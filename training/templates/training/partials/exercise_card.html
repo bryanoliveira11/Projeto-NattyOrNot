@@ -34,7 +34,7 @@
 
                     {% if exercise.categories.all|length > 1 %}
                         {% if is_dashboard_page %}
-                            <a href="{% url 'users:user_dashboard_category' request.user category.id %}">
+                            <a href="{% url 'users:user_dashboard_category' category.id %}">
                                 {{category.name}}
                             </a> |
                         {% else %}
@@ -42,7 +42,7 @@
                         {% endif %}
                     {% else %}
                         {% if is_dashboard_page %}
-                            <a href="{% url 'users:user_dashboard_category' request.user category.id %}">
+                            <a href="{% url 'users:user_dashboard_category' category.id %}">
                                 {{category.name}}
                             </a>
                         {% else %}

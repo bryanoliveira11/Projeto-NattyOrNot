@@ -9,12 +9,12 @@ urlpatterns = [
     path('login/', views.UserLoginView.as_view(), name='login'),
     path('logout/', views.UserLogoutView.as_view(), name='logout'),
     path(
-        'dashboard/<str:user>/exercises/',
+        'dashboard/exercises/',
         views.DashboardUserClassView.as_view(),
         name='user_dashboard'
     ),
     path(
-        'dashboard/<str:user>/exercises/category/<int:id>/',
+        'dashboard/exercises/category/<int:id>/',
         views.DashboardUserCategoryClassView.as_view(),
         name='user_dashboard_category'
     ),

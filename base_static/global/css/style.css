@@ -342,6 +342,7 @@ img {
 
 .form-content-grid.login {
   margin-bottom: 0;
+  margin-top: 2rem;
 }
 
 .form-image {
@@ -355,7 +356,6 @@ img {
   font-size: 1.5rem;
   font-weight: 500;
   border: none;
-  border-radius: 0.4rem;
   cursor: pointer;
   background: var(--color-primary);
   color: var(--color-white);
@@ -623,9 +623,12 @@ img {
 
 .exercise-dashboard-footer a:hover,
 .exercise-dashboard-footer button:hover {
-  color: var(--color-dark-text);
   cursor: pointer;
   scale: 1.05;
+}
+
+.exercise-dashboard-footer button:hover{
+  background-color: var(--color-error-dark-hover);
 }
 
 .dashboard-tag,
@@ -708,6 +711,25 @@ img {
   max-width: 100%;
 }
 
+.btn-google-signin{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5rem;
+  padding: 0.8rem;
+  max-width: 64rem;
+  margin: 0 auto;
+  border-radius: 0.3rem;
+  background: var(--color-white);
+  color: var(--color-dark-text);
+  font-family: var(--font-headings);
+}
+
+.btn-google-signin img{
+  width: 2.5rem;
+  margin-right: 1.5rem;
+}
+
 /* medias */
 @media (max-width: 600px) {
   .main-header-content span {
@@ -773,7 +795,7 @@ img {
     font-size: 1.4rem;
   }
 
-  .message-form {
+  .message-form, .btn-google-signin {
     width: 82%;
   }
 }

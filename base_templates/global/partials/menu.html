@@ -27,7 +27,7 @@
 
             {% if request.user.is_authenticated %}
                 <span class="menu-link">
-                    <a href="{% url 'users:user_dashboard' request.user.username %}">
+                    <a href="{% url 'users:user_dashboard' %}">
                         <i class="fa-solid fa-clipboard-user"></i>
                         Meu Dashboard
                     </a>

@@ -38,15 +38,25 @@ ALLOWED_HOSTS: List = ['127.0.0.1', environ.get('IP', '')]
 # Application definition
 
 INSTALLED_APPS = [
+    # my apps
     'users',
     'training',
+    # django defaults
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # all auth
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    # debug toolbar
     'debug_toolbar',
+    # axes
     'axes',
 ]
 
@@ -58,6 +68,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # all auth middleware
+    'allauth.account.middleware.AccountMiddleware',
+    # debug toolbar middleware
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     # AxesMiddleware should be the last middleware in the MIDDLEWARE list.
     'axes.middleware.AxesMiddleware',
@@ -164,6 +177,8 @@ AUTHENTICATION_BACKENDS = [
     'axes.backends.AxesStandaloneBackend',
     # Django ModelBackend is the default authentication backend.
     'django.contrib.auth.backends.ModelBackend',
+    # all auth backend
+    'allauth.account.auth_backends.AuthenticationBackend'
 ]
 
 
@@ -172,3 +187,20 @@ AUTHENTICATION_BACKENDS = [
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+# all auth configs
+
+SITE_ID = 2
+SOCIALACCOUNT_LOGIN_ON_GET = True
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+LOGIN_REDIRECT_URL = '/dashboard/exercises/'

@@ -72,7 +72,7 @@ class UserLoginView(View):
             # login com sucesso
             if authenticated_user is not None:
                 login(self.request, user=authenticated_user)
-                return redirect(reverse('users:user_dashboard', args=(authenticated_user, )))
+                return redirect(reverse('users:user_dashboard'))
             # errou as credenciais
             else:
                 messages.error(self.request, 'Credenciais Inválidas.')
