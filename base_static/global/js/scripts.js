@@ -71,3 +71,24 @@
         is_password_visible = !is_password_visible;
     });
 })();
+
+
+// função para confirmar a deleção de um exercício na página do dashboard
+
+(() => {
+    const forms = document.querySelectorAll('.form-delete');
+ 
+    for(const form of forms){
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const confirmed = confirm('Isso ira Deletar o Exercício, Confirmar ?');
+
+            if(confirmed){
+                form.submit();
+            }
+
+        });
+    }
+
+})();

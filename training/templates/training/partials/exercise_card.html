@@ -76,20 +76,30 @@
     </div>
     
     {% if is_dashboard_page %}
-        <footer class="footer-delete">
+
+    <footer class="exercise-dashboard-footer">
+        <a href="{% url 'users:edit_exercise' exercise.pk %}">
+            <i class="fa-solid fa-pen-to-square"></i>
+            Editar
+        </a>
+        <form action="{% url 'users:user_dashboard_delete' exercise.pk %}" method="POST" class='form-delete'>
+            {% csrf_token %}
             <input type="hidden" name="id" value="{{exercise.pk}}">
-            <a href="{% url 'users:edit_exercise' exercise.pk %}">
-                <i class="fa-solid fa-pen-to-square"></i>
-                Editar
-            </a>
-        </footer>
+            <button type="submit">
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </form>
+    </footer>
+
     {% else %}
-        <footer class="exercise-footer">
-            <a href="" class="exercise-read-more-button center">
-                <i class="fa-solid fa-eye"></i>
-                <span>Ver Mais...</span>
-            </a>
-        </footer>
+
+    <footer class="exercise-footer">
+        <a href="" class="exercise-read-more-button center">
+            <i class="fa-solid fa-eye"></i>
+            <span>Ver Mais...</span>
+        </a>
+    </footer>
+        
     {% endif %}
 
 </div>

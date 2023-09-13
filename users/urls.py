@@ -19,7 +19,7 @@ urlpatterns = [
         name='user_dashboard_category'
     ),
     path(
-        'dashboard/<str:user>/exercises/delete/<int:id>/',
+        'dashboard/exercise/<int:id>/delete/',
         views.DashboardDeleteExerciseClassView.as_view(),
         name='user_dashboard_delete'
     ),
