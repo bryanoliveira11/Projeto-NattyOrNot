@@ -1,0 +1,22 @@
+{% extends 'global/base.html' %}
+{% block title %} {{title}}{% endblock title %}
+
+{% block content %}
+    <div class="main-content center container">
+        <h3 class="form-tag dashboard-forms">{{title}}</h3>
+        <div class="login-message container center">
+            <h3>
+                <a href="{% url 'users:user_dashboard' request.user %}" class="plaintext-button">
+                    Clique aqui
+                </a>
+                para ir ao Dashboard.
+            </h3>
+        </div>
+
+        {% include "global/partials/messages.html" %}
+        <div class="left">
+            {% include "global/partials/form.html" %}
+        </div>
+    </div>
+
+{% endblock content %}

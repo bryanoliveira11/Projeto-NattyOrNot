@@ -1,0 +1,10 @@
+<div class="search-container">
+        <form action="{% url 'training:search' %}" method="GET" class="search-form">
+            <input type="search" class="search-input"
+             value="{{search_term}}" name="q"
+             placeholder="Busca..." required>
+             <button class="search-button" type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+             </button>
+        </form>
+</div>

@@ -1,0 +1,27 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% block title %} {{title}} {% endblock title %}
+
+{% block content %}
+    <div class="center">
+        <h2 class="form-tag main">{{page_tag}}</h2>
+    </div>
+    <div class="main-content main-content-list container center">
+        {% for exercise in exercises  %}
+            {% include "training/partials/exercise_card.html" %}
+        {% empty %}
+        <div class="main-content-error-page container center">
+            <div class="error-message-content container">
+                <img src="{% static 'global/imgs/404_fakenatty.png' %}" loading="lazy" alt="">
+                <h2>Fake Natty !</h2>
+                <h3>
+                    Parece que não há exercícios, não é mesmo ?
+                    {% if is_search_page %}
+                        <h3><a href="{% url 'training:home' %}">Retornar para a Home.</a></h3>
+                    {% endif %}
+                </h3>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    {% include "global/partials/head.html" %}
+    <title> {% block title %}{{title}}{% endblock title %} | NattyOrNot</title>
+</head>
+<body>
+    {% include "global/partials/menu.html" %}
+    {% include "global/partials/header.html" %}
+    {% include "global/partials/search.html" %}
+    <main class="main-content-container">
+        {% block content %}{% endblock content %}
+    </main>
+
+{% include "global/partials/footer.html" %}
+<script src="{% static 'global/js/scripts.js' %}"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</body>
+</html>

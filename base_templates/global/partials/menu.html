@@ -1,0 +1,65 @@
+{% load filters %}
+<button class="button-show-menu button-show-menu-is-visible">
+    <i class="fas fa-bars"></i>
+    <span class="hidden-text">mostrar menu</span>
+</button>
+
+<div class="menu-container menu-hidden">
+    <button class="button-close-menu button-close-menu-is-visible">
+        <i class="fas fa-times-circle"></i>
+        <span class="hidden-text">esconder menu</span>
+    </button>
+
+    <div class="menu-content">
+        <nav class="menu-nav">
+            <span class="menu-link hello center">
+                {% if request.user.is_authenticated %}
+                    {{request.user.username|username_limit_length}} !
+                {% endif %}
+            </span>
+
+            <span class="menu-link">
+                <a href="{% url 'training:home' %}">
+                    <i class="fa-solid fa-house"></i>
+                    Home
+                </a>
+            </span>
+
+            {% if request.user.is_authenticated %}
+                <span class="menu-link">
+                    <a href="{% url 'users:user_dashboard' request.user.username %}">
+                        <i class="fa-solid fa-clipboard-user"></i>
+                        Meu Dashboard
+                    </a>
+                </span>
+                <span class="menu-link">
+                    <a href="{% url 'users:create_exercise' %}">
+                        <i class="fa-solid fa-weight-hanging"></i>
+                        Criar Exercício
+                    </a>
+                </span>
+                <span class="menu-link">
+                    <a href="{% url 'users:logout' %}" class="user-logout-link">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        Sair
+                    </a>
+                    {% include "global/partials/logout_form.html" %}
+                </span>
+
+            {% else %}
+                <span class="menu-link">
+                    <a href="{% url 'users:login' %}">
+                        <i class="fa-solid fa-user"></i>
+                        Login
+                    </a>
+                </span>
+                <span class="menu-link">
+                    <a href="{% url 'users:register' %}">
+                        <i class="fa-solid fa-clipboard-user"></i>
+                        Registre-se
+                    </a>
+                </span>
+            {% endif %}
+        </nav>
+    </div>
+</div>

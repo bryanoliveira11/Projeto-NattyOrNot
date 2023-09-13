@@ -1,0 +1,18 @@
+{% extends 'global/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="main-content-error-page container center">
+    <div class="error-message-content container">
+        <img src="{% static 'global/imgs/404_fakenatty.png' %}" loading="lazy" alt="">
+        <h2>Fake Natty !</h2>
+        <h3>
+            Parece que Alguém Acessou uma Página Inexistente, não é mesmo?
+        </h3>
+        <h3><a href="{% url 'training:home' %}">Retornar para a Home.</a></h3>
+    </div>
+</div>
+
+{% endblock content %}

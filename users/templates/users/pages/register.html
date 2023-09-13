@@ -1,0 +1,25 @@
+{% extends 'global/base.html' %}
+{% block content %}
+
+    <div class="main-content center">
+        <h2 class="form-tag">Cadastro</h2>
+    </div>
+
+    {% if not request.user.is_authenticated %}
+        <div class="login-register-redirect register center form-tag">
+            <h3> Já tem uma Conta?  
+                <span>
+                    <a class="default-link" href="{% url 'users:login' %}">Faça Login</a>.
+                </span> 
+            </h3>
+        </div>
+    {% endif %}
+
+    {% include 'global/partials/messages.html' %}
+    {% include 'users/partials/login_message.html' %}
+
+    {% if not request.user.is_authenticated %}
+        {% include "global/partials/form.html" %}
+    {% endif %}
+
+{% endblock content %}

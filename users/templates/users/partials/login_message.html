@@ -1,0 +1,29 @@
+{% if request.user.is_authenticated %}
+<div class="login-message container center">
+    {% if is_dashboard_page %}
+        <h3>
+            Este é o seu 
+            <a href="{% url 'users:user_dashboard' request.user %}" class="plaintext-button">
+                Dashboard ! 
+            </a>
+            Você pode
+            <a href="{% url 'users:create_exercise' %}" class="plaintext-button">
+                criar um exercício
+            </a>,
+            <a href="{% url 'training:home' %}" class="plaintext-button">
+                ir até a home
+            </a> ou 
+            <a href="{% url 'users:logout' %}" class="plaintext-button user-logout-link">
+                sair
+            </a>.
+        </h3>
+    {% else %}
+        <h3>
+            Logado como {{request.user.username}}
+            <a href="{% url 'users:logout' %}" class="plaintext-button user-logout-link">clique aqui</a>
+            {% include "global/partials/logout_form.html" %}
+            para sair.
+        </h3>
+    {% endif %}
+</div>
+{% endif %}
