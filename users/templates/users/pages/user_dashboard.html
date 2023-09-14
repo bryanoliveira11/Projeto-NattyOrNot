@@ -11,19 +11,21 @@
         </div>
     </div>
     <div class="main-content main-content-list container center">
-        {% for exercise in exercises  %}
-            {% include "training/partials/exercise_card.html" %}
-        {% empty %}
-        <div class="main-content-error-page container center">
-            <div class="error-message-content">
-                <img src="{% static 'global/imgs/404_fakenatty.png' %}" loading="lazy" alt="">
-                <h2>Fake Natty !</h2>
-                <h3>
-                    Parece que não há exercícios, não é mesmo ?
-                    <h3><a href="{% url 'users:create_exercise' %}">Criar Exercício.</a></h3>
-                </h3>
+        <div class="exercise-container-grid">
+            {% for exercise in exercises  %}
+                {% include "training/partials/exercise_card.html" %}
+            {% empty %}
+            <div class="main-content-error-page container center">
+                <div class="error-message-content">
+                    <img src="{% static 'global/imgs/404_fakenatty.png' %}" loading="lazy" alt="">
+                    <h2>Fake Natty !</h2>
+                    <h3>
+                        Parece que não há exercícios, não é mesmo ?
+                        <h3><a href="{% url 'users:create_exercise' %}">Criar Exercício.</a></h3>
+                    </h3>
+                </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 {% endblock content %}
