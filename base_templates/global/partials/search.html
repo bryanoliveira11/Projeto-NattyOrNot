@@ -1,5 +1,5 @@
 <div class="search-container">
-        <form action="{% url 'training:search' %}" method="GET" class="search-form">
+        <form action="{{search_form_action}}" method="GET" class="search-form">
             <input type="search" class="search-input"
              value="{{search_term}}" name="q"
              placeholder="Busca..." required>

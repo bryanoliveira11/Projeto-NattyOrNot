@@ -3,6 +3,7 @@ from typing import Any, Dict
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.http import Http404
+from django.urls import reverse
 from django.views.generic import ListView
 
 from training.models import Exercises
@@ -18,17 +19,20 @@ class ExerciseBaseClassView(ListView):
     # filtrando exercícios que estejam publicados e otimizando a consulta sql
     def get_queryset(self, *args, **kwargs) -> QuerySet[Any]:
         queryset = super().get_queryset(*args, **kwargs)
+
         queryset = queryset.filter(is_published=True).select_related(
             'published_by').prefetch_related('categories')
+
         return queryset
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        context = super().get_context_data(**kwargs)
+    def get_context_data(self, *args, **kwargs) -> Dict[str, Any]:
+        context = super().get_context_data(*args, **kwargs)
 
         exercises = context.get('training')
 
         context.update({
             'exercises': exercises,
+            'search_form_action': reverse('training:search'),
             'title': 'Home',
             'page_tag': 'Exercícios'
         })
