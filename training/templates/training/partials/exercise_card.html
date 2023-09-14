@@ -1,4 +1,5 @@
 {% load static %}
+{% load filters %}
 
 <div class="exercise exercise-list-item">
     <div class="exercise-cover">
@@ -13,12 +14,15 @@
         {% endif %}
     </div>
 
-    <div class="exercise-title-container">
-        {% if is_dashboard_page %}
-            <h2 class="exercise-title">
-                <a href="{% url 'users:edit_exercise' exercise.pk %}"> {{exercise.title}} </a>
+    {% if is_dashboard_page %}
+        <div class="exercise-title-container dashboard-exercise-title">
+            <h2 class="exercise-title dashboard-exercise-title">
+                <a href="{% url 'users:edit_exercise' exercise.pk %}">
+                     {{exercise.title|title_limit_length}} 
+                </a>
             </h2>
         {% else %}
+        <div class="exercise-title-container">
             <h2 class="exercise-title">
                 <a href=""> {{exercise.title}} </a>
             </h2>
@@ -49,11 +53,20 @@
                             <a href="{% url 'training:category' category.id %}">{{category.name}}</a>
                         {% endif %}
                     {% endif %}
-                    
                 {% endfor %}
             </span>
         {% endif %}
     </div>
+
+    {% if is_dashboard_page %}
+        <div class="exercise-status">
+            {% if not exercise.is_published %}
+                <span class="not-published"> &#8226 Não Publicado </span>
+            {% else %}
+                <span class="published"> &#8226 Publicado </span>
+            {% endif %}
+        </div>
+    {% endif %}
 
     <div class="exercise-meta-container">
         <div class="exercise-meta exercise-series-number">
@@ -61,7 +74,7 @@
                 Séries
             </h3>
             <div class="exercise-meta-text">
-                {{exercise.series}} Séries
+                {{exercise.series|format_series}}
             </div>
         </div>
 
@@ -70,7 +83,7 @@
                 Repetições
             </h3>
             <div class="exercise-meta-text">
-                {{exercise.reps}} Repetições
+                {{exercise.reps|format_reps}}
             </div>
         </div>
     </div>

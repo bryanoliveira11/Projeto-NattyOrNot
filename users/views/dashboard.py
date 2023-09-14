@@ -26,7 +26,6 @@ class DashboardUserBase(ListView):
         # filtrando exercícios que o usuário logado criou e não estão publicados
         queryset = queryset.filter(
             published_by=self.request.user,
-            is_published=False,
         ).prefetch_related('categories')
 
         return queryset
@@ -68,7 +67,6 @@ class DashboardUserCategoryClassView(DashboardUserBase):
         queryset = queryset.filter(
             categories__id=self.kwargs.get('id'),
             published_by=self.request.user,
-            is_published=False,
         )
 
         if not queryset:

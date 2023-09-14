@@ -27,7 +27,6 @@ class DashboardFormBaseClassView(View):
             exercise = Exercises.objects.filter(
                 published_by=self.request.user,
                 pk=id,
-                is_published=False
             ).first()
 
             # lançando erro 404 caso não tenha nenhum resultado para o id

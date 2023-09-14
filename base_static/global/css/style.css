@@ -245,7 +245,8 @@ img {
 }
 
 .exercise-data {
-  padding: 0.5rem;
+  background: var(--color-gray-1);
+  padding: 1rem;
 }
 
 .exercise-content {
@@ -265,6 +266,19 @@ img {
   font-size: 1.5rem;
 }
 
+.exercise-status{
+  background: var(--color-gray-1);
+  padding: 0.5rem;
+}
+
+.exercise-status span.not-published{
+  color: var(--color-error-dark);
+}
+
+.exercise-status span.published{
+  color: var(--color-success-dark);
+}
+
 .exercise-meta {
   display: flex;
   flex-flow: column nowrap;
@@ -276,6 +290,7 @@ img {
 .exercise-meta-container {
   display: flex;
   flex-flow: row wrap;
+  background: var(--color-gray-1);
   padding: var(--spacing-gutter-medium);
 }
 
@@ -609,6 +624,10 @@ img {
 }
 
 /* dashboard */
+
+.dashboard-exercise-title{
+  padding: 0.5rem;
+}
 
 .exercise-dashboard-footer {
   display: flex;
