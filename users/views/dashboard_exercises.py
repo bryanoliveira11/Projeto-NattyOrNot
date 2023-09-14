@@ -103,7 +103,7 @@ class DashboardExerciseClassView(DashboardFormBaseClassView):
 )
 class DashboardDeleteExerciseClassView(DashboardFormBaseClassView):
     def get(self, *args, **kwargs):
-        return redirect(reverse('users:user_dashboard', args=(self.request.user,)))
+        return redirect(reverse('users:user_dashboard'))
 
     def post(self, *args, **kwargs):
         exercise = self.get_exercise(self.request.POST.get('id'))
@@ -112,4 +112,4 @@ class DashboardDeleteExerciseClassView(DashboardFormBaseClassView):
             exercise.delete()
 
         messages.success(self.request, 'Exercício Deletado com Sucesso.')
-        return redirect(reverse('users:user_dashboard', args=(self.request.user, )))
+        return redirect(reverse('users:user_dashboard'))

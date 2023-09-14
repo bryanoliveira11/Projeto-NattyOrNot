@@ -199,7 +199,7 @@ img {
 }
 
 .exercise-list-item {
-  max-width: 37rem;
+  max-width: 32rem;
   height: fit-content;
   background: var(--color-gray-0);
 }
@@ -357,6 +357,7 @@ img {
   font-weight: 500;
   border: none;
   cursor: pointer;
+  border-radius: 0.3rem;
   background: var(--color-primary);
   color: var(--color-white);
   width: 100%;
@@ -624,7 +625,7 @@ img {
 .exercise-dashboard-footer a:hover,
 .exercise-dashboard-footer button:hover {
   cursor: pointer;
-  scale: 1.05;
+  transform: scale(1.02);
 }
 
 .exercise-dashboard-footer button:hover{
@@ -718,11 +719,16 @@ img {
   margin-bottom: 5rem;
   padding: 0.8rem;
   max-width: 64rem;
-  margin: 0 auto;
   border-radius: 0.3rem;
+  margin: 0 auto;
   background: var(--color-white);
   color: var(--color-dark-text);
   font-family: var(--font-headings);
+  transition: all 300ms ease-in-out;
+}
+
+.btn-google-signin:hover{
+  background: var(--color-gray-2);
 }
 
 .btn-google-signin img{
