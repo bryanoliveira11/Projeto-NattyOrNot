@@ -61,9 +61,13 @@
     {% if is_dashboard_page %}
         <div class="exercise-status">
             {% if not exercise.is_published %}
-                <span class="not-published"> &#8226 Não Publicado </span>
+                <a href="{% url 'users:user_dashboard_is_published' exercise.is_published %}" class="not-published">
+                     &#8226 Não Publicado 
+                </a>
             {% else %}
-                <span class="published"> &#8226 Publicado </span>
+                <a href="{% url 'users:user_dashboard_is_published' exercise.is_published %}" class="published">
+                     &#8226 Publicado 
+                </a>
             {% endif %}
         </div>
     {% else %}

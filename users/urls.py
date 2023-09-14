@@ -9,9 +9,14 @@ urlpatterns = [
     path('login/', views.UserLoginView.as_view(), name='login'),
     path('logout/', views.UserLogoutView.as_view(), name='logout'),
     path(
-        'dashboard/search/',
+        'dashboard/exercises/search/',
         views.DashboardSearchClassView.as_view(),
         name='user_dashboard_search'
+    ),
+    path(
+        'dashboard/exercises/filter/is_published=<str:is_published>',
+        views.DashboardIsPublishedFilterClassView.as_view(),
+        name='user_dashboard_is_published'
     ),
     path(
         'dashboard/exercises/',

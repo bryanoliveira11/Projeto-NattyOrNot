@@ -31,6 +31,23 @@ class DashboardUserBase(ListView):
 
         return queryset
 
+    def get_context_data(self, *args, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(*args, **kwargs)
+
+        # exercicios do contexto
+        exercises = context.get('user_exercises')
+        user = self.request.user
+
+        context.update({
+            'exercises': exercises,
+            'title': f'Dashboard de {user}',
+            'page_tag': f'Meus Exercícios - Dashboard ({user})',
+            'search_form_action': reverse('users:user_dashboard_search'),
+            'is_dashboard_page': True,
+        })
+
+        return context
+
 
 @method_decorator(
     login_required(login_url='users:login', redirect_field_name='next'),
@@ -38,23 +55,7 @@ class DashboardUserBase(ListView):
 )
 # classe para mostrar o dashboard do usuário com os exercícios criados
 class DashboardUserClassView(DashboardUserBase):
-    def get_context_data(self, *args, **kwargs) -> dict[str, Any]:
-        context = super().get_context_data(*args, **kwargs)
-
-        # pegando exercícios que vieram da query no contexto
-        user_exercises = context.get('user_exercises')
-        user = self.request.user
-
-        # passando o resultado da queryset para a key exercises usada no template html
-        context.update({
-            'exercises': user_exercises,
-            'search_form_action': reverse('users:user_dashboard_search'),
-            'title': f'Dashboard de {user}',
-            'page_tag': f'Meus Exercícios - Dashboard ({user})',
-            'is_dashboard_page': True,
-        })
-
-        return context
+    template_name = 'users/pages/user_dashboard.html'
 
 
 @method_decorator(
@@ -86,10 +87,8 @@ class DashboardUserCategoryClassView(DashboardUserBase):
         ).first()
 
         context.update({
-            'exercises': user_exercises,
-            'title': f'Dashboard de {user}',
+            'title': f'Dashboard de {user} - {category_name}',
             'page_tag': f'Meus Exercícios de {category_name} - Dashboard ({user})',
-            'is_dashboard_page': True,
         })
 
         return context
@@ -114,22 +113,50 @@ class DashboardSearchClassView(DashboardUserBase):
 
         queryset = queryset.filter(
             published_by=self.request.user, title__icontains=self.search_term
-        ).prefetch_related('categories')
+        )
 
         return queryset
 
     def get_context_data(self, *args, **kwargs) -> Dict[str, Any]:
         context = super().get_context_data(*args, **kwargs)
 
-        exercises = context.get('user_exercises')
         title = f'Dashboard ({self.request.user}) - Pesquisa por "{self.search_term}"'
 
         context.update({
-            'exercises': exercises,
-            'search_form_action': reverse('users:user_dashboard_search'),
             'title': title,
             'page_tag': title,
-            'is_dashboard_page': True,
+        })
+
+        return context
+
+
+class DashboardIsPublishedFilterClassView(DashboardUserBase):
+    def get_queryset(self, *args, **kwargs) -> QuerySet[Any]:
+        queryset = super().get_queryset(*args, **kwargs)
+
+        is_published = self.kwargs.get('is_published')
+
+        queryset = queryset.filter(
+            published_by=self.request.user, is_published=is_published
+        )
+
+        return queryset
+
+    def get_context_data(self, *args, **kwargs) -> Dict[str, Any]:
+        context = super().get_context_data(*args, **kwargs)
+
+        is_published = self.kwargs.get('is_published')
+
+        if is_published == 'False':
+            publish_translate = 'Não Públicados'
+        else:
+            publish_translate = 'Públicados'
+
+        title = f'Meus Exercícios {publish_translate} - Dashboard ({self.request.user})'
+
+        context.update({
+            'title': title,
+            'page_tag': title,
         })
 
         return context

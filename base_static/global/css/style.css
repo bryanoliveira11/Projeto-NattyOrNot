@@ -18,7 +18,7 @@
 
   --color-info-light: #cce5ff;
   --color-debug-light: #cce5ff;
-  --color-success-light: #d4edda;
+  --color-success-light: #5bc273;
   --color-alert-light: #fff3cd;
   --color-warning-light: #fff3cd;
   --color-error-light: #f8d7da;
@@ -271,11 +271,19 @@ img {
   padding: 0.5rem;
 }
 
-.exercise-status span.not-published{
+.exercise-status a.not-published{
   color: var(--color-error-dark);
 }
 
-.exercise-status span.published{
+.exercise-status a.not-published:hover{
+  color: var(--color-error-dark-hover);
+}
+
+.exercise-status a.published{
+  color: var(--color-success-light);
+}
+
+.exercise-status a.published:hover{
   color: var(--color-success-dark);
 }
 
