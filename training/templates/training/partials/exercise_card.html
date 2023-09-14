@@ -66,6 +66,13 @@
                 <span class="published"> &#8226 Publicado </span>
             {% endif %}
         </div>
+    {% else %}
+        <div class="exercise-status">
+                <span class="published-by">
+                    <i class="fa-solid fa-user"></i>
+                    {{exercise.published_by}}
+                </span>
+        </div>
     {% endif %}
 
     <div class="exercise-meta-container">

@@ -75,7 +75,7 @@ class SearchClassView(ExerciseBaseClassView):
         context.update({
             'title': f'Busca por "{self.search_term}"',
             'page_tag': f'Resultados da Busca por "{self.search_term}"',
-            'is_search_page': True
+            'is_home_page': True
         })
         return context
 

@@ -18,6 +18,7 @@ class UserRegisterView(View):
         return render(self.request, 'users/pages/register.html', context={
             'form': form,
             'form_action': reverse('users:register'),
+            'search_form_action': reverse('training:search'),
             'title': 'Cadastro',
         })
 
@@ -53,6 +54,7 @@ class UserLoginView(View):
         return render(self.request, 'users/pages/login.html', context={
             'form': form,
             'form_action': reverse('users:login'),
+            'search_form_action': reverse('training:search'),
             'title': 'Login',
             'is_login_page': True,
         })
@@ -87,6 +89,7 @@ class UserLogoutView(View):
     # vai levantar erro se o usuário fizer get ao invés de post
     def get(self, *args, **kwargs):
         return render(self.request, 'global/partials/error404.html', context={
+            'search_form_action': reverse('training:search'),
             'title': 'Página Não Encontrada',
         })
 

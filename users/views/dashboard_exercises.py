@@ -45,9 +45,11 @@ class DashboardFormBaseClassView(View):
     def render_exercise(self, form):  # renderizando página do form
         return render(self.request, 'users/pages/create_exercise.html', context={
             'form': form,
+            'search_form_action': reverse('users:user_dashboard_search'),
             'title': self.title,
             'captcha_key': environ.get('RECAPTCHA_PUBLIC_KEY', ''),
             'is_exercise_form': True,
+            'is_exercise_edit': self.is_exercise_edit
         })
 
 

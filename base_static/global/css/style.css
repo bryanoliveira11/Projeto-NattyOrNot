@@ -738,6 +738,14 @@ img {
   grid-column: span 2;
 }
 
+.fa-pen-to-square, .fa-dumbbell{
+  margin-right: 0.5rem;
+}
+
+.fa-dumbbell{
+  rotate: 90deg;
+}
+
 .captcha-centered {
   display: flex;
   justify-content: center;

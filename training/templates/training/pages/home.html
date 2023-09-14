@@ -17,8 +17,11 @@
                     <h2>Fake Natty !</h2>
                     <h3>
                         Parece que não há exercícios, não é mesmo ?
-                        {% if is_search_page %}
-                            <h3><a href="{% url 'training:home' %}">Retornar para a Home.</a></h3>
+                        {% if is_home_page %}
+                            <h3>
+                                <a href="{% url 'training:home' %}">Retornar para a Home</a> |
+                                <a href="{% url 'users:create_exercise' %}">Criar um Exercício</a>
+                            </h3>
                         {% endif %}
                     </h3>
                 </div>

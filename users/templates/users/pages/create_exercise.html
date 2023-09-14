@@ -3,7 +3,17 @@
 
 {% block content %}
     <div class="main-content center container">
-        <h3 class="form-tag dashboard-forms">{{title}}</h3>
+        {% if is_exercise_edit %}
+            <h3 class="form-tag dashboard-forms">
+                <i class="fa-solid fa-pen-to-square"></i>
+                {{title}}
+            </h3>
+        {% else %}
+            <h3 class="form-tag dashboard-forms">
+                <i class="fa-solid fa-dumbbell"></i>
+                {{title}}
+            </h3>
+        {% endif %}
         <div class="login-message container center">
             <h3>
                 <a href="{% url 'users:user_dashboard' %}" class="plaintext-button">
