@@ -1,6 +1,8 @@
+from os import environ
 from typing import Any, Dict
 
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.db.models.query import QuerySet
 from django.http import Http404
 from django.urls import reverse
@@ -8,6 +10,9 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView
 
 from training.models import Exercises
+from utils.pagination import make_pagination
+
+DASHBOARD_PER_PAGE = environ.get('DASHBOARD_PER_PAGE', 4)
 
 
 @method_decorator(
@@ -38,8 +43,14 @@ class DashboardUserBase(ListView):
         exercises = context.get('user_exercises')
         user = self.request.user
 
+        # paginação
+        page_obj, pagination_range = make_pagination(
+            self.request, exercises, DASHBOARD_PER_PAGE
+        )
+
         context.update({
-            'exercises': exercises,
+            'exercises': page_obj,
+            'pagination_range': pagination_range,
             'title': f'Dashboard de {user}',
             'page_tag': f'Meus Exercícios - Dashboard ({user})',
             'search_form_action': reverse('users:user_dashboard_search'),

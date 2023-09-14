@@ -1,3 +1,4 @@
+from os import environ
 from typing import Any, Dict
 
 from django.db.models import Q
@@ -7,9 +8,13 @@ from django.urls import reverse
 from django.views.generic import ListView
 
 from training.models import Exercises
+from utils.pagination import make_pagination
 
+PER_PAGE = environ.get('HOME_PER_PAGE', 8)
 
 # classe base para a home
+
+
 class ExerciseBaseClassView(ListView):
     template_name = 'training/pages/home.html'
     context_object_name = 'training'
@@ -30,8 +35,14 @@ class ExerciseBaseClassView(ListView):
 
         exercises = context.get('training')
 
+        # paginação
+        page_obj, pagination_range = make_pagination(
+            self.request, exercises, PER_PAGE
+        )
+
         context.update({
-            'exercises': exercises,
+            'exercises': page_obj,
+            'pagination_range': pagination_range,
             'search_form_action': reverse('training:search'),
             'title': 'Home',
             'page_tag': 'Exercícios'
