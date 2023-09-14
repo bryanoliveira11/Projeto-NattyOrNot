@@ -184,17 +184,17 @@ img {
 }
 
 .exercise-container-grid {
-  display: flex; 
-  flex-wrap: wrap; 
-  justify-content: start; 
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   gap: var(--spacing-gutter-medium);
   max-width: 140rem;
 }
 
 .exercise-container-grid .exercise {
-  min-width: 295px;
-  max-width: 295px;
+  min-width: 250px;
+  max-width: 290px;
   flex: 1;
   margin: var(--spacing-gutter-medium);
 }
@@ -644,7 +644,7 @@ img {
   transform: scale(1.02);
 }
 
-.exercise-dashboard-footer button:hover{
+.exercise-dashboard-footer button:hover {
   background-color: var(--color-error-dark-hover);
 }
 
@@ -728,7 +728,7 @@ img {
   max-width: 100%;
 }
 
-.btn-google-signin{
+.btn-google-signin {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -743,16 +743,34 @@ img {
   transition: all 300ms ease-in-out;
 }
 
-.btn-google-signin:hover{
+.btn-google-signin:hover {
   background: var(--color-gray-2);
 }
 
-.btn-google-signin img{
+.btn-google-signin img {
   width: 2.5rem;
   margin-right: 1.5rem;
 }
 
 /* medias */
+
+@media (max-width: 750px) {
+  .main-content-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .exercise-container-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-gutter-medium);
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 600px) {
   .main-header-content span {
     font-size: 2.5rem;
@@ -760,12 +778,6 @@ img {
 
   .main-logo.logo img {
     margin: 0 0.7rem 0.3rem 0;
-  }
-
-  .exercise-container-grid{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
-    gap: var(--spacing-gutter-medium);
   }
 
   .form-content-grid {
@@ -817,7 +829,8 @@ img {
     font-size: 1.4rem;
   }
 
-  .message-form, .btn-google-signin {
+  .message-form,
+  .btn-google-signin {
     width: 82%;
   }
 }
