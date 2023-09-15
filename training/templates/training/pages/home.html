@@ -9,7 +9,10 @@
         </h2>
         {% if is_filtered %}
             <h3 class="home-remove-filter">
-                <a href="{% url 'training:home' %}">Remover Filtro.</a>
+                <a href="{% url 'training:home' %}">
+                    Remover Filtro
+                    <i class="fa-solid fa-delete-left"></i>
+                </a>
             </h3>
         {% endif %}
     </div>

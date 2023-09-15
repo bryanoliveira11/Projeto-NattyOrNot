@@ -1,7 +1,7 @@
 {% if request.user.is_authenticated %}
 <div class="login-message container center">
     {% if is_dashboard_page %}
-        <h3>
+        <h3 class='p-05'>
             Este é o seu 
             <a href="{% url 'users:user_dashboard' %}" class="plaintext-button">
                 Dashboard ! 
@@ -17,6 +17,14 @@
                 sair
             </a>.
         </h3>
+        {% if is_filtered %}
+            <h3 class="home-remove-filter">
+                <a href="{% url 'users:user_dashboard' %}">
+                    Remover Filtro
+                    <i class="fa-solid fa-delete-left"></i>
+                </a>
+            </h3>
+        {% endif %}
     {% else %}
         <h3>
             Logado como {{request.user.username}}

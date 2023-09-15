@@ -12,4 +12,8 @@ urlpatterns = [
         views.CategoriesFilterClassView.as_view(),
         name='category'
     ),
+    path
+    ('exercises/detail/<slug:slug>/',
+     views.ExerciseDetailClassView.as_view(), name='exercises_detail'
+     ),
 ]

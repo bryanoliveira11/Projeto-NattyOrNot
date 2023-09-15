@@ -1,0 +1,22 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% block title %} {{title}} {% endblock title %}
+
+{% block content %}
+    <div class="center">
+        <h2 class="form-tag main">
+            Exercício - {{page_tag}}
+            <h3 class="home-remove-filter">
+                <a href="{% url 'training:home' %}">
+                    <i class="fa-solid fa-circle-left"></i>
+                    Voltar para Home.
+                </a>
+            </h3>
+        </h2>
+    </div>
+    <div class="main-content main-content-detail container center">
+        <div class="exercise-container-grid">
+                {% include "training/partials/exercise_card.html" %}
+        </div>
+    </div>
+{% endblock content %}

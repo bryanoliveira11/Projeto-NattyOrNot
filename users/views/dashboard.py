@@ -51,10 +51,11 @@ class DashboardUserBase(ListView):
         context.update({
             'exercises': page_obj,
             'pagination_range': pagination_range,
-            'title': f'Dashboard de {user}',
+            'title': f'Dashboard ({user})',
             'page_tag': f'Meus Exercícios - Dashboard ({user})',
             'search_form_action': reverse('users:user_dashboard_search'),
             'is_dashboard_page': True,
+            'additional_search_placeholder': 'no Dashboard',
         })
 
         return context
@@ -100,6 +101,7 @@ class DashboardUserCategoryClassView(DashboardUserBase):
         context.update({
             'title': f'Dashboard de {user} - {category_name}',
             'page_tag': f'Meus Exercícios de {category_name} - Dashboard ({user})',
+            'is_filtered': True,
         })
 
         return context
@@ -137,6 +139,7 @@ class DashboardSearchClassView(DashboardUserBase):
             'title': title,
             'page_tag': title,
             'additional_url_query': f'&q={self.search_term}',
+            'is_filtered': True,
         })
 
         return context
@@ -169,6 +172,7 @@ class DashboardIsPublishedFilterClassView(DashboardUserBase):
         context.update({
             'title': title,
             'page_tag': title,
+            'is_filtered': True,
         })
 
         return context

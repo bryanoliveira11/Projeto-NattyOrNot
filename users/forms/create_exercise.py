@@ -17,6 +17,8 @@ class CreateExerciseForm(forms.ModelForm):
         add_placeholder(self.fields['description'], 'Digite a Descrição')
         add_placeholder(self.fields['series'], 'Digite o Número de Séries')
         add_placeholder(self.fields['reps'], 'Digite o Número de Repetições')
+        add_attr(self.fields['title'], 'class', 'span-2')
+        add_attr(self.fields['description'], 'class', 'span-2')
         add_attr(self.fields['categories'], 'class', 'span-2')
 
     title = forms.CharField(
@@ -25,15 +27,6 @@ class CreateExerciseForm(forms.ModelForm):
         max_length=155,
         error_messages={
             'required': 'Digite o Título.',
-        }
-    )
-
-    description = forms.CharField(
-        label='Descrição',
-        required=True,
-        max_length=250,
-        error_messages={
-            'required': 'Digite a descrição.'
         }
     )
 

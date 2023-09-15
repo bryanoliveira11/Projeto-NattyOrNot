@@ -1,11 +1,12 @@
 from os import environ
 from typing import Any, Dict
 
+from django.db import models
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.http import Http404
 from django.urls import reverse
-from django.views.generic import ListView
+from django.views.generic import DetailView, ListView
 
 from training.models import Exercises
 from utils.pagination import make_pagination
@@ -45,7 +46,8 @@ class ExerciseBaseClassView(ListView):
             'pagination_range': pagination_range,
             'search_form_action': reverse('training:search'),
             'title': 'Home',
-            'page_tag': 'Exercícios'
+            'page_tag': 'Exercícios',
+            'additional_search_placeholder': 'na Home',
         })
 
         return context
@@ -123,6 +125,36 @@ class CategoriesFilterClassView(ExerciseBaseClassView):
             'title': f'Categoria - {category_name}',
             'page_tag': f'Filtrando por Exercícios de {category_name}',
             'is_filtered': True,
+        })
+
+        return context
+
+
+class ExerciseDetailClassView(DetailView):
+    template_name = 'training/pages/exercise_detail.html'
+    model = Exercises
+    context_object_name = 'exercise_detail'
+    slug_field = 'slug'
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        queryset = queryset.select_related(
+            'published_by'
+        ).prefetch_related('categories')
+        return queryset
+
+    def get_context_data(self, *args, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(*args, **kwargs)
+
+        exercise = context.get('exercise_detail')
+
+        context.update({
+            'exercise': exercise,
+            'search_form_action': reverse('training:search'),
+            'title': f'{exercise}',
+            'page_tag': f'{exercise}',
+            'additional_search_placeholder': 'na Home',
+            'is_detail_page': True,
         })
 
         return context

@@ -3,6 +3,7 @@ import os
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 from PIL import Image
 
@@ -24,7 +25,7 @@ class Categories(models.Model):
 
 class Exercises(models.Model):
     title = models.CharField(max_length=155, verbose_name='Titulo')
-    description = models.CharField(max_length=250, verbose_name='Descrição')
+    description = models.TextField(verbose_name='Descrição')
     slug = models.SlugField(unique=True)
     series = models.IntegerField(verbose_name='Séries')
     reps = models.IntegerField(verbose_name='Repetições')
@@ -81,6 +82,9 @@ class Exercises(models.Model):
                 ...
 
         return saved
+
+    def get_absolute_url(self):
+        return reverse('training:exercises_detail', kwargs={"slug": self.slug})
 
     class Meta:
         verbose_name = 'Exercício'

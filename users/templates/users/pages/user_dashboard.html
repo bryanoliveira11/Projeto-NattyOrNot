@@ -4,7 +4,10 @@
 
 {% block content %}
     <div class="center">
-        <h2 class="form-tag main dashboard-tag">{{page_tag}}</h2>
+        <h2 class="form-tag main dashboard-tag">
+            <i class="fa-solid fa-clipboard-user"></i>
+            {{page_tag}}
+        </h2>
         <div class="dashboard-message-padding">
             {% include "users/partials/login_message.html" %}
             {% include "global/partials/messages.html" %}
