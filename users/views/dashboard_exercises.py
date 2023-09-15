@@ -47,7 +47,8 @@ class DashboardFormBaseClassView(View):
             'form': form,
             'search_form_action': reverse('users:user_dashboard_search'),
             'title': self.title,
-            'captcha_key': environ.get('RECAPTCHA_PUBLIC_KEY', ''),
+            'captcha_public_key': environ.get('RECAPTCHA_PUBLIC_KEY', ''),
+            'captcha_private_key': environ.get('RECAPTCHA_PRIVATE_KEY', ''),
             'is_exercise_form': True,
             'is_exercise_edit': self.is_exercise_edit
         })

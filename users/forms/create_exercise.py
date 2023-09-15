@@ -93,10 +93,11 @@ class CreateExerciseForm(forms.ModelForm):
         # google recaptcha
         recaptcha_response = self.data.get('g-recaptcha-response')
 
-        if not recaptcha_response:
-            self.add_error(
-                'captcha', 'Marque a Caixa "Não sou um Robô".'
-            )
+        if environ.get('RECAPTCHA_PRIVATE_KEY'):
+            if not recaptcha_response:
+                self.add_error(
+                    'captcha', 'Marque a Caixa "Não sou um Robô".'
+                )
 
         recaptcha_request = requests.post(
             'https://www.google.com/recaptcha/api/siteverify',

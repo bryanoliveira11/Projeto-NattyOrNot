@@ -61,9 +61,11 @@
     {% endif %}
 
     {% if is_exercise_form %}
-        <div class="captcha-centered">
-            <div class="g-recaptcha" data-sitekey="{{captcha_key}}"></div>
-        </div>
+        {% if captcha_private_key %}
+            <div class="captcha-centered">
+                <div class="g-recaptcha" data-sitekey="{{captcha_public_key}}"></div>
+            </div>
+        {% endif %}
     {% endif %}
 
     <div class="form-content form-content-grid">

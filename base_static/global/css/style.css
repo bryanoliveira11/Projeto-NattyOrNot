@@ -11,6 +11,7 @@
   --color-info-dark: #4d86c4;
   --color-debug-dark: #4d86c4;
   --color-success-dark: #4a9c5d;
+  --color-success: #5bc273;
   --color-alert-dark: #927f40;
   --color-warning-dark: #927f40;
   --color-error-dark: #da525d;
@@ -19,7 +20,7 @@
 
   --color-info-light: #cce5ff;
   --color-debug-light: #cce5ff;
-  --color-success-light: #5bc273;
+  --color-success-light: #d4edda;
   --color-alert-light: #fff3cd;
   --color-warning-light: #fff3cd;
   --color-error-light: #f8d7da;
@@ -274,6 +275,7 @@ img {
 
 .exercise-status a.not-published{
   color: var(--color-error-dark);
+  transition: all 200ms ease-in-out;
 }
 
 .exercise-status a.not-published:hover{
@@ -281,7 +283,8 @@ img {
 }
 
 .exercise-status a.published{
-  color: var(--color-success-light);
+  color: var(--color-success);
+  transition: all 200ms ease-in-out;
 }
 
 .exercise-status a.published:hover{
@@ -717,7 +720,6 @@ img {
 }
 
 .pagination .page-item {
-  background: var(--color-gray-3);
   padding: 0.5rem 1rem;
   font-size: 2rem;
 }
@@ -740,6 +742,7 @@ img {
 
 .pagination-arrow:hover{
   color: var(--color-primary);
+  scale: 1.05;
 }
 
 
