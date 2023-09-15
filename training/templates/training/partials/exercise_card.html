@@ -21,13 +21,24 @@
                      {{exercise.title|title_limit_length}} 
                 </a>
             </h2>
-        {% else %}
+        </div>
+    {% endif %}
+    
+    {% if not is_dashboard_page %}
         <div class="exercise-title-container">
             <h2 class="exercise-title">
-                <a href="{% url 'training:exercises_detail' exercise.slug %}"> {{exercise.title|title_limit_length}} </a>
+                {% if is_home_page %}
+                    <a href="{% url 'training:exercises_detail' exercise.slug %}">
+                         {{exercise.title|title_limit_length}} 
+                    </a>
+                {% else %}
+                    <a href="{% url 'training:exercises_detail' exercise.slug %}">
+                        {{exercise.title}} 
+                    </a>
+                {% endif %}
             </h2>
-        {% endif %}
-    </div>
+        </div>
+    {% endif %}
 
     <div class="exercise-data">
         {% if exercise.categories.all%}

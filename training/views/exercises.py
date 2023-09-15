@@ -57,6 +57,13 @@ class ExerciseBaseClassView(ListView):
 class HomeClassView(ExerciseBaseClassView):
     template_name = 'training/pages/home.html'
 
+    def get_context_data(self, *args, **kwargs) -> Dict[str, Any]:
+        context = super().get_context_data(*args, **kwargs)
+        context.update({
+            'is_home_page': True
+        })
+        return context
+
 
 # classe para a barra de pesquisa
 class SearchClassView(ExerciseBaseClassView):
