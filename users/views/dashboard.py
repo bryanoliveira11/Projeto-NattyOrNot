@@ -136,6 +136,7 @@ class DashboardSearchClassView(DashboardUserBase):
         context.update({
             'title': title,
             'page_tag': title,
+            'additional_url_query': f'&q={self.search_term}',
         })
 
         return context

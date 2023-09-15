@@ -86,7 +86,9 @@ class SearchClassView(ExerciseBaseClassView):
         context.update({
             'title': f'Busca por "{self.search_term}"',
             'page_tag': f'Resultados da Busca por "{self.search_term}"',
-            'is_home_page': True
+            'additional_url_query': f'&q={self.search_term}',
+            'is_home_page': True,
+            'is_filtered': True,
         })
         return context
 
@@ -119,7 +121,8 @@ class CategoriesFilterClassView(ExerciseBaseClassView):
 
         context.update({
             'title': f'Categoria - {category_name}',
-            'page_tag': f'Filtrando por Exercícios de {category_name}'
+            'page_tag': f'Filtrando por Exercícios de {category_name}',
+            'is_filtered': True,
         })
 
         return context
