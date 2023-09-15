@@ -4,9 +4,15 @@
 <div class="exercise exercise-list-item">
     <div class="exercise-cover">
         {% if is_dashboard_page %}
-            <a href="{% url 'users:edit_exercise' exercise.pk %}">
-                <img src="{{exercise.cover.url}}" loading="lazy" alt="">
-            </a>
+            {% if not exercise.is_published %}
+                <a href="{% url 'users:edit_exercise' exercise.pk %}">
+                    <img src="{{exercise.cover.url}}" loading="lazy" alt="">
+                </a>
+            {% else %}
+                <a href="{% url 'training:exercises_detail' exercise.slug %}">
+                    <img src="{{exercise.cover.url}}" loading="lazy" alt="">
+                </a>
+            {% endif %}
         {% else %}
             <a href="{% url 'training:exercises_detail' exercise.slug %}">
                 <img src="{{exercise.cover.url}}" loading="lazy" alt="">
@@ -17,9 +23,15 @@
     {% if is_dashboard_page %}
         <div class="exercise-title-container dashboard-exercise-title">
             <h2 class="exercise-title dashboard-exercise-title">
-                <a href="{% url 'users:edit_exercise' exercise.pk %}">
-                     {{exercise.title|title_limit_length}} 
-                </a>
+                {% if not exercise.is_published %}
+                    <a href="{% url 'users:edit_exercise' exercise.pk %}">
+                        {{exercise.title|title_limit_length}} 
+                    </a>
+                {% else %}
+                    <a href="{% url 'training:exercises_detail' exercise.slug %}">
+                        {{exercise.title|title_limit_length}} 
+                    </a>
+                {% endif %}
             </h2>
         </div>
     {% endif %}
@@ -118,21 +130,29 @@
     </div>
     
     {% if is_dashboard_page %}
-
-    <footer class="exercise-dashboard-footer">
-        <a href="{% url 'users:edit_exercise' exercise.pk %}">
-            <i class="fa-solid fa-pen-to-square"></i>
-            Editar
-        </a>
-        <form action="{% url 'users:user_dashboard_delete' exercise.pk %}" method="POST" class='form-delete'>
-            {% csrf_token %}
-            <input type="hidden" name="id" value="{{exercise.pk}}">
-            <button type="submit">
-                <i class="fa-solid fa-trash"></i>
-            </button>
-        </form>
-    </footer>
-
+        {% if not exercise.is_published %}
+            <footer class="exercise-dashboard-footer">
+                <a href="{% url 'users:edit_exercise' exercise.pk %}">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    Editar
+                </a>
+                <form action="{% url 'users:user_dashboard_delete' exercise.pk %}" method="POST" class='form-delete'>
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{exercise.pk}}">
+                    <button type="submit">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </form>
+            </footer>
+        {% else %}
+            <footer class="exercise-footer">
+                <a href="{% url 'training:exercises_detail' exercise.slug %}"
+                    class="exercise-read-more-button center">
+                    <i class="fa-solid fa-eye"></i>
+                    <span>Ver Mais...</span>
+                </a>
+            </footer>
+        {% endif %}
     {% else %}
 
     {% if not is_detail_page %}
