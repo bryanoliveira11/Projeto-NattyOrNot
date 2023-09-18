@@ -6,6 +6,7 @@
   --color-primary-dark: #13141f;
   --color-primary-dark-hover: #212336;
   --color-white: #fff;
+  --clr-white-background: #f5f5ff;
   --color-black: #000;
   --color-dark-text: #444;
   --color-info-dark: #4d86c4;
@@ -25,7 +26,7 @@
   --color-warning-light: #fff3cd;
   --color-error-light: #f8d7da;
 
-  --color-gray-0: #f9f9f9;
+  --color-gray-0: #f3f1f1;
   --color-gray-1: #dfdede;
   --color-gray-2: #c7c7c7;
   --color-gray-3: #aeaeae;
@@ -63,7 +64,7 @@ html {
 body {
   font-size: 1.6rem;
   font-family: var(--font-primary);
-  background: var(--color-gray-1);
+  background: var(--clr-white-background);
   color: var(--color-dark-text);
   min-height: 100vh;
   display: flex;
@@ -127,6 +128,7 @@ img {
 }
 
 /* search */
+
 .search-container {
   width: 100%;
   flex-wrap: nowrap;
@@ -251,7 +253,7 @@ img {
 }
 
 .exercise-data {
-  background: var(--color-gray-1);
+  background: var(--color-gray-0);
   padding: 1rem;
 }
 
@@ -273,7 +275,7 @@ img {
 }
 
 .exercise-status {
-  background: var(--color-gray-1);
+  background: var(--color-gray-0);
   padding: 0.5rem;
 }
 
@@ -296,7 +298,7 @@ img {
 }
 
 .exercise-description {
-  background: var(--color-gray-1);
+  background: var(--color-gray-0);
   padding: var(--spacing-gutter-medium);
 }
 
@@ -311,7 +313,7 @@ img {
 .exercise-meta-container {
   display: flex;
   flex-flow: row wrap;
-  background: var(--color-gray-1);
+  background: var(--color-gray-0);
   padding: var(--spacing-gutter-medium);
 }
 
@@ -326,6 +328,11 @@ img {
   text-decoration: none;
   padding: calc(var(--spacing-gutter-medium) / 2);
   transition: all 300ms ease-in-out;
+}
+
+.exercise-cover,
+.exercise-title-container {
+  background: #fff;
 }
 
 .exercise-footer a:hover {
@@ -412,7 +419,11 @@ img {
   border: 1px solid var(--color-primary);
 }
 
-.form-content input:focus {
+select option:hover, select option:checked {
+  box-shadow: 0 0 10px 100px #dd9e73 inset;
+}
+
+.form-content input:focus, #id_description:focus {
   outline: var(--color-primary-hover) solid 1px;
 }
 
@@ -834,6 +845,8 @@ img {
 
 .span-2 {
   grid-column: span 2;
+  font-family: sans-serif;
+  font-size: 1.33rem;
 }
 
 .fa-pen-to-square,
@@ -871,6 +884,7 @@ img {
   background: var(--color-white);
   color: var(--color-dark-text);
   font-family: var(--font-headings);
+  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.2);
   transition: all 300ms ease-in-out;
 }
 
