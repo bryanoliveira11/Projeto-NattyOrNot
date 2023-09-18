@@ -295,7 +295,7 @@ img {
   color: var(--color-success-dark);
 }
 
-.exercise-description{
+.exercise-description {
   background: var(--color-gray-1);
   padding: var(--spacing-gutter-medium);
 }
@@ -821,6 +821,11 @@ img {
   color: var(--color-primary-hover);
 }
 
+.sep {
+  font-size: 1.5rem;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
 .prevent-select {
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
@@ -837,7 +842,7 @@ img {
   margin-right: 0.5rem;
 }
 
-.fa-user{
+.fa-user {
   margin-left: 0.5rem;
 }
 

@@ -14,7 +14,7 @@ urlpatterns = [
         name='user_dashboard_search'
     ),
     path(
-        'dashboard/exercises/filter/is_published=<str:is_published>',
+        'dashboard/exercises/filter/is_published=<str:is_published>/',
         views.DashboardIsPublishedFilterClassView.as_view(),
         name='user_dashboard_is_published'
     ),
