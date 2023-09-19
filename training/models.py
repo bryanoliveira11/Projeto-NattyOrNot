@@ -1,12 +1,9 @@
-import os
-
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
-from PIL import Image
 
+from utils.resize_image import resize_image
 from utils.strings import generate_random_string
 
 User = get_user_model()
@@ -50,24 +47,6 @@ class Exercises(models.Model):
     def __str__(self) -> str:
         return self.title
 
-    @staticmethod
-    def resize_image(image, new_width=800):
-        image_full_path = os.path.join(settings.MEDIA_ROOT, image.name)
-        image_pillow = Image.open(image_full_path)
-        original_width, original_height = image_pillow.size
-
-        if original_width <= new_width:
-            image_pillow.close()
-            return
-
-        new_height = round((new_width * original_height) / original_width)
-
-        new_image = image_pillow.resize(
-            (new_width, new_height), Image.LANCZOS
-        )
-
-        new_image.save(image_full_path, optimize=True, quality=50)
-
     def save(self, *args, **kwargs):
         if not self.slug:
             slug = f'{slugify(self.title)}{generate_random_string(length=5)}'
@@ -77,7 +56,7 @@ class Exercises(models.Model):
 
         if self.cover:
             try:
-                self.resize_image(self.cover, new_width=840)
+                resize_image(self.cover, new_width=840)
             except FileNotFoundError:
                 ...
 

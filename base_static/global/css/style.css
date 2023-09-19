@@ -330,8 +330,7 @@ img {
   transition: all 300ms ease-in-out;
 }
 
-.exercise-cover,
-.exercise-title-container {
+.exercise-cover {
   background: #fff;
 }
 
