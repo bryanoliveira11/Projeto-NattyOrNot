@@ -150,6 +150,10 @@ class DashboardSearchClassView(DashboardUserBase):
         return context
 
 
+@method_decorator(
+    login_required(login_url='users:login', redirect_field_name='next'),
+    name='dispatch'
+)
 class DashboardIsPublishedFilterClassView(DashboardUserBase):
     def get_queryset(self, *args, **kwargs) -> QuerySet[Any]:
         queryset = super().get_queryset(*args, **kwargs)
