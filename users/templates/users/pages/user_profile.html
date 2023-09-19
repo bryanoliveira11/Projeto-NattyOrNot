@@ -3,29 +3,21 @@
 {% block title %} {{title}} {% endblock title %}
 
 {% block content %}
-<div class="center">
-    <h2 class="form-tag">
-        <i class="fa-solid fa-user"></i>
-        Minha Conta
-    </h2>
-</div>
-<div class="main-content-profile container center">
+<div class="main-content-profile center">
     {% if user_profile.profile_picture %}
         <img src="{{user_profile.profile_picture.url}}" alt="Foto de Perfil do Usuário">
     {% else %}
         <img src="{% static 'global/imgs/profile_placeholder.jpg' %}" alt="Foto de Perfil Padrão do Site">
     {% endif %}
-    <div class="profile-content">
-        <h3 class="profile-item">
-            {% if user.first_name and user.last_name %}
-                {{user.first_name}} {{user.last_name}} 
-            {% else %}
-                {{user.username}}
-            {% endif %}
-        </h3>
-        {% if user.email %}
-            <h3 class="profile-item email">{{user.email}}</h3>
-        {% endif %}
-    </div>
+</div>
+<div class="center mt">
+    <h2 class="form-tag profile">
+        Meu Perfil ({{request.user.username}})
+    </h2>
+    {% include "users/partials/login_message.html" %}
+    {% include "global/partials/messages.html" %}
+</div>
+<div class="container">
+    {% include "global/partials/form.html" %}
 </div>
 {% endblock content %}

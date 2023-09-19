@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 
-from utils.django_forms import add_placeholder, strong_password
+from utils.django_forms import add_attr, add_placeholder, strong_password
 
 User = get_user_model()
 
@@ -23,7 +23,7 @@ class RegisterForm(forms.ModelForm):
         add_placeholder(self.fields['password2'], 'Confirme sua Senha')
 
     first_name = forms.CharField(
-        label='Primeiro Nome', max_length=150,
+        label='Nome', max_length=150,
         error_messages={
             'required': 'Digite seu Nome.',
             'max_length': 'O Nome deve ter no Máximo 150 Dígitos.',
@@ -107,7 +107,9 @@ class RegisterForm(forms.ModelForm):
     def clean_username(self):
         # validando usuário
         username = self.cleaned_data.get('username')
-        username_database = User.objects.filter(username=username).first()
+        username_database = User.objects.filter(
+            username__iexact=username
+        ).first()
 
         if username_database:
             self._my_errors['username'].append(
@@ -118,7 +120,7 @@ class RegisterForm(forms.ModelForm):
     def clean_email(self):
         # validando se o email já existe no banco
         email = self.cleaned_data.get('email')
-        email_database = User.objects.filter(email=email).first()
+        email_database = User.objects.filter(email__iexact=email).first()
 
         if email_database:
             self._my_errors['email'].append(
@@ -140,6 +142,58 @@ class RegisterForm(forms.ModelForm):
                 'Senhas Precisam ser Iguais.'
             )
 
+        if self._my_errors:
+            raise ValidationError(self._my_errors)
+
+        return super().clean(*args, **kwargs)
+
+
+# este form vai ser usado para editar os dados do usuário
+class EditForm(RegisterForm):
+    password = forms.CharField(required=False, widget=forms.PasswordInput(
+        attrs={'class': 'invisible'}
+    ))
+
+    password2 = forms.CharField(required=False, widget=forms.PasswordInput(
+        attrs={'class': 'invisible'}
+    ))
+
+    class Meta:
+        model = User
+        fields = [
+            'first_name',
+            'last_name',
+            'username',
+            'email',
+        ]
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        username_database = User.objects.filter(
+            username__iexact=username
+        ).first()
+
+        # validando se o username existente no banco tem um id diferente da instancia
+        if username_database:
+            if username_database.pk != self.instance.pk:
+                self._my_errors['username'].append(
+                    'Este Usuário Está em Uso.'
+                )
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        email_database = User.objects.filter(email__iexact=email).first()
+
+        # validando se o email existente no banco tem um id diferente da instancia
+        if email_database:
+            if email_database.pk != self.instance.pk:
+                self._my_errors['email'].append(
+                    'Este E-mail Está em Uso.'
+                )
+        return email
+
+    def clean(self, *args, **kwargs):
         if self._my_errors:
             raise ValidationError(self._my_errors)
 

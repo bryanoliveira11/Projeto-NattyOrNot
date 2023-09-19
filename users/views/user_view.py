@@ -39,12 +39,11 @@ class UserRegisterView(View):
 
             # pegando a foto de perfil que o usuário enviou
             user_picture = form.cleaned_data.get('profile_picture', '')
-            # validando se foi enviado algo mesmo e salvando no banco
-            if user_picture:
-                UserProfile.objects.create(
-                    user=user,
-                    profile_picture=user_picture
-                )
+            # criando perfil mesmo se não houver imagem
+            UserProfile.objects.create(
+                user=user,
+                profile_picture=user_picture
+            )
 
             messages.success(
                 self.request,

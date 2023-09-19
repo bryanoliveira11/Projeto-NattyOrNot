@@ -25,7 +25,24 @@
                 </a>
             </h3>
         {% endif %}
-    {% else %}
+    {% endif %}
+    {% if is_profile_page %}
+        <h3 class='p-05'>
+            Este é o seu 
+            <a href="{% url 'users:user_profile' request.user %}" class="plaintext-button">
+                Perfil ! 
+            </a>
+            Você pode editar seus dados,
+            <a href="{% url 'training:home' %}" class="plaintext-button">
+                ir até a home
+            </a> ou 
+            <a href="{% url 'users:logout' %}" class="plaintext-button user-logout-link">
+                sair
+            </a>.
+        </h3>
+    {% endif %}
+
+    {% if not is_dashboard_page and not is_profile_page %}
         <h3>
             Logado como {{request.user.username}}
             <a href="{% url 'users:logout' %}" class="plaintext-button user-logout-link">clique aqui</a>

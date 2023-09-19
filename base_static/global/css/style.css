@@ -338,7 +338,7 @@ img {
   background: var(--color-primary);
 }
 
-.form-tag.main {
+.form-tag.main, .form-tag.profile {
   margin-bottom: 0;
 }
 
@@ -744,33 +744,18 @@ select option:hover, select option:checked {
 /* profile */
 
 .main-content-profile img{
-  max-width: 24rem;
-  max-height: 20rem;
+  max-width: 64rem;
+  max-height: 22rem;
   border-radius: 0.5rem;
 }
 
 .main-content-profile {
-  background: #fff;
   max-width: 64rem;
-  box-shadow: -4px 4px 8px rgba(0, 0, 0, 0.2);
   display: flex;
-  align-items: start;
-  justify-content: start;
-}
-
-.profile-content {
-  display: block;
-  margin: auto 0 auto 0;
-}
-
-.profile-item {
-  font-size: 1.8rem;
-  margin-left: 2rem;
-}
-
-.profile-item.email{
-  font-size: 1.5rem;
-  margin-top: 1rem;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding-top: 2.5rem;
 }
 
 /* footer */
@@ -928,6 +913,10 @@ select option:hover, select option:checked {
   margin-right: 1.5rem;
 }
 
+.invisible {
+  display: none;
+}
+
 /* medias */
 
 @media (max-width: 750px) {
@@ -1008,20 +997,6 @@ select option:hover, select option:checked {
   .message-form,
   .btn-google-signin {
     width: 82%;
-  }
-
-  .main-content-profile img {
-    margin: 0 auto;
-    max-width: 14rem;
-  }
-
-  .main-content-profile {
-    max-width: 100%;
-    display: block;
-  }
-
-  .profile-item {
-    margin-top: 1rem;
   }
 }
 
