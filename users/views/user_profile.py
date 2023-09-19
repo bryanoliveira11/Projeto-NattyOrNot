@@ -6,6 +6,8 @@ from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
 
+from users.models import UserProfile
+
 User = get_user_model()
 
 
@@ -15,12 +17,18 @@ User = get_user_model()
 )
 class UserProfileDetailClassView(View):
     def get(self, *args, **kwargs):
-        user = User.objects.filter(pk=self.kwargs.get('id')).first()
+        user = User.objects.filter(
+            username=self.kwargs.get('username')
+        ).first()
 
-        if not user:
+        # usuário só pode acessar o próprio perfil
+        if not user or user != self.request.user:
             raise Http404()
+
+        user_profile = UserProfile.objects.filter(user__id=user.pk).first()
 
         return render(self.request, 'users/pages/user_profile.html', context={
             'user': user,
+            'user_profile': user_profile,
             'title': f'Minha Conta',
         })

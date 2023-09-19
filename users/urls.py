@@ -9,9 +9,9 @@ urlpatterns = [
     path('login/', views.UserLoginView.as_view(), name='login'),
     path('logout/', views.UserLogoutView.as_view(), name='logout'),
     path(
-        'user/<int:id>/profile/',
+        'user/<str:username>/profile/',
         views.UserProfileDetailClassView.as_view(),
-        name='user_dashboard_search'
+        name='user_profile'
     ),
     path(
         'dashboard/exercises/search/',

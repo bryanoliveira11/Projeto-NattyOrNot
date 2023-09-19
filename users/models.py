@@ -14,16 +14,13 @@ class UserProfile(models.Model):
         verbose_name='Foto de Perfil'
     )
 
-    class Meta:
-        verbose_name = 'User Profile'
-
     def __str__(self) -> str:
         return self.user.username
 
     def save(self, *args, **kwargs):
         saved = super().save(*args, **kwargs)
 
-        if self.user:
+        if self.profile_picture:
             try:
                 resize_image(self.profile_picture, new_width=600)
             except FileNotFoundError:

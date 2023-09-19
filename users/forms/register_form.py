@@ -1,10 +1,12 @@
 from collections import defaultdict
 
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 
 from utils.django_forms import add_placeholder, strong_password
+
+User = get_user_model()
 
 
 class RegisterForm(forms.ModelForm):
@@ -79,6 +81,17 @@ class RegisterForm(forms.ModelForm):
             'Confirme sua Senha.'
         ),
         widget=forms.PasswordInput()
+    )
+
+    profile_picture = forms.FileField(
+        label='Foto de Perfil',
+        help_text='* Não Obrigatório',
+        required=False,
+        widget=forms.FileInput(
+            attrs={
+                'class': 'span-2',
+            }
+        ),
     )
 
     class Meta:

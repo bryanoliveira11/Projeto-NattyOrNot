@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.views import View
 
 from users.forms import LoginForm, RegisterForm
+from users.models import UserProfile
 
 
 class UserRegisterView(View):
@@ -26,15 +27,28 @@ class UserRegisterView(View):
         POST = self.request.POST
         self.request.session['register_data'] = POST
 
-        form = RegisterForm(POST)
+        form = RegisterForm(
+            data=self.request.POST or None,
+            files=self.request.FILES or None
+        )
 
         if form.is_valid():
             user = form.save(commit=False)
             user.set_password(user.password)  # setando a senha do usuário
-            user.save()
+            user.save()  # criando usuário no banco
+
+            # pegando a foto de perfil que o usuário enviou
+            user_picture = form.cleaned_data.get('profile_picture', '')
+            # validando se foi enviado algo mesmo e salvando no banco
+            if user_picture:
+                UserProfile.objects.create(
+                    user=user,
+                    profile_picture=user_picture
+                )
+
             messages.success(
                 self.request,
-                'Usuário Criado com Sucesso! Por Favor Faça seu Login.'
+                'Usuário Criado com Sucesso ! Por Favor Faça seu Login.'
             )
             # deletando dados salvos na sessão
             del (self.request.session['register_data'])

@@ -744,8 +744,9 @@ select option:hover, select option:checked {
 /* profile */
 
 .main-content-profile img{
-  max-width: 16rem;
-  border-radius: 0.4rem;
+  max-width: 24rem;
+  max-height: 20rem;
+  border-radius: 0.5rem;
 }
 
 .main-content-profile {
@@ -753,12 +754,13 @@ select option:hover, select option:checked {
   max-width: 64rem;
   box-shadow: -4px 4px 8px rgba(0, 0, 0, 0.2);
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: start;
+  justify-content: start;
 }
 
 .profile-content {
   display: block;
+  margin: auto 0 auto 0;
 }
 
 .profile-item {
@@ -1010,7 +1012,7 @@ select option:hover, select option:checked {
 
   .main-content-profile img {
     margin: 0 auto;
-    max-width: 10rem;
+    max-width: 14rem;
   }
 
   .main-content-profile {
