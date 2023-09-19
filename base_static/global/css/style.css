@@ -742,6 +742,36 @@ select option:hover, select option:checked {
   padding-bottom: 2.5rem;
 }
 
+/* profile */
+
+.main-content-profile img{
+  max-width: 16rem;
+  border-radius: 0.4rem;
+}
+
+.main-content-profile {
+  background: #fff;
+  max-width: 64rem;
+  box-shadow: -4px 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-content {
+  display: block;
+}
+
+.profile-item {
+  font-size: 1.8rem;
+  margin-left: 2rem;
+}
+
+.profile-item.email{
+  font-size: 1.5rem;
+  margin-top: 1rem;
+}
+
 /* footer */
 .main-footer {
   display: flex;
@@ -977,6 +1007,20 @@ select option:hover, select option:checked {
   .message-form,
   .btn-google-signin {
     width: 82%;
+  }
+
+  .main-content-profile img {
+    margin: 0 auto;
+    max-width: 10rem;
+  }
+
+  .main-content-profile {
+    max-width: 100%;
+    display: block;
+  }
+
+  .profile-item {
+    margin-top: 1rem;
   }
 }
 

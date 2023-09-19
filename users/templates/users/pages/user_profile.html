@@ -1,0 +1,27 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% block title %} {{title}} {% endblock title %}
+
+{% block content %}
+<div class="center">
+    <h2 class="form-tag">
+        <i class="fa-solid fa-user"></i>
+        Minha Conta
+    </h2>
+</div>
+<div class="main-content-profile container center">
+    <img src="{% static 'global/imgs/profile_placeholder.jpg' %}" alt="">
+    <div class="profile-content">
+        <h3 class="profile-item">
+            {% if user.first_name and user.last_name %}
+                {{user.first_name}} {{user.last_name}} 
+            {% else %}
+                {{user.username}}
+            {% endif %}
+        </h3>
+        {% if user.email %}
+            <h3 class="profile-item email">{{user.email}}</h3>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

@@ -3,7 +3,7 @@
     <div class="pagination-content">
 
         {% if exercises.has_previous %}
-            <a class="pagination-arrow" href="?page={{exercises.previous_page_number }}">
+            <a class="pagination-arrow" href="?page={{exercises.previous_page_number }}{{ additional_url_query }}">
               <i class="fa-solid fa-angle-left"></i>
             </a>
         {% endif %}
@@ -36,7 +36,7 @@
         {% endif %}
     
         {% if exercises.has_next %}
-            <a class="pagination-arrow" href="?page={{ exercises.next_page_number }}">
+            <a class="pagination-arrow" href="?page={{ exercises.next_page_number }}{{ additional_url_query }}">
               <i class="fa-solid fa-angle-right"></i>
             </a>
         {% endif %}

@@ -1,7 +1,6 @@
 from os import environ
 from typing import Any, Dict
 
-from django.db import models
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.http import Http404
@@ -84,7 +83,9 @@ class SearchClassView(ExerciseBaseClassView):
         # filtrando no banco de dados
         queryset = queryset.filter(
             Q(
-                Q(title__icontains=self.search_term)
+                Q(title__icontains=self.search_term) |
+                Q(categories__name__icontains=self.search_term) |
+                Q(published_by__username__icontains=self.search_term)
             ),
             is_published=True
         )

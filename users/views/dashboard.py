@@ -2,7 +2,7 @@ from os import environ
 from typing import Any, Dict
 
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
+from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.http import Http404
 from django.urls import reverse
@@ -125,7 +125,12 @@ class DashboardSearchClassView(DashboardUserBase):
             raise Http404()
 
         queryset = queryset.filter(
-            published_by=self.request.user, title__icontains=self.search_term
+            Q
+            (
+                Q(published_by=self.request.user,
+                  title__icontains=self.search_term) |
+                Q(categories__name__icontains=self.search_term)
+            )
         )
 
         return queryset
