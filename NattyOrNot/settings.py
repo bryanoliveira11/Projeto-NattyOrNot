@@ -203,4 +203,5 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
-LOGIN_REDIRECT_URL = '/dashboard/exercises/'
+
+LOGIN_REDIRECT_URL = "/dashboard/exercises/"

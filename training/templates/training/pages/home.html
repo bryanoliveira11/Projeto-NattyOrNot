@@ -7,6 +7,7 @@
         <h2 class="form-tag main">
             {{page_tag}}
         </h2>
+        {% include "global/partials/messages.html" %}
         {% if is_filtered %}
             <h3 class="home-remove-filter">
                 <a href="{% url 'training:home' %}">
