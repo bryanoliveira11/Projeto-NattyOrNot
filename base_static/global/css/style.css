@@ -64,7 +64,7 @@ html {
 body {
   font-size: 1.6rem;
   font-family: var(--font-primary);
-  background: var(--clr-white-background);
+  background: var(--color-gray-0);
   color: var(--color-dark-text);
   min-height: 100vh;
   display: flex;

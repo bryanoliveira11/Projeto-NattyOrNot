@@ -12,9 +12,8 @@ from utils.pagination import make_pagination
 
 PER_PAGE = environ.get('HOME_PER_PAGE', 8)
 
+
 # classe base para a home
-
-
 class ExerciseBaseClassView(ListView):
     template_name = 'training/pages/home.html'
     context_object_name = 'training'
