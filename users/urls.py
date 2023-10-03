@@ -1,8 +1,14 @@
-from django.urls import path
+from django.urls import include, path
+from rest_framework.routers import SimpleRouter
 
 from . import views
 
 app_name = 'users'
+
+user_api_v1_router = SimpleRouter()
+user_api_v1_router.register(
+    'users/api/v1', views.UserApiV1ViewSet, basename='users-api'
+)
 
 urlpatterns = [
     path('register/', views.UserRegisterView.as_view(), name='register'),
@@ -48,4 +54,6 @@ urlpatterns = [
         views.DashboardExerciseClassView.as_view(),
         name='edit_exercise'
     ),
+    # api paths
+    path('', include(user_api_v1_router.urls)),
 ]

@@ -1,3 +1,4 @@
+from .api_v1 import *
 from .dashboard import *
 from .dashboard_exercises import *
 from .user_lockout import *
