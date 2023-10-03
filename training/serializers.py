@@ -1,6 +1,9 @@
+from django.utils.text import slugify
 from rest_framework import serializers
 
 from training.models import Categories, Exercises
+from training.validators import ExerciseValidator
+from utils.strings import generate_random_string
 
 
 class CategoriesSerializer(serializers.ModelSerializer):
@@ -32,9 +35,27 @@ class ExercisesSerializer(serializers.ModelSerializer):
         many=True,
         source='categories',
         lookup_field='id',
-        view_name='training:exercises_api_v1_category',
+        view_name='training:api_v1_category',
         read_only=True,
     )
+
+    def validate(self, attrs):
+        if self.instance is not None and attrs.get('series') is None:
+            attrs['series'] = self.instance.series
+
+        if self.instance is not None and attrs.get('reps') is None:
+            attrs['reps'] = self.instance.reps
+
+        if self.instance is not None and attrs.get('slug') is None:
+            try:
+                attrs['slug'] = slugify(
+                    attrs['title'] + generate_random_string(5))
+            except KeyError:
+                ...
+
+        super_validate = super().validate(attrs)
+        ExerciseValidator(data=attrs, ErrorClass=serializers.ValidationError)
+        return super_validate
 
     def save(self, **kwargs):
         return super().save(**kwargs)

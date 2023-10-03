@@ -6,16 +6,22 @@
         {% if is_dashboard_page %}
             {% if not exercise.is_published %}
                 <a href="{% url 'users:edit_exercise' exercise.pk %}">
-                    <img src="{{exercise.cover.url}}" loading="lazy" alt="">
+                    {% if exercise.cover %}
+                        <img src="{{exercise.cover.url}}" loading="lazy" alt="">
+                    {% endif %}
                 </a>
             {% else %}
                 <a href="{% url 'training:exercises_detail' exercise.slug %}">
-                    <img src="{{exercise.cover.url}}" loading="lazy" alt="">
+                    {% if exercise.cover %}
+                        <img src="{{exercise.cover.url}}" loading="lazy" alt="">
+                    {% endif %}
                 </a>
             {% endif %}
         {% else %}
             <a href="{% url 'training:exercises_detail' exercise.slug %}">
-                <img src="{{exercise.cover.url}}" loading="lazy" alt="">
+                {% if exercise.cover %}
+                    <img src="{{exercise.cover.url}}" loading="lazy" alt="">
+                {% endif %}
             </a>
         {% endif %}
     </div>

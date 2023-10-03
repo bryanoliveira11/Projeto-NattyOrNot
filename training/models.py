@@ -23,7 +23,7 @@ class Categories(models.Model):
 class Exercises(models.Model):
     title = models.CharField(max_length=155, verbose_name='Titulo')
     description = models.TextField(verbose_name='Descrição')
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, blank=True, default='')
     series = models.IntegerField(verbose_name='Séries')
     reps = models.IntegerField(verbose_name='Repetições')
     is_published = models.BooleanField(default=False, verbose_name='Publicado')
