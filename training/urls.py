@@ -15,6 +15,11 @@ exercise_api_v1_router.register(
 
 urlpatterns = [
     path('', views.HomeClassView.as_view(), name='home'),
+    path(
+        'nattyornot/api/',
+        views.ApiExplanationClassView.as_view(),
+        name='nattyornot_api'
+    ),
     path('exercises/search/', views.SearchClassView.as_view(), name='search'),
     path(
         'exercises/category/<int:id>/',

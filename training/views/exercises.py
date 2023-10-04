@@ -1,13 +1,16 @@
+import json
 from os import environ
 from typing import Any, Dict
 
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.http import Http404
+from django.shortcuts import render
 from django.urls import reverse
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, View
 
 from training.models import Exercises
+from utils.api_exercises_json import exercises_json
 from utils.pagination import make_pagination
 
 PER_PAGE = environ.get('HOME_PER_PAGE', 8)
@@ -165,3 +168,20 @@ class ExerciseDetailClassView(DetailView):
         })
 
         return context
+
+
+# classe para Página de explicação da api
+class ApiExplanationClassView(View):
+    def get(self, *args, **kwargs):
+        title = 'NattyorNot - API'
+        exercises_json_dumped = json.dumps(
+            exercises_json, indent=1, ensure_ascii=False
+        )
+
+        return render(self.request, 'training/pages/nattyornot_api.html', context={
+            'title': title,
+            'page_tag': title,
+            'search_form_action': reverse('training:search'),
+            'additional_search_placeholder': 'na Home',
+            'exercises_json': exercises_json_dumped,
+        })

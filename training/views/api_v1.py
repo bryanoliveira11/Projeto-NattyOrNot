@@ -15,6 +15,7 @@ class ExercisesApiV1Pagination(PageNumberPagination):
     page_size = 10
 
 
+# api para exercícios
 class ExercisesApiV1ViewSet(ModelViewSet):
     queryset = Exercises.objects.filter(
         is_published=True).order_by('-id').select_related(
@@ -60,6 +61,7 @@ class ExercisesApiV1ViewSet(ModelViewSet):
         return super().get_permissions()
 
 
+# api para categorias
 class CategoryApiV1ViewSet(ModelViewSet):
     queryset = Categories.objects.all()
     serializer_class = CategoriesSerializer
@@ -68,6 +70,7 @@ class CategoryApiV1ViewSet(ModelViewSet):
     http_method_names = ['get', 'options', 'head', 'post', 'patch']
 
 
+# detalhes das categorias
 class CategoryApiV1Detail(APIView):
     def get(self, request, **kwargs):
         category = get_object_or_404(Categories.objects.filter(

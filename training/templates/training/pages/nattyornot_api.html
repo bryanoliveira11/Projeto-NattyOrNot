@@ -1,0 +1,79 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% block title %} {{title}} {% endblock title %}
+
+{% block content %}
+    <div class="center">
+        <h2 class="form-tag main">
+            <i class="fa-solid fa-server m-right"></i> {{page_tag}}
+        </h2>
+    </div>
+    <div class="main-content main-api-page container center">
+        <h2 class="api-tag"> Informação </h2>
+        <p class="api-paragraph"> &#8226 A API do NattyOrNot Permite os Métodos HTTP
+            <span class="api-span green-text">GET</span>,
+            <span class="api-span yellow-text">POST</span>,
+            <span class="api-span blue-text">PATCH</span> e 
+            <span class="api-span red-text">DELETE</span>.
+        </p>
+
+        <hr>
+
+        <h2 class="api-tag"> API de Exercícios (endpoint)</h2>
+        <p class="api-paragraph"> &#8226 Lista Todos os Exercícios Públicados no Site.</p>
+        <p class="api-paragraph"> &#8226 <b>Não</b> Necessita de Autenticação. </p>
+        <p class="api-paragraph method">
+            <span class="http-method get">GET</span>
+            <span class="api-url"> http://127.0.0.1:8000/exercises/api/v1/ </span>
+        </p>
+        
+        <textarea readonly name="api-exercises-get" class="api-textarea">{{exercises_json}}</textarea>
+
+        <hr>
+
+        <h2 class="api-tag"> Detalhes de um Exercício (endpoint)</h2>
+        <p class="api-paragraph"> &#8226 Exibe os Detalhes de um Único Exercício.</p>
+        <p class="api-paragraph"> &#8226 <b>Não</b> Necessita de Autenticação. </p>
+        <p class="api-paragraph method">
+            <span class="http-method get">GET</span>
+            <span class="api-url"> http://127.0.0.1:8000/exercises/api/v1/{ <b>id</b> } </span>
+        </p>
+
+        <hr>
+
+        <h2 class="api-tag"> Post de um Exercício (endpoint)</h2>
+        <p class="api-paragraph"> &#8226 Criar um Exercício via API.</p>
+        <p class="api-paragraph"> &#8226 <b>Necessita</b> Autenticação. </p>
+        <p class="api-paragraph method">
+            <span class="http-method post">POST</span>
+            <span class="api-url"> http://127.0.0.1:8000/exercises/api/v1/ </span>
+        </p>
+        
+        <h2 class="api-tag"> Como Fazer a Autenticação</h2>
+        <p class="api-paragraph">
+             1 - Fazer um 
+             <span class="api-span yellow-text">POST</span>
+             no endpoint : <span class="api-span yellow-text">http://127.0.0.1:8000/exercises/api/token/</span>
+             informando, no <b>body</b>, seu <b>username</b> e <b>password</b>
+             (usuário precisa já estar cadastrado no site).
+        </p>
+        <p class="api-paragraph">
+             2 - Após concluir o passo acima, em caso de <b>sucesso</b>, você receberá
+             um <b>token de acesso</b> como na imagem abaixo.
+             <img src="{% static 'global/imgs/access_token.png' %}" alt="imagem demontrando o token de acesso">
+        </p>
+        <p class="api-paragraph">
+             3 - Volte ao endpoint de <span class="api-span yellow-text">POST</span>
+             (<span class="api-span yellow-text">http://127.0.0.1:8000/exercises/api/v1/</span>)
+             e informe o cabeçalho (header) <b>Authorization</b>
+             com o valor "Bearer + <b>SEU TOKEN DE ACESSO</b>"
+             <img src="{% static 'global/imgs/api_auth.png' %}" alt="imagem demontrando como colocar o campo authorization">
+       </p>
+        <p class="api-paragraph">
+            4 - Preencha os campos solicitados para finalizar seu
+            <span class="api-span yellow-text">POST</span>.
+            <img src="{% static 'global/imgs/api_post.png' %}" alt="imagem demontrando um post bem sucedido">
+        </p>
+
+    </div>
+{% endblock content %}

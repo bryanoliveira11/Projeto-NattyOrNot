@@ -1,3 +1,4 @@
+from allauth.account.models import EmailAddress
 from django.contrib import messages
 from django.contrib.auth import get_user_model, logout
 from django.contrib.auth.decorators import login_required
@@ -21,15 +22,26 @@ class UserProfileDetailClassView(View):
     def get_user_profile(self, user_id):
         return UserProfile.objects.filter(user__id=user_id).first()
 
+    def is_google_account_user(self):
+        google_account = EmailAddress.objects.filter(
+            user_id=self.request.user.id  # type:ignore
+        ).first()
+
+        if google_account is not None:
+            return True
+        return False
+
     def render_form(self, form):
         user = self.request.user
         user_profile = self.get_user_profile(user.pk)
+        is_google_account = self.is_google_account_user()
 
         return render(self.request, 'users/pages/user_profile.html', context={
             'user': user,
             'form': form,
             'user_profile': user_profile,
             'is_profile_page': True,
+            'is_google_account': is_google_account,
             'form_action': reverse('users:user_profile', args=(self.request.user,)),
             'search_form_action': reverse('training:search'),
             'additional_search_placeholder': 'na Home',
