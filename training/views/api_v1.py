@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
@@ -19,7 +20,8 @@ class ExercisesApiV1Pagination(PageNumberPagination):
 class ExercisesApiV1ViewSet(ModelViewSet):
     queryset = Exercises.objects.filter(
         is_published=True).order_by('-id').select_related(
-            'published_by').prefetch_related('categories')
+            'published_by'
+    ).prefetch_related('categories')
     serializer_class = ExercisesSerializer
     pagination_class = ExercisesApiV1Pagination
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -36,6 +38,20 @@ class ExercisesApiV1ViewSet(ModelViewSet):
             status=status.HTTP_201_CREATED,
             headers=headers
         )
+
+    def destroy(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        # alterando a queryset
+        exercise = Exercises.objects.filter(pk=self.kwargs.get('pk'))
+        self.queryset = exercise
+
+        if exercise.first().is_published:  # type:ignore
+            raise ValidationError(
+                'Seu exercício está públicado. Não é possível concluir a operação'
+            )
+
+        return super().destroy(request, *args, **kwargs)
 
     def get_queryset(self):
         queryset = super().get_queryset()

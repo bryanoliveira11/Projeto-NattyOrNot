@@ -36,7 +36,7 @@
         <p class="api-paragraph"> &#8226 <b>Não</b> Necessita de Autenticação. </p>
         <p class="api-paragraph method">
             <span class="http-method get">GET</span>
-            <span class="api-url"> http://127.0.0.1:8000/exercises/api/v1/{ <b>id</b> } </span>
+            <span class="api-url"> http://127.0.0.1:8000/exercises/api/v1/{<b>id</b>}/ </span>
         </p>
 
         <hr>
@@ -60,19 +60,90 @@
         <p class="api-paragraph">
              2 - Após concluir o passo acima, em caso de <b>sucesso</b>, você receberá
              um <b>token de acesso</b> como na imagem abaixo.
-             <img src="{% static 'global/imgs/access_token.png' %}" alt="imagem demontrando o token de acesso">
+
+             {% if api_images.access_token.url %}
+                <a href="{{api_images.access_token.url}}" target="_blank">
+                   <img src="{{api_images.access_token.url}}" alt="imagem demontrando o token de acesso">
+                </a>
+             {% else %}
+                <img src="{% static 'global/imgs/access_token.png' %}" alt="imagem demontrando o token de acesso">
+             {% endif %}
         </p>
+        <h2 class="api-tag"> Finalizando o <span class="api-span yellow-text">POST</span></h2>
         <p class="api-paragraph">
-             3 - Volte ao endpoint de <span class="api-span yellow-text">POST</span>
+             3 - Volte ao endpoint
              (<span class="api-span yellow-text">http://127.0.0.1:8000/exercises/api/v1/</span>)
              e informe o cabeçalho (header) <b>Authorization</b>
              com o valor "Bearer + <b>SEU TOKEN DE ACESSO</b>"
-             <img src="{% static 'global/imgs/api_auth.png' %}" alt="imagem demontrando como colocar o campo authorization">
+
+             {% if api_images.auth.url %}
+                <a href="{{api_images.auth.url}}" target="_blank">
+                   <img src="{{api_images.auth.url}}" alt="imagem demontrando como colocar o campo authorization">
+                </a>
+             {% else %}
+                <img src="{% static 'global/imgs/api_auth.png' %}" alt="imagem demontrando como colocar o campo authorization">
+             {% endif %}
        </p>
         <p class="api-paragraph">
             4 - Preencha os campos solicitados para finalizar seu
             <span class="api-span yellow-text">POST</span>.
-            <img src="{% static 'global/imgs/api_post.png' %}" alt="imagem demontrando um post bem sucedido">
+
+            {% if api_images.post.url %}
+                <a href="{{api_images.post.url}}" target="_blank">
+                   <img src="{{api_images.post.url}}" alt="imagem demontrando um post bem sucedido">
+                </a>
+             {% else %}
+                <img src="{% static 'global/imgs/api_post.png' %}" alt="imagem demontrando um post bem sucedido">
+             {% endif %}
+        </p>
+
+        <hr>
+
+        <h2 class="api-tag"> <span class="api-span blue-text">PATCH</span> de um Exercício (endpoint) </h2>
+        <p class="api-paragraph"> &#8226 Editar dados de um Exercício via API.</p>
+        <p class="api-paragraph"> &#8226 <b>Necessita</b> Autenticação.</p>
+        <p class="api-paragraph"> &#8226 Usuário <b>Autenticado</b> deve ser o <b>Criador</b> do exercício.</p>
+        <p class="api-paragraph"> &#8226 Exercício <b>Precisa</b> estar <b>Publicado</b>.</p>
+        <p class="api-paragraph method">
+            <span class="http-method patch">PATCH</span>
+            <span class="api-url"> http://127.0.0.1:8000/exercises/api/v1/{<b>id</b>}/ </span>
+        </p>
+
+        <hr>
+
+        <h2 class="api-tag"> <span class="api-span red-text">DELETANDO</span> um Exercício (endpoint) </h2>
+        <p class="api-paragraph"> &#8226 Deletar um Exercício via API.</p>
+        <p class="api-paragraph"> &#8226 <b>Necessita</b> Autenticação.</p>
+        <p class="api-paragraph"> &#8226 Usuário <b>Autenticado</b> deve ser o <b>Criador</b> do exercício.</p>
+        <p class="api-paragraph"> &#8226 Exercício <b>Não</b> pode estar <b>Publicado</b>.</p>
+        <p class="api-paragraph method">
+            <span class="http-method delete">DELETE</span>
+            <span class="api-url"> http://127.0.0.1:8000/exercises/api/v1/{<b>id</b>}/ </span>
+        </p>
+
+        <hr>
+
+        <h2 class="api-tag"> Api de Usuário (endpoint) </h2>
+        <p class="api-paragraph"> &#8226 Mostra os dados do usuário <b>Autenticado</b>.</p>
+        <p class="api-paragraph"> &#8226 <b>Necessita</b> Autenticação.</p>
+        <p class="api-paragraph"> &#8226 Permite apenas <b>GET</b>.</p>
+        <p class="api-paragraph method">
+            <span class="http-method get">GET</span>
+            <span class="api-url">  http://127.0.0.1:8000/users/api/v1/ </span>
+        </p>
+
+        <hr>
+
+        <h2 class="api-tag"> Outros Endpoints </h2>
+        <p class="api-paragraph"> &#8226 Listar Todas as <b>Categorias</b>.</p>
+        <p class="api-paragraph method">
+            <span class="http-method get">GET</span>
+            <span class="api-url"> http://127.0.0.1:8000/exercises/api/v1/category/ </span>
+        </p>
+        <p class="api-paragraph"> &#8226 Listar uma Categoria <b>Específica</b>.</p>
+        <p class="api-paragraph method">
+            <span class="http-method get">GET</span>
+            <span class="api-url"> http://127.0.0.1:8000/exercises/api/v1/category/{<b>id</b>}/ </span>
         </p>
 
     </div>

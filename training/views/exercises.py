@@ -9,7 +9,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import DetailView, ListView, View
 
-from training.models import Exercises
+from training.models import ApiMediaImages, Exercises
 from utils.api_exercises_json import exercises_json
 from utils.pagination import make_pagination
 
@@ -174,6 +174,15 @@ class ExerciseDetailClassView(DetailView):
 class ApiExplanationClassView(View):
     def get(self, *args, **kwargs):
         title = 'NattyorNot - API'
+
+        api_media_images = ApiMediaImages.objects.all()
+
+        api_media_dict = {
+            'access_token': api_media_images[0].image,
+            'auth': api_media_images[1].image,
+            'post': api_media_images[2].image,
+        }
+
         exercises_json_dumped = json.dumps(
             exercises_json, indent=1, ensure_ascii=False
         )
@@ -184,4 +193,5 @@ class ApiExplanationClassView(View):
             'search_form_action': reverse('training:search'),
             'additional_search_placeholder': 'na Home',
             'exercises_json': exercises_json_dumped,
+            'api_images': api_media_dict,
         })

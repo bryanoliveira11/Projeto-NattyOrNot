@@ -68,3 +68,20 @@ class Exercises(models.Model):
     class Meta:
         verbose_name = 'Exercício'
         verbose_name_plural = 'Exercícios'
+
+
+class ApiMediaImages(models.Model):
+    name = models.CharField(max_length=155, verbose_name='Nome da Imagem')
+    image = models.ImageField(
+        upload_to='api/%Y/%m/%d/',
+        blank=True,
+        default='',
+        verbose_name='Imagem'
+    )
+
+    def __str__(self) -> str:
+        return self.name
+
+    class Meta:
+        verbose_name = 'Api Explanation Image'
+        verbose_name_plural = 'Api Explanation Images'

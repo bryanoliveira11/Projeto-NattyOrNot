@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Categories, Exercises
+from .models import ApiMediaImages, Categories, Exercises
 
 
 @admin.register(Exercises)
@@ -24,3 +24,11 @@ class CategoriesAdmin(admin.ModelAdmin):
     ordering = '-id',
     search_fields = 'id', 'name',
     list_per_page = 10
+
+
+@admin.register(ApiMediaImages)
+class ApiMediaAdmin(admin.ModelAdmin):
+    list_display = 'id', 'name',
+    ordering = '-id',
+    search_fields = 'id', 'name',
+    list_per_page = 5

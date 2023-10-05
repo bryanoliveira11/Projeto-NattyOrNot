@@ -55,6 +55,7 @@
 
 html {
   font-size: 62.5%;
+  scroll-behavior: smooth;
 }
 
 ::selection {
@@ -425,7 +426,7 @@ img {
 
 select option:hover,
 select option:checked {
-  box-shadow: 0 0 10px 100px #dd9e73 inset;
+  box-shadow: 0 0 10px 100px #fa8a3f inset;
 }
 
 .form-content input:focus,
@@ -843,6 +844,14 @@ select option:checked {
   padding: 1.2rem 0 0 0;
 }
 
+.api-paragraph a {
+  cursor: pointer;
+}
+
+.api-paragraph a:hover {
+  scale: 1.2;
+}
+
 .api-paragraph.method {
   margin: 0;
 }
@@ -882,6 +891,14 @@ textarea.api-textarea:focus {
 
 .http-method.post {
   background-color: var(--color-warning-dark);
+}
+
+.http-method.patch {
+  background-color: var(--color-info-dark);
+}
+
+.http-method.delete {
+  background-color: var(--color-error-dark);
 }
 
 /* others */
