@@ -2,11 +2,13 @@ import json
 from os import environ
 from typing import Any, Dict
 
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.http import Http404
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView, View
 
 from training.models import ApiMediaImages, Exercises
@@ -170,6 +172,10 @@ class ExerciseDetailClassView(DetailView):
         return context
 
 
+@method_decorator(
+    login_required(login_url='users:login', redirect_field_name='next'),
+    name='dispatch'
+)
 # classe para Página de explicação da api
 class ApiExplanationClassView(View):
     def get(self, *args, **kwargs):
