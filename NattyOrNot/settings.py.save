@@ -181,7 +181,7 @@ AXES_ENABLED = False if environ.get('AXES_ENABLED') == '0' else True
 AXES_LOCKOUT_CALLABLE = "users.views.user_lockout.lockout"
 AXES_COOLOFF_TIME = timedelta(minutes=15)
 AXES_FAILURE_LIMIT = 3
-AXES_LOCKOUT_PARAMETERS = [["username"]]
+AXES_LOCKOUT_PARAMETERS = [["userna]]
 
 AUTHENTICATION_BACKENDS = [
     # AxesStandaloneBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
