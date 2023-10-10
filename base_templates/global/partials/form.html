@@ -14,7 +14,7 @@
 {% if is_login_page %}
 {% if not request.user.is_authenticated %}
 <a class="btn-google-signin center"
-    href="{% provider_login_url 'google'%}">
+    href="{% provider_login_url 'google'%}?next=/">
     <img src="{% static 'global/imgs/google_icon.png' %}" alt="Logar com google">
     Continuar com o Google
 </a>
