@@ -40,8 +40,6 @@ class ExercisesApiV1ViewSet(ModelViewSet):
         )
 
     def destroy(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
         # alterando a queryset
         exercise = Exercises.objects.filter(pk=self.kwargs.get('pk'))
         self.queryset = exercise
