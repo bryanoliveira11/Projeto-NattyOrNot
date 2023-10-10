@@ -14,6 +14,9 @@ urlpatterns = [
     path('user/register/', views.UserRegisterView.as_view(), name='register'),
     path('user/login/', views.UserLoginView.as_view(), name='login'),
     path('user/logout/', views.UserLogoutView.as_view(), name='logout'),
+    # google default urls
+    path('accounts/signup/', views.UserLoginView.as_view(), name='account_signup'),
+    path('accounts/logout/', views.UserLogoutView.as_view(), name='account_logout'),
     path(
         'user/<str:username>/profile/',
         views.UserProfileDetailClassView.as_view(),
