@@ -24,7 +24,7 @@
         <p class="api-paragraph"> &#8226 <b>Não</b> Necessita de Autenticação. </p>
         <p class="api-paragraph method">
             <span class="http-method get">GET</span>
-            <span class="api-url"> http://127.0.0.1:8000/exercises/api/v1/ </span>
+            <span class="api-url"> https://www.nattyornot.online/exercises/api/v1/ </span>
         </p>
         
         <textarea readonly name="api-exercises-get" class="api-textarea">{{exercises_json}}</textarea>
@@ -36,7 +36,7 @@
         <p class="api-paragraph"> &#8226 <b>Não</b> Necessita de Autenticação. </p>
         <p class="api-paragraph method">
             <span class="http-method get">GET</span>
-            <span class="api-url"> http://127.0.0.1:8000/exercises/api/v1/{<b>id</b>}/ </span>
+            <span class="api-url"> https://www.nattyornot.online/exercises/api/v1/{<b>id</b>}/ </span>
         </p>
 
         <hr>
@@ -46,14 +46,14 @@
         <p class="api-paragraph"> &#8226 <b>Necessita</b> Autenticação. </p>
         <p class="api-paragraph method">
             <span class="http-method post">POST</span>
-            <span class="api-url"> http://127.0.0.1:8000/exercises/api/v1/ </span>
+            <span class="api-url"> https://www.nattyornot.online/exercises/api/v1/ </span>
         </p>
         
         <h2 class="api-tag"> Como Fazer a Autenticação</h2>
         <p class="api-paragraph">
              1 - Fazer um 
              <span class="api-span yellow-text">POST</span>
-             no endpoint : <span class="api-span yellow-text">http://127.0.0.1:8000/exercises/api/token/</span>
+             no endpoint : <span class="api-span yellow-text">https://www.nattyornot.online/exercises/api/token/</span>
              informando, no <b>body</b>, seu <b>username</b> e <b>password</b>
              (usuário precisa já estar cadastrado no site).
         </p>
@@ -72,7 +72,7 @@
         <h2 class="api-tag"> Finalizando o <span class="api-span yellow-text">POST</span></h2>
         <p class="api-paragraph">
              3 - Volte ao endpoint
-             (<span class="api-span yellow-text">http://127.0.0.1:8000/exercises/api/v1/</span>)
+             (<span class="api-span yellow-text">https://www.nattyornot.online/exercises/api/v1/</span>)
              e informe o cabeçalho (header) <b>Authorization</b>
              com o valor "Bearer + <b>SEU TOKEN DE ACESSO</b>"
 
@@ -106,7 +106,7 @@
         <p class="api-paragraph"> &#8226 Exercício <b>Precisa</b> estar <b>Publicado</b>.</p>
         <p class="api-paragraph method">
             <span class="http-method patch">PATCH</span>
-            <span class="api-url"> http://127.0.0.1:8000/exercises/api/v1/{<b>id</b>}/ </span>
+            <span class="api-url"> https://www.nattyornot.online/exercises/api/v1/{<b>id</b>}/ </span>
         </p>
 
         <hr>
@@ -118,7 +118,7 @@
         <p class="api-paragraph"> &#8226 Exercício <b>Não</b> pode estar <b>Publicado</b>.</p>
         <p class="api-paragraph method">
             <span class="http-method delete">DELETE</span>
-            <span class="api-url"> http://127.0.0.1:8000/exercises/api/v1/{<b>id</b>}/ </span>
+            <span class="api-url"> https://www.nattyornot.online/exercises/api/v1/{<b>id</b>}/ </span>
         </p>
 
         <hr>
@@ -129,7 +129,7 @@
         <p class="api-paragraph"> &#8226 Permite apenas <b>GET</b>.</p>
         <p class="api-paragraph method">
             <span class="http-method get">GET</span>
-            <span class="api-url">  http://127.0.0.1:8000/users/api/v1/ </span>
+            <span class="api-url">  https://www.nattyornot.online/users/api/v1/ </span>
         </p>
 
         <hr>
@@ -138,12 +138,12 @@
         <p class="api-paragraph"> &#8226 Listar Todas as <b>Categorias</b>.</p>
         <p class="api-paragraph method">
             <span class="http-method get">GET</span>
-            <span class="api-url"> http://127.0.0.1:8000/exercises/api/v1/category/ </span>
+            <span class="api-url"> https://www.nattyornot.online/exercises/api/v1/category/ </span>
         </p>
         <p class="api-paragraph"> &#8226 Listar uma Categoria <b>Específica</b>.</p>
         <p class="api-paragraph method">
             <span class="http-method get">GET</span>
-            <span class="api-url"> http://127.0.0.1:8000/exercises/api/v1/category/{<b>id</b>}/ </span>
+            <span class="api-url"> https://www.nattyornot.online/exercises/api/v1/category/{<b>id</b>}/ </span>
         </p>
 
     </div>
