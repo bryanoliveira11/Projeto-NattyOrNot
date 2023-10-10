@@ -3,7 +3,6 @@ from allauth.socialaccount.models import SocialAccount
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.dispatch import receiver
-from django.shortcuts import redirect
 
 User = get_user_model()
 
