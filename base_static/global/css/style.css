@@ -926,6 +926,10 @@ textarea.api-textarea:focus {
   padding: 0.5rem;
 }
 
+.p-t {
+  padding-top: 1rem;
+}
+
 .p-medium {
   padding: var(--spacing-gutter-medium);
 }
@@ -1108,6 +1112,10 @@ textarea.api-textarea:focus {
   .message-form,
   .btn-google-signin {
     width: 82%;
+  }
+
+  .p-b {
+    padding-bottom: 1rem;
   }
 }
 
