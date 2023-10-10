@@ -116,7 +116,3 @@ class UserLogoutView(View):
         messages.success(self.request, 'Logout Efetuado. Até a Próxima !')
         logout(self.request)
         return redirect(reverse('users:login'))
-
-
-def signup_redirect():
-    return redirect(reverse('training:home'))
