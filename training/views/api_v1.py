@@ -27,6 +27,17 @@ class ExercisesApiV1ViewSet(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     http_method_names = ['get', 'options', 'head', 'post', 'patch', 'delete']
 
+    def default_exercise_published_validation(self):
+        # alterando a queryset
+        exercise = Exercises.objects.filter(pk=self.kwargs.get('pk'))
+        self.queryset = exercise
+
+        # validando exercício públicado
+        if exercise.first().is_published:  # type:ignore
+            raise ValidationError(
+                'Seu exercício está públicado. Não é possível concluir a operação'
+            )
+
     def create(self, request, *args, **kwargs):  # post
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -40,16 +51,12 @@ class ExercisesApiV1ViewSet(ModelViewSet):
         )
 
     def destroy(self, request, *args, **kwargs):
-        # alterando a queryset
-        exercise = Exercises.objects.filter(pk=self.kwargs.get('pk'))
-        self.queryset = exercise
-
-        if exercise.first().is_published:  # type:ignore
-            raise ValidationError(
-                'Seu exercício está públicado. Não é possível concluir a operação'
-            )
-
+        self.default_exercise_published_validation()
         return super().destroy(request, *args, **kwargs)
+
+    def partial_update(self, request, *args, **kwargs):
+        self.default_exercise_published_validation()
+        return super().partial_update(request, *args, **kwargs)
 
     def get_queryset(self):
         queryset = super().get_queryset()
