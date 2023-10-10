@@ -13,6 +13,7 @@ user_api_v1_router.register(
 urlpatterns = [
     path('register/', views.UserRegisterView.as_view(), name='register'),
     path('login/', views.UserLoginView.as_view(), name='login'),
+    path('social/signup/', views.signup_redirect, name='signup_redirect'),
     path('logout/', views.UserLogoutView.as_view(), name='logout'),
     path(
         'user/<str:username>/profile/',
