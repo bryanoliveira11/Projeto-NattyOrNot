@@ -11,10 +11,11 @@ user_api_v1_router.register(
 )
 
 urlpatterns = [
-    path('register/', views.UserRegisterView.as_view(), name='register'),
-    path('login/', views.UserLoginView.as_view(), name='login'),
-    path('social/signup/', views.signup_redirect, name='signup_redirect'),
-    path('logout/', views.UserLogoutView.as_view(), name='logout'),
+    path('user/register/', views.UserRegisterView.as_view(), name='register'),
+    path('user/login/', views.UserLoginView.as_view(), name='login'),
+    path('login/', views.UserLoginView.as_view(), name='login_google_url'),
+    path('signup/', views.UserLoginView.as_view(), name='signup_google_url'),
+    path('user/logout/', views.UserLogoutView.as_view(), name='logout'),
     path(
         'user/<str:username>/profile/',
         views.UserProfileDetailClassView.as_view(),
