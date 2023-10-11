@@ -17,15 +17,6 @@
         {% endif %}
     </h2>
     {% include "users/partials/login_message.html" %}
-    
-    {% include "global/partials/messages.html" %}
-
-    {% if is_google_account %}
-        <span class="btn-google-signin profile center">
-            <img src="{% static 'global/imgs/google_icon.png' %}" alt="Logar com google">
-            Conectado com Google.
-        </span>
-    {% endif %}
 
     <div class="show-user-form">
         {% if is_profile_page %}
@@ -50,6 +41,13 @@
     </div>
 </div>
 <div class="container">
+    {% if is_google_account %}
+        <span class="btn-google-signin profile center">
+            <img src="{% static 'global/imgs/google_icon.png' %}" alt="Logar com google">
+            Conectado com Google.
+        </span>
+    {% endif %}
+    {% include "global/partials/messages.html" %}
     {% include "global/partials/form.html" %}
 </div>
 {% endblock content %}
