@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css"
+  integrity="sha512-SgaqKKxJDQ/tAUAAXzvxZz33rmn7leYDYfBP+YoMRSENhf3zJyx3SBASt/OfeQwBHA1nxMis7mM3EV/oYT6Fdw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css"
+  integrity="sha512-9YHSK59/rjvhtDcY/b+4rdnl0V4LPDWdkKceBl8ZLF5TB6745ml1AfluEU6dFWqwDw9lPvnauxFgpKvJqp7jiQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/solid.min.css"
+  integrity="sha512-yDUXOUWwbHH4ggxueDnC5vJv4tmfySpVdIcN1LksGZi8W8EVZv4uKGrQc0pVf66zS7LDhFJM7Zdeow1sw1/8Jw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@900&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="/static/global/css/style.css" />
+<link rel="stylesheet" href="/static/global/css/remedy.css" />
+<link rel="shortcut icon" href="/static/global/imgs/favicon.png" type="image/png"/>
+    <title>  Home  | NattyOrNot</title>
+</head>
+<body>
+    
+<button class="button-show-menu button-show-menu-is-visible">
+    <i class="fas fa-bars"></i>
+    <span class="hidden-text">mostrar menu</span>
+</button>
+
+<div class="menu-container menu-hidden">
+    <button class="button-close-menu button-close-menu-is-visible">
+        <i class="fas fa-times-circle"></i>
+        <span class="hidden-text">esconder menu</span>
+    </button>
+
+    <div class="menu-content">
+        <nav class="menu-nav">
+            <span class="menu-link hello center">
+                
+            </span>
+
+            <span class="menu-link">
+                <a href="/">
+                    <i class="fa-solid fa-house"></i>
+                    Home
+                </a>
+            </span>
+
+            
+                <span class="menu-link">
+                    <a href="/login/">
+                        <i class="fa-solid fa-user"></i>
+                        Login
+                    </a>
+                </span>
+                <span class="menu-link">
+                    <a href="/register/">
+                        <i class="fa-solid fa-clipboard-user"></i>
+                        Registre-se
+                    </a>
+                </span>
+            
+        </nav>
+    </div>
+</div>
+    
+
+<header class="main-header-container">
+  <div class="main-header container">
+    <div class="main-header-content">
+      <a href="/" class="main-logo logo">
+        <img src="/static/global/imgs/logo.png" alt="">
+        <span class="main-logo-text"> NattyOrNot </span>
+      </a>
+    </div>
+</header>
+
+    <div class="search-container">
+        <form action="/exercises/search/" method="GET" class="search-form">
+            <input type="search" class="search-input"
+             value="" name="q"
+             placeholder="Pesquise um Exercício ou Categoria na Home" required>
+             <button class="search-button" type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+             </button>
+        </form>
+</div>
+    <main class="main-content-container">
+        
+    <div class="center">
+        <h2 class="form-tag main">
+            Exercícios
+        </h2>
+        
+        
+    </div>
+    <div class="main-content main-content-list container center">
+        <div class="exercise-container-grid">
+            
+            <div class="main-content-error-page container center">
+                <div class="error-message-content container">
+                    <img src="/static/global/imgs/404_fakenatty.png" loading="lazy" alt="">
+                    <h2>Fake Natty !</h2>
+                    <h3>
+                        Parece que não há exercícios, não é mesmo ?
+                        
+                            <h3>
+                                <a href="/">Retornar para a Home</a> |
+                                <a href="/dashboard/exercise/create/">Criar um Exercício</a>
+                            </h3>
+                        
+                    </h3>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    </main>
+
+
+<footer class="main-footer">
+    <div class="developers">
+        <a href=""> Em Desenvolvimento... </a>
+    </div>
+
+    <div class="powered">
+        <a href="https://www.djangoproject.com/" target="_blank">
+            Powered By Django
+        </a>
+    </div>
+</footer>
+<script src="/static/global/js/scripts.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</body>
+</html>

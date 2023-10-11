@@ -19,6 +19,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -32,11 +33,9 @@ SECRET_KEY = environ.get('SECRET_KEY', 'INSECURE')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if environ.get('DEBUG') == '0' else True
 
-ALLOWED_HOSTS: List = [environ.get('RECAPTCHA_DOMAIN', 'www.nattyornot.online')]
+RECAPTCHA_DOMAINALLOWED_HOSTS: List = [environ.get('CSRF_TRUSTED_ORIGINS', 'https://www.nattyornot.online')]
 
-CSRF_TRUSTED_ORIGINS: List = [environ.get(
-    'CSRF_TRUSTED_ORIGINS', 'https://www.nattyornot.online')
-]
+CSRF_TRUSTED_ORIGINS: List = [environ.get('CSRF_TRUSTED_ORIGINS', 'https://www.nattyornot.online')]
 
 # Application definition
 
@@ -66,6 +65,9 @@ INSTALLED_APPS = [
     # axes
     'axes',
 ]
+
+# all auth site id
+SITE_ID = 2
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -104,6 +106,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'NattyOrNot.wsgi.application'
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -180,7 +183,7 @@ MESSAGE_TAGS = {
 AXES_ENABLED = False if environ.get('AXES_ENABLED') == '0' else True
 AXES_LOCKOUT_CALLABLE = "users.views.user_lockout.lockout"
 AXES_COOLOFF_TIME = timedelta(minutes=15)
-AXES_FAILURE_LIMIT = 5
+AXES_FAILURE_LIMIT = 3
 AXES_LOCKOUT_PARAMETERS = [["username"]]
 
 AUTHENTICATION_BACKENDS = [
@@ -199,9 +202,6 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-# all auth site id
-SITE_ID = int(environ.get('SITE_ID', 2))
-
 # all auth configs
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -217,11 +217,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
-
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = environ.get(
-    'ACCOUNT_DEFAULT_HTTP_PROTOCOL', 'https'
-)
-
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 LOGIN_REDIRECT_URL = "/"
 
 
