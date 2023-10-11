@@ -87,6 +87,10 @@ class UserLoginView(View):
             # login com sucesso
             if authenticated_user is not None:
                 login(self.request, user=authenticated_user)
+                messages.success(
+                    self.request,
+                    f'Login Efetuado com Sucesso na Conta {self.request.user}.'
+                )
                 return redirect(reverse('users:user_dashboard'))
             # errou as credenciais
             else:
