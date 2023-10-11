@@ -7,20 +7,20 @@
             {% if not exercise.is_published %}
                 <a href="{% url 'users:edit_exercise' exercise.pk %}">
                     {% if exercise.cover %}
-                        <img src="{{exercise.cover.url}}" loading="lazy" alt="">
+                        <img src="{{exercise.cover.url}}" loading="lazy" alt="imagem do exercício">
                     {% endif %}
                 </a>
             {% else %}
                 <a href="{% url 'training:exercises_detail' exercise.slug %}">
                     {% if exercise.cover %}
-                        <img src="{{exercise.cover.url}}" loading="lazy" alt="">
+                        <img src="{{exercise.cover.url}}" loading="lazy" alt="imagem do exercício">
                     {% endif %}
                 </a>
             {% endif %}
         {% else %}
             <a href="{% url 'training:exercises_detail' exercise.slug %}">
                 {% if exercise.cover %}
-                    <img src="{{exercise.cover.url}}" loading="lazy" alt="">
+                    <img src="{{exercise.cover.url}}" loading="lazy" alt="imagem do exercício">
                 {% endif %}
             </a>
         {% endif %}

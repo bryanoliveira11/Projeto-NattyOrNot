@@ -1,5 +1,3 @@
-from typing import Any
-
 from allauth.account.models import EmailAddress
 from django.contrib import messages
 from django.contrib.auth import get_user_model, logout
@@ -115,6 +113,10 @@ class UserProfileDetailClassView(View):
         )
 
 
+@method_decorator(
+    login_required(login_url='users:login', redirect_field_name='next'),
+    name='dispatch'
+)
 class UserProfileChangePassword(UserProfileDetailClassView):
     def get(self, *args, **kwargs):
         self.validate_url_user(self.kwargs.get('username'))

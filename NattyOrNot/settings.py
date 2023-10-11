@@ -34,7 +34,9 @@ DEBUG = False if environ.get('DEBUG') == '0' else True
 
 ALLOWED_HOSTS: List = [environ.get('RECAPTCHA_DOMAIN', 'www.nattyornot.online')]
 
-CSRF_TRUSTED_ORIGINS: List = [environ.get('CSRF_TRUSTED_ORIGINS', 'https://www.nattyornot.online')]
+CSRF_TRUSTED_ORIGINS: List = [environ.get(
+    'CSRF_TRUSTED_ORIGINS', 'https://www.nattyornot.online')
+]
 
 # Application definition
 
@@ -178,8 +180,8 @@ MESSAGE_TAGS = {
 AXES_ENABLED = False if environ.get('AXES_ENABLED') == '0' else True
 AXES_LOCKOUT_CALLABLE = "users.views.user_lockout.lockout"
 AXES_COOLOFF_TIME = timedelta(minutes=15)
-AXES_FAILURE_LIMIT = 3
-AXES_LOCKOUT_PARAMETERS = [["userna]]
+AXES_FAILURE_LIMIT = 5
+AXES_LOCKOUT_PARAMETERS = [["username"]]
 
 AUTHENTICATION_BACKENDS = [
     # AxesStandaloneBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
@@ -197,10 +199,11 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
+# all auth site id
+SITE_ID = int(environ.get('SITE_ID', 2))
+
 # all auth configs
 
-SITE_ID = 2
-SOCIALACCOUNT_LOGIN_ON_GET = True
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
@@ -213,7 +216,12 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = environ.get(
+    'ACCOUNT_DEFAULT_HTTP_PROTOCOL', 'https'
+)
+
 LOGIN_REDIRECT_URL = "/"
 
 

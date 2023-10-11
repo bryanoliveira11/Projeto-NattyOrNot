@@ -1,5 +1,8 @@
 {% extends 'global/base.html' %}
 {% load static %}
+{% load disqus_tags %}
+{% set_disqus_url exercise.get_absolute_url %}
+{% disqus_dev %}
 {% block title %} {{title}} {% endblock title %}
 
 {% block content %}
@@ -20,8 +23,17 @@
         </h2>
     </div>
     <div class="main-content main-content-detail container center">
-        <div class="exercise-container-grid">
+        <div class="exercise-container-grid details">
                 {% include "training/partials/exercise_card.html" %}
         </div>
+        <div class="firefox-warning-message">
+            <div class="main-content center container messages-container">
+                <div class="message message-info">
+                    Se estiver com problemas para comentar no navegador
+                    <b>Firefox</b>, recomendamos tentar em outro navegador.
+                </div>
+            </div>
+        </div>
+        {% disqus_show_comments %}
     </div>
 {% endblock content %}
