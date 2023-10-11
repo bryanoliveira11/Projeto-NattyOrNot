@@ -81,7 +81,7 @@
                         {% endif %}
                     {% endif %}
                 {% endfor %}
-                {% if not is_dashboard_page %}
+                {% if not is_dashboard_page and exercise.published_by is not None %}
                     <span class="published-by">
                         -
                         <i class="fa-solid fa-user"></i>

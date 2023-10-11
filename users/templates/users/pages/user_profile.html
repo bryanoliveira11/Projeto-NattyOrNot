@@ -8,18 +8,46 @@
         <img src="{{user_profile.profile_picture.url}}" alt="Foto de Perfil do Usuário">
     {% endif %}
 </div>
-<div class="center mt">
+<div class="center mt m-0-auto">
     <h2 class="form-tag profile">
-        Meu Perfil ({{request.user.username}})
+        {% if not is_change_password_page %}
+            Meu Perfil ({{request.user.username}})
+        {% else %}
+            Meu Perfil ({{request.user.username}}) - Alterar Senha
+        {% endif %}
     </h2>
     {% include "users/partials/login_message.html" %}
+    
     {% include "global/partials/messages.html" %}
+
     {% if is_google_account %}
         <span class="btn-google-signin profile center">
             <img src="{% static 'global/imgs/google_icon.png' %}" alt="Logar com google">
             Conectado com Google.
         </span>
     {% endif %}
+
+    <div class="show-user-form">
+        {% if is_profile_page %}
+            <div class="user-profile-data selected">
+        {% else %}
+            <div class="user-profile-data">
+        {% endif %}
+                <a class="user-profile-data-show-form" 
+                href="{% url 'users:user_profile' request.user.username %}">Meus Dados</a>
+            </div>
+        
+        {% if is_change_password_page %}
+            <div class="user-password-change selected">
+        {% else %}
+            <div class="user-password-change">
+        {% endif %}
+            <a class="user-profile-change-password-form"
+                href="{% url 'users:user_profile_change_password' request.user.username %}">
+                Alterar Senha 
+            </a>
+        </div>
+    </div>
 </div>
 <div class="container">
     {% include "global/partials/form.html" %}

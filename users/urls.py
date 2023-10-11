@@ -20,6 +20,11 @@ urlpatterns = [
         name='user_profile'
     ),
     path(
+        'user/<str:username>/profile/change/password/',
+        views.UserProfileChangePassword.as_view(),
+        name='user_profile_change_password'
+    ),
+    path(
         'dashboard/exercises/search/',
         views.DashboardSearchClassView.as_view(),
         name='user_dashboard_search'

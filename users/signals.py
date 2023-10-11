@@ -33,5 +33,5 @@ def check_existing_email(sender, request, user, **kwargs):
                 messages.warning(
                     request,
                     'Seu E-mail já está associado a outra conta. Mas não se Preocupe, '
-                    'é possível editar seus dados em "Meu Perfil".'
+                    'é possível editar seus dados em " Menu > Meu Perfil ".'
                 )

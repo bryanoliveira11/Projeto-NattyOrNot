@@ -778,6 +778,44 @@ select option:checked {
   padding-top: 2.5rem;
 }
 
+.btn-google-signin.profile {
+  margin-bottom: 2rem;
+}
+
+.show-user-form {
+  max-width: fit-content;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-profile-data, .user-password-change {
+  border-radius: 0.4rem;
+  background: var(--color-gray-3);
+  padding: 1rem;
+}
+
+.user-profile-data a, .user-password-change a {
+  color: var(--color-white);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 200ms ease-in-out;
+}
+
+.user-profile-data {
+  margin-right: 1rem;
+}
+
+.user-profile-data.selected, .user-password-change.selected {
+  background: var(--color-primary);
+}
+
+.user-profile-data a:hover, .user-password-change a:hover {
+  filter: brightness(1.3);
+  color: var(--color-dark-text);
+}
+
 /* footer */
 .main-footer {
   display: flex;
@@ -926,6 +964,10 @@ textarea.api-textarea:focus {
   margin-top: 3rem;
 }
 
+.mb {
+  margin-bottom: 1rem;
+}
+
 .m-right {
   margin-right: 0.3rem;
 }
@@ -944,6 +986,10 @@ textarea.api-textarea:focus {
 
 .p-medium {
   padding: var(--spacing-gutter-medium);
+}
+
+.m-0-auto {
+  margin: 0 auto;
 }
 
 .green-text {

@@ -33,7 +33,11 @@ SECRET_KEY = environ.get('SECRET_KEY', 'INSECURE')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if environ.get('DEBUG') == '0' else True
 
-ALLOWED_HOSTS: List = ['127.0.0.1', environ.get('IP', '')]
+ALLOWED_HOSTS: List = [environ.get('RECAPTCHA_DOMAIN', '')]
+
+CSRF_TRUSTED_ORIGINS: List = [environ.get(
+    'CSRF_TRUSTED_ORIGINS', '')
+]
 
 # Application definition
 
@@ -48,6 +52,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # cors headers
+    'corsheaders',
     # rest framework
     'rest_framework',
     # all auth
@@ -70,6 +76,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # cors headers middleware
+    'corsheaders.middleware.CorsMiddleware',
     # all auth middleware
     'allauth.account.middleware.AccountMiddleware',
     # debug toolbar middleware
@@ -174,8 +182,8 @@ MESSAGE_TAGS = {
 AXES_ENABLED = False if environ.get('AXES_ENABLED') == '0' else True
 AXES_LOCKOUT_CALLABLE = "users.views.user_lockout.lockout"
 AXES_COOLOFF_TIME = timedelta(minutes=15)
-AXES_FAILURE_LIMIT = 3
-AXES_LOCKOUT_PARAMETERS = [["username", "ip_address"]]
+AXES_FAILURE_LIMIT = 5
+AXES_LOCKOUT_PARAMETERS = [["username"]]
 
 AUTHENTICATION_BACKENDS = [
     # AxesStandaloneBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
@@ -193,10 +201,11 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
+# all auth site id
+SITE_ID = int(environ.get('SITE_ID', 2))
+
 # all auth configs
 
-SITE_ID = 2
-SOCIALACCOUNT_LOGIN_ON_GET = True
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
@@ -209,7 +218,13 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-LOGIN_REDIRECT_URL = "/dashboard/exercises/"
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = environ.get(
+    'ACCOUNT_DEFAULT_HTTP_PROTOCOL', 'https'
+)
+
+LOGIN_REDIRECT_URL = "/"
 
 
 # django rest api
