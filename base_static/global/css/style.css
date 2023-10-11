@@ -208,6 +208,10 @@ img {
   margin: var(--spacing-gutter-medium);
 }
 
+.exercise-container-grid.details {
+  margin-bottom: 2rem;
+}
+
 .exercise {
   background: var(--color-white);
   box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.2);
@@ -949,6 +953,22 @@ textarea.api-textarea:focus {
 
 .http-method.delete {
   background-color: var(--color-error-dark);
+}
+
+/* disqus */
+
+#disqus_thread {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.dsq-brlink {
+  text-decoration: none;
+  color: var(--color-primary);
+}
+
+.firefox-warning-message {
+  margin-top: 2.5rem;
 }
 
 /* others */

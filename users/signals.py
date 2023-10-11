@@ -8,7 +8,7 @@ User = get_user_model()
 
 
 @receiver(user_signed_up)
-def check_existing_email(sender, request, user, **kwargs):
+def check_existing_email(request, user, **kwargs):
     # Verifique se o usuário se inscreveu usando o Google
     google_account = SocialAccount.objects.filter(
         user=user, provider='google'
