@@ -1,3 +1,5 @@
+from typing import Any
+
 from allauth.account.models import EmailAddress
 from django.contrib import messages
 from django.contrib.auth import get_user_model, logout
@@ -8,7 +10,7 @@ from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
 
-from users.forms import EditForm
+from users.forms import ChangePasswordForm, EditForm
 from users.models import UserProfile
 
 User = get_user_model()
@@ -31,7 +33,18 @@ class UserProfileDetailClassView(View):
             return True
         return False
 
-    def render_form(self, form):
+    def validate_url_user(self, username):
+        # 404 em tentativa de editar a url
+        if username != self.request.user.username:  # type:ignore
+            raise Http404()
+
+    def get_profile_form_action(self):
+        return reverse('users:user_profile', args=(self.request.user,))
+
+    def get_password_change_form_action(self):
+        return reverse('users:user_profile_change_password', args=(self.request.user,))
+
+    def render_form(self, form, form_action, profile_page=False, password_page=False):
         user = self.request.user
         user_profile = self.get_user_profile(user.pk)
         is_google_account = self.is_google_account_user()
@@ -40,9 +53,10 @@ class UserProfileDetailClassView(View):
             'user': user,
             'form': form,
             'user_profile': user_profile,
-            'is_profile_page': True,
             'is_google_account': is_google_account,
-            'form_action': reverse('users:user_profile', args=(self.request.user,)),
+            'is_profile_page': profile_page,
+            'is_change_password_page': password_page,
+            'form_action': form_action,
             'search_form_action': reverse('training:search'),
             'additional_search_placeholder': 'na Home',
             'title': f'Perfil ({user})',
@@ -50,13 +64,13 @@ class UserProfileDetailClassView(View):
 
     # get vai mostrar a foto de perfil do user e seus dados
     def get(self, *args, **kwargs):
-        # 404 em tentativa de editar a url
-        if self.kwargs.get('username') != self.request.user.username:  # type:ignore
-            raise Http404()
-
+        self.validate_url_user(self.kwargs.get('username'))
         form = EditForm(instance=self.request.user)
-
-        return self.render_form(form=form)
+        return self.render_form(
+            form=form,
+            profile_page=True,
+            form_action=self.get_profile_form_action()
+        )
 
     # post permitirá que o user edite os dados existentes da conta
     def post(self, *args, **kwargs):
@@ -94,4 +108,43 @@ class UserProfileDetailClassView(View):
                 reverse('users:user_profile', args=(self.request.user,)),
             )
 
-        return self.render_form(form=form)
+        return self.render_form(
+            form=form,
+            profile_page=True,
+            form_action=self.get_profile_form_action()
+        )
+
+
+class UserProfileChangePassword(UserProfileDetailClassView):
+    def get(self, *args, **kwargs):
+        self.validate_url_user(self.kwargs.get('username'))
+        form = ChangePasswordForm(instance=self.request.user)
+        return self.render_form(
+            form=form,
+            password_page=True,
+            form_action=self.get_password_change_form_action()
+        )
+
+    def post(self, *args, **kwargs):
+        form = ChangePasswordForm(
+            data=self.request.POST or None,
+            files=self.request.FILES or None,
+            instance=self.request.user
+        )
+
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(user.password)
+            user.save()
+            messages.success(
+                self.request,
+                'Senha Alterada com Sucesso ! Por Favor, Faça seu Login.'
+            )
+
+            return redirect(reverse('users:login'))
+
+        return self.render_form(
+            form=form,
+            password_page=True,
+            form_action=self.get_password_change_form_action()
+        )

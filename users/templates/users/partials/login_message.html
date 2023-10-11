@@ -26,7 +26,7 @@
             </h3>
         {% endif %}
     {% endif %}
-    {% if is_profile_page %}
+    {% if is_profile_page or is_change_password_page %}
         <h3 class='p-05'>
             Este é o seu 
             <a href="{% url 'users:user_profile' request.user %}" class="plaintext-button">
@@ -42,7 +42,7 @@
         </h3>
     {% endif %}
 
-    {% if not is_dashboard_page and not is_profile_page %}
+    {% if not is_dashboard_page and not is_profile_page and not is_change_password_page %}
         <h3>
             Logado como {{request.user.username}}
             <a href="{% url 'users:logout' %}" class="plaintext-button user-logout-link">clique aqui</a>
