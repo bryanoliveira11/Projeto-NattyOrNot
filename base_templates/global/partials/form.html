@@ -61,7 +61,7 @@
         </div>
     {% endif %}
 
-    {% if is_exercise_form %}
+    {% if is_exercise_form or is_workout_form %}
         {% if captcha_private_key %}
             <div class="captcha-centered">
                 <div class="g-recaptcha" data-sitekey="{{captcha_public_key}}"></div>

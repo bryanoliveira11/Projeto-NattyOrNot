@@ -9,7 +9,28 @@ from training.validators import ExerciseValidator
 from utils.django_forms import add_attr, add_placeholder
 
 
-class CreateExerciseForm(forms.ModelForm):
+class CreateFormMixin:
+    def validate_google_recaptcha(self, data, add_error):
+        # google recaptcha
+        recaptcha_response = data.get('g-recaptcha-response')
+
+        if environ.get('RECAPTCHA_PRIVATE_KEY'):
+            if not recaptcha_response:
+                add_error(
+                    'captcha', 'Marque a Caixa "Não sou um Robô".'
+                )
+
+        recaptcha_request = requests.post(
+            'https://www.google.com/recaptcha/api/siteverify',
+            data={
+                'secret': environ.get('RECAPTCHA_PRIVATE_KEY', ''),
+                'response': recaptcha_response
+            }
+        )
+        recaptcha_request.json()
+
+
+class CreateExerciseForm(forms.ModelForm, CreateFormMixin):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -82,24 +103,6 @@ class CreateExerciseForm(forms.ModelForm):
 
     def clean(self, *args, **kwargs):
         super_clean = super().clean(*args, **kwargs)
-
-        # google recaptcha
-        recaptcha_response = self.data.get('g-recaptcha-response')
-
-        if environ.get('RECAPTCHA_PRIVATE_KEY'):
-            if not recaptcha_response:
-                self.add_error(
-                    'captcha', 'Marque a Caixa "Não sou um Robô".'
-                )
-
-        recaptcha_request = requests.post(
-            'https://www.google.com/recaptcha/api/siteverify',
-            data={
-                'secret': environ.get('RECAPTCHA_PRIVATE_KEY', ''),
-                'response': recaptcha_response
-            }
-        )
-        recaptcha_request.json()
-
+        self.validate_google_recaptcha(data=self.data, add_error=self.add_error)
         ExerciseValidator(self.cleaned_data, ErrorClass=ValidationError)
         return super_clean

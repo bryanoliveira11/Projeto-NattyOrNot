@@ -25,3 +25,10 @@ def format_reps(reps):
         return f'{reps} Repetições'
 
     return f'{reps} Repetição'
+
+
+def format_exercises_num(value):
+    if value > 1:
+        return f'{value} Exercícios'
+
+    return f'{value} Exercício'

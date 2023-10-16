@@ -13,9 +13,7 @@
     <div class="menu-content">
         <nav class="menu-nav">
             <span class="menu-link hello center">
-                {% if request.user.is_authenticated %}
-                    {{request.user.username|username_limit_length}} !
-                {% endif %}
+                NattyOrNot
             </span>
 
             <span class="menu-link">
@@ -36,6 +34,12 @@
                     <a href="{% url 'users:user_dashboard' %}">
                         <i class="fa-solid fa-clipboard-user"></i>
                         Meu Dashboard
+                    </a>
+                </span>
+                <span class="menu-link">
+                    <a href="{% url 'users:user_workouts'%}">
+                        <i class="fa-solid fa-dumbbell"></i>
+                        Meus Treinos
                     </a>
                 </span>
                 <span class="menu-link">

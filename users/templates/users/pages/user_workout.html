@@ -1,0 +1,65 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% load filters %}
+{% block title %} {{title}} {% endblock title %}
+
+{% block content %}
+    <div class="center">
+        <h2 class="form-tag main dashboard-tag">
+            <i class="fa-solid fa-clipboard-user"></i>
+            {{page_tag}}
+        </h2>
+        <div class="dashboard-message-padding">
+            {% include "users/partials/login_message.html" %}
+            {% include "global/partials/messages.html" %}
+        </div>
+    </div>
+    <div class="main-content main-content-list container center">
+        {% if workouts %}
+            <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Nome do Treino</th>
+                    <th scope="col">Total de Exercícios</th>
+                    <th scope="col">Usuário</th>
+                    <th scope="col">Criado em</th>
+                    <th scope="col">Detalhes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for workout in workouts  %}
+                  <tr>
+                    <td scope="row" class="workout-name">
+                        <a href="{% url 'users:user_workout_edit' workout.pk %}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            {{workout.title}} 
+                        </a>
+                    </td>
+                    <td> {{ workout.exercises_total|format_exercises_num }} </td>
+                    <td> {{ workout.user }} </td>
+                    <td>
+                        {{ workout.created_at|date:"d/m/Y" }}
+                        ás {{ workout.created_at|date:"H:i" }}
+                    </td>
+                    <td>
+                        <a href="">
+                            Ver <i class="fas fa-search-plus"></i>
+                        </a>
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+        <div class="main-content-error-page container center">
+            <div class="error-message-content">
+                <img src="{% static 'global/imgs/404_fakenatty.png' %}" loading="lazy" alt="">
+                <h2>Fake Natty !</h2>
+                <h3>
+                    Parece que não há nenhum Treino, não é mesmo ?
+                    <h3><a href="{% url 'users:user_workout_create' %}">Criar Treino.</a></h3>
+                </h3>
+            </div>
+        </div>
+        {% endif %}
+{% endblock content %}

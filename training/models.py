@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
@@ -29,6 +31,9 @@ class Exercises(models.Model):
     is_published = models.BooleanField(default=False, verbose_name='Publicado')
     categories = models.ManyToManyField(
         Categories, blank=True, default='', verbose_name='Categorias'
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True, blank=True, verbose_name='Criado em'
     )
     published_by = models.ForeignKey(
         User,
