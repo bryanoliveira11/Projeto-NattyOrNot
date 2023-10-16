@@ -23,3 +23,8 @@ def format_series(series):
 @register.filter
 def format_reps(reps):
     return filters.format_reps(reps)
+
+
+@register.filter
+def format_exercises_num(value):
+    return filters.format_exercises_num(value)

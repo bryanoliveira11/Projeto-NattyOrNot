@@ -1,0 +1,32 @@
+{% extends 'global/base.html' %}
+{% block title %} {{title}}{% endblock title %}
+
+{% block content %}
+    <div class="main-content center container">
+        {% if is_workout_edit %}
+            <h3 class="form-tag dashboard-forms">
+                <i class="fa-solid fa-pen-to-square"></i>
+                {{title}}
+            </h3>
+        {% else %}
+            <h3 class="form-tag dashboard-forms">
+                <i class="fa-solid fa-dumbbell"></i>
+                {{title}}
+            </h3>
+        {% endif %}
+        <div class="login-message container center">
+            <h3>
+                <a href="{% url 'users:user_workouts' %}" class="plaintext-button">
+                    Clique aqui
+                </a>
+                para ver seus treinos.
+            </h3>
+        </div>
+
+        {% include "global/partials/messages.html" %}
+        <div class="left">
+            {% include "global/partials/form.html" %}
+        </div>
+    </div>
+
+{% endblock content %}

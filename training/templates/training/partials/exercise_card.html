@@ -85,7 +85,14 @@
                     <span class="published-by">
                         -
                         <i class="fa-solid fa-user"></i>
-                        {{exercise.published_by}}
+                        {{exercise.published_by}} 
+                    </span>
+                {% endif %}
+                {% if is_detail_page %}
+                    <span class="published_date">
+                        -
+                        <i class="fas fa-calendar-alt"></i>
+                        {{ exercise.created_at|date:"d/m/Y" }} ás {{ exercise.created_at|date:"H:i" }}
                     </span>
                 {% endif %}
             </span>

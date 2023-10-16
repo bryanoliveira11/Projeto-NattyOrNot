@@ -42,7 +42,23 @@
         </h3>
     {% endif %}
 
-    {% if not is_dashboard_page and not is_profile_page and not is_change_password_page %}
+    {% if is_workout_page %}
+        <h3 class='p-05'>
+            Estes são seus 
+            <a href="{% url 'users:user_workouts' %}" class="plaintext-button">
+                Treinos ! 
+            </a>
+            Você pode criar um novo treino
+            <a href="{% url 'users:user_workout_create' %}" class="plaintext-button">
+                clicando aqui
+            </a> ou 
+            <a href="{% url 'users:logout' %}" class="plaintext-button user-logout-link">
+                sair
+            </a>.
+        </h3>
+    {% endif %}
+
+    {% if not is_dashboard_page and not is_profile_page and not is_change_password_page and not is_workout_page %}
         <h3>
             Logado como {{request.user.username}}
             <a href="{% url 'users:logout' %}" class="plaintext-button user-logout-link">clique aqui</a>

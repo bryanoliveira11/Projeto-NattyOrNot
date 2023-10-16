@@ -61,6 +61,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    # disqus
+    'disqus',
     # debug toolbar
     'debug_toolbar',
     # axes
@@ -224,6 +226,10 @@ ACCOUNT_DEFAULT_HTTP_PROTOCOL = environ.get(
 
 LOGIN_REDIRECT_URL = "/"
 
+# disqus
+
+DISQUS_API_KEY = environ.get('DISQUS_SECRET_KEY', '')
+DISQUS_WEBSITE_SHORTNAME = environ.get('DISQUS_WEBSITE_SHORTNAME', '')
 
 # django rest api
 REST_FRAMEWORK = {

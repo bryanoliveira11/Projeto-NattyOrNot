@@ -25,6 +25,21 @@ urlpatterns = [
         name='user_profile_change_password'
     ),
     path(
+        'user/workouts/',
+        views.UserWorkoutsPageClassView.as_view(),
+        name='user_workouts'
+    ),
+    path(
+        'user/workout/create/',
+        views.UserWorkoutClassView.as_view(),
+        name='user_workout_create'
+    ),
+    path(
+        'user/workout/<int:id>/edit/',
+        views.UserWorkoutClassView.as_view(),
+        name='user_workout_edit'
+    ),
+    path(
         'dashboard/exercises/search/',
         views.DashboardSearchClassView.as_view(),
         name='user_dashboard_search'

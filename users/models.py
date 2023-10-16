@@ -1,12 +1,15 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from training.models import Exercises
 from utils.resize_image import resize_image
 
 
 class UserProfile(models.Model):
     # se o usuário for deletado, o perfil também será
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name='Usuário'
+    )
     profile_picture = models.ImageField(
         upload_to='users/%Y/%m/%d/',
         blank=True,
@@ -27,3 +30,34 @@ class UserProfile(models.Model):
                 ...
 
         return saved
+
+    class Meta:
+        verbose_name = 'Perfil'
+        verbose_name_plural = 'Perfis'
+
+
+class UserWorkouts(models.Model):
+    title = models.CharField(
+        max_length=155, verbose_name='Nome do Treino', default=''
+    )
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name='Usuário'
+    )
+    exercises = models.ManyToManyField(
+        Exercises, blank=True, default='',
+        verbose_name='Exercícios',
+        limit_choices_to={'is_published': True}
+    )
+    exercises_total = models.IntegerField(
+        default=0, verbose_name='Total de Exercícios'
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name='Criado em'
+    )
+
+    def __str__(self) -> str:
+        return f'Treino de {self.user.username}'
+
+    class Meta:
+        verbose_name = 'Treino'
+        verbose_name_plural = 'Treinos'
