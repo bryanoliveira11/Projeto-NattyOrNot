@@ -27,7 +27,7 @@ class CreateWorkoutForm(forms.ModelForm, CreateFormMixin):
     )
 
     exercises = forms.ModelMultipleChoiceField(
-        queryset=Exercises.objects.all(),
+        queryset=Exercises.objects.filter(is_published=True),
         label='Exercícios',
         help_text='Segure CTRL para selecionar mais de um exercício.',
     )
