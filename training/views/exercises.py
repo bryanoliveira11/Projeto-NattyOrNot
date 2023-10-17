@@ -151,9 +151,13 @@ class ExerciseDetailClassView(DetailView):
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.select_related(
+        queryset = queryset.filter(is_published=True).select_related(
             'published_by'
         ).prefetch_related('categories')
+
+        if not queryset:
+            raise Http404()
+
         return queryset
 
     def get_context_data(self, *args, **kwargs) -> dict[str, Any]:

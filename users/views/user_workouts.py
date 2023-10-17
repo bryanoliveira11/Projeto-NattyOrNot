@@ -36,6 +36,9 @@ class UserWorkoutsPageClassView(ListView):
             user=self.request.user
         ).select_related('user')
 
+        if not queryset:
+            raise Http404()
+
         return queryset
 
     def get_context_data(self, *args, **kwargs):
