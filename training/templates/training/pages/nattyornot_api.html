@@ -24,7 +24,11 @@
         <p class="api-paragraph"> &#8226 <b>Não</b> Necessita de Autenticação. </p>
         <p class="api-paragraph method">
             <span class="http-method get">GET</span>
-            <span class="api-url"> https://www.nattyornot.online/exercises/api/v1/ </span>
+            <span class="api-url">
+                <a href="{% url 'training:exercises-api-list' %}" target="_blank">
+                https://www.nattyornot.online/exercises/api/v1/
+                </a>
+            </span>
         </p>
         
         <textarea readonly name="api-exercises-get" class="api-textarea">{{exercises_json}}</textarea>
@@ -74,7 +78,7 @@
              3 - Volte ao endpoint
              (<span class="api-span yellow-text">https://www.nattyornot.online/exercises/api/v1/</span>)
              e informe o cabeçalho (header) <b>Authorization</b>
-             com o valor "Bearer + <b>SEU TOKEN DE ACESSO</b>"
+             com o valor "Bearer <b>SEU TOKEN DE ACESSO</b>"
 
              {% if api_images.auth.url %}
                 <a href="{{api_images.auth.url}}" target="_blank">
@@ -129,7 +133,7 @@
         <p class="api-paragraph"> &#8226 Permite apenas <b>GET</b>.</p>
         <p class="api-paragraph method">
             <span class="http-method get">GET</span>
-            <span class="api-url">  https://www.nattyornot.online/users/api/v1/ </span>
+            <span class="api-url">https://www.nattyornot.online/users/api/v1/</span>
         </p>
 
         <hr>
@@ -138,7 +142,11 @@
         <p class="api-paragraph"> &#8226 Listar Todas as <b>Categorias</b>.</p>
         <p class="api-paragraph method">
             <span class="http-method get">GET</span>
-            <span class="api-url"> https://www.nattyornot.online/exercises/api/v1/category/ </span>
+            <span class="api-url">
+                <a href="{% url 'training:api_v1_categories' %}">
+                    https://www.nattyornot.online/exercises/api/v1/category/
+                </a> 
+            </span>
         </p>
         <p class="api-paragraph"> &#8226 Listar uma Categoria <b>Específica</b>.</p>
         <p class="api-paragraph method">

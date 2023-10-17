@@ -972,6 +972,15 @@ td a:hover {
   margin-left: 0.5rem;
 }
 
+.api-url a{
+  color: var(--color-primary);
+  transition: all 200ms ease-in-out;
+}
+
+.api-url a:hover {
+  filter: brightness(.6);
+}
+
 textarea.api-textarea {
   width: 100%;
   max-width: 60rem;
