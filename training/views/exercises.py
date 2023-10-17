@@ -50,6 +50,7 @@ class ExerciseBaseClassView(ListView):
             'search_form_action': reverse('training:search'),
             'title': 'Home',
             'page_tag': 'Exercícios',
+            'placeholder': 'Pesquise por um Exercício ou Categoria',
             'additional_search_placeholder': 'na Home',
         })
 
@@ -165,6 +166,7 @@ class ExerciseDetailClassView(DetailView):
             'search_form_action': reverse('training:search'),
             'title': f'{exercise}',
             'page_tag': f'{exercise}',
+            'placeholder': 'Pesquise por um Exercício ou Categoria',
             'additional_search_placeholder': 'na Home',
             'is_detail_page': True,
         })
@@ -197,6 +199,7 @@ class ApiExplanationClassView(View):
             'title': title,
             'page_tag': title,
             'search_form_action': reverse('training:search'),
+            'placeholder': 'Pesquise por um Exercício ou Categoria',
             'additional_search_placeholder': 'na Home',
             'exercises_json': exercises_json_dumped,
             'api_images': api_media_dict,

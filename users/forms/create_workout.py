@@ -14,7 +14,13 @@ class CreateWorkoutForm(forms.ModelForm, CreateFormMixin):
         add_attr(self.fields['title'], 'class', 'span-2')
         add_attr(self.fields['exercises'], 'class', 'span-2')
         add_attr(self.fields['exercises'], 'class', 'select-more-height')
-        add_attr(self.fields['captcha'], 'class', 'mt-5')
+
+    captcha = forms.CharField(
+        label='',
+        required=False,
+        widget=forms.HiddenInput(
+            attrs={'class': 'span-2 center captcha-form'}
+        ))
 
     title = forms.CharField(
         label='Título',
@@ -31,13 +37,6 @@ class CreateWorkoutForm(forms.ModelForm, CreateFormMixin):
         label='Exercícios',
         help_text='Segure CTRL para selecionar mais de um exercício.',
     )
-
-    captcha = forms.CharField(
-        label='',
-        required=False,
-        widget=forms.HiddenInput(
-            attrs={'class': 'span-2 center mt'}
-        ))
 
     class Meta:
         model = UserWorkouts

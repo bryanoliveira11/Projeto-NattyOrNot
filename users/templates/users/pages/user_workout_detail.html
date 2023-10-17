@@ -1,0 +1,24 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% block title %} {{title}} {% endblock title %}
+
+{% block content %}
+    <div class="center">
+        <h2 class="form-tag main capitalize">
+            {{page_tag}}
+        </h2>
+        <h3 class="home-remove-filter">
+            <a href="{% url 'users:user_workouts' %}">
+                <i class="fa-solid fa-circle-left"></i>
+                Voltar para Lista de Treinos
+            </a> 
+        </h3>
+    </div>
+    <div class="main-content main-content-detail container center">
+        <div class="exercise-container-block">
+            {% for exercise in workout.exercises.all %}
+                {% include "users/partials/workout_exercise_card.html" %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
