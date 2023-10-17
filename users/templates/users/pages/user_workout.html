@@ -42,7 +42,7 @@
                         ás {{ workout.created_at|date:"H:i" }}
                     </td>
                     <td>
-                        <a href="">
+                        <a href="{% url 'users:user_workout_detail' workout.pk %}">
                             Ver <i class="fas fa-search-plus"></i>
                         </a>
                     </td>
@@ -62,4 +62,5 @@
             </div>
         </div>
         {% endif %}
+    </div>
 {% endblock content %}

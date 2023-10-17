@@ -868,6 +868,12 @@ td a:hover {
   text-transform: capitalize;
 }
 
+.exercise.workout {
+  max-width: 48rem;
+  margin-top: var(--spacing-gutter-large);
+}
+
+
 /* footer */
 .main-footer {
   display: flex;
@@ -1039,6 +1045,10 @@ textarea.api-textarea:focus {
   margin-bottom: 1rem;
 }
 
+.mb-3 {
+  margin-bottom: 3rem;
+}
+
 .m-right {
   margin-right: 0.3rem;
 }
@@ -1105,9 +1115,13 @@ textarea.api-textarea:focus {
   font-size: 1.33rem;
 }
 
+.capitalize {
+  text-transform: capitalize;
+}
+
 .select-more-height {
-  max-height: 28rem;
-  height: 28rem;
+  max-height: 26rem;
+  height: 26rem;
 }
 
 .fa-pen-to-square,
@@ -1123,7 +1137,7 @@ textarea.api-textarea:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 4rem;
   margin-bottom: 1rem;
   padding: 0.5rem 0 1.5rem 0;
   max-width: 100%;
@@ -1160,6 +1174,10 @@ textarea.api-textarea:focus {
 
 .invisible {
   display: none;
+}
+
+.captcha-form .errorlist {
+  margin-top: 6rem;
 }
 
 /* medias */
@@ -1252,6 +1270,10 @@ textarea.api-textarea:focus {
 
   .captcha-centered {
     margin-top: 6.2rem;
+  }
+
+  .captcha-form .errorlist {
+    margin-top: 8rem;
   }
 
   table {

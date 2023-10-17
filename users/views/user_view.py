@@ -20,6 +20,8 @@ class UserRegisterView(View):
             'form': form,
             'form_action': reverse('users:register'),
             'search_form_action': reverse('training:search'),
+            'placeholder': 'Pesquise por um Exercício ou Categoria',
+            'additional_search_placeholder': 'na Home',
             'title': 'Cadastro',
         })
 
@@ -68,6 +70,8 @@ class UserLoginView(View):
             'form': form,
             'form_action': reverse('users:login'),
             'search_form_action': reverse('training:search'),
+            'placeholder': 'Pesquise por um Exercício ou Categoria',
+            'additional_search_placeholder': 'na Home',
             'title': 'Login',
             'is_login_page': True,
         })

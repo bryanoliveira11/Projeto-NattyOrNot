@@ -30,6 +30,16 @@ urlpatterns = [
         name='user_workouts'
     ),
     path(
+        'user/workouts/search/',
+        views.UserWorkoutsPageSearchClassView.as_view(),
+        name='user_workouts_search'
+    ),
+    path(
+        'user/workout/<int:id>/detail/',
+        views.UserWorkoutsPageDetailClassView.as_view(),
+        name='user_workout_detail'
+    ),
+    path(
         'user/workout/create/',
         views.UserWorkoutClassView.as_view(),
         name='user_workout_create'
