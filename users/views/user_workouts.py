@@ -36,9 +36,6 @@ class UserWorkoutsPageClassView(ListView):
             user=self.request.user
         ).select_related('user')
 
-        if not queryset:
-            raise Http404()
-
         return queryset
 
     def get_context_data(self, *args, **kwargs):
@@ -77,7 +74,7 @@ class UserWorkoutsPageDetailClassView(DetailView):
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.select_related('user').prefetch_related(
+        queryset = queryset.filter(user=self.request.user).select_related('user').prefetch_related(
             'exercises', 'exercises__categories', 'exercises__published_by'
         )
         return queryset
