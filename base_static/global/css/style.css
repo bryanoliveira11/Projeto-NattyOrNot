@@ -102,9 +102,8 @@ img {
 }
 
 .main-header-content {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
+  display: block;
+  margin: 0 auto;
   padding: 1rem;
 }
 
@@ -871,6 +870,23 @@ td a:hover {
 .exercise.workout {
   max-width: 48rem;
   margin-top: var(--spacing-gutter-large);
+}
+
+.add-new-workout {
+  max-width: 64rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: calc(var(--spacing-gutter-medium) / 2) auto;
+}
+
+.add-new-workout a {
+  color: var(--color-primary);
+}
+
+.add-new-workout a:hover {
+  filter: brightness(0.8);
+  cursor: pointer;
 }
 
 

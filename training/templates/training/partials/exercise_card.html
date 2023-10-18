@@ -85,7 +85,7 @@
                     <span class="published-by">
                         -
                         <i class="fa-solid fa-user"></i>
-                        {{exercise.published_by}} 
+                        {{exercise.published_by.username|title_limit_length}} 
                     </span>
                 {% endif %}
                 {% if is_detail_page %}

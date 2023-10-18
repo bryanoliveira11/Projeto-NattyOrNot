@@ -32,11 +32,14 @@
                     <td scope="row" class="workout-name">
                         <a href="{% url 'users:user_workout_edit' workout.pk %}">
                             <i class="fa-solid fa-pen-to-square"></i>
-                            {{workout.title}} 
+                            {{workout.title|title_limit_length}} 
                         </a>
                     </td>
                     <td> {{ workout.exercises_total|format_exercises_num }} </td>
-                    <td> <a href="{% url 'users:user_profile' request.user %}">{{ workout.user }}</a> </td>
+                    <td> <a href="{% url 'users:user_profile' request.user %}">
+                        {{ workout.user.username|title_limit_length }}
+                        </a> 
+                    </td>
                     <td>
                         {{ workout.created_at|date:"d/m/Y" }}
                         ás {{ workout.created_at|date:"H:i" }}
@@ -63,4 +66,12 @@
         </div>
         {% endif %}
     </div>
+    {% if workouts %}
+        <div class="add-new-workout">
+            <a href="{% url 'users:user_workout_create' %}">
+                <i class="fa-solid fa-circle-plus"></i>
+                Novo Treino
+            </a>
+        </div>
+    {% endif %}
 {% endblock content %}

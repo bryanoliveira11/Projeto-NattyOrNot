@@ -111,6 +111,8 @@ class UserLogoutView(View):
     def get(self, *args, **kwargs):
         return render(self.request, 'global/partials/error404.html', context={
             'search_form_action': reverse('training:search'),
+            'placeholder': 'Pesquise por um Exercício ou Categoria',
+            'additional_search_placeholder': 'na Home',
             'title': 'Página Não Encontrada',
         })
 

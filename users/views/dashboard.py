@@ -51,8 +51,8 @@ class DashboardUserBase(ListView):
         context.update({
             'exercises': page_obj,
             'pagination_range': pagination_range,
-            'title': f'Dashboard ({user})',
-            'page_tag': f'Meus Exercícios - Dashboard ({user})',
+            'title': f'Dashboard',
+            'page_tag': f'Meus Exercícios - Dashboard',
             'search_form_action': reverse('users:user_dashboard_search'),
             'is_dashboard_page': True,
             'placeholder': 'Pesquise por um Exercício ou Categoria',
@@ -100,8 +100,8 @@ class DashboardUserCategoryClassView(DashboardUserBase):
         ).first()
 
         context.update({
-            'title': f'Dashboard de {user} - {category_name}',
-            'page_tag': f'Meus Exercícios de {category_name} - Dashboard ({user})',
+            'title': f'Dashboard - {category_name}',
+            'page_tag': f'Meus Exercícios de {category_name} - Dashboard',
             'is_filtered': True,
         })
 
@@ -139,7 +139,7 @@ class DashboardSearchClassView(DashboardUserBase):
     def get_context_data(self, *args, **kwargs) -> Dict[str, Any]:
         context = super().get_context_data(*args, **kwargs)
 
-        title = f'Dashboard ({self.request.user}) - Pesquisa por "{self.search_term}"'
+        title = f'Dashboard - Pesquisa por "{self.search_term}"'
 
         context.update({
             'title': title,
@@ -171,13 +171,9 @@ class DashboardIsPublishedFilterClassView(DashboardUserBase):
         context = super().get_context_data(*args, **kwargs)
 
         is_published = self.kwargs.get('is_published')
+        publish_translate = 'Públicados' if is_published == 'True' else 'Não Públicados'
 
-        if is_published == 'False':
-            publish_translate = 'Não Públicados'
-        else:
-            publish_translate = 'Públicados'
-
-        title = f'Meus Exercícios {publish_translate} - Dashboard ({self.request.user})'
+        title = f'Meus Exercícios {publish_translate} - Dashboard'
 
         context.update({
             'title': title,
