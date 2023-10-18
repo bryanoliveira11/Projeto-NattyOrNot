@@ -41,7 +41,7 @@ class UserWorkoutsPageClassView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         workouts = context.get('user_workout')
-        titles = f'Meus Treinos ({self.request.user})'
+        titles = f'Meus Treinos'
 
         # paginação
         page_obj, pagination_range = make_pagination(
@@ -83,11 +83,7 @@ class UserWorkoutsPageDetailClassView(DetailView):
         context = super().get_context_data(*args, **kwargs)
 
         workout = context.get('workout_detail')
-
-        if workout:
-            title = workout.title
-        else:
-            title = workout
+        title = workout.title if workout else workout
 
         context.update({
             'workout': workout,
@@ -131,7 +127,7 @@ class UserWorkoutsPageSearchClassView(UserWorkoutsPageClassView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
 
-        title = f'Meus Treinos ({self.request.user}) - Pesquisa por "{self.search_term}"'
+        title = f'Meus Treinos - Pesquisa por "{self.search_term}"'
 
         context.update({
             'title': title,

@@ -1,5 +1,6 @@
 {% extends 'global/base.html' %}
 {% load static %}
+{% load filters %}
 {% block title %} {{title}} {% endblock title %}
 
 {% block content %}
@@ -11,9 +12,9 @@
 <div class="center mt m-0-auto">
     <h2 class="form-tag profile">
         {% if not is_change_password_page %}
-            Meu Perfil ({{request.user.username}})
+            Meu Perfil ({{request.user.username|title_limit_length}})
         {% else %}
-            Meu Perfil ({{request.user.username}}) - Alterar Senha
+            Meu Perfil ({{request.user.username|title_limit_length}}) - Alterar Senha
         {% endif %}
     </h2>
     {% include "users/partials/login_message.html" %}
