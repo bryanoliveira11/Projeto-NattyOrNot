@@ -338,6 +338,24 @@ img {
   background: #fff;
 }
 
+.exercise-cover img {
+  margin: 0 auto;
+}
+
+.detail-cover img {
+  max-height: 32rem;
+  margin: 0 auto;
+}
+
+.dashboard-cover img {
+  max-height: 19rem;
+  margin: 0 auto;
+}
+
+.exercise-cover.workout-cover img {
+  max-height: 32rem;
+}
+
 .exercise-footer a:hover {
   filter: brightness(1.1);
 }
@@ -390,7 +408,7 @@ img {
 }
 
 .form-tag {
-  margin: 1.5rem 2rem 2rem 2rem;
+  margin: 2rem 2rem 2rem 2rem;
   font-size: 2.2rem;
   padding: 0 0 1rem 0;
 }
@@ -860,7 +878,7 @@ td a {
 }
 
 td a:hover {
-  filter: brightness(.8);
+  filter: brightness(0.8);
 }
 
 .workout-name {
@@ -872,23 +890,51 @@ td a:hover {
   margin-top: var(--spacing-gutter-large);
 }
 
-.add-new-workout {
+.add-new-workout, .add-new-exercise {
+  padding: 0.5rem 0 1.5rem 0;
+}
+
+.add-new-workout,
+.add-new-exercise {
   max-width: 64rem;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: calc(var(--spacing-gutter-medium) / 2) auto;
+  padding-right: 2rem;
 }
 
-.add-new-workout a {
+.add-new-workout a,
+.add-new-exercise a {
   color: var(--color-primary);
 }
 
-.add-new-workout a:hover {
+.add-new-workout a:hover,
+.add-new-exercise a:hover {
   filter: brightness(0.8);
   cursor: pointer;
 }
 
+.fa-trash-can {
+  font-size: 1.8rem;
+  color: var(--color-error-dark);
+}
+
+.fa-trash-can:hover {
+  filter: brightness(0.8);
+  cursor: pointer;
+}
+
+.workout-delete-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.workout-delete {
+  background: none;
+  border: none;
+}
 
 /* footer */
 .main-footer {
@@ -988,13 +1034,13 @@ td a:hover {
   margin-left: 0.5rem;
 }
 
-.api-url a{
+.api-url a {
   color: var(--color-primary);
   transition: all 200ms ease-in-out;
 }
 
 .api-url a:hover {
-  filter: brightness(.6);
+  filter: brightness(0.6);
 }
 
 textarea.api-textarea {
@@ -1338,6 +1384,11 @@ textarea.api-textarea:focus {
 
   table td:last-child {
     border-bottom: 0;
+  }
+
+  .workout-delete-form {
+    align-items: start;
+    justify-content: start;
   }
 }
 

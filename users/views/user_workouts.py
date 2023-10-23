@@ -225,3 +225,24 @@ class UserWorkoutClassView(UserWorkoutBaseClass):
             return redirect(reverse('users:user_workout_edit', args=(workout.pk,)))
 
         return self.render_workout(form=form)
+
+
+@method_decorator(
+    login_required(login_url='users:login', redirect_field_name='next'),
+    name='dispatch'
+)
+class UserWorkoutDeleteClassView(UserWorkoutBaseClass):
+    def get(self, *args, **kwargs):
+        return redirect(reverse('users:user_workouts'))
+
+    def post(self, *args, **kwargs):
+        workout = self.get_workout(self.request.POST.get('id'))
+
+        if workout:
+            messages.success(
+                self.request,
+                f'Treino "{workout.title}" Deletado com Sucesso.'
+            )
+            workout.delete()
+
+        return redirect(reverse('users:user_workouts'))

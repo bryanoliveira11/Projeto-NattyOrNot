@@ -5,11 +5,13 @@
     <div class="exercise-cover">
         {% if is_dashboard_page %}
             {% if not exercise.is_published %}
+            <div class="dashboard-cover">
                 <a href="{% url 'users:edit_exercise' exercise.pk %}">
                     {% if exercise.cover %}
                         <img src="{{exercise.cover.url}}" loading="lazy" alt="imagem do exercício">
                     {% endif %}
                 </a>
+            </div>
             {% else %}
                 <a href="{% url 'training:exercises_detail' exercise.slug %}">
                     {% if exercise.cover %}
@@ -18,11 +20,13 @@
                 </a>
             {% endif %}
         {% else %}
-            <a href="{% url 'training:exercises_detail' exercise.slug %}">
-                {% if exercise.cover %}
-                    <img src="{{exercise.cover.url}}" loading="lazy" alt="imagem do exercício">
-                {% endif %}
-            </a>
+            <div class="detail-cover">
+                <a href="{% url 'training:exercises_detail' exercise.slug %}">
+                    {% if exercise.cover %}
+                        <img src="{{exercise.cover.url}}" loading="lazy" alt="imagem do exercício">
+                    {% endif %}
+                </a>
+            </div>
         {% endif %}
     </div>
 

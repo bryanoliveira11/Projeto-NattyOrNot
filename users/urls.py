@@ -50,6 +50,11 @@ urlpatterns = [
         name='user_workout_edit'
     ),
     path(
+        'user/workout/<int:id>/delete/',
+        views.UserWorkoutDeleteClassView.as_view(),
+        name='user_workout_delete'
+    ),
+    path(
         'dashboard/exercises/search/',
         views.DashboardSearchClassView.as_view(),
         name='user_dashboard_search'

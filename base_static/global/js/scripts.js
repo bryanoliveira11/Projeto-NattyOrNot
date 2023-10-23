@@ -82,7 +82,7 @@
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            const confirmed = confirm('Deseja Deletar o Exercício ?');
+            const confirmed = confirm('Confirmar Deleção ?');
 
             if(confirmed){
                 form.submit();

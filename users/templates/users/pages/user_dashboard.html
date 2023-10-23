@@ -31,4 +31,12 @@
             {% endfor %}
         </div>
     </div>
+    {% if exercises %}
+        <div class="add-new-exercise">
+            <a href="{% url 'users:create_exercise' %}">
+                <i class="fa-solid fa-circle-plus"></i>
+                Novo Exercício
+            </a>
+        </div>
+    {% endif %}
 {% endblock content %}

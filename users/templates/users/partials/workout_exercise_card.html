@@ -2,7 +2,7 @@
 {% load filters %}
 
 <div class="exercise workout">
-    <div class="exercise-cover">
+    <div class="exercise-cover workout-cover">
         {% if exercise.cover %}
             <img src="{{exercise.cover.url}}" loading="lazy" alt="imagem do exercício {{exercise.title}}">
         {% endif %}
