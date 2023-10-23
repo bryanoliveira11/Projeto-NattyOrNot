@@ -17,10 +17,19 @@
         <div class="login-message container center">
             <h3>
                 <a href="{% url 'users:user_dashboard' %}" class="plaintext-button">
+                    <i class="fa-solid fa-circle-left"></i>
                     Clique aqui
                 </a>
                 para ir ao Dashboard.
             </h3>
+            {% if is_exercise_edit %}
+                <div class="add-new-exercise">
+                    <a href="{% url 'users:create_exercise' %}">
+                        <i class="fa-solid fa-circle-plus"></i>
+                        Novo Exercício
+                    </a>
+                </div>
+            {% endif %}
         </div>
 
         {% include "global/partials/messages.html" %}

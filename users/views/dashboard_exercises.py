@@ -113,7 +113,10 @@ class DashboardDeleteExerciseClassView(DashboardFormBaseClassView):
         exercise = self.get_exercise(self.request.POST.get('id'))
 
         if exercise:
+            messages.success(
+                self.request,
+                f'Exercício "{exercise.title}" Deletado com Sucesso.'
+            )
             exercise.delete()
 
-        messages.success(self.request, 'Exercício Deletado com Sucesso.')
         return redirect(reverse('users:user_dashboard'))
