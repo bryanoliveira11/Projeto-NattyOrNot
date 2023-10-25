@@ -338,17 +338,17 @@ img {
   background: #fff;
 }
 
-.exercise-cover img {
+.dashboard-cover img,
+.exercise-cover img,
+.detail-cover.home-page img {
+  max-height: 19rem;
+  object-fit: cover;
   margin: 0 auto;
+  width: fit-content;
 }
 
 .detail-cover img {
-  max-height: 32rem;
-  margin: 0 auto;
-}
-
-.dashboard-cover img {
-  max-height: 19rem;
+  max-height: fit-content;
   margin: 0 auto;
 }
 
@@ -890,7 +890,8 @@ td a:hover {
   margin-top: var(--spacing-gutter-large);
 }
 
-.add-new-workout, .add-new-exercise {
+.add-new-workout,
+.add-new-exercise {
   padding: 0.5rem 0 1.5rem 0;
 }
 
@@ -1251,7 +1252,43 @@ textarea.api-textarea:focus {
   margin-top: 6rem;
 }
 
+.back-to-top {
+  position: fixed;
+  bottom: 11.5rem;
+  right: 8rem;
+  background: var(--color-primary);
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: var(--clr-white-background);
+  transform: rotate(-90deg);
+  border: 0.1rem solid var(--clr-white-background);
+  transition: all 300ms ease-in-out;
+}
+
+.back-to-top:hover {
+  width: 6rem;
+  height: 6rem;
+}
+
 /* medias */
+
+@media (max-width: 975px) {
+  .back-to-top {
+    bottom: 7rem;
+    right: 1rem;
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .back-to-top:hover {
+    width: 4rem;
+    height: 4rem;
+  }
+}
 
 @media (max-width: 750px) {
   .main-content-list {
