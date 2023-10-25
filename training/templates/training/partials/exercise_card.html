@@ -20,6 +20,15 @@
                 </a>
             {% endif %}
         {% else %}
+            {% if is_home_page %}
+            <div class="detail-cover home-page">
+                <a href="{% url 'training:exercises_detail' exercise.slug %}">
+                    {% if exercise.cover %}
+                        <img src="{{exercise.cover.url}}" loading="lazy" alt="imagem do exercício">
+                    {% endif %}
+                </a>
+            </div>
+            {% else %}
             <div class="detail-cover">
                 <a href="{% url 'training:exercises_detail' exercise.slug %}">
                     {% if exercise.cover %}
@@ -27,6 +36,7 @@
                     {% endif %}
                 </a>
             </div>
+        {% endif %}
         {% endif %}
     </div>
 
