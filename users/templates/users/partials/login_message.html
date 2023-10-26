@@ -1,5 +1,5 @@
 {% if request.user.is_authenticated %}
-<div class="login-message container center">
+<div class="login-message center">
     {% if is_dashboard_page %}
         <h3 class='p-05'>
             Este é o seu 
@@ -17,14 +17,6 @@
                 sair
             </a>.
         </h3>
-        {% if is_filtered %}
-            <h3 class="home-remove-filter">
-                <a href="{% url 'users:user_dashboard' %}">
-                    Remover Filtro
-                    <i class="fa-solid fa-delete-left"></i>
-                </a>
-            </h3>
-        {% endif %}
     {% endif %}
     {% if is_profile_page or is_change_password_page %}
         <h3 class='p-05'>

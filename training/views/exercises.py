@@ -2,6 +2,7 @@ import json
 from os import environ
 from typing import Any, Dict
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.db.models.query import QuerySet
@@ -11,7 +12,7 @@ from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView, View
 
-from training.models import ApiMediaImages, Exercises
+from training.models import ApiMediaImages, Categories, Exercises
 from utils.api_exercises_json import exercises_json
 from utils.pagination import make_pagination
 
@@ -38,6 +39,7 @@ class ExerciseBaseClassView(ListView):
         context = super().get_context_data(*args, **kwargs)
 
         exercises = context.get('training')
+        self.categories = Categories.objects.all()
 
         # paginação
         page_obj, pagination_range = make_pagination(
@@ -46,8 +48,10 @@ class ExerciseBaseClassView(ListView):
 
         context.update({
             'exercises': page_obj,
+            'categories': self.categories,
             'pagination_range': pagination_range,
             'search_form_action': reverse('training:search'),
+            'is_home_page': True,
             'title': 'Home',
             'page_tag': 'Exercícios',
             'placeholder': 'Pesquise por um Exercício ou Categoria',
@@ -60,13 +64,6 @@ class ExerciseBaseClassView(ListView):
 # classe para a homepage
 class HomeClassView(ExerciseBaseClassView):
     template_name = 'training/pages/home.html'
-
-    def get_context_data(self, *args, **kwargs) -> Dict[str, Any]:
-        context = super().get_context_data(*args, **kwargs)
-        context.update({
-            'is_home_page': True
-        })
-        return context
 
 
 # classe para a barra de pesquisa
@@ -102,7 +99,6 @@ class SearchClassView(ExerciseBaseClassView):
             'title': f'Busca por "{self.search_term}"',
             'page_tag': f'Resultados da Busca por "{self.search_term}"',
             'additional_url_query': f'&q={self.search_term}',
-            'is_home_page': True,
             'is_filtered': True,
         })
         return context
@@ -120,9 +116,16 @@ class CategoriesFilterClassView(ExerciseBaseClassView):
             categories__id=self.kwargs.get('id'),
             is_published=True)
 
-        # 404 se não existir o id da categoria no banco
         if not queryset:
-            raise Http404()
+            self.category = Categories.objects.filter(
+                pk=self.kwargs.get('id')
+            ).first()
+
+            if self.category:
+                messages.error(
+                    self.request,
+                    f"Nenhum Resultado Encontrado para {self.category.name}"
+                )
 
         return queryset
 
@@ -130,9 +133,15 @@ class CategoriesFilterClassView(ExerciseBaseClassView):
         context = super().get_context_data(*args, **kwargs)
 
         # filtrando no banco para obter no nome da categoria com base no id
-        category_name = context.get('training', '')[0].categories.filter(
-            id=self.kwargs.get('id')
-        ).first()
+        try:
+            category_name = context.get('training', '')[0].categories.filter(
+                id=self.kwargs.get('id')
+            ).first()
+        except IndexError:
+            category_name = self.category.name if self.category else None
+
+        if category_name is None:
+            raise Http404()
 
         context.update({
             'title': f'Categoria - {category_name}',

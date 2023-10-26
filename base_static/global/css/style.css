@@ -1,7 +1,7 @@
 /* vars */
 :root {
   --color-primary: #fa8a3f;
-  --color-primary-light: #d4a07c;
+  --color-primary-light: #d39161;
   --color-primary-hover: #b85a1c;
   --color-primary-dark: #13141f;
   --color-primary-dark-hover: #212336;
@@ -340,6 +340,7 @@ img {
 
 .dashboard-cover img,
 .exercise-cover img,
+.detail-cover img,
 .detail-cover.home-page img {
   max-height: 19rem;
   object-fit: cover;
@@ -370,13 +371,28 @@ img {
 }
 
 .home-remove-filter a {
-  color: var(--color-primary);
+  color: var(--color-dark-text);
   font-size: 1.7rem;
-  padding-bottom: 2rem;
+  margin-left: 1rem;
+}
+
+.home-remove-filter span {
+  font-size: 1.7rem;
+}
+
+.home-remove-filter .fa-delete-left {
+  color: var(--color-primary);
 }
 
 .home-remove-filter a:hover {
-  color: var(--color-primary-hover);
+  color: var(--color-primary);
+  filter: brightness(0.9);
+}
+
+.home-remove-filter .fa-circle-left,
+.home-remove-filter .fa-circle-right,
+.home-remove-filter .back-to-home {
+  color: var(--color-primary);
 }
 
 .main-content-detail .exercise-list-item {
@@ -577,6 +593,7 @@ select option:checked {
 
 .login-message {
   padding-top: 0;
+  margin-bottom: 0.6rem;
 }
 
 .login-message h3,
@@ -780,6 +797,118 @@ select option:checked {
 
 .dashboard-message-padding {
   padding-bottom: 2.5rem;
+}
+
+/* dash filters */
+
+.filters-page {
+  width: 50rem;
+  max-height: 40rem;
+  padding: 1rem;
+  overflow-y: scroll;
+  position: fixed;
+  display: none;
+  background: var(--color-primary-light);
+  margin: 2.5rem auto;
+  border-radius: 0.4rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  transition: all 150ms ease-in-out;
+  font-family: var(--font-primary);
+  text-transform: capitalize;
+  color: var(--color-white);
+}
+
+.toggle-filters h2 {
+  margin-right: 1rem;
+  font-size: 1.7rem;
+  transition: all 100ms ease-in-out;
+}
+
+.toggle-filters h2:hover {
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.dash-filters {
+  display: flex;
+  width: fit-content;
+  margin: 0 auto 1rem auto;
+}
+
+.dash-filters span {
+  font-family: var(--font-headings);
+}
+
+.filters-page-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: var(--spacing-gutter-medium);
+}
+
+.filters-page-title {
+  text-align: left;
+  width: 80%;
+}
+
+.filters-page-title span {
+  font-size: 2rem;
+}
+
+.close-filters-page {
+  text-align: right;
+  width: 20%;
+  padding: 1rem;
+  font-size: 3rem;
+}
+
+.close-filters-page .fa-xmark {
+  transition: all 150ms ease-in-out;
+}
+
+.close-filters-page .fa-xmark:hover {
+  cursor: pointer;
+  scale: 1.2;
+}
+
+.filters-container-flex {
+  width: 100%;
+  display: flex;
+}
+
+.categories-filter,
+.is_published-filter {
+  display: block;
+  font-size: 2rem;
+  padding: 1rem;
+  text-align: left;
+  width: 50%;
+  margin-left: 1rem;
+}
+
+.categories-list,
+.published-list {
+  margin: 1rem 0 0 1.5rem;
+}
+
+.categories-list a,
+.published-list a {
+  color: var(--color-white);
+  transition: all 150ms ease-in-out;
+}
+
+.categories-list a:hover,
+.published-list a:hover {
+  color: var(--color-gray-2);
+}
+
+.categories-filter.home-page,
+.categories-list.home-page {
+  width: 100%;
+  text-align: left;
 }
 
 /* profile */
@@ -1101,6 +1230,12 @@ textarea.api-textarea:focus {
   text-align: center;
 }
 
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .mt {
   margin-top: 1rem;
 }
@@ -1201,7 +1336,8 @@ textarea.api-textarea:focus {
   margin-right: 0.5rem;
 }
 
-.fa-user {
+.fa-user,
+.fa-sliders {
   margin-left: 0.5rem;
 }
 
@@ -1278,7 +1414,7 @@ textarea.api-textarea:focus {
 
 @media (max-width: 975px) {
   .back-to-top {
-    bottom: 7rem;
+    bottom: 1rem;
     right: 1rem;
     width: 3.5rem;
     height: 3.5rem;
@@ -1356,7 +1492,7 @@ textarea.api-textarea:focus {
     margin: 0 auto;
     width: 100%;
     padding: 0;
-    max-width: 33rem;
+    max-width: 40rem;
   }
 
   .main-content-error-page h2 {
@@ -1426,6 +1562,29 @@ textarea.api-textarea:focus {
   .workout-delete-form {
     align-items: start;
     justify-content: start;
+  }
+
+  .filters-page {
+    width: 95%;
+  }
+
+  .filters-page-title span {
+    font-size: 1.8rem;
+  }
+
+  .close-filters-page {
+    font-size: 2.5rem;
+  }
+
+  .filters-container-flex {
+    display: block;
+  }
+
+  .categories-list,
+  .published-list,
+  .categories-filter,
+  .is_published-filter {
+    width: 100%;
   }
 }
 

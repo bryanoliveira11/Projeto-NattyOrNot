@@ -16,12 +16,12 @@
         menuContainer.classList.add(menuHiddenClass)
     };
 
-    if(buttonShowMenu){
+    if (buttonShowMenu) {
         buttonShowMenu.removeEventListener('click', showMenu);
         buttonShowMenu.addEventListener('click', showMenu);
     };
 
-    if(buttonCloseMenu){
+    if (buttonCloseMenu) {
         buttonCloseMenu.removeEventListener('click', closeMenu);
         buttonCloseMenu.addEventListener('click', closeMenu);
     };
@@ -32,7 +32,7 @@
     const linksLogout = document.querySelectorAll('.user-logout-link')
     const formLogout = document.querySelector('.form-logout')
 
-    for(const link of linksLogout){
+    for (const link of linksLogout) {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             formLogout.submit();
@@ -47,7 +47,7 @@
     const passwordField = document.querySelector('#id_password');
     const showPasswordBtnShow = document.querySelector('#show-password');
 
-    if(!showPasswordBtnShow){
+    if (!showPasswordBtnShow) {
         return
     }
 
@@ -56,16 +56,16 @@
     let is_password_visible = false;
 
     showPasswordBtnShow.addEventListener('click', () => {
-        if(is_password_visible){
+        if (is_password_visible) {
             passwordField.type = 'password';
             showPasswordIcon.classList.remove('fa-eye-slash');
             showPasswordIcon.classList.add('fa-eye');
             showPasswordText.innerHTML = 'Mostrar';
         }
-        else{
+        else {
             passwordField.type = 'text';
             showPasswordIcon.classList.remove('fa-eye');
-            showPasswordIcon.classList.add('fa-eye-slash'); 
+            showPasswordIcon.classList.add('fa-eye-slash');
             showPasswordText.innerHTML = 'Esconder';
         }
         is_password_visible = !is_password_visible;
@@ -77,18 +77,59 @@
 
 (() => {
     const forms = document.querySelectorAll('.form-delete');
- 
-    for(const form of forms){
+
+    for (const form of forms) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
             const confirmed = confirm('Confirmar Deleção ?');
 
-            if(confirmed){
+            if (confirmed) {
                 form.submit();
             }
 
         });
     }
 
+})();
+
+
+// funções para tela de filtros
+
+function PreventUserClicksOnBody(e) {
+    e.preventDefault();
+    e.stopPropagation();
+}
+
+function AdjustElementOpacity(element, value) {
+    element.style.opacity = value;
+}
+
+function AdjustElementDisplay(element, value) {
+    element.style.display = value;
+}
+
+(() => {
+    const filtersButton = document.querySelector('.filters-button');
+    const filtersScreen = document.querySelector('.filters-page');
+    const closeFiltersButton = document.querySelector('#close-filters-page');
+    const exerciseGrid = document.querySelector('.exercise-container-grid');
+
+    // abre a tela de filtros
+    if (filtersButton) {
+        filtersButton.addEventListener('click', () => {
+            AdjustElementDisplay(filtersScreen, 'inline');
+            AdjustElementOpacity(exerciseGrid, 0.4),
+                exerciseGrid.addEventListener('click', PreventUserClicksOnBody);
+        })
+    }
+
+    if (closeFiltersButton) {
+        // fecha a tela de filtros
+        closeFiltersButton.addEventListener('click', () => {
+            AdjustElementDisplay(filtersScreen, 'none');
+            AdjustElementOpacity(exerciseGrid, 1);
+            exerciseGrid.removeEventListener('click', PreventUserClicksOnBody);
+        })
+    }
 })();

@@ -1,0 +1,18 @@
+<div class="dash-filters">
+    <div class="toggle-filters">
+        <h2 class="filters-button">Filtros <i class="fa-solid fa-sliders"></i></h2>
+    </div>
+    {% if is_filtered %}
+        |
+        <span class="home-remove-filter">
+            {% if is_home_page %}
+                <a href="{% url 'training:home' %}">
+            {% else %}
+                <a href="{% url 'users:user_dashboard' %}">
+            {% endif %}
+                Remover Filtro
+                <i class="fa-solid fa-delete-left"></i>
+            </a>
+        </span>
+    {% endif %}
+</div>
