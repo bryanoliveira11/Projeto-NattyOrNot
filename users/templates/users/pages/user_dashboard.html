@@ -10,6 +10,8 @@
         </h2>
         <div class="dashboard-message-padding">
             {% include "users/partials/login_message.html" %}
+            {% include "users/partials/toggle_filters.html" %}
+            {% include "users/partials/exercise_filters.html" %}
             {% include "global/partials/messages.html" %}
         </div>
     </div>
@@ -18,7 +20,7 @@
             {% for exercise in exercises  %}
                 {% include "training/partials/exercise_card.html" %}
             {% empty %}
-            <div class="main-content-error-page container center">
+            <div class="main-content-error-page center">
                 <div class="error-message-content">
                     <img src="{% static 'global/imgs/404_fakenatty.png' %}" loading="lazy" alt="">
                     <h2>Fake Natty !</h2>

@@ -1,6 +1,7 @@
 from os import environ
 from typing import Any, Dict
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.db.models.query import QuerySet
@@ -9,7 +10,7 @@ from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView
 
-from training.models import Exercises
+from training.models import Categories, Exercises
 from utils.pagination import make_pagination
 
 DASHBOARD_PER_PAGE = environ.get('DASHBOARD_PER_PAGE', 4)
@@ -41,7 +42,7 @@ class DashboardUserBase(ListView):
 
         # exercicios do contexto
         exercises = context.get('user_exercises')
-        user = self.request.user
+        categories = Categories.objects.all()
 
         # paginação
         page_obj, pagination_range = make_pagination(
@@ -51,6 +52,7 @@ class DashboardUserBase(ListView):
         context.update({
             'exercises': page_obj,
             'pagination_range': pagination_range,
+            'categories': categories,
             'title': f'Dashboard',
             'page_tag': f'Meus Exercícios - Dashboard',
             'search_form_action': reverse('users:user_dashboard_search'),
@@ -86,7 +88,15 @@ class DashboardUserCategoryClassView(DashboardUserBase):
         )
 
         if not queryset:
-            raise Http404()
+            self.category = Categories.objects.filter(
+                pk=self.kwargs.get('id')
+            ).first()
+
+            if self.category:
+                messages.error(
+                    self.request,
+                    f"Nenhum Resultado Encontrado para {self.category.name}"
+                )
 
         return queryset
 
@@ -94,10 +104,16 @@ class DashboardUserCategoryClassView(DashboardUserBase):
         context = super().get_context_data(*args, **kwargs)
 
         user_exercises = context.get('user_exercises', '')
-        user = self.request.user
-        category_name = user_exercises[0].categories.filter(
-            id=self.kwargs.get('id')
-        ).first()
+
+        try:
+            category_name = user_exercises[0].categories.filter(
+                id=self.kwargs.get('id')
+            ).first()
+        except IndexError:
+            category_name = self.category.name if self.category else None
+
+        if category_name is None:
+            raise Http404()
 
         context.update({
             'title': f'Dashboard - {category_name}',
@@ -161,9 +177,15 @@ class DashboardIsPublishedFilterClassView(DashboardUserBase):
 
         is_published = self.kwargs.get('is_published')
 
+        if is_published not in ['True', 'False']:
+            raise Http404()
+
         queryset = queryset.filter(
             published_by=self.request.user, is_published=is_published
         )
+
+        if not queryset:
+            messages.error(self.request, 'Nenhum Exercício Encontrado.')
 
         return queryset
 
