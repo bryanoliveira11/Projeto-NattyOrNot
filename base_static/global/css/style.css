@@ -809,7 +809,7 @@ select option:checked {
   overflow-x: hidden;
   position: fixed;
   display: none;
-  background: var(--color-primary-light);
+  background: var(--color-primary);
   margin: 2.5rem auto;
   border-radius: 0.4rem;
   top: 50%;
