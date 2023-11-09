@@ -371,7 +371,7 @@ img {
 }
 
 .home-remove-filter a {
-  color: var(--color-dark-text);
+  color: var(--color-primary);
   font-size: 1.7rem;
   margin-left: 1rem;
 }
