@@ -53,7 +53,7 @@ class ExerciseBaseClassView(ListView):
             'search_form_action': reverse('training:search'),
             'is_home_page': True,
             'title': 'Home',
-            'page_tag': 'Exercícios',
+            'page_tag': 'Home - Exercícios',
             'placeholder': 'Pesquise por um Exercício ou Categoria',
             'additional_search_placeholder': 'na Home',
         })
@@ -97,7 +97,7 @@ class SearchClassView(ExerciseBaseClassView):
         context = super().get_context_data(*args, **kwargs)
         context.update({
             'title': f'Busca por "{self.search_term}"',
-            'page_tag': f'Resultados da Busca por "{self.search_term}"',
+            'page_tag': f'Home - Resultados da Busca por "{self.search_term}"',
             'additional_url_query': f'&q={self.search_term}',
             'is_filtered': True,
         })
@@ -145,7 +145,7 @@ class CategoriesFilterClassView(ExerciseBaseClassView):
 
         context.update({
             'title': f'Categoria - {category_name}',
-            'page_tag': f'Filtrando por Exercícios de {category_name}',
+            'page_tag': f'Home - Filtrando por Exercícios de {category_name}',
             'is_filtered': True,
         })
 
