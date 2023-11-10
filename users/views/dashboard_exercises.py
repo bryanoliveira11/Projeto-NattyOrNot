@@ -108,7 +108,7 @@ class DashboardExerciseClassView(DashboardFormBaseClassView):
 )
 class DeleteExerciseClassView(DashboardFormBaseClassView):
     def get(self, *args, **kwargs):
-        raise Http404()
+        return redirect(reverse('users:user_dashboard'))
 
     def post(self, *args, **kwargs):
         exercise = self.get_exercise(self.request.POST.get('id'))
