@@ -1,0 +1,36 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% block title %} {{title}} {% endblock title %}
+
+{% block content %}
+    <div class="delete-confirm-tag center">
+        <h2 class="form-tag main dashboard-tag">
+            <h3>&#8226 Deseja Realmente Deletar o {{type_of_object}} "{{exercise.title}}" ?</h3>
+        </h2>
+        {% if has_cover %}
+            {% if exercise.cover.url %}
+                <img src="{{exercise.cover.url}}" alt="Imagem do Exercício">
+            {% endif %}
+        {% endif %}
+    </div>
+    <div class="confirm-buttons">
+        <div class="confirm-buttons-flex">
+            <form action="{{form_action}}" method="POST">
+                {% csrf_token %}
+                {% if is_exercise %}
+                    <input type="hidden" name="id" value="{{exercise.pk}}">
+                {% else %}
+                    <input type="hidden" name="id" value="{{workout.pk}}">
+                {% endif %}
+                <button type="submit" class="delete-yes">
+                    Sim, Tenho Certeza.
+                </button>
+            </form>
+            {% if is_exercise %}
+                <a href="{% url 'users:user_dashboard' %}" class="delete-no">Não, Voltar ao Dashboard.</a>
+            {% else %}
+                <a href="{% url 'users:user_workouts' %}" class="delete-no">Não, Voltar aos Treinos.</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

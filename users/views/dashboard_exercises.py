@@ -10,6 +10,7 @@ from django.views import View
 
 from training.models import Exercises
 from users.forms import CreateExerciseForm
+from users.models import UserWorkouts
 
 
 @method_decorator(  # garantindo que o usuário esteja logado no site
@@ -105,9 +106,9 @@ class DashboardExerciseClassView(DashboardFormBaseClassView):
     login_required(login_url='users:login', redirect_field_name='next'),
     name='dispatch'
 )
-class DashboardDeleteExerciseClassView(DashboardFormBaseClassView):
+class DeleteExerciseClassView(DashboardFormBaseClassView):
     def get(self, *args, **kwargs):
-        return redirect(reverse('users:user_dashboard'))
+        raise Http404()
 
     def post(self, *args, **kwargs):
         exercise = self.get_exercise(self.request.POST.get('id'))
@@ -120,3 +121,21 @@ class DashboardDeleteExerciseClassView(DashboardFormBaseClassView):
             exercise.delete()
 
         return redirect(reverse('users:user_dashboard'))
+
+
+class DeleteWorkoutClassView(View):
+    def get(self, *args, **kwargs):
+        return redirect('users:user_workout')
+
+    def post(self, *args, **kwargs):
+        workout = UserWorkouts.objects.filter(
+            pk=self.request.POST.get('id')).first()
+
+        if workout:
+            messages.success(
+                self.request,
+                f'Treino "{workout.title}" Deletado com Sucesso.'
+            )
+            workout.delete()
+
+        return redirect(reverse('users:user_workouts'))

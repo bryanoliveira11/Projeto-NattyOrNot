@@ -11,9 +11,11 @@ user_api_v1_router.register(
 )
 
 urlpatterns = [
+    # user /
     path('user/register/', views.UserRegisterView.as_view(), name='register'),
     path('user/login/', views.UserLoginView.as_view(), name='login'),
     path('user/logout/', views.UserLogoutView.as_view(), name='logout'),
+    # user profile urls
     path(
         'user/<str:username>/profile/',
         views.UserProfileDetailClassView.as_view(),
@@ -24,6 +26,7 @@ urlpatterns = [
         views.UserProfileChangePassword.as_view(),
         name='user_profile_change_password'
     ),
+    # user workouts urls
     path(
         'user/workouts/',
         views.UserWorkoutsPageClassView.as_view(),
@@ -51,9 +54,15 @@ urlpatterns = [
     ),
     path(
         'user/workout/<int:id>/delete/',
-        views.UserWorkoutDeleteClassView.as_view(),
+        views.UserObjectWorkoutDeleteClassView.as_view(),
         name='user_workout_delete'
     ),
+    path(
+        'user/workout/<int:id>/delete/confirm/',
+        views.DeleteWorkoutClassView.as_view(),
+        name='user_workout_delete_confirm'
+    ),
+    # user dashboard urls
     path(
         'dashboard/exercises/search/',
         views.DashboardSearchClassView.as_view(),
@@ -76,8 +85,13 @@ urlpatterns = [
     ),
     path(
         'dashboard/exercise/<int:id>/delete/',
-        views.DashboardDeleteExerciseClassView.as_view(),
-        name='user_dashboard_delete'
+        views.UserObjectExerciseDeleteClassView.as_view(),
+        name='user_exercise_delete'
+    ),
+    path(
+        'dashboard/exercise/<int:id>/delete/confirm/',
+        views.DeleteExerciseClassView.as_view(),
+        name='user_exercise_delete_confirm'
     ),
     path(
         'dashboard/exercise/create/',

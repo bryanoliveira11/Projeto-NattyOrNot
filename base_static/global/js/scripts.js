@@ -75,7 +75,7 @@
 
 // função para confirmar a deleção de um exercício na página do dashboard
 
-(() => {
+/* (() => {
     const forms = document.querySelectorAll('.form-delete');
 
     for (const form of forms) {
@@ -92,7 +92,7 @@
     }
 
 })();
-
+*/
 
 // funções para tela de filtros
 
