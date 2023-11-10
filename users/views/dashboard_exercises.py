@@ -125,7 +125,7 @@ class DeleteExerciseClassView(DashboardFormBaseClassView):
 
 class DeleteWorkoutClassView(View):
     def get(self, *args, **kwargs):
-        return redirect('users:user_workout')
+        return redirect('users:user_workouts')
 
     def post(self, *args, **kwargs):
         workout = UserWorkouts.objects.filter(
