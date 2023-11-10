@@ -51,13 +51,9 @@
                         </a>
                     </td>
                     <td class="workout-delete-form">
-                        <form action="{% url 'users:user_workout_delete' workout.pk %}" method="POST" class='form-delete'>
-                            {% csrf_token %}
-                            <input type="hidden" name="id" value="{{workout.pk}}">
-                            <button type="submit" class="workout-delete center">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
-                        </form>
+                        <a href="{% url 'users:user_workout_delete' workout.pk %}" class="workout-delete center">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </a>
                     </td>
                   </tr>
                 {% endfor %}

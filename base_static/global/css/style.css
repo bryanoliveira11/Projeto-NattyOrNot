@@ -334,6 +334,10 @@ img {
   transition: all 300ms ease-in-out;
 }
 
+.exercise-footer a:hover {
+  filter: brightness(0.8);
+}
+
 .exercise-cover {
   background: #fff;
 }
@@ -355,10 +359,6 @@ img {
 
 .exercise-cover.workout-cover img {
   max-height: 32rem;
-}
-
-.exercise-footer a:hover {
-  filter: brightness(1.1);
 }
 
 .form-tag.main,
@@ -752,8 +752,7 @@ select option:checked {
   display: flex;
 }
 
-.exercise-dashboard-footer a,
-.exercise-dashboard-footer button {
+.exercise-dashboard-footer a {
   color: var(--color-white);
   text-decoration: none;
   padding: calc(var(--spacing-gutter-medium) / 2);
@@ -768,16 +767,14 @@ select option:checked {
   width: 80%;
 }
 
-.form-delete {
-  width: 20%;
-}
-
-.exercise-dashboard-footer button {
+.delete-page .open-delete-page {
+  top: 1;
+  position: absolute;
+  max-width: 20%;
   background: var(--color-error-dark);
 }
 
-.exercise-dashboard-footer a:hover,
-.exercise-dashboard-footer button:hover {
+.exercise-dashboard-footer a:hover {
   cursor: pointer;
 }
 
@@ -785,7 +782,7 @@ select option:checked {
   background: var(--color-primary);
 }
 
-.exercise-dashboard-footer button:hover {
+.delete-page .open-delete-page:hover {
   background: var(--color-error-dark-hover);
 }
 
@@ -1065,6 +1062,61 @@ td a:hover {
 .workout-delete {
   background: none;
   border: none;
+}
+
+/* delete page */
+
+.delete-confirm-tag {
+  margin-top: 3rem;
+}
+
+.delete-confirm-tag h3 {
+  font-size: 1.8rem;
+}
+
+.delete-confirm-tag img {
+  margin: 0 auto;
+  padding: 1rem;
+  max-width: 44rem;
+}
+
+.confirm-buttons {
+  margin: 3rem auto;
+  max-width: 64rem;
+}
+
+.confirm-buttons-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+}
+
+.confirm-buttons .delete-yes {
+  background:var(--color-success);
+  margin-right: 1rem;
+  outline: 0;
+  border: 0;
+}
+
+.confirm-buttons .delete-no {
+  background:var(--color-error-dark);
+  margin-left: 1rem;
+}
+
+.confirm-buttons .delete-yes, .confirm-buttons .delete-no {
+  font-weight: 600;
+  font-size: 1.6rem;
+  padding: 0.7rem;
+  border-radius: 0.4rem;
+  color: var(--color-white);
+  transition: all 300ms ease-in-out;
+  text-align: center;
+}
+
+.confirm-buttons .delete-yes:hover, .confirm-buttons .delete-no:hover {
+  filter: brightness(0.8);
+  cursor: pointer;
 }
 
 /* footer */
@@ -1586,6 +1638,10 @@ textarea.api-textarea:focus {
   .categories-filter,
   .is_published-filter {
     width: 100%;
+  }
+
+  .confirm-buttons {
+    width: 95%;
   }
 }
 
