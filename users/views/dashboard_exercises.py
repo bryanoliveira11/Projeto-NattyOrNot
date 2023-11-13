@@ -106,36 +106,46 @@ class DashboardExerciseClassView(DashboardFormBaseClassView):
     login_required(login_url='users:login', redirect_field_name='next'),
     name='dispatch'
 )
-class DeleteExerciseClassView(DashboardFormBaseClassView):
+class DeleteObjectClassViewBase(DashboardFormBaseClassView):
+    def delete_object(self, type: str, msg_obj: str):
+        obj = None
+
+        if type == 'exercise':
+            obj = self.get_exercise(self.request.POST.get('id'))
+
+        if type == 'workout':
+            obj = UserWorkouts.objects.filter(
+                pk=self.request.POST.get('id')).first()
+
+        if obj:
+            messages.success(
+                self.request,
+                f'{msg_obj} "{obj.title}" Deletado com Sucesso.'
+            )
+            obj.delete()
+
+
+@method_decorator(
+    login_required(login_url='users:login', redirect_field_name='next'),
+    name='dispatch'
+)
+class DeleteExerciseClassView(DeleteObjectClassViewBase):
     def get(self, *args, **kwargs):
         return redirect(reverse('users:user_dashboard'))
 
     def post(self, *args, **kwargs):
-        exercise = self.get_exercise(self.request.POST.get('id'))
-
-        if exercise:
-            messages.success(
-                self.request,
-                f'Exercício "{exercise.title}" Deletado com Sucesso.'
-            )
-            exercise.delete()
-
+        self.delete_object(type='exercise', msg_obj='Exercício')
         return redirect(reverse('users:user_dashboard'))
 
 
-class DeleteWorkoutClassView(View):
+@method_decorator(
+    login_required(login_url='users:login', redirect_field_name='next'),
+    name='dispatch'
+)
+class DeleteWorkoutClassView(DeleteObjectClassViewBase):
     def get(self, *args, **kwargs):
         return redirect('users:user_workouts')
 
     def post(self, *args, **kwargs):
-        workout = UserWorkouts.objects.filter(
-            pk=self.request.POST.get('id')).first()
-
-        if workout:
-            messages.success(
-                self.request,
-                f'Treino "{workout.title}" Deletado com Sucesso.'
-            )
-            workout.delete()
-
+        self.delete_object(type='workout', msg_obj='Treino')
         return redirect(reverse('users:user_workouts'))

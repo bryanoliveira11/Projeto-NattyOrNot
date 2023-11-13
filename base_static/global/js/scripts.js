@@ -1,19 +1,71 @@
-// função para mostrar / esconder o menu
+// funções para tela de filtros
+
+function PreventUserClicksOnBody(e) {
+    e.preventDefault();
+    e.stopPropagation();
+}
+
+function AdjustElementOpacity(element, value) {
+    element.style.opacity = value;
+}
+
+function AdjustElementDisplay(element, value) {
+    element.style.display = value;
+}
+
+function CloseFiltersScreen(filtersScreen, exerciseGrid){
+    AdjustElementDisplay(filtersScreen, 'none');
+    AdjustElementOpacity(exerciseGrid, 1);
+    exerciseGrid.removeEventListener('click', PreventUserClicksOnBody);
+}
+
 (() => {
+    const filtersButton = document.querySelector('.filters-button');
+    const filtersScreen = document.querySelector('.filters-page');
+    const closeFiltersButton = document.querySelector('#close-filters-page');
+    const exerciseGrid = document.querySelector('.exercise-container-grid');
+
+    // abre a tela de filtros
+    if (filtersButton) {
+        filtersButton.addEventListener('click', () => {
+            AdjustElementDisplay(filtersScreen, 'inline');
+            AdjustElementOpacity(exerciseGrid, 0.4),
+                exerciseGrid.addEventListener('click', PreventUserClicksOnBody);
+        })
+    }
+
+    if (closeFiltersButton) {
+        // fecha a tela de filtros
+        closeFiltersButton.addEventListener('click', () => {
+            CloseFiltersScreen(filtersScreen, exerciseGrid)
+        })
+    }
+})();
+
+
+// função para mostrar / esconder o menu
+
+(() => {
+    // menu
     const buttonShowMenu = document.querySelector('.button-show-menu');
     const buttonCloseMenu = document.querySelector('.button-close-menu');
     const menuContainer = document.querySelector('.menu-container');
     const buttonShowMenuVisibleClass = 'button-show-menu-is-visible';
     const menuHiddenClass = 'menu-hidden';
 
+    // filters screen 
+    const filtersScreen = document.querySelector('.filters-page');
+    const exerciseGrid = document.querySelector('.exercise-container-grid');
+
     const showMenu = () => {
-        buttonShowMenu.classList.remove(buttonShowMenuVisibleClass)
-        menuContainer.classList.remove(menuHiddenClass)
+        buttonShowMenu.classList.remove(buttonShowMenuVisibleClass);
+        menuContainer.classList.remove(menuHiddenClass);
+        CloseFiltersScreen(filtersScreen, exerciseGrid);
     };
 
     const closeMenu = () => {
-        buttonShowMenu.classList.add(buttonShowMenuVisibleClass)
-        menuContainer.classList.add(menuHiddenClass)
+        buttonShowMenu.classList.add(buttonShowMenuVisibleClass);
+        menuContainer.classList.add(menuHiddenClass);
     };
 
     if (buttonShowMenu) {
@@ -29,8 +81,8 @@
 
 // função para enviar formulários de logout
 (() => {
-    const linksLogout = document.querySelectorAll('.user-logout-link')
-    const formLogout = document.querySelector('.form-logout')
+    const linksLogout = document.querySelectorAll('.user-logout-link');
+    const formLogout = document.querySelector('.form-logout');
 
     for (const link of linksLogout) {
         link.addEventListener('click', (e) => {
@@ -93,43 +145,3 @@
 
 })();
 */
-
-// funções para tela de filtros
-
-function PreventUserClicksOnBody(e) {
-    e.preventDefault();
-    e.stopPropagation();
-}
-
-function AdjustElementOpacity(element, value) {
-    element.style.opacity = value;
-}
-
-function AdjustElementDisplay(element, value) {
-    element.style.display = value;
-}
-
-(() => {
-    const filtersButton = document.querySelector('.filters-button');
-    const filtersScreen = document.querySelector('.filters-page');
-    const closeFiltersButton = document.querySelector('#close-filters-page');
-    const exerciseGrid = document.querySelector('.exercise-container-grid');
-
-    // abre a tela de filtros
-    if (filtersButton) {
-        filtersButton.addEventListener('click', () => {
-            AdjustElementDisplay(filtersScreen, 'inline');
-            AdjustElementOpacity(exerciseGrid, 0.4),
-                exerciseGrid.addEventListener('click', PreventUserClicksOnBody);
-        })
-    }
-
-    if (closeFiltersButton) {
-        // fecha a tela de filtros
-        closeFiltersButton.addEventListener('click', () => {
-            AdjustElementDisplay(filtersScreen, 'none');
-            AdjustElementOpacity(exerciseGrid, 1);
-            exerciseGrid.removeEventListener('click', PreventUserClicksOnBody);
-        })
-    }
-})();
