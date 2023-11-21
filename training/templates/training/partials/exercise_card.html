@@ -45,11 +45,11 @@
         <div class="exercise-title-container dashboard-exercise-title">
             <h2 class="exercise-title dashboard-exercise-title">
                 {% if not exercise.is_published %}
-                    <a href="{% url 'users:edit_exercise' exercise.pk %}">
+                    <a href="{% url 'users:edit_exercise' exercise.pk %}" title="{{exercise.title}}">
                         {{exercise.title|title_limit_length}} 
                     </a>
                 {% else %}
-                    <a href="{% url 'training:exercises_detail' exercise.slug %}">
+                    <a href="{% url 'training:exercises_detail' exercise.slug %}" title="{{exercise.title}}">
                         {{exercise.title|title_limit_length}} 
                     </a>
                 {% endif %}
@@ -61,11 +61,11 @@
         <div class="exercise-title-container">
             <h2 class="exercise-title">
                 {% if is_home_page %}
-                    <a href="{% url 'training:exercises_detail' exercise.slug %}">
+                    <a href="{% url 'training:exercises_detail' exercise.slug %}" title="{{exercise.title}}">
                          {{exercise.title|title_limit_length}} 
                     </a>
                 {% else %}
-                    <a href="{% url 'training:exercises_detail' exercise.slug %}">
+                    <a href="{% url 'training:exercises_detail' exercise.slug %}" title="{{exercise.title}}">
                         {{exercise.title}} 
                     </a>
                 {% endif %}

@@ -133,3 +133,4 @@ db.sqlite3
 db copy.sqlite3
 static/
 utils/create_env_file.py
+.VSCodeCounter
