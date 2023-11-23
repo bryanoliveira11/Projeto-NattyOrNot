@@ -1,3 +1,4 @@
+{% load static %}
 {% load filters %}
 <button class="button-show-menu button-show-menu-is-visible">
     <i class="fas fa-bars"></i>
@@ -12,7 +13,8 @@
 
     <div class="menu-content">
         <nav class="menu-nav">
-            <span class="menu-link hello center">
+            <span class="menu-link hello center flex-center">
+                <img src="{% static 'global/imgs/logo.png' %}" alt="logo do site">
                 NattyOrNot
             </span>
 

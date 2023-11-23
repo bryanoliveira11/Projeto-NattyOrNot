@@ -4,9 +4,28 @@
   <div class="main-header container">
     <div class="main-header-content center">
       <a href="{% url 'training:home' %}" class="main-logo logo">
-        <img src="{% static 'global/imgs/logo.png' %}" alt="">
-        <span class="main-logo-text"> NattyOrNot </span>
+        <img src="{% static 'global/imgs/logo.png' %}" alt="logo do site">
+        <span class="main-logo-text" title="NattyOrNot"> NattyOrNot </span>
       </a>
       {% include "global/partials/search.html" %}
+
+      {% if request.user.is_authenticated %}
+        <div class="shortcuts-container">
+          <span>
+            <a href="{% url 'users:user_profile' request.user %}" title="Perfil">Perfil</a> /
+            <a href="{% url 'users:user_dashboard' %}" title="Dashboard">Dashboard</a> / 
+            <a href="{% url 'users:user_workouts'%}" title="Treinos">Treinos</a> /
+            <span>
+              <a href="{% url 'users:logout' %}" class="user-logout-link" title="Encerrar Sessão">
+                Encerrar Sessão
+              </a>
+              {% include "global/partials/logout_form.html" %}
+            </span>
+      {% endif %}
+            <button class="plaintext-button mr-1" id="toggle-dark-mode" title="Dark Mode">
+              <i class="fa-solid" id="menu-icon"></i>
+            </button>
+          </span>
+        </div>
     </div>
 </header>

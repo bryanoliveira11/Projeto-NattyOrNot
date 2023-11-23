@@ -13,7 +13,7 @@ function AdjustElementDisplay(element, value) {
     element.style.display = value;
 }
 
-function CloseFiltersScreen(filtersScreen, exerciseGrid){
+function CloseFiltersScreen(filtersScreen, exerciseGrid) {
     AdjustElementDisplay(filtersScreen, 'none');
     AdjustElementOpacity(exerciseGrid, 1);
     exerciseGrid.removeEventListener('click', PreventUserClicksOnBody);
@@ -77,6 +77,9 @@ function CloseFiltersScreen(filtersScreen, exerciseGrid){
         buttonCloseMenu.removeEventListener('click', closeMenu);
         buttonCloseMenu.addEventListener('click', closeMenu);
     };
+
+    // fechar menu se o usuário começar a digitar algo
+    document.addEventListener('keyup', closeMenu);
 })();
 
 // função para enviar formulários de logout
@@ -99,9 +102,7 @@ function CloseFiltersScreen(filtersScreen, exerciseGrid){
     const passwordField = document.querySelector('#id_password');
     const showPasswordBtnShow = document.querySelector('#show-password');
 
-    if (!showPasswordBtnShow) {
-        return
-    }
+    if (!showPasswordBtnShow) return;
 
     const showPasswordIcon = document.querySelector('#show-password-icon');
     const showPasswordText = document.querySelector('#show-password-text');
