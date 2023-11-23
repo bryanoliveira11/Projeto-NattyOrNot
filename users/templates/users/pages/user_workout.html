@@ -17,7 +17,7 @@
         {% if workouts %}
             <table class="content-table">
                 <thead>
-                  <tr>
+                  <tr class="table-tr">
                     <th scope="col">Nome do Treino</th>
                     <th scope="col">Total de Exercícios</th>
                     <th scope="col">Usuário</th>
@@ -28,7 +28,7 @@
                 </thead>
                 <tbody>
                 {% for workout in workouts  %}
-                  <tr>
+                  <tr class="table-tr">
                     <td scope="row" class="workout-name">
                         <a href="{% url 'users:user_workout_edit' workout.pk %}">
                             <i class="fa-solid fa-pen-to-square"></i>

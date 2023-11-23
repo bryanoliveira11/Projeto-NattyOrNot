@@ -4,7 +4,8 @@
     const toggleDarkbtn = document.querySelector('#toggle-dark-mode');
     const mainContent = document.querySelector('body');
     const exerciseCardsBackground = document.querySelectorAll('.exercise-card-background');
-    const tableElement = document.querySelector('table');
+    const tableElement = document.querySelector('.content-table');
+    const tableTr = document.querySelectorAll('.table-tr');
 
     // botão não existe
     if (!toggleDarkbtn) return;
@@ -38,10 +39,11 @@
     function toggleDarkMode() {
         addClassList(mainContent, 'dark-mode-style');
         addClassList(tableElement, 'dark-mode-table');
+        if (tableTr) {
+            for (const tr of tableTr) addClassList(tr, 'tr-dark');
+        }
         if (exerciseCardsBackground) {
-            for (const card of exerciseCardsBackground) {
-                addClassList(card, 'dark-mode-cards');
-            }
+            for (const card of exerciseCardsBackground) addClassList(card, 'dark-mode-cards');
         }
     }
 
@@ -49,10 +51,11 @@
     function removeDarkMode() {
         removeClassList(mainContent, 'dark-mode-style');
         removeClassList(tableElement, 'dark-mode-table');
+        if (tableTr) {
+            for (const tr of tableTr) removeClassList(tr, 'tr-dark');
+        }
         if (exerciseCardsBackground) {
-            for (const card of exerciseCardsBackground) {
-                removeClassList(card, 'dark-mode-cards');
-            }
+            for (const card of exerciseCardsBackground) removeClassList(card, 'dark-mode-cards');
         }
     }
 
