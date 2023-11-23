@@ -41,7 +41,8 @@
         {% endif %}
     </div>
 
-    {% if is_dashboard_page %}
+    <div class="exercise-card-background">
+        {% if is_dashboard_page %}
         <div class="exercise-title-container dashboard-exercise-title">
             <h2 class="exercise-title dashboard-exercise-title">
                 {% if not exercise.is_published %}
@@ -192,5 +193,6 @@
     {% endif %}  
 
     {% endif %}
+    </div>
 
 </div>

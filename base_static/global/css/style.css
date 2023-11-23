@@ -7,6 +7,7 @@
   --color-primary-dark-hover: #212336;
   --color-white: #fff;
   --clr-white-background: #f5f5ff;
+  --clr-dark-background: #313136;
   --color-black: #000;
   --color-dark-text: #444;
   --color-info-dark: #4d86c4;
@@ -59,7 +60,7 @@ html {
 }
 
 ::selection {
-  background: var(--color-gray-2);
+  background: var(--color-primary-light);
 }
 
 body {
@@ -101,12 +102,6 @@ img {
   box-shadow: 2px 1px 1px 2px var(--color-primary-dark-shadow);
 }
 
-.main-header-content {
-  display: block;
-  margin: 0 auto;
-  padding: 1rem;
-}
-
 .main-header-content span {
   font-size: 3rem;
 }
@@ -117,9 +112,11 @@ img {
 
 .main-logo.logo {
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  margin-right: var(--spacing-gutter-medium);
+  align-items: end;
+  justify-content: end;
+  margin: 0 auto;
+  padding-right: var(--spacing-gutter-medium);
+  width: fit-content;
 }
 
 .main-logo.logo img {
@@ -179,6 +176,49 @@ img {
   color: var(--color-primary);
 }
 
+/* menu shortcuts - dark mode ?  */
+
+.shortcuts-container {
+  padding: 1rem 0.4rem 0 0;
+}
+
+.shortcuts-container span,
+.fa-moon,
+.fa-sun {
+  color: var(--color-white);
+  font-size: 1.5rem;
+}
+
+.shortcuts-container span a,
+.fa-moon,
+.fa-sun {
+  transition: all 150ms ease-in-out;
+  margin-left: 0.1rem;
+}
+
+.shortcuts-container span a:hover,
+.fa-moon:hover,
+.fa-sun:hover {
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.fa-moon,
+.fa-sun {
+  padding-left: 0.4rem;
+}
+
+.dark-mode-style {
+  background: var(--clr-dark-background);
+  color: var(--color-gray-0);
+}
+
+.dark-mode-cards,
+.dark-mode-table {
+  background: var(--color-gray-1);
+  color: var(--color-dark-text);
+}
+
 /* home exercise cards */
 
 .main-content {
@@ -229,7 +269,6 @@ img {
 .exercise-list-item {
   max-width: 33rem;
   height: fit-content;
-  background: var(--color-gray-0);
 }
 
 .exercise-list-item:hover {
@@ -257,7 +296,6 @@ img {
 }
 
 .exercise-data {
-  background: var(--color-gray-0);
   padding: 1rem;
 }
 
@@ -279,7 +317,6 @@ img {
 }
 
 .exercise-status {
-  background: var(--color-gray-0);
   padding: 0.5rem;
 }
 
@@ -302,7 +339,6 @@ img {
 }
 
 .exercise-description {
-  background: var(--color-gray-0);
   padding: var(--spacing-gutter-medium);
 }
 
@@ -317,7 +353,6 @@ img {
 .exercise-meta-container {
   display: flex;
   flex-flow: row wrap;
-  background: var(--color-gray-0);
   padding: var(--spacing-gutter-medium);
 }
 
@@ -361,9 +396,13 @@ img {
   max-height: 32rem;
 }
 
-.form-tag.main,
-.form-tag.profile {
+.form-tag.main {
+  padding-bottom: 0;
   margin-bottom: 0;
+}
+
+.form-tag.profile {
+  margin-bottom: 1rem;
 }
 
 .form-tag.profile img {
@@ -534,12 +573,11 @@ select option:checked {
 .show-password {
   margin: 0 0.5rem 0.1rem 0;
   cursor: pointer;
-  color: var(--color-primary-dark);
   font-size: 1.4rem;
 }
 
 .show-password:hover {
-  color: var(--color-primary-dark-hover);
+  filter: brightness(1.1);
 }
 
 #show-password-text {
@@ -742,6 +780,11 @@ select option:checked {
   color: var(--color-white);
 }
 
+.menu-link.hello img {
+  max-width: 3rem;
+  margin: 0 1rem 0.7rem 0;
+}
+
 /* dashboard */
 
 .dashboard-exercise-title {
@@ -817,6 +860,10 @@ select option:checked {
   font-family: var(--font-primary);
   text-transform: capitalize;
   color: var(--color-white);
+}
+
+.toggle-filters {
+  padding: 0.3rem;
 }
 
 .toggle-filters h2 {
@@ -1093,18 +1140,19 @@ td a:hover {
 }
 
 .confirm-buttons .delete-yes {
-  background:var(--color-success);
+  background: var(--color-success);
   margin-right: 1rem;
   outline: 0;
   border: 0;
 }
 
 .confirm-buttons .delete-no {
-  background:var(--color-error-dark);
+  background: var(--color-error-dark);
   margin-left: 1rem;
 }
 
-.confirm-buttons .delete-yes, .confirm-buttons .delete-no {
+.confirm-buttons .delete-yes,
+.confirm-buttons .delete-no {
   font-weight: 600;
   font-size: 1.6rem;
   padding: 0.7rem;
@@ -1114,7 +1162,8 @@ td a:hover {
   text-align: center;
 }
 
-.confirm-buttons .delete-yes:hover, .confirm-buttons .delete-no:hover {
+.confirm-buttons .delete-yes:hover,
+.confirm-buttons .delete-no:hover {
   filter: brightness(0.8);
   cursor: pointer;
 }
@@ -1313,6 +1362,10 @@ textarea.api-textarea:focus {
   margin-right: 0.3rem;
 }
 
+.mr-1 {
+  margin-right: 1rem;
+}
+
 .left {
   text-align: left;
 }
@@ -1465,7 +1518,7 @@ textarea.api-textarea:focus {
 
 /* medias */
 
-@media (max-width: 975px) {
+@media (max-width: 1620px) {
   .back-to-top {
     bottom: 1rem;
     right: 1rem;
@@ -1503,6 +1556,10 @@ textarea.api-textarea:focus {
 
   .main-logo.logo img {
     margin: 0 0.7rem 0.3rem 0;
+  }
+
+  .shortcuts-container span {
+    font-size: 1.2rem;
   }
 
   .form-content-grid {
@@ -1558,7 +1615,11 @@ textarea.api-textarea:focus {
 
   .message-form,
   .btn-google-signin {
-    width: 82%;
+    width: 75%;
+  }
+
+  .btn-google-signin.profile {
+    width: 100%;
   }
 
   .p-b {

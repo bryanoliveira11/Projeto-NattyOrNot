@@ -17,7 +17,6 @@
             Meu Perfil ({{request.user.username|title_limit_length}}) - Alterar Senha
         {% endif %}
     </h2>
-    {% include "users/partials/login_message.html" %}
 
     <div class="show-user-form">
         {% if is_profile_page %}
@@ -45,7 +44,7 @@
     {% if is_google_account %}
         <span class="btn-google-signin profile center">
             <img src="{% static 'global/imgs/google_icon.png' %}" alt="Logar com google">
-            Conectado com Google.
+            Conta Google
         </span>
     {% endif %}
     {% include "global/partials/messages.html" %}
