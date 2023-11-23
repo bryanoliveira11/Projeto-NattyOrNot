@@ -32,13 +32,11 @@ SECRET_KEY = environ.get('SECRET_KEY', 'INSECURE')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if environ.get('DEBUG') == '0' else True
 
-ALLOWED_HOSTS: List = [environ.get('RECAPTCHA_DOMAIN', '')]
-
 ALLOWED_HOSTS: List = [environ.get(
     'RECAPTCHA_DOMAIN', 'www.nattyornot.online')]
 
 CSRF_TRUSTED_ORIGINS: List = [environ.get(
-    'CSRF_TRUSTED_ORIGINS', '')
+    'CSRF_TRUSTED_ORIGINS', 'https://www.nattyornot.online')
 ]
 
 # Application definition
@@ -187,7 +185,6 @@ AXES_LOCKOUT_CALLABLE = "users.views.user_lockout.lockout"
 AXES_COOLOFF_TIME = timedelta(minutes=15)
 AXES_FAILURE_LIMIT = 5
 AXES_LOCKOUT_PARAMETERS = [["username"]]
-AXES_RESET_ON_SUCCESS = True
 
 AUTHENTICATION_BACKENDS = [
     # AxesStandaloneBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
@@ -228,11 +225,7 @@ ACCOUNT_DEFAULT_HTTP_PROTOCOL = environ.get(
     'ACCOUNT_DEFAULT_HTTP_PROTOCOL', 'https'
 )
 
-
-# disqus config
-
-DISQUS_API_KEY = environ.get('DISQUS_SECRET_KEY', '')
-DISQUS_WEBSITE_SHORTNAME = environ.get('DISQUS_WEBSITE_SHORTNAME', '')
+LOGIN_REDIRECT_URL = "/"
 
 # disqus
 

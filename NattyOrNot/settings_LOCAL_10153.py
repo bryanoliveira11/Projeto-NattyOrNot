@@ -34,9 +34,6 @@ DEBUG = False if environ.get('DEBUG') == '0' else True
 
 ALLOWED_HOSTS: List = [environ.get('RECAPTCHA_DOMAIN', '')]
 
-ALLOWED_HOSTS: List = [environ.get(
-    'RECAPTCHA_DOMAIN', 'www.nattyornot.online')]
-
 CSRF_TRUSTED_ORIGINS: List = [environ.get(
     'CSRF_TRUSTED_ORIGINS', '')
 ]
