@@ -11,6 +11,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView
 
 from training.models import Categories, Exercises
+from utils.get_notifications import get_notifications
 from utils.pagination import make_pagination
 
 DASHBOARD_PER_PAGE = environ.get('DASHBOARD_PER_PAGE', 4)
@@ -49,10 +50,14 @@ class DashboardUserBase(ListView):
             self.request, exercises, DASHBOARD_PER_PAGE
         )
 
+        notifications, notifications_total = get_notifications(self.request)
+
         context.update({
             'exercises': page_obj,
             'pagination_range': pagination_range,
             'categories': categories,
+            'notifications': notifications,
+            'notification_total': notifications_total,
             'title': f'Dashboard',
             'page_tag': f'Meus Exercícios - Dashboard',
             'search_form_action': reverse('users:user_dashboard_search'),

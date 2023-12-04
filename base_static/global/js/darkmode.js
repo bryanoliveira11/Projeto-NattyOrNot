@@ -6,6 +6,7 @@
     const exerciseCardsBackground = document.querySelectorAll('.exercise-card-background');
     const tableElement = document.querySelector('.content-table');
     const tableTr = document.querySelectorAll('.table-tr');
+    const notifications = document.querySelectorAll('.notification');
 
     // botão não existe
     if (!toggleDarkbtn) return;
@@ -45,6 +46,9 @@
         if (exerciseCardsBackground) {
             for (const card of exerciseCardsBackground) addClassList(card, 'dark-mode-cards');
         }
+        if (notifications) {
+            for (const notification of notifications) addClassList(notification, 'dark-mode-style');
+        }
     }
 
     // remove a classe de dark mode
@@ -56,6 +60,9 @@
         }
         if (exerciseCardsBackground) {
             for (const card of exerciseCardsBackground) removeClassList(card, 'dark-mode-cards');
+        }
+        if (notifications) {
+            for (const notification of notifications) removeClassList(notification, 'dark-mode-style');
         }
     }
 

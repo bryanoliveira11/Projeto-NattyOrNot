@@ -11,6 +11,7 @@ from django.views import View
 from training.models import Exercises
 from users.forms import CreateExerciseForm
 from users.models import UserWorkouts
+from utils.get_notifications import get_notifications
 
 
 @method_decorator(  # garantindo que o usuário esteja logado no site
@@ -45,9 +46,13 @@ class DashboardFormBaseClassView(View):
         return exercise
 
     def render_exercise(self, form):  # renderizando página do form
+        notifications, notifications_total = get_notifications(self.request)
+
         return render(self.request, 'users/pages/create_exercise.html', context={
             'form': form,
             'search_form_action': reverse('users:user_dashboard_search'),
+            'notifications': notifications,
+            'notification_total': notifications_total,
             'title': self.title,
             'captcha_public_key': environ.get('RECAPTCHA_PUBLIC_KEY', ''),
             'captcha_private_key': environ.get('RECAPTCHA_PRIVATE_KEY', ''),

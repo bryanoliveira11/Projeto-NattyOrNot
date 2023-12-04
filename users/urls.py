@@ -26,6 +26,12 @@ urlpatterns = [
         views.UserProfileChangePassword.as_view(),
         name='user_profile_change_password'
     ),
+    # notifications delete path
+    path(
+        'user/notifications/delete/',
+        views.UserNotificationsDeleteClassView.as_view(),
+        name='notifications_delete'
+    ),
     # user workouts urls
     path(
         'user/workouts/',

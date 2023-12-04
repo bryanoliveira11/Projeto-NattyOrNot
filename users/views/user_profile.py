@@ -10,6 +10,7 @@ from django.views import View
 
 from users.forms import ChangePasswordForm, EditForm
 from users.models import UserProfile
+from utils.get_notifications import get_notifications
 
 User = get_user_model()
 
@@ -46,11 +47,14 @@ class UserProfileDetailClassView(View):
         user = self.request.user
         user_profile = self.get_user_profile(user.pk)
         is_google_account = self.is_google_account_user()
+        notifications, notifications_total = get_notifications(self.request)
 
         return render(self.request, 'users/pages/user_profile.html', context={
             'user': user,
             'form': form,
             'user_profile': user_profile,
+            'notifications': notifications,
+            'notification_total': notifications_total,
             'is_google_account': is_google_account,
             'is_profile_page': profile_page,
             'is_change_password_page': password_page,

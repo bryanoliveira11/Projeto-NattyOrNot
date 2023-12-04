@@ -6,6 +6,7 @@ from django.views import View
 
 from users.forms import LoginForm, RegisterForm
 from users.models import UserProfile
+from utils.get_notifications import get_notifications
 
 
 class UserRegisterView(View):
@@ -15,10 +16,14 @@ class UserRegisterView(View):
 
         form = RegisterForm(register_data)
 
+        notifications, notifications_total = get_notifications(self.request)
+
         # renderiza formulário de registro
         return render(self.request, 'users/pages/register.html', context={
             'form': form,
             'form_action': reverse('users:register'),
+            'notifications': notifications,
+            'notification_total': notifications_total,
             'search_form_action': reverse('training:search'),
             'placeholder': 'Pesquise por um Exercício ou Categoria',
             'additional_search_placeholder': 'na Home',
@@ -65,10 +70,14 @@ class UserLoginView(View):
     def get(self, *args, **kwargs):
         form = LoginForm()
 
+        notifications, notifications_total = get_notifications(self.request)
+
         # renderiza a página de login com get
         return render(self.request, 'users/pages/login.html', context={
             'form': form,
             'form_action': reverse('users:login'),
+            'notifications': notifications,
+            'notification_total': notifications_total,
             'search_form_action': reverse('training:search'),
             'placeholder': 'Pesquise por um Exercício ou Categoria',
             'additional_search_placeholder': 'na Home',
@@ -109,7 +118,11 @@ class UserLoginView(View):
 class UserLogoutView(View):
     # vai levantar erro se o usuário fizer get ao invés de post
     def get(self, *args, **kwargs):
+        notifications, notifications_total = get_notifications(self.request)
+
         return render(self.request, 'global/partials/error404.html', context={
+            'notifications': notifications,
+            'notification_total': notifications_total,
             'search_form_action': reverse('training:search'),
             'placeholder': 'Pesquise por um Exercício ou Categoria',
             'additional_search_placeholder': 'na Home',

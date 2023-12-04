@@ -14,6 +14,7 @@ from django.views.generic import DetailView, ListView, View
 
 from training.models import ApiMediaImages, Categories, Exercises
 from utils.api_exercises_json import exercises_json
+from utils.get_notifications import get_notifications
 from utils.pagination import make_pagination
 
 PER_PAGE = environ.get('HOME_PER_PAGE', 8)
@@ -39,7 +40,9 @@ class ExerciseBaseClassView(ListView):
         context = super().get_context_data(*args, **kwargs)
 
         exercises = context.get('training')
-        self.categories = Categories.objects.all()
+        categories = Categories.objects.all()
+
+        notifications, notifications_total = get_notifications(self.request)
 
         # paginação
         page_obj, pagination_range = make_pagination(
@@ -48,7 +51,9 @@ class ExerciseBaseClassView(ListView):
 
         context.update({
             'exercises': page_obj,
-            'categories': self.categories,
+            'categories': categories,
+            'notifications': notifications,
+            'notification_total': notifications_total,
             'pagination_range': pagination_range,
             'search_form_action': reverse('training:search'),
             'is_home_page': True,
@@ -174,8 +179,12 @@ class ExerciseDetailClassView(DetailView):
 
         exercise = context.get('exercise_detail')
 
+        notifications, notifications_total = get_notifications(self.request)
+
         context.update({
             'exercise': exercise,
+            'notifications': notifications,
+            'notification_total': notifications_total,
             'search_form_action': reverse('training:search'),
             'title': f'{exercise}',
             'page_tag': f'{exercise}',
@@ -208,7 +217,11 @@ class ApiExplanationClassView(View):
             exercises_json, indent=1, ensure_ascii=False
         )
 
+        notifications, notifications_total = get_notifications(self.request)
+
         return render(self.request, 'training/pages/nattyornot_api.html', context={
+            'notifications': notifications,
+            'notification_total': notifications_total,
             'title': title,
             'page_tag': title,
             'search_form_action': reverse('training:search'),

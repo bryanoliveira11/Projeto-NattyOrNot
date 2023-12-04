@@ -182,11 +182,24 @@ img {
   padding: 1rem 0.4rem 0 0;
 }
 
+.shortcuts-container button {
+  margin-right: 0.2rem;
+}
+
 .shortcuts-container span,
 .fa-moon,
-.fa-sun {
+.fa-sun,
+.fa-bell {
   color: var(--color-white);
   font-size: 1.5rem;
+}
+
+.notification-total {
+  font-size: 1rem;
+  padding: 0 0.5rem 0 0.5rem;
+  background: var(--color-primary);
+  border-radius: 0.2rem;
+  font-weight: 700;
 }
 
 .shortcuts-container span a,
@@ -198,17 +211,22 @@ img {
 
 .shortcuts-container span a:hover,
 .fa-moon:hover,
-.fa-sun:hover {
+.fa-sun:hover,
+.fa-bell.bell-menu:hover {
   color: var(--color-primary);
   cursor: pointer;
 }
 
 .fa-moon,
-.fa-sun {
+.fa-sun,
+.fa-bell.bell-menu {
   padding-left: 0.4rem;
 }
 
-.dark-mode-style, .dark-mode-table, .exercise-cover {
+.dark-mode-style,
+.dark-mode-table,
+.exercise-cover,
+.notification.dark-mode-style {
   background: var(--clr-dark-background);
   color: var(--color-gray-0);
 }
@@ -279,7 +297,7 @@ table tr.tr-dark {
 }
 
 .exercise-title-container {
-  padding: var(--spacing-gutter-medium);
+  padding: calc(var(--spacing-gutter-medium) / 2);
 }
 
 .exercise-title {
@@ -386,7 +404,7 @@ table tr.tr-dark {
   max-height: 19rem;
   object-fit: cover;
   margin: 0 auto;
-  width: fit-content;
+  width: 100%;
 }
 
 .detail-cover img {
@@ -400,7 +418,7 @@ table tr.tr-dark {
 
 .form-tag.main {
   padding-bottom: 0;
-  margin-bottom: 0;
+  margin-bottom: 1rem;
 }
 
 .form-tag.profile {
@@ -465,7 +483,7 @@ table tr.tr-dark {
 }
 
 .form-tag {
-  margin: 2rem 2rem 2rem 2rem;
+  margin: 2rem 2rem 0.5rem 2rem;
   font-size: 2.2rem;
   padding: 0 0 1rem 0;
 }
@@ -793,6 +811,10 @@ select option:checked {
   padding: 0.5rem;
 }
 
+.exercise-created-at span {
+  padding: 0.2rem;
+}
+
 .exercise-dashboard-footer {
   display: flex;
 }
@@ -841,11 +863,34 @@ select option:checked {
   padding-bottom: 2.5rem;
 }
 
-/* dash filters */
+/* filters & notifications page */
 
 .filters-page {
   width: 50rem;
   max-height: 40rem;
+  text-transform: capitalize;
+}
+
+.notifications-page {
+  width: 60rem;
+  max-height: 50rem;
+}
+
+.notifications-page .close-notifications-page {
+  align-items: end;
+  justify-content: end;
+}
+
+.fa-bell.notifications-bell {
+  font-size: 2rem;
+  margin-left: 0.4rem;
+}
+
+.filters-page,
+.notifications-page {
+  top: 28%;
+  left: 50%;
+  transform: translate(-50%, 0%);
   padding: 1rem;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -854,13 +899,9 @@ select option:checked {
   background: var(--color-primary);
   margin: 2.5rem auto;
   border-radius: 0.4rem;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   z-index: 3;
   transition: all 150ms ease-in-out;
   font-family: var(--font-primary);
-  text-transform: capitalize;
   color: var(--color-white);
 }
 
@@ -889,34 +930,40 @@ select option:checked {
   font-family: var(--font-headings);
 }
 
-.filters-page-flex {
+.filters-page-flex,
+.notifications-page-flex {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: var(--spacing-gutter-medium);
+  margin: 0 2rem 0 2rem;
 }
 
-.filters-page-title {
+.filters-page-title,
+.notifications-page-title {
   text-align: left;
   width: 80%;
 }
 
-.filters-page-title span {
+.filters-page-title span,
+.notifications-page-title span {
   font-size: 2rem;
 }
 
-.close-filters-page {
+.close-filters-page,
+.close-notifications-page {
   text-align: right;
   width: 20%;
   padding: 1rem;
   font-size: 3rem;
 }
 
-.close-filters-page .fa-xmark {
+.close-filters-page .fa-xmark,
+.close-notifications-page .fa-xmark {
   transition: all 150ms ease-in-out;
 }
 
-.close-filters-page .fa-xmark:hover {
+.close-filters-page .fa-xmark:hover,
+.close-notifications-page .fa-xmark:hover {
   cursor: pointer;
   scale: 1.2;
 }
@@ -956,6 +1003,66 @@ select option:checked {
 .categories-list.home-page {
   width: 100%;
   text-align: left;
+}
+
+/* notifications container */
+
+.notifications-container {
+  width: 100%;
+  display: block;
+}
+
+.no-notifications {
+  padding: 2rem;
+  font-size: 2rem;
+}
+
+.notification {
+  background: var(--clr-white-background);
+  color: var(--color-dark-text);
+  padding-bottom: 1rem;
+  margin: 1.3rem;
+  border-radius: 0.3rem;
+  transition: all 300ms ease-in-out;
+}
+
+.notification-subject {
+  display: flex;
+  align-items: start;
+  padding: 1rem;
+  font-weight: 700;
+}
+
+.notification-message {
+  margin: 0 auto;
+  padding: 0 1rem 0 1rem;
+}
+
+.notification-sendby {
+  padding: 1rem 0 0.5rem 0;
+}
+
+a.notification-url {
+  color: var(--color-primary);
+  transition: all 150ms ease-in-out;
+}
+
+a.notification-url:hover {
+  filter: brightness(0.8);
+}
+
+.notifications-dismiss button {
+  font-size: 1.8rem;
+  padding: 1rem;
+  background: var(--color-success);
+  transition: all 300ms ease-in-out;
+  margin: 0 auto;
+  width: 95%;
+}
+
+.notifications-dismiss button:hover {
+  color: var(--color-white);
+  background: var(--color-success-dark);
 }
 
 /* profile */
@@ -1075,7 +1182,7 @@ td a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: calc(var(--spacing-gutter-medium) / 2) auto;
+  margin: 0rem auto;
   padding-right: 2rem;
 }
 
@@ -1366,8 +1473,16 @@ textarea.api-textarea:focus {
   margin-right: 1rem;
 }
 
+.m-left {
+  margin-left: 0.3rem;
+}
+
 .left {
   text-align: left;
+}
+
+.right {
+  text-align: right;
 }
 
 .p-05 {
@@ -1384,6 +1499,10 @@ textarea.api-textarea:focus {
 
 .m-0-auto {
   margin: 0 auto;
+}
+
+.white-text {
+  color: var(--color-white);
 }
 
 .green-text {
@@ -1516,6 +1635,26 @@ textarea.api-textarea:focus {
   height: 6rem;
 }
 
+/* keyframes */
+
+@keyframes tilt-shaking {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  50% {
+    transform: rotate(0eg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
 /* medias */
 
 @media (max-width: 1620px) {
@@ -1559,7 +1698,7 @@ textarea.api-textarea:focus {
   }
 
   .shortcuts-container span {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
 
   .form-content-grid {
@@ -1678,20 +1817,29 @@ textarea.api-textarea:focus {
     justify-content: start;
   }
 
-  .filters-page {
-    width: 98%;
+  .filters-page,
+  .notifications-page {
+    width: 99%;
+    top: 23%;
   }
 
-  .filters-page-title span {
+  .filters-page-flex {
+    margin: 0;
+  }
+
+  .filters-page-title span,
+  .notifications-page-title span {
     font-size: 1.8rem;
   }
 
-  .close-filters-page {
+  .close-filters-page,
+  .close-notifications-page {
     font-size: 2.5rem;
   }
 
-  .filters-container-flex {
-    display: block;
+  .filters-container-flex,
+  .notifications-page-flex {
+    display: flex;
   }
 
   .categories-list,

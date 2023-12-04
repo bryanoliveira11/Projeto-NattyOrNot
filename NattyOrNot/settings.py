@@ -80,6 +80,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # my middlewares
+    'users.notifications_middleware.NotificationsMiddleware',
     # cors headers middleware
     'corsheaders.middleware.CorsMiddleware',
     # all auth middleware

@@ -124,6 +124,12 @@
     {% endif %}
 
     {% if is_dashboard_page %}
+        <div class="exercise-created-at">
+            <span>
+                <i class="fas fa-calendar-alt"></i>
+                {{ exercise.created_at|date:"d/m/Y" }} ás {{ exercise.created_at|date:"H:i" }}
+            </span>
+        </div>
         <div class="exercise-status">
             {% if not exercise.is_published %}
                 <a href="{% url 'users:user_dashboard_is_published' exercise.is_published %}" class="not-published">

@@ -8,6 +8,7 @@ from django.views.generic import DetailView
 
 from training.models import Exercises
 from users.models import UserWorkouts
+from utils.get_notifications import get_notifications
 
 
 @method_decorator(
@@ -43,9 +44,13 @@ class UserObjectExerciseDeleteClassView(DetailView):
         else:
             raise Http404()
 
+        notifications, notifications_total = get_notifications(self.request)
+
         context.update({
             'exercise': exercise,
             'form_action': form_action,
+            'notifications': notifications,
+            'notification_total': notifications_total,
             'title': title,
             'search_form_action': reverse('users:user_dashboard_search'),
             'is_exercise': True,
@@ -89,9 +94,13 @@ class UserObjectWorkoutDeleteClassView(DetailView):
         else:
             raise Http404()
 
+        notifications, notifications_total = get_notifications(self.request)
+
         context.update({
             'exercise': workout,
             'workout': workout,
+            'notifications': notifications,
+            'notification_total': notifications_total,
             'form_action': form_action,
             'title': title,
             'search_form_action': reverse('users:user_workouts_search'),

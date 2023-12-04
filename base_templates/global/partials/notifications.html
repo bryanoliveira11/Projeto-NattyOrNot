@@ -1,0 +1,46 @@
+<div class="notifications-page center">
+    <div class="notifications-page-flex">
+        <div class="notifications-page-title">
+            <span>
+                {{notification_total}} Notificações
+                <i class="fa-solid fa-bell notifications-bell"></i>
+            </span>
+        </div>
+        <div class="close-notifications-page right">
+            <i class="fa-solid fa-xmark" id="close-notifications-page" title="Fechar Tela de Notificações"></i>
+        </div>
+    </div>
+  <hr/>
+    <div class="notifications-container">
+        {% for notification in notifications  %}
+            <div class="notification">
+                <div class="notification-subject">
+                    <p>{{notification.subject_html|safe}}</p>
+                </div>
+                <div class="notification-message left">
+                    {{notification.message|safe}}
+                </div>
+                <div class="notification-sendby center">
+                    {{notification.send_by}}
+                </div>
+            </div>
+        {% empty %}
+        <div class="no-notifications">
+            Nenhuma Notificação Encontrada.
+        </div>
+        {% endfor %}
+        {% if notifications %}
+            <div class="notifications-dismiss">
+                <form action="{% url 'users:notifications_delete' %}" class="inline-form" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="username" value="{{request.user.username}}">
+                    <input type="hidden" name="previous_page" value="{{request.path}}">
+                    <button class="plaintext-button white-text" type="submit">
+                        Remover Notificações
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+</div>

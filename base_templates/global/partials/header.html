@@ -8,23 +8,39 @@
         <span class="main-logo-text" title="NattyOrNot"> NattyOrNot </span>
       </a>
       {% include "global/partials/search.html" %}
+      {% include "global/partials/notifications.html" %}
 
-      {% if request.user.is_authenticated %}
         <div class="shortcuts-container">
-          <span>
-            <a href="{% url 'users:user_profile' request.user %}" title="Perfil">Perfil</a> /
-            <a href="{% url 'users:user_dashboard' %}" title="Dashboard">Dashboard</a> / 
-            <a href="{% url 'users:user_workouts'%}" title="Treinos">Treinos</a> /
+          {% if request.user.is_authenticated %}
             <span>
-              <a href="{% url 'users:logout' %}" class="user-logout-link" title="Encerrar Sessão">
-                Encerrar Sessão
-              </a>
-              {% include "global/partials/logout_form.html" %}
-            </span>
-      {% endif %}
-            <button class="plaintext-button mr-1 mt" id="toggle-dark-mode" title="Dark Mode">
+              <a href="{% url 'users:user_profile' request.user %}" title="Perfil">Perfil</a> /
+              <a href="{% url 'users:user_dashboard' %}" title="Dashboard">Dashboard</a> / 
+              <a href="{% url 'users:user_workouts'%}" title="Treinos">Treinos</a> /
+              <span>
+                <a href="{% url 'users:logout' %}" class="user-logout-link" title="Encerrar Sessão">
+                  Encerrar Sessão
+                </a>
+                {% include "global/partials/logout_form.html" %}
+              </span>
+          {% else %}
+              <span>
+                <a href="{% url 'users:login' %}" title="Perfil">Login</a> /
+                <a href="{% url 'users:register' %}" title="Dashboard">Registre-se</a>
+              </span>
+          {% endif %}
+            <button class="plaintext-button mt" id="toggle-dark-mode" title="Dark Mode">
               <i class="fa-solid" id="menu-icon"></i>
             </button>
+            {% if request.user.is_authenticated %}
+              <button class="plaintext-button mt" id="toggle-notification-menu" title="Notificações">
+                  <i class="fa-solid fa-bell bell-menu"></i>
+              </button>
+              {% if notification_total %}
+                <span class='notification-total'> 
+                   {{notification_total}}
+                </span>
+              {% endif %} 
+            {% endif %}
           </span>
         </div>
     </div>

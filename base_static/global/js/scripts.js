@@ -1,22 +1,28 @@
-// funções para tela de filtros
+// funções para as telas de filtros e notificações do usuário
 
+// evita que o usuário clique em algum elemento da tela
 function PreventUserClicksOnBody(e) {
     e.preventDefault();
     e.stopPropagation();
 }
 
+// ajusta opacidade de um elemento
 function AdjustElementOpacity(element, value) {
-    element.style.opacity = value;
+    if (element) element.style.opacity = value;
 }
 
+// define o style de display do elemento
 function AdjustElementDisplay(element, value) {
-    element.style.display = value;
+    if (element) element.style.display = value;
 }
 
-function CloseFiltersScreen(filtersScreen, exerciseGrid) {
-    AdjustElementDisplay(filtersScreen, 'none');
-    AdjustElementOpacity(exerciseGrid, 1);
-    exerciseGrid.removeEventListener('click', PreventUserClicksOnBody);
+// fechar telas que 'flutuam' na página
+function CloseScreen(screen_to_close, background) {
+    if (screen_to_close && background) {
+        AdjustElementDisplay(screen_to_close, 'none');
+        AdjustElementOpacity(background, 1);
+        background.removeEventListener('click', PreventUserClicksOnBody);
+    }
 }
 
 (() => {
@@ -24,24 +30,57 @@ function CloseFiltersScreen(filtersScreen, exerciseGrid) {
     const filtersScreen = document.querySelector('.filters-page');
     const closeFiltersButton = document.querySelector('#close-filters-page');
     const exerciseGrid = document.querySelector('.exercise-container-grid');
+    const notificationScreen = document.querySelector('.notifications-page');
+    const notificationBtn = document.querySelector('#toggle-notification-menu');
+    const closeNotificationsBtn = document.querySelector('#close-notifications-page');
+    const pageContent = document.querySelector('.main-content-container');
 
-    // abre a tela de filtros
-    if (filtersButton) {
-        filtersButton.addEventListener('click', () => {
-            AdjustElementDisplay(filtersScreen, 'inline');
-            AdjustElementOpacity(exerciseGrid, 0.4),
-                exerciseGrid.addEventListener('click', PreventUserClicksOnBody);
-        })
-    }
+    /* menu de filtros */
 
-    if (closeFiltersButton) {
-        // fecha a tela de filtros
-        closeFiltersButton.addEventListener('click', () => {
-            CloseFiltersScreen(filtersScreen, exerciseGrid)
-        })
-    }
+    if (filtersButton) filtersButton.addEventListener('click', () => {
+        // fechar tela de notificações se estiver aberta
+        if (notificationScreen) CloseScreen(notificationScreen, exerciseGrid);
+
+        AdjustElementDisplay(filtersScreen, 'inline');
+        AdjustElementOpacity(exerciseGrid, 0.4);
+        exerciseGrid.addEventListener('click', PreventUserClicksOnBody);
+    });
+
+    // fecha a tela de filtros
+    if (closeFiltersButton) closeFiltersButton.addEventListener('click', () => {
+        CloseScreen(filtersScreen, exerciseGrid);
+    });
+
+
+    /* menu de notificações */
+
+    if (notificationBtn) notificationBtn.addEventListener('click', () => {
+        // fechar tela de filtros se estiver aberta
+        if (filtersScreen) CloseScreen(filtersScreen, pageContent);
+
+        AdjustElementDisplay(notificationScreen, 'inline');
+
+        // se exerciseGrid existir na tela
+        if (exerciseGrid) {
+            exerciseGrid.addEventListener('click', PreventUserClicksOnBody);
+            AdjustElementOpacity(exerciseGrid, 0.4);
+            return;
+        };
+
+        // caso contrário usar pagecontent
+        pageContent.addEventListener('click', PreventUserClicksOnBody);
+        AdjustElementOpacity(pageContent, 0.4);
+    });
+
+    if (closeNotificationsBtn) closeNotificationsBtn.addEventListener('click', () => {
+        if (exerciseGrid) {
+            CloseScreen(notificationScreen, exerciseGrid);
+            return;
+        };
+
+        CloseScreen(notificationScreen, pageContent)
+    });
 })();
-
 
 // função para mostrar / esconder o menu
 
@@ -53,14 +92,22 @@ function CloseFiltersScreen(filtersScreen, exerciseGrid) {
     const buttonShowMenuVisibleClass = 'button-show-menu-is-visible';
     const menuHiddenClass = 'menu-hidden';
 
-    // filters screen 
+    // filters & notification screen 
     const filtersScreen = document.querySelector('.filters-page');
+    const notificationScreen = document.querySelector('.notifications-page');
     const exerciseGrid = document.querySelector('.exercise-container-grid');
+    const pageContent = document.querySelector('.main-content-container');
 
     const showMenu = () => {
         buttonShowMenu.classList.remove(buttonShowMenuVisibleClass);
         menuContainer.classList.remove(menuHiddenClass);
-        CloseFiltersScreen(filtersScreen, exerciseGrid);
+
+        if (exerciseGrid) {
+            CloseScreen(filtersScreen, exerciseGrid);
+            CloseScreen(notificationScreen, exerciseGrid);
+            return;
+        }
+        CloseScreen(notificationScreen, pageContent);
     };
 
     const closeMenu = () => {
@@ -81,6 +128,7 @@ function CloseFiltersScreen(filtersScreen, exerciseGrid) {
     // fechar menu se o usuário começar a digitar algo
     document.addEventListener('keyup', closeMenu);
 })();
+
 
 // função para enviar formulários de logout
 (() => {

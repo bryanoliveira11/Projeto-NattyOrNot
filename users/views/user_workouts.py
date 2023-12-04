@@ -14,6 +14,7 @@ from django.views.generic import DetailView, ListView
 
 from users.forms import CreateWorkoutForm
 from users.models import UserWorkouts
+from utils.get_notifications import get_notifications
 from utils.pagination import make_pagination
 
 WORKOUT_PER_PAGE = environ.get('WORKOUT_PER_PAGE', 10)
@@ -48,9 +49,13 @@ class UserWorkoutsPageClassView(ListView):
             self.request, workouts, WORKOUT_PER_PAGE
         )
 
+        notifications, notifications_total = get_notifications(self.request)
+
         context.update({
             'workouts': page_obj,
             'exercises': page_obj,  # for paginations to work
+            'notifications': notifications,
+            'notification_total': notifications_total,
             'pagination_range': pagination_range,
             'search_form_action': reverse('users:user_workouts_search'),
             'placeholder': 'Pesquise por um Treino',
@@ -84,9 +89,12 @@ class UserWorkoutsPageDetailClassView(DetailView):
 
         workout = context.get('workout_detail')
         title = workout.title if workout else workout
+        notifications, notifications_total = get_notifications(self.request)
 
         context.update({
             'workout': workout,
+            'notifications': notifications,
+            'notification_total': notifications_total,
             'search_form_action': reverse('training:search'),
             'title': f'{title}',
             'page_tag': f'{title}',
@@ -169,8 +177,12 @@ class UserWorkoutBaseClass(View):
         return workout
 
     def render_workout(self, form):  # renderizando página do form
+        notifications, notifications_total = get_notifications(self.request)
+
         return render(self.request, 'users/pages/create_workout.html', context={
             'form': form,
+            'notifications': notifications,
+            'notification_total': notifications_total,
             'title': self.title,
             'captcha_public_key': environ.get('RECAPTCHA_PUBLIC_KEY', ''),
             'captcha_private_key': environ.get('RECAPTCHA_PRIVATE_KEY', ''),

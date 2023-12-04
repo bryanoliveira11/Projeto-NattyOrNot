@@ -1,6 +1,7 @@
 from .api_v1 import *
 from .dashboard import *
 from .dashboard_exercises import *
+from .notifications import *
 from .user_delete_object import *
 from .user_lockout import *
 from .user_profile import *

@@ -16,6 +16,11 @@ class UserProfile(models.Model):
         default='',
         verbose_name='Foto de Perfil'
     )
+    notifications_total = models.IntegerField(
+        null=False,
+        default=0,
+        verbose_name='Notificações não Vistas'
+    )
 
     def __str__(self) -> str:
         return self.user.username
@@ -61,3 +66,27 @@ class UserWorkouts(models.Model):
     class Meta:
         verbose_name = 'Treino'
         verbose_name_plural = 'Treinos'
+
+
+class UserNotifications(models.Model):
+    subject = models.CharField(
+        max_length=155, verbose_name='Assunto', default=''
+    )
+    subject_html = models.CharField(
+        max_length=255, verbose_name='Assunto HTML', default=''
+    )
+    message = models.TextField(verbose_name='Mensagem')
+    send_by = models.CharField(max_length=155, verbose_name='Enviado por')
+    send_to = models.ForeignKey(
+        User, on_delete=models.DO_NOTHING, verbose_name='Enviado para'
+    )
+    send_at = models.DateTimeField(
+        auto_now_add=True, verbose_name='Enviado em'
+    )
+
+    def __str__(self) -> str:
+        return f'Notificação de {self.send_to.username}'
+
+    class Meta:
+        verbose_name = 'Notificação'
+        verbose_name_plural = 'Notificações'
