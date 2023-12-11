@@ -86,7 +86,7 @@ class UserNotifications(models.Model):
     send_by = models.CharField(max_length=155, verbose_name='Enviado por')
     send_to = models.ForeignKey(
         User,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         blank=True,
         verbose_name='Enviado para'
     )
