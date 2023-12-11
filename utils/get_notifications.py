@@ -1,4 +1,4 @@
-# traz as notificação salvas em request pelo middleware de notifications
+# traz as notificações salvas em request pelo middleware de notifications
 # -> users > notification_middleware.py
 def get_notifications(request):
     notifications = getattr(request, 'notifications', [])

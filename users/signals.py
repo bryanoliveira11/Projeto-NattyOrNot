@@ -40,6 +40,13 @@ def create_user_notification(subj, subj_html, msg, send_to, send_by='NattyOrNot'
     )
 
 
+def create_profile(user):
+    return UserProfile.objects.create(
+        user_id=user,
+        profile_picture='',
+    )
+
+
 # exercise approved notification
 @receiver(post_save, sender=Exercises)
 def exercise_published_notification(instance, *args, **kwargs):
@@ -114,8 +121,8 @@ def user_signin_notification(instance, created, *args, **kwargs):
 
 
 @receiver(user_signed_up)
-def check_existing_email(request, user, **kwargs):
-    # Verifique se o usuário se inscreveu usando o Google
+def configure_google_account(request, user, **kwargs):
+    # Verificando se o usuário se inscreveu usando o Google
     google_account = SocialAccount.objects.filter(
         user=user, provider='google'
     ).first()
@@ -125,6 +132,9 @@ def check_existing_email(request, user, **kwargs):
         google_account_email = google_account.extra_data.get(  # type:ignore
             'email'
         )
+
+        # criando perfil para o usuário google
+        create_profile(user=user.id)
 
         if google_account_email:
             # Verificar se o email já está em uso

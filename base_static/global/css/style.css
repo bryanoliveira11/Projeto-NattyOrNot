@@ -1819,7 +1819,7 @@ textarea.api-textarea:focus {
 
   .filters-page,
   .notifications-page {
-    width: 99%;
+    width: 98%;
     top: 23%;
   }
 
@@ -1847,6 +1847,11 @@ textarea.api-textarea:focus {
   .categories-filter,
   .is_published-filter {
     width: 100%;
+  }
+
+  .categories-filter, .is_published-filter {
+    margin: 0.3rem;
+    padding: 0.3rem;
   }
 
   .confirm-buttons {

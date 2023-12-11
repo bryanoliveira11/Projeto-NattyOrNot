@@ -2,7 +2,16 @@
     <div class="notifications-page-flex">
         <div class="notifications-page-title">
             <span>
-                {{notification_total}} Notificações
+                {% if notification_total %}
+                    {{notification_total}}
+                    {% if notification_total > 1 %}
+                    Notificações
+                    {% else %}
+                    Notificação
+                    {% endif %}
+                {% else %}
+                    Notificações
+                {% endif %}
                 <i class="fa-solid fa-bell notifications-bell"></i>
             </span>
         </div>
@@ -21,7 +30,9 @@
                     {{notification.message|safe}}
                 </div>
                 <div class="notification-sendby center">
-                    {{notification.send_by}}
+                    {{notification.send_by}} - 
+                    {{ notification.send_at|date:"d/m/Y" }}
+                    ás {{ notification.send_at|date:"H:i" }}
                 </div>
             </div>
         {% empty %}
