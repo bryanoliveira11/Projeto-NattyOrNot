@@ -40,30 +40,20 @@
     function toggleDarkMode() {
         addClassList(mainContent, 'dark-mode-style');
         addClassList(tableElement, 'dark-mode-table');
-        if (tableTr) {
-            for (const tr of tableTr) addClassList(tr, 'tr-dark');
-        }
-        if (exerciseCardsBackground) {
-            for (const card of exerciseCardsBackground) addClassList(card, 'dark-mode-cards');
-        }
-        if (notifications) {
-            for (const notification of notifications) addClassList(notification, 'dark-mode-style');
-        }
+        // arrays / nodelists
+        nodeListAddClass(tableTr, 'tr-dark');
+        nodeListAddClass(exerciseCardsBackground, 'dark-mode-cards');
+        nodeListAddClass(notifications, 'dark-mode-style');
     }
 
     // remove a classe de dark mode
     function removeDarkMode() {
         removeClassList(mainContent, 'dark-mode-style');
         removeClassList(tableElement, 'dark-mode-table');
-        if (tableTr) {
-            for (const tr of tableTr) removeClassList(tr, 'tr-dark');
-        }
-        if (exerciseCardsBackground) {
-            for (const card of exerciseCardsBackground) removeClassList(card, 'dark-mode-cards');
-        }
-        if (notifications) {
-            for (const notification of notifications) removeClassList(notification, 'dark-mode-style');
-        }
+        // arrays / nodelists
+        nodeListRemoveClass(tableTr, 'tr-dark');
+        nodeListRemoveClass(exerciseCardsBackground, 'dark-mode-cards');
+        nodeListRemoveClass(notifications, 'dark-mode-style');
     }
 
     // muda o ícone da header dinamicamente com base no valor do localstorage
@@ -89,6 +79,18 @@
     // remove uma classe do elemento
     function removeClassList(element, class_to_remove) {
         if (element) element.classList.remove(class_to_remove);
+    }
+
+    function nodeListAddClass(nodelist, class_to_add) {
+        if (nodelist) {
+            for (const element of nodelist) addClassList(element, class_to_add);
+        }
+    }
+
+    function nodeListRemoveClass(nodelist, class_to_remove) {
+        if (nodelist) {
+            for (const element of nodelist) removeClassList(element, class_to_remove);
+        }
     }
 
 })();
