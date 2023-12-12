@@ -27,11 +27,25 @@ class Exercises(models.Model):
     series = models.IntegerField(verbose_name='Séries')
     reps = models.IntegerField(verbose_name='Repetições')
     is_published = models.BooleanField(default=False, verbose_name='Publicado')
+    was_rejected = models.BooleanField(
+        default=False, verbose_name='Rejeitado Anteriormente (NÃO MEXER)'
+    )
+    rejected = models.BooleanField(
+        default=False, verbose_name='Rejeitar (MARQUE PARA REJEITAR)'
+    )
+    extra_info = models.TextField(
+        default='',
+        blank=True,
+        verbose_name='Informações Adicionais (em caso de rejeição)'
+    )
     categories = models.ManyToManyField(
         Categories, blank=True, default='', verbose_name='Categorias'
     )
     created_at = models.DateTimeField(
         auto_now_add=True, blank=True, verbose_name='Criado em'
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True, verbose_name='Alterado em'
     )
     published_by = models.ForeignKey(
         User,

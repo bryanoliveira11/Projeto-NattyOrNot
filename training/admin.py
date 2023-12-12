@@ -5,7 +5,7 @@ from .models import ApiMediaImages, Categories, Exercises
 
 @admin.register(Exercises)
 class ExercisesAdmin(admin.ModelAdmin):
-    list_display = 'id', 'title', 'published_by', 'slug', 'created_at', 'is_published',
+    list_display = 'id', 'title', 'published_by', 'slug', 'created_at', 'updated_at', 'is_published',
     list_display_links = 'id', 'title',
     list_editable = 'is_published',
     search_fields = 'id', 'title', 'description'

@@ -12,7 +12,7 @@ from users.models import UserNotifications, UserProfile
 User = get_user_model()
 
 
-def get_user_data(instance):
+def get_user_by_instance(instance):
     if not instance:
         return
 
@@ -55,7 +55,7 @@ def exercise_published_notification(instance, *args, **kwargs):
         return
 
     # getting user
-    user = get_user_data(instance=instance)
+    user = get_user_by_instance(instance=instance)
 
     # getting url
     exercise_slug = instance.slug
@@ -67,11 +67,44 @@ def exercise_published_notification(instance, *args, **kwargs):
             subj_html='Exercício' '<p class="green-text m-left"> Aprovado. </p>',
             msg='Seu Exercício '
             f'<a class="notification-url" href="{msg_url}">"{instance.title}"</a> '
-            'foi Aprovado e está Sendo Exibido na Home.',
+            'foi <b>Aprovado</b> e está Sendo Exibido na Home.',
             send_to=user,
         )
 
     update_notifications_counter(user)
+
+
+@receiver(post_save, sender=Exercises)
+def exercise_rejected_notification(instance, *args, **kwargs):
+    # do nothing if exercise is published = true
+    if instance.is_published:
+        return
+
+    # rejected = false
+    if not instance.rejected:
+        return
+
+    user = get_user_by_instance(instance=instance)
+    msg_url = reverse('users:edit_exercise', args=(instance.pk,))
+    extra_info = instance.extra_info if instance.extra_info else 'Não informado'
+
+    if user:
+        create_user_notification(
+            subj='Exercício Rejeitado',
+            subj_html='Exercício' '<p class="red-text m-left"> Rejeitado. </p>',
+            msg='Seu Exercício '
+            f'<a class="notification-url" href="{msg_url}">"{instance.title}"</a> '
+            'foi <b>Rejeitado</b> e não Será Exibido no Site, '
+            f'Motivo : {extra_info}.',
+            send_to=user,
+        )
+        ''' setting rejected to be false so the notification will not play again
+            if the user tries to edit the exercise.
+        '''
+        instance.rejected = False
+        # checking was rejected so the admin will know it
+        instance.was_rejected = True
+        instance.save()
 
 
 # exercise created notification
@@ -80,7 +113,7 @@ def exercise_created_notification(instance, created, *args, **kwargs):
     if not created:
         return
 
-    user = get_user_data(instance=instance)
+    user = get_user_by_instance(instance=instance)
     msg_url = reverse('users:edit_exercise', args=(instance.pk,))
 
     if user:
