@@ -31,6 +31,10 @@ def update_notifications_counter(user):
 
 
 def create_user_notification(subj, subj_html, msg, send_to, send_by='NattyOrNot'):
+    # updating notification counter
+    update_notifications_counter(user=send_to)
+
+    # creating notification in the database
     return UserNotifications.objects.create(
         subject=subj,
         subject_html=subj_html,
@@ -70,8 +74,6 @@ def exercise_published_notification(instance, *args, **kwargs):
             'foi <b>Aprovado</b> e está Sendo Exibido na Home.',
             send_to=user,
         )
-
-    update_notifications_counter(user)
 
 
 @receiver(post_save, sender=Exercises)
@@ -126,8 +128,6 @@ def exercise_created_notification(instance, created, *args, **kwargs):
             send_to=user,
         )
 
-    update_notifications_counter(user)
-
 
 # user signin notification
 @receiver(post_save, sender=User)
@@ -149,8 +149,6 @@ def user_signin_notification(instance, created, *args, **kwargs):
             'para Navegar no Site. Bons Treinos !',
             send_to=user,
         )
-
-    update_notifications_counter(user)
 
 
 @receiver(user_signed_up)

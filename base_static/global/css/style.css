@@ -873,7 +873,7 @@ select option:checked {
 
 .notifications-page {
   width: 60rem;
-  max-height: 50rem;
+  max-height: 45rem;
 }
 
 .notifications-page .close-notifications-page {

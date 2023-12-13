@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.forms import ValidationError
 from django.urls import reverse
 from django.utils.text import slugify
 
@@ -64,13 +65,36 @@ class Exercises(models.Model):
     def __str__(self) -> str:
         return self.title
 
+    def clean(self) -> None:
+        clean = super().clean()
+        errors = {}
+        messages = {
+            'UncheckOneError': 'Desmarque o Públicado ou o Rejeitar para Continuar.',
+            'ExtraInfoError': 'Preencha as Informações Adicionais antes de Rejeitar.'
+        }
+
+        # validating other data
+        if self.is_published and self.rejected:
+            errors['is_published'] = messages.get('UncheckOneError')
+            errors['rejected'] = messages.get('UncheckOneError')
+
+        if self.rejected and not self.extra_info:
+            errors['extra_info'] = messages.get('ExtraInfoError')
+
+        if errors:
+            raise ValidationError(errors)
+
+        return clean
+
     def save(self, *args, **kwargs):
+        # creating the slug
         if not self.slug:
             slug = f'{slugify(self.title)}{generate_random_string(length=5)}'
             self.slug = slug
 
         saved = super().save(*args, **kwargs)
 
+        # resizing the cover image
         if self.cover:
             try:
                 resize_image(self.cover, new_width=840)
