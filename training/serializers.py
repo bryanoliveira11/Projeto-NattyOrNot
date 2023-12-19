@@ -54,7 +54,11 @@ class ExercisesSerializer(serializers.ModelSerializer):
                 ...
 
         super_validate = super().validate(attrs)
-        ExerciseValidator(data=attrs, ErrorClass=serializers.ValidationError)
+        ExerciseValidator(
+            data=attrs,
+            ErrorClass=serializers.ValidationError,
+            isApi=True
+        )
         return super_validate
 
     def save(self, **kwargs):

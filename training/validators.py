@@ -7,10 +7,11 @@ from utils.django_forms import is_positive_number
 
 # essa classe é responsável por validar o form para os exercícios
 class ExerciseValidator:
-    def __init__(self, data, errors=None, ErrorClass=None) -> None:
+    def __init__(self, data, errors=None, ErrorClass=None, isApi=False) -> None:
         self.errors = defaultdict(list) if errors is None else errors
         self.ErrorClass = ValidationError if ErrorClass is None else ErrorClass
         self.data = data
+        self.isApi = isApi
         self.clean()
 
     def validate_min_length(self, field_name, field_value, min_length):
@@ -56,7 +57,7 @@ class ExerciseValidator:
             )
 
         # validando categorias
-        if not categories:
+        if not categories and not self.isApi:
             self.errors['categories'].append(
                 'Escolha ao menos uma categoria.'
             )

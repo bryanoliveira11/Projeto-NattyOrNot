@@ -32,6 +32,9 @@ class ExercisesApiV1ViewSet(ModelViewSet):
         exercise = Exercises.objects.filter(pk=self.kwargs.get('pk'))
         self.queryset = exercise
 
+        if not exercise:
+            return
+
         # validando exercício públicado
         if exercise.first().is_published:  # type:ignore
             raise ValidationError(
