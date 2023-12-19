@@ -1318,6 +1318,7 @@ td a:hover {
 
 .pagination .page-current {
   background: var(--color-primary);
+  border: 2px solid var(--color-primary);
 }
 
 .pagination-arrow {
@@ -1328,7 +1329,7 @@ td a:hover {
 
 .pagination-arrow:hover {
   color: var(--color-primary);
-  scale: 1.05;
+  scale: 1.08;
 }
 
 /* api page */
