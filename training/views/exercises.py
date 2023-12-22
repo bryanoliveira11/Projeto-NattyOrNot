@@ -8,13 +8,12 @@ from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.http import Http404
 from django.shortcuts import render
-from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView, View
 
+from training.contexts.training_base_contexts import get_home_page_base_context
 from training.models import ApiMediaImages, Categories, Exercises
 from utils.api_exercises_json import exercises_json
-from utils.get_notifications import get_notifications
 from utils.pagination import make_pagination
 
 PER_PAGE = environ.get('HOME_PER_PAGE', 8)
@@ -42,25 +41,21 @@ class ExerciseBaseClassView(ListView):
         exercises = context.get('training')
         categories = Categories.objects.all()
 
-        notifications, notifications_total = get_notifications(self.request)
-
         # paginação
         page_obj, pagination_range = make_pagination(
             self.request, exercises, PER_PAGE
         )
 
+        context.update(
+            get_home_page_base_context(self.request, is_home_page=True)
+        )
+
         context.update({
             'exercises': page_obj,
             'categories': categories,
-            'notifications': notifications,
-            'notification_total': notifications_total,
             'pagination_range': pagination_range,
-            'search_form_action': reverse('training:search'),
-            'is_home_page': True,
             'title': 'Home',
             'page_tag': 'Home - Exercícios',
-            'placeholder': 'Pesquise por um Exercício ou Categoria',
-            'additional_search_placeholder': 'na Home',
         })
 
         return context
@@ -179,18 +174,14 @@ class ExerciseDetailClassView(DetailView):
 
         exercise = context.get('exercise_detail')
 
-        notifications, notifications_total = get_notifications(self.request)
+        context.update(get_home_page_base_context(
+            self.request, is_detail_page=True
+        ))
 
         context.update({
             'exercise': exercise,
-            'notifications': notifications,
-            'notification_total': notifications_total,
-            'search_form_action': reverse('training:search'),
             'title': f'{exercise}',
             'page_tag': f'{exercise}',
-            'placeholder': 'Pesquise por um Exercício ou Categoria',
-            'additional_search_placeholder': 'na Home',
-            'is_detail_page': True,
         })
 
         return context
@@ -217,16 +208,15 @@ class ApiExplanationClassView(View):
             exercises_json, indent=1, ensure_ascii=False
         )
 
-        notifications, notifications_total = get_notifications(self.request)
+        context = get_home_page_base_context(self.request)
 
-        return render(self.request, 'training/pages/nattyornot_api.html', context={
-            'notifications': notifications,
-            'notification_total': notifications_total,
+        context.update({
             'title': title,
             'page_tag': title,
-            'search_form_action': reverse('training:search'),
-            'placeholder': 'Pesquise por um Exercício ou Categoria',
-            'additional_search_placeholder': 'na Home',
             'exercises_json': exercises_json_dumped,
             'api_images': api_media_dict,
         })
+
+        return render(
+            self.request, 'training/pages/nattyornot_api.html', context=context
+        )
