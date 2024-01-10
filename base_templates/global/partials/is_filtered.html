@@ -1,0 +1,16 @@
+<span class="home-remove-filter">
+    {% if is_home_page %}
+        <a href="{% url 'training:home' %}">
+    {% endif %}
+
+    {% if is_dashboard_page %}
+        <a href="{% url 'users:user_dashboard' %}">
+    {% endif %}
+    
+    {% if is_workout_page %}
+        <a href="{% url 'users:user_workouts' %}">     
+    {% endif %}
+        Remover Filtro
+        <i class="fa-solid fa-delete-left"></i>
+    </a>
+</span>

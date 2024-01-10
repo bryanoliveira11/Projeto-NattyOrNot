@@ -9,6 +9,11 @@
             <i class="fa-solid fa-clipboard-user"></i>
             {{page_tag}}
         </h2>
+
+        {% if is_filtered %}
+            {% include "global/partials/is_filtered.html" %}
+        {% endif %}
+
         <div class="dashboard-message-padding">
             {% include "global/partials/messages.html" %}
         </div>
@@ -51,7 +56,7 @@
                     </td>
                     <td class="workout-delete-form">
                         <a href="{% url 'users:user_workout_delete' workout.pk %}" class="workout-delete center">
-                            <i class="fa-solid fa-trash-can"></i>
+                            <i class="fa-solid fa-trash-can" title="Deletar"></i>
                         </a>
                     </td>
                   </tr>

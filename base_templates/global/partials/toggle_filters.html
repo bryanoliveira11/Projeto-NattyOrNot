@@ -1,0 +1,8 @@
+<div class="dash-filters form-tag">
+    <div class="toggle-filters">
+        <h2 class="filters-button">Filtros <i class="fa-solid fa-sliders"></i></h2>
+    </div>
+    {% if is_filtered %}
+        | {% include "global/partials/is_filtered.html" %}
+    {% endif %}
+</div>

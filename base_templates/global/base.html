@@ -10,10 +10,10 @@
     {% include "global/partials/header.html" %}
     <main class="main-content-container">
         {% block content %}{% endblock content %}
+        {% include "global/partials/pagination.html" %}
     </main>
 
-<a class="back-to-top" href="#">➤</a>
-{% include "global/partials/pagination.html" %}
+<a class="back-to-top" href="#" title="Voltar ao Topo">➤</a>
 {% include "global/partials/footer.html" %}
 <script src="{% static 'global/js/darkmode.js' %}"></script>
 <script src="{% static 'global/js/scripts.js' %}"></script>

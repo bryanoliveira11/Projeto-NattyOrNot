@@ -80,6 +80,7 @@ function CloseScreen(screen_to_close, background) {
 
         CloseScreen(notificationScreen, pageContent)
     });
+
 })();
 
 // função para mostrar / esconder o menu
@@ -125,8 +126,15 @@ function CloseScreen(screen_to_close, background) {
         buttonCloseMenu.addEventListener('click', closeMenu);
     };
 
-    // fechar menu se o usuário começar a digitar algo
-    document.addEventListener('keyup', closeMenu);
+    // fechar menu ao clicar na tela
+    pageContent.addEventListener('click', () => {
+        closeMenu();
+    })
+
+    // fechar menu ao clicar no footer
+    document.querySelector('.main-footer').addEventListener('click', () => {
+        closeMenu();
+    })
 })();
 
 
@@ -136,7 +144,7 @@ function CloseScreen(screen_to_close, background) {
     const formLogout = document.querySelector('.form-logout');
 
     for (const link of linksLogout) {
-        link.addEventListener('click', (e) => {
+        link.addEventListener('click', e => {
             e.preventDefault();
             formLogout.submit();
         })
@@ -171,6 +179,19 @@ function CloseScreen(screen_to_close, background) {
         }
         is_password_visible = !is_password_visible;
     });
+})();
+
+
+// remover flash messages da tela
+(() => {
+    const dismissMessageBtn = document.querySelector('.dismiss-flash-message')
+    const message = document.querySelector('.message')
+
+    if (message && dismissMessageBtn) {
+        dismissMessageBtn.addEventListener('click', () => {
+            message.style.display = 'none';
+        });
+    };
 })();
 
 
