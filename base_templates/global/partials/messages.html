@@ -2,7 +2,21 @@
     <div class="main-content center container messages-container">
         {% for message in messages  %}
             <div class="message {{message.tags}}" title="{{message}}">
-                {{message}}
+                <div class="message-content">
+                    {% if 'message-success' in message.tags %}
+                        <i class="fa-regular fa-circle-check icon-shake"></i>
+                    {% endif %}
+                    {% if 'message-error' in message.tags %}
+                        <i class="fa-regular fa-circle-xmark icon-shake"></i>
+                    {% endif %}
+                    {% if 'message-info' in message.tags %}
+                        <i class="fa-solid fa-circle-info icon-shake"></i>
+                    {% endif %}
+                    {% if 'message-warning' in message.tags %}
+                        <i class="fa-solid fa-triangle-exclamation icon-shake"></i>
+                    {% endif %}
+                    {{message}}
+                </div>
                 <i class="fa-solid fa-xmark dismiss-flash-message" title="Remover Notificação"></i>
             </div>
         {% endfor %}

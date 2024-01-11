@@ -22,6 +22,7 @@
   border: 1px solid var(--color-dark-text);
   background: var(--color-gray-1);
   color: var(--color-dark-text);
+  font-size: 1.8rem;
 }
 
 .message-disqus {
@@ -29,8 +30,8 @@
 }
 
 .dismiss-flash-message {
-  font-size: 1.9rem;
   transition: all 200ms ease-in-out;
+  order: 2;
 }
 
 .dismiss-flash-message:hover {
@@ -39,27 +40,36 @@
 }
 
 .message-error {
-  border: 1px solid var(--color-error-dark);
-  background: var(--color-error-light);
-  color: var(--color-error-dark);
+  border: 1px solid #f10606cf;
+  background-color: #dc110129;
+  box-shadow: 0px 0px 2px #ff0303;
+  color: #e46b6b;
 }
 
 .message-success {
-  border: 1px solid var(--color-success-dark);
-  background: var(--color-success-light);
-  color: var(--color-success-dark);
+  border: 1px solid #24f10675;
+  background: #0795421f;
+  box-shadow: 0px 0px 2px #259c08;
+  color: #4ae647;
 }
 
 .message-warning {
-  border: 1px solid var(--color-warning-dark);
-  background: var(--color-warning-light);
-  color: var(--color-warning-dark);
+  border: 1px solid #f18e06cf;
+  background-color: #dc800129;
+  box-shadow: 0px 0px 2px #ffb103;
+  color: #ffb103;
+  transition: 0.5s;
 }
 
 .message-info {
-  border: 1px solid var(--color-info-dark);
-  background: var(--color-info-light);
-  color: var(--color-info-dark);
+  border: 1px solid #062cf175;
+  background-color: #0749951f;
+  box-shadow: 0px 0px 2px #0396ff;
+  color: #0396ff;
+}
+
+.icon-shake {
+  margin-right: 0.5rem;
 }
 
 .login-message {
