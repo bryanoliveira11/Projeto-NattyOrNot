@@ -1,0 +1,58 @@
+@import url(root.css);
+
+/* dashboard */
+.dashboard-exercise-title {
+  padding: 0.5rem;
+}
+
+.exercise-created-at span {
+  padding: 0.2rem;
+}
+
+.exercise-dashboard-footer {
+  display: flex;
+}
+
+.exercise-dashboard-footer a {
+  color: var(--color-white);
+  text-decoration: none;
+  padding: calc(var(--spacing-gutter-medium) / 2);
+  transition: all 300ms ease-in-out;
+  border: none;
+  width: 100%;
+  font-size: 1.7rem;
+}
+
+.exercise-dashboard-footer a {
+  background: var(--color-primary);
+  width: 80%;
+}
+
+.delete-page .open-delete-page {
+  top: 1;
+  position: absolute;
+  max-width: 20%;
+  background: var(--color-error-dark);
+}
+
+.exercise-dashboard-footer a:hover {
+  cursor: pointer;
+}
+
+.exercise-dashboard-footer a:hover {
+  background: var(--color-primary);
+}
+
+.delete-page .open-delete-page:hover {
+  background: var(--color-error-dark-hover);
+}
+
+.dashboard-tag,
+.dashboard-forms {
+  padding: 0;
+  margin-bottom: 0.7rem;
+}
+
+.dashboard-message-padding {
+  padding-bottom: 2.5rem;
+}

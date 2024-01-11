@@ -1,0 +1,58 @@
+@import url(root.css);
+
+/* delete page */
+
+.delete-confirm-tag {
+  margin-top: 3rem;
+}
+
+.delete-confirm-tag h3 {
+  font-size: 1.8rem;
+}
+
+.delete-confirm-tag img {
+  margin: 0 auto;
+  padding: 1rem;
+  max-width: 44rem;
+}
+
+.confirm-buttons {
+  margin: 3rem auto;
+  max-width: 64rem;
+}
+
+.confirm-buttons-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+}
+
+.confirm-buttons .delete-yes {
+  background: var(--color-success);
+  margin-right: 1rem;
+  outline: 0;
+  border: 0;
+}
+
+.confirm-buttons .delete-no {
+  background: var(--color-error-dark);
+  margin-left: 1rem;
+}
+
+.confirm-buttons .delete-yes,
+.confirm-buttons .delete-no {
+  font-weight: 600;
+  font-size: 1.6rem;
+  padding: 0.7rem;
+  border-radius: 0.4rem;
+  color: var(--color-white);
+  transition: all 300ms ease-in-out;
+  text-align: center;
+}
+
+.confirm-buttons .delete-yes:hover,
+.confirm-buttons .delete-no:hover {
+  filter: brightness(0.8);
+  cursor: pointer;
+}

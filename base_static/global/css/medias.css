@@ -1,0 +1,212 @@
+@import url(root.css);
+
+/* medias */
+@media (max-width: 1620px) {
+  .back-to-top {
+    bottom: 1rem;
+    right: 1rem;
+  }
+}
+
+@media (max-width: 750px) {
+  .main-content-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .exercise-container-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-gutter-medium);
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .main-header-content span {
+    font-size: 2.5rem;
+  }
+
+  .main-logo.logo img {
+    margin: 0 0.7rem 0.3rem 0;
+  }
+
+  .shortcuts-container span {
+    font-size: 1.3rem;
+  }
+
+  .form-content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+    gap: calc(var(--spacing-gutter-medium) / 2);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .form-content {
+    display: block;
+    padding: 0;
+    width: 100%;
+  }
+
+  .form-group {
+    margin-top: 1rem;
+  }
+
+  .help-text {
+    font-size: 1.4rem;
+    width: 100%;
+    text-align: left;
+  }
+
+  .errorlist li {
+    margin-bottom: 0.3rem;
+  }
+
+  .messages-container {
+    max-width: 91%;
+  }
+
+  .main-content-error-page {
+    margin: 0 auto;
+  }
+
+  .main-content-error-page img {
+    margin: 0 auto;
+    width: 100%;
+    padding: 0;
+    max-width: 40rem;
+  }
+
+  .main-content-error-page h2 {
+    font-size: 2rem;
+  }
+
+  .main-content-error-page h3 {
+    font-size: 1.4rem;
+  }
+
+  .message-form,
+  .btn-google-signin {
+    width: 75%;
+  }
+
+  .btn-google-signin.profile {
+    width: 100%;
+  }
+
+  .p-b {
+    padding-bottom: 1rem;
+  }
+
+  .captcha-centered {
+    margin-top: 6.2rem;
+  }
+
+  .captcha-form .errorlist {
+    margin-top: 8rem;
+  }
+
+  table {
+    border: 0;
+    font-size: 2rem;
+  }
+
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  table tr {
+    border-bottom: 3px solid var(--color-gray-2);
+    display: block;
+    margin-bottom: 0.625em;
+  }
+
+  table td {
+    border-bottom: 1px solid var(--color-gray-2);
+    display: block;
+    font-size: 0.8em;
+    text-align: left;
+  }
+
+  table td::before {
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
+
+  .workout-delete-form {
+    align-items: start;
+    justify-content: start;
+  }
+
+  .filters-page,
+  .notifications-page {
+    width: 98%;
+    top: 35%;
+  }
+
+  .filters-page-flex {
+    margin: 0;
+  }
+
+  .filters-page-title span,
+  .notifications-page-title span {
+    font-size: 1.8rem;
+  }
+
+  .close-filters-page,
+  .close-notifications-page {
+    font-size: 2.5rem;
+  }
+
+  .filters-container-flex,
+  .notifications-page-flex {
+    display: flex;
+  }
+
+  .categories-list,
+  .published-list,
+  .categories-filter,
+  .is_published-filter {
+    width: 100%;
+  }
+
+  .categories-filter,
+  .is_published-filter {
+    margin: 0.3rem;
+    padding: 0.3rem;
+  }
+
+  .confirm-buttons {
+    width: 95%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .g-recaptcha {
+    transform: scale(0.77);
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 380px) {
+  .main-footer {
+    display: block;
+    text-align: center;
+  }
+}

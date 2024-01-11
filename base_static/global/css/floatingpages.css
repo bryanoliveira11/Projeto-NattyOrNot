@@ -1,0 +1,209 @@
+@import url(root.css);
+
+/* filters & notifications page */
+
+.filters-page {
+  width: 50rem;
+  max-height: 40rem;
+  text-transform: capitalize;
+}
+
+.notifications-page {
+  width: 60rem;
+  max-height: 45rem;
+}
+
+.notifications-page .close-notifications-page {
+  align-items: end;
+  justify-content: end;
+}
+
+.fa-bell.notifications-bell {
+  font-size: 2rem;
+  margin-left: 0.4rem;
+}
+
+.filters-page,
+.notifications-page {
+  top: 28%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  padding: 1rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  position: fixed;
+  display: none;
+  background: var(--color-primary);
+  margin: 2.5rem auto;
+  border-radius: 0.4rem;
+  z-index: 3;
+  transition: all 150ms ease-in-out;
+  font-family: var(--font-primary);
+  color: var(--color-white);
+  box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.4);
+}
+
+.toggle-filters {
+  padding: 0.3rem;
+}
+
+.toggle-filters h2 {
+  margin-right: 1rem;
+  font-size: 1.7rem;
+  transition: all 100ms ease-in-out;
+}
+
+.toggle-filters h2:hover {
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.dash-filters {
+  display: flex;
+  width: fit-content;
+  margin: 0 auto 1rem auto;
+}
+
+.dash-filters span {
+  font-family: var(--font-headings);
+}
+
+.filters-page-flex,
+.notifications-page-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 2rem 0 2rem;
+}
+
+.filters-page-title,
+.notifications-page-title {
+  text-align: left;
+  width: 80%;
+}
+
+.filters-page-title span,
+.notifications-page-title span {
+  font-size: 2rem;
+}
+
+.close-filters-page,
+.close-notifications-page {
+  text-align: right;
+  width: 20%;
+  padding: 1rem;
+  font-size: 3rem;
+}
+
+.close-filters-page .fa-xmark,
+.close-notifications-page .fa-xmark {
+  transition: all 150ms ease-in-out;
+}
+
+.close-filters-page .fa-xmark:hover,
+.close-notifications-page .fa-xmark:hover {
+  cursor: pointer;
+  scale: 1.2;
+}
+
+.filters-container-flex {
+  width: 100%;
+  display: flex;
+}
+
+.categories-filter,
+.is_published-filter {
+  display: block;
+  font-size: 2rem;
+  padding: 1rem;
+  text-align: left;
+  width: 50%;
+  margin-left: 1rem;
+}
+
+.categories-list,
+.published-list {
+  margin: 1rem 0 0 1.5rem;
+}
+
+.categories-list a,
+.published-list a {
+  color: var(--color-white);
+  transition: all 150ms ease-in-out;
+}
+
+.categories-list a:hover,
+.published-list a:hover {
+  color: var(--color-gray-1);
+  border-bottom: 1px solid var(--color-white);
+}
+
+.categories-filter.home-page,
+.categories-list.home-page {
+  width: 100%;
+  text-align: left;
+}
+
+/* notifications container */
+
+.notifications-container {
+  width: 100%;
+  display: block;
+}
+
+.no-notifications {
+  padding: 2rem;
+  font-size: 2rem;
+}
+
+.notification {
+  background: var(--clr-white-background);
+  color: var(--color-dark-text);
+  padding-bottom: 1rem;
+  margin: 1.3rem;
+  border-radius: 0.3rem;
+  transition: all 300ms ease-in-out;
+}
+
+.notification-subject {
+  display: flex;
+  align-items: start;
+  padding: 1rem;
+  font-weight: 700;
+}
+
+.notification-message {
+  margin: 0 auto;
+  padding: 0 1rem 0 1rem;
+}
+
+.notification-sendby {
+  padding: 1rem 0 0.5rem 0;
+}
+
+a.notification-url {
+  color: var(--color-primary);
+  transition: all 150ms ease-in-out;
+}
+
+a.notification-url:hover {
+  filter: brightness(0.8);
+}
+
+.notifications-dismiss button {
+  font-size: 1.8rem;
+  padding: 1rem;
+  background: var(--color-success);
+  transition: all 300ms ease-in-out;
+  margin: 0 auto;
+  width: 95%;
+}
+
+.notifications-dismiss button:hover {
+  color: var(--color-white);
+  background: var(--color-success-dark);
+}
+
+.white-text {
+  color: var(--color-white);
+}

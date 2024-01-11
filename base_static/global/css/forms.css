@@ -1,0 +1,134 @@
+@import url(root.css);
+
+/* form */
+.main-form {
+  padding-top: 0;
+}
+
+.form-content {
+  max-width: 64rem;
+  margin: 0 auto;
+  margin-bottom: var(--spacing-gutter-medium);
+}
+
+.form-tag {
+  margin: 2rem 2rem 0.5rem 2rem;
+  font-size: 2.2rem;
+  padding: 0 0 1rem 0;
+}
+
+.form-content label,
+.form-content .help_text,
+.errorlist {
+  display: block;
+  margin: 0.3rem 0;
+  font-size: 1.4rem;
+  list-style: none;
+}
+
+.help-text {
+  padding: 0.4rem 0 0 0;
+  font-size: 1.4rem;
+}
+
+.errorlist li {
+  padding: 0.3rem;
+  font-size: 1.4rem;
+}
+
+.errorlist {
+  color: var(--color-error-dark);
+}
+
+.form-content input,
+.form-content textarea,
+.form-content select {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.4rem;
+  border: 1px solid var(--color-primary);
+}
+
+select option:hover,
+select option:checked {
+  box-shadow: 0 0 10px 100px #fa8a3f inset;
+}
+
+.form-content input:focus,
+#id_description:focus {
+  outline: var(--color-primary-hover) solid 1px;
+}
+
+.form-content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  gap: calc(var(--spacing-gutter-medium) / 2);
+}
+
+.form-content-grid.login {
+  margin-bottom: 0;
+  margin-top: 2rem;
+}
+
+.form-image {
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.form-content button {
+  padding: 1rem 2rem;
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  background: var(--color-primary);
+  color: var(--color-white);
+  width: 100%;
+  transition: all 300ms ease-in-out;
+}
+
+.form-content button:hover {
+  background: var(--color-primary-hover);
+}
+
+.plaintext-button {
+  display: inline;
+  border: none;
+  background: none;
+  color: var(--color-primary);
+  font-size: 1.6rem;
+}
+
+.plaintext-button:hover {
+  cursor: pointer;
+  color: var(--color-primary-hover);
+}
+
+.inline-form {
+  display: inline;
+}
+
+.show-password-container {
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  margin: 0 auto;
+  padding: 1rem 0 1rem 0;
+  max-width: 64rem;
+}
+
+.show-password {
+  margin: 0 0.5rem 0.1rem 0;
+  cursor: pointer;
+  font-size: 1.4rem;
+}
+
+.show-password:hover {
+  filter: brightness(1.1);
+}
+
+#show-password-text {
+  text-decoration: none;
+}

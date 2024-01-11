@@ -16,10 +16,24 @@ function AdjustElementDisplay(element, value) {
     if (element) element.style.display = value;
 }
 
+// adicionar animação de fadeIn nas telas
+function ToggleFadeInAnimation(screen) {
+    screen.classList.add('fadeIn-screen');
+    AdjustElementDisplay(screen, 'inline');
+}
+
+// settar display para none ao final de uma animação
+function ChangeDisplayAnimationEnd(element) {
+    element.addEventListener('animationend', () => {
+        element.style.display = 'none';
+    }, { once: true });
+}
+
 // fechar telas que 'flutuam' na página
 function CloseScreen(screen_to_close, background) {
     if (screen_to_close && background) {
-        AdjustElementDisplay(screen_to_close, 'none');
+        screen_to_close.classList.remove('fadeIn-screen');
+        screen_to_close.style.display = 'none';
         AdjustElementOpacity(background, 1);
         background.removeEventListener('click', PreventUserClicksOnBody);
     }
@@ -41,6 +55,8 @@ function CloseScreen(screen_to_close, background) {
         // fechar tela de notificações se estiver aberta
         if (notificationScreen) CloseScreen(notificationScreen, exerciseGrid);
 
+        // animação de fadeIn
+        ToggleFadeInAnimation(filtersScreen);
         AdjustElementDisplay(filtersScreen, 'inline');
         AdjustElementOpacity(exerciseGrid, 0.4);
         exerciseGrid.addEventListener('click', PreventUserClicksOnBody);
@@ -58,7 +74,8 @@ function CloseScreen(screen_to_close, background) {
         // fechar tela de filtros se estiver aberta
         if (filtersScreen) CloseScreen(filtersScreen, pageContent);
 
-        AdjustElementDisplay(notificationScreen, 'inline');
+        // animação de fadeIn
+        ToggleFadeInAnimation(notificationScreen);
 
         // se exerciseGrid existir na tela
         if (exerciseGrid) {
@@ -78,7 +95,7 @@ function CloseScreen(screen_to_close, background) {
             return;
         };
 
-        CloseScreen(notificationScreen, pageContent)
+        CloseScreen(notificationScreen, pageContent);
     });
 
 })();
@@ -127,14 +144,15 @@ function CloseScreen(screen_to_close, background) {
     };
 
     // fechar menu ao clicar na tela
-    pageContent.addEventListener('click', () => {
-        closeMenu();
-    })
+    pageContent.addEventListener('click', closeMenu);
 
     // fechar menu ao clicar no footer
-    document.querySelector('.main-footer').addEventListener('click', () => {
-        closeMenu();
-    })
+    const footer = document.querySelector('.main-footer');
+    if (footer) footer.addEventListener('click', closeMenu);
+
+    // fechar menu ao abrir notifications
+    const notificationMenu = document.querySelector('#toggle-notification-menu');
+    if (notificationMenu) notificationMenu.addEventListener('click', closeMenu);
 })();
 
 
@@ -184,14 +202,20 @@ function CloseScreen(screen_to_close, background) {
 
 // remover flash messages da tela
 (() => {
-    const dismissMessageBtn = document.querySelector('.dismiss-flash-message')
-    const message = document.querySelector('.message')
+    const dismissMessageBtns = document.querySelectorAll('.dismiss-flash-message');
 
-    if (message && dismissMessageBtn) {
-        dismissMessageBtn.addEventListener('click', () => {
-            message.style.display = 'none';
-        });
-    };
+    if (dismissMessageBtns) {
+        for (const btn of dismissMessageBtns) {
+            btn.addEventListener('click', () => {
+                const parentElement = btn.parentElement;
+
+                if (parentElement.classList.contains('message')) {
+                    parentElement.classList.add('hide-message');
+                    ChangeDisplayAnimationEnd(parentElement);
+                }
+            })
+        }
+    }
 })();
 
 

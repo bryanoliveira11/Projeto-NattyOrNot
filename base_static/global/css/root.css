@@ -1,0 +1,49 @@
+/* vars */
+:root {
+  --color-primary: #fa8a3f;
+  --color-primary-light: #d39161;
+  --color-primary-hover: #b85a1c;
+  --color-primary-dark: #13141f;
+  --color-primary-dark-hover: #212336;
+  --color-white: #fff;
+  --clr-white-background: #f5f5ff;
+  --clr-dark-background: #313136;
+  --color-black: #000;
+  --color-dark-text: #444;
+  --color-info-dark: #4d86c4;
+  --color-debug-dark: #4d86c4;
+  --color-success-dark: #4a9c5d;
+  --color-success: #5bc273;
+  --color-alert-dark: #927f40;
+  --color-warning-dark: #b9a14f;
+  --color-error-dark: #da525d;
+  --color-error-dark-hover: #7a3036;
+  --color-error-dark-transparent: #da525d6b;
+
+  --color-info-light: #cce5ff;
+  --color-debug-light: #cce5ff;
+  --color-success-light: #d4edda;
+  --color-alert-light: #fff3cd;
+  --color-warning-light: #fff3cd;
+  --color-error-light: #f8d7da;
+
+  --color-gray-0: #f3f1f1;
+  --color-gray-1: #dfdede;
+  --color-gray-2: #c7c7c7;
+  --color-gray-3: #aeaeae;
+  --color-gray-4: #959595;
+  --color-gray-5: #7d7d7d;
+  --color-gray-6: #646464;
+  --color-gray-7: #4b4b4b;
+  --color-gray-8: #323232;
+  --color-gray-9: #191919;
+
+  --color-primary-dark-shadow: #13141f96;
+
+  --font-primary: sans-serif;
+  --font-headings: "Roboto Slab", serif;
+
+  --spacing-gutter-medium: 1.7rem;
+  --spacing-gutter-large: 3rem;
+  --spacing-gutter-extra-large: 4rem;
+}

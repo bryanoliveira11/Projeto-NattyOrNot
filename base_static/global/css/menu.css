@@ -1,0 +1,106 @@
+@import url(root.css);
+
+/* menu */
+.hidden-text {
+  visibility: hidden;
+  display: none;
+}
+
+.menu-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 26rem;
+  min-height: 100vh;
+  overflow-y: auto;
+  z-index: 2;
+  background: var(--color-primary);
+  transition: all 300ms ease-in-out;
+}
+
+.menu-hidden {
+  left: -255px;
+}
+
+.button-show-menu {
+  position: fixed;
+  left: 265px;
+  top: 2rem;
+  color: var(--color-white);
+  background: var(--color-primary);
+  border: none;
+  font-size: 2rem;
+  z-index: 3;
+  padding: 1rem;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 300ms ease-in-out;
+  border-radius: 0 0.4rem 0.4rem 0;
+  cursor: pointer;
+}
+
+.button-show-menu:hover {
+  scale: 1.2;
+}
+
+.button-show-menu-is-visible {
+  visibility: visible;
+  opacity: 1;
+  left: 0.5rem;
+}
+
+.button-close-menu {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: var(--color-white);
+  background: none;
+  border: none;
+  font-size: 2.2rem;
+  z-index: 3;
+  cursor: pointer;
+  transition: all 300ms ease-in-out;
+  margin-top: 0.6rem;
+}
+
+.button-close-menu:hover {
+  scale: 1.2;
+}
+
+.menu-nav {
+  display: flex;
+  flex-flow: column wrap;
+  font-family: var(--font-headings);
+  font-size: 2rem;
+}
+
+.menu-nav a {
+  width: fit-content;
+  color: var(--color-white);
+  transition: all 50ms ease-in-out;
+}
+
+.menu-nav a:hover {
+  color: var(--color-gray-1);
+  border-bottom: 2px solid var(--color-white);
+}
+
+.menu-link {
+  font-size: 2.2rem;
+  padding: 1.5rem;
+  max-width: 25rem;
+}
+
+.menu-link i {
+  margin-right: 0.5rem;
+}
+
+.menu-link.hello {
+  color: var(--color-white);
+}
+
+.menu-link.hello img {
+  max-width: 3rem;
+  margin: 0 1rem 0.7rem 0;
+}

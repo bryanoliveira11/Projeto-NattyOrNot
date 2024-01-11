@@ -1,0 +1,29 @@
+/* keyframes */
+
+@keyframes messageFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+.hide-message {
+  animation: messageFadeOut 0.5s ease-in-out;
+}
+
+@keyframes screenFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeIn-screen {
+  animation: screenFadeIn 0.3s ease-in-out;
+}
