@@ -33,7 +33,7 @@ function ChangeDisplayAnimationEnd(element) {
 function CloseScreen(screen_to_close, background) {
     if (screen_to_close && background) {
         screen_to_close.classList.remove('fadeIn-screen');
-        screen_to_close.style.display = 'none';
+        AdjustElementDisplay(screen_to_close, 'none');
         AdjustElementOpacity(background, 1);
         background.removeEventListener('click', PreventUserClicksOnBody);
     }
@@ -57,7 +57,6 @@ function CloseScreen(screen_to_close, background) {
 
         // animação de fadeIn
         ToggleFadeInAnimation(filtersScreen);
-        AdjustElementDisplay(filtersScreen, 'inline');
         AdjustElementOpacity(exerciseGrid, 0.4);
         exerciseGrid.addEventListener('click', PreventUserClicksOnBody);
     });
