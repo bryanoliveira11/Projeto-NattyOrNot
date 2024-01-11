@@ -16,12 +16,6 @@ function AdjustElementDisplay(element, value) {
     if (element) element.style.display = value;
 }
 
-// adicionar animação de fadeIn nas telas
-function ToggleFadeInAnimation(screen) {
-    screen.classList.add('fadeIn-screen');
-    AdjustElementDisplay(screen, 'inline');
-}
-
 // settar display para none ao final de uma animação
 function ChangeDisplayAnimationEnd(element) {
     element.addEventListener('animationend', () => {
@@ -32,7 +26,6 @@ function ChangeDisplayAnimationEnd(element) {
 // fechar telas que 'flutuam' na página
 function CloseScreen(screen_to_close, background) {
     if (screen_to_close && background) {
-        screen_to_close.classList.remove('fadeIn-screen');
         AdjustElementDisplay(screen_to_close, 'none');
         AdjustElementOpacity(background, 1);
         background.removeEventListener('click', PreventUserClicksOnBody);
@@ -55,8 +48,7 @@ function CloseScreen(screen_to_close, background) {
         // fechar tela de notificações se estiver aberta
         if (notificationScreen) CloseScreen(notificationScreen, exerciseGrid);
 
-        // animação de fadeIn
-        ToggleFadeInAnimation(filtersScreen);
+        AdjustElementDisplay(filtersScreen, 'inline');
         AdjustElementOpacity(exerciseGrid, 0.4);
         exerciseGrid.addEventListener('click', PreventUserClicksOnBody);
     });
@@ -73,8 +65,7 @@ function CloseScreen(screen_to_close, background) {
         // fechar tela de filtros se estiver aberta
         if (filtersScreen) CloseScreen(filtersScreen, pageContent);
 
-        // animação de fadeIn
-        ToggleFadeInAnimation(notificationScreen);
+        AdjustElementDisplay(notificationScreen, 'inline');
 
         // se exerciseGrid existir na tela
         if (exerciseGrid) {
