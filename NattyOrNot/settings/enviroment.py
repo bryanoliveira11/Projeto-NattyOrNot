@@ -15,10 +15,9 @@ SECRET_KEY = environ.get('SECRET_KEY', 'INSECURE')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if environ.get('DEBUG') == '0' else True
 
-ALLOWED_HOSTS: List = [environ.get('RECAPTCHA_DOMAIN', '')]
-
 ALLOWED_HOSTS: List = [environ.get(
-    'RECAPTCHA_DOMAIN', 'www.nattyornot.online')]
+    'RECAPTCHA_DOMAIN', 'www.nattyornot.online'
+)]
 
 CSRF_TRUSTED_ORIGINS: List = [environ.get(
     'CSRF_TRUSTED_ORIGINS', '')

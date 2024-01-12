@@ -12,8 +12,10 @@
 <div class="center mt m-0-auto">
     <h2 class="form-tag profile">
         {% if not is_change_password_page %}
+            <i class="fa-solid fa-circle-user m-right"></i>
             Meu Perfil ({{request.user.username|title_limit_length}})
         {% else %}
+            <i class="fa-solid fa-key m-right"></i>
             Meu Perfil ({{request.user.username|title_limit_length}}) - Alterar Senha
         {% endif %}
     </h2>
