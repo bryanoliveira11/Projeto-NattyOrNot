@@ -32,6 +32,19 @@ class UserProfileDetailClassView(View):
             return True
         return False
 
+    # lançar um alerta na tela de perfil se o email do usuário estiver vázio
+    # isso ocorre se a conta for do google e um outro usuário já estiver usando o mesmo email
+    def check_email(self):
+        user_db = User.objects.filter(pk=self.request.user.pk).first()
+
+        if user_db:
+            if not user_db.email:  # type:ignore
+                messages.warning(
+                    self.request,
+                    'Parece que seu Email não está Preenchido. '
+                    'Por Favor, Revise seus Dados !'
+                )
+
     def validate_url_user(self, username):
         # 404 em tentativa de editar a url
         if username != self.request.user.username:  # type:ignore
@@ -47,6 +60,7 @@ class UserProfileDetailClassView(View):
         user = self.request.user
         user_profile = self.get_user_profile(user.pk)
         is_google_account = self.is_google_account_user()
+        self.check_email()
         notifications, notifications_total = get_notifications(self.request)
 
         return render(self.request, 'users/pages/user_profile.html', context={

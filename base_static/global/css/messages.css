@@ -23,6 +23,7 @@
   background: var(--color-gray-1);
   color: var(--color-dark-text);
   font-size: 1.8rem;
+  text-align: left;
 }
 
 .message-disqus {
@@ -66,6 +67,10 @@
   background-color: #0749951f;
   box-shadow: 0px 0px 2px #0396ff;
   color: #0396ff;
+}
+
+.message-content i {
+  font-size: 2rem;
 }
 
 .icon-shake {
