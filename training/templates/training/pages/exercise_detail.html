@@ -10,11 +10,11 @@
         <h2 class="form-tag main">
             Exercício - {{page_tag}}
             <h3 class="home-remove-filter home form-tag main">
-                <a href="{% url 'training:home' %}">
+                <a href="{{url_to_redirect}}">
                     <i class="fa-solid fa-circle-left"></i>
                     <span class="back-to-home">Voltar</span>
                 </a> 
-                <span>para Home</span>
+                <span>para Página Anterior</span>
             </h3>
         </h2>
     </div>

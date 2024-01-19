@@ -28,6 +28,11 @@ urlpatterns = [
     ),
     # notifications delete path
     path(
+        'user/notification/<int:id>/delete/',
+        views.UserNotificationDeleteSingle.as_view(),
+        name='notification_delete_single'
+    ),
+    path(
         'user/notifications/delete/',
         views.UserNotificationsDeleteClassView.as_view(),
         name='notifications_delete'

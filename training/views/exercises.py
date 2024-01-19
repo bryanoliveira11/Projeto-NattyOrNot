@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.http import Http404
 from django.shortcuts import render
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView, View
 
@@ -178,10 +179,17 @@ class ExerciseDetailClassView(DetailView):
             self.request, is_detail_page=True
         ))
 
+        http_referer = self.request.META.get('HTTP_REFERER')
+
+        url_to_redirect = http_referer if http_referer is not None else reverse(
+            'training:home'
+        )
+
         context.update({
             'exercise': exercise,
             'title': f'{exercise}',
             'page_tag': f'{exercise}',
+            'url_to_redirect': url_to_redirect
         })
 
         return context

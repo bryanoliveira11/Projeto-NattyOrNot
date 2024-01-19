@@ -16,11 +16,11 @@
         {% endif %}
         <div class="login-message container center">
             <h3 class="form-tag main">
-                <a href="{% url 'users:user_dashboard' %}" class="plaintext-button">
+                <a href="{{url_to_redirect}}" class="plaintext-button">
                     <i class="fa-solid fa-circle-left"></i>
-                    Clique aqui
+                    Voltar
                 </a>
-                para ir ao Dashboard.
+                para Página Anterior.
             </h3>
             {% if is_exercise_edit %}
                 <div class="add-new-exercise">

@@ -48,6 +48,15 @@ class DashboardFormBaseClassView(View):
     def render_exercise(self, form):  # renderizando página do form
         notifications, notifications_total = get_notifications(self.request)
 
+        http_referer = self.request.META.get('HTTP_REFERER')
+
+        if http_referer is None or self.request.path in http_referer:
+            url_to_redirect = reverse(
+                'users:user_dashboard'
+            )
+        else:
+            url_to_redirect = http_referer
+
         return render(self.request, 'users/pages/create_exercise.html', context={
             'form': form,
             'search_form_action': reverse('users:user_dashboard_search'),
@@ -60,6 +69,7 @@ class DashboardFormBaseClassView(View):
             'is_exercise_edit': self.is_exercise_edit,
             'placeholder': 'Pesquise por um Exercício ou Categoria',
             'additional_search_placeholder': 'no Dashboard',
+            'url_to_redirect': url_to_redirect
         })
 
 

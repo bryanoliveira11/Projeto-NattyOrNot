@@ -16,7 +16,7 @@
             </span>
         </div>
         <div class="close-notifications-page right">
-            <i class="fa-solid fa-xmark" id="close-notifications-page" title="Fechar Tela de Notificações"></i>
+            <i class="fa-solid fa-circle-xmark" id="close-notifications-page" title="Fechar Tela de Notificações"></i>
         </div>
     </div>
   <hr/>
@@ -25,6 +25,16 @@
             <div class="notification">
                 <div class="notification-subject">
                     <p>{{notification.subject_html|safe}}</p>
+                    <div class="notification-dismiss">
+                        <form action="{% url 'users:notification_delete_single' notification.id %}" class="inline-form" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="username" value="{{request.user.username}}">
+                            <input type="hidden" name="previous_page" value="{{request.path}}">
+                            <button class="plaintext-button white-text" type="submit" title="Remover Todas as Notificações">
+                                <i class="fa-solid fa-xmark" title="Remover Notificação"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
                 <div class="notification-message left">
                     {{notification.message|safe}}
@@ -36,7 +46,8 @@
             </div>
         {% empty %}
         <div class="no-notifications">
-            Nenhuma Notificação Encontrada.
+            <i class="fa-solid fa-bell-slash"></i>
+            <p>Nenhuma Notificação Encontrada.</p>
         </div>
         {% endfor %}
         {% if notifications %}
@@ -45,7 +56,7 @@
                     {% csrf_token %}
                     <input type="hidden" name="username" value="{{request.user.username}}">
                     <input type="hidden" name="previous_page" value="{{request.path}}">
-                    <button class="plaintext-button white-text" type="submit">
+                    <button class="plaintext-button white-text" type="submit" title="Remover Todas as Notificações">
                         Remover Notificações
                         <i class="fa-solid fa-check"></i>
                     </button>

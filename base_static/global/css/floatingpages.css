@@ -95,13 +95,13 @@
   font-size: 3rem;
 }
 
-.close-filters-page .fa-xmark,
-.close-notifications-page .fa-xmark {
+.close-filters-page i,
+.close-notifications-page i {
   transition: all 150ms ease-in-out;
 }
 
-.close-filters-page .fa-xmark:hover,
-.close-notifications-page .fa-xmark:hover {
+.close-filters-page i:hover,
+.close-notifications-page i:hover {
   cursor: pointer;
   scale: 1.2;
 }
@@ -154,6 +154,16 @@
 .no-notifications {
   padding: 2rem;
   font-size: 2rem;
+  margin-top: 1rem;
+}
+
+.no-notifications i {
+  font-size: 8rem;
+}
+
+.no-notifications p {
+  font-size: 2.5rem;
+  margin-top: var(--spacing-gutter-large);
 }
 
 .notification {
@@ -175,6 +185,7 @@
 .notification-message {
   margin: 0 auto;
   padding: 0 1rem 0 1rem;
+  word-wrap: break-word;
 }
 
 .notification-sendby {
@@ -190,13 +201,30 @@ a.notification-url:hover {
   filter: brightness(0.8);
 }
 
+.notification-dismiss {
+  display: flex;
+  flex: auto;
+  align-items: end;
+  justify-content: end;
+}
+
+.notification-dismiss button i {
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+
+.notification-dismiss button i:hover {
+  scale: 1.2;
+  color: var(--color-white);
+}
+
 .notifications-dismiss button {
   font-size: 1.8rem;
   padding: 1rem;
   background: var(--color-success);
   transition: all 300ms ease-in-out;
   margin: 0 auto;
-  width: 95%;
+  width: 93%;
 }
 
 .notifications-dismiss button:hover {
