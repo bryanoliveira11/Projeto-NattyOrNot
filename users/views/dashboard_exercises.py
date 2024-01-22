@@ -45,9 +45,7 @@ class DashboardFormBaseClassView(View):
 
         return exercise
 
-    def render_exercise(self, form):  # renderizando página do form
-        notifications, notifications_total = get_notifications(self.request)
-
+    def get_referer_url(self):
         http_referer = self.request.META.get('HTTP_REFERER')
 
         if http_referer is None or self.request.path in http_referer:
@@ -56,6 +54,13 @@ class DashboardFormBaseClassView(View):
             )
         else:
             url_to_redirect = http_referer
+
+        return url_to_redirect
+
+    def render_exercise(self, form):  # renderizando página do form
+        notifications, notifications_total = get_notifications(self.request)
+
+        url_to_redirect = self.get_referer_url()
 
         return render(self.request, 'users/pages/create_exercise.html', context={
             'form': form,
@@ -136,7 +141,7 @@ class DeleteObjectClassViewBase(DashboardFormBaseClassView):
         if obj:
             messages.success(
                 self.request,
-                f'{msg_obj} "{obj.title}" Deletado com Sucesso.'
+                f'{msg_obj} Deletado com Sucesso.'
             )
             obj.delete()
 

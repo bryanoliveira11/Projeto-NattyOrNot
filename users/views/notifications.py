@@ -1,12 +1,18 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.views.generic import View
 
 from users.models import UserNotifications, UserProfile
 from utils.get_notifications import get_notifications
 
 
+@method_decorator(
+    login_required(login_url='users:login', redirect_field_name='next'),
+    name='dispatch'
+)
 class UserNotificationsDeleteClassView(View):
     def adjust_notifications_value(self, set_to_zero=False, minus_one=False):
         user_profile = UserProfile.objects.filter(
@@ -56,6 +62,10 @@ class UserNotificationsDeleteClassView(View):
         return redirect(previous_page)
 
 
+@method_decorator(
+    login_required(login_url='users:login', redirect_field_name='next'),
+    name='dispatch'
+)
 class UserNotificationDeleteSingle(UserNotificationsDeleteClassView):
     def get(self, *args, **kwargs):
         return super().get(*args, **kwargs)

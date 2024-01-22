@@ -9,7 +9,9 @@
     </div>
     <div class="exercise-title-container">
         <h2 class="exercise-title">
-            {{exercise.title}} 
+            <a href="{% url 'training:exercises_detail' exercise.slug %}" title="{{exercise.title}}">
+                {{exercise.title|title_limit_length}} 
+            </a>
         </h2>
     </div>
 

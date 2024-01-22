@@ -33,13 +33,18 @@ function CloseScreen(screen_to_close, background) {
 }
 
 (() => {
+    // filters vars
     const filtersButton = document.querySelector('.filters-button');
     const filtersScreen = document.querySelector('.filters-page');
     const closeFiltersButton = document.querySelector('#close-filters-page');
-    const exerciseGrid = document.querySelector('.exercise-container-grid');
+
+    // notifications vars
     const notificationScreen = document.querySelector('.notifications-page');
     const notificationBtn = document.querySelector('#toggle-notification-menu');
     const closeNotificationsBtn = document.querySelector('#close-notifications-page');
+
+    // pages
+    const exerciseGrid = document.querySelector('.exercise-container-grid');
     const pageContent = document.querySelector('.main-content-container');
 
     /* menu de filtros */

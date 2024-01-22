@@ -63,6 +63,7 @@
 .exercise-title {
   color: var(--color-primary);
   font-size: 2rem;
+  word-wrap: break-word;
 }
 
 .exercise-title-container a {

@@ -4,12 +4,25 @@
 
 {% block content %}
     <div class="delete-confirm-tag center">
-        <h2 class="form-tag main dashboard-tag">
-            <h3>&#8226 Deseja Realmente Deletar o {{type_of_object}} "{{exercise.title}}" ?</h3>
-        </h2>
+        <h3 class="form-tag main dashboard-tag">
+            &#8226 Deseja Realmente Deletar o {{type_of_object}} "{{exercise.title}}" ?
+        </h3>
         {% if has_cover %}
             {% if exercise.cover.url %}
                 <img src="{{exercise.cover.url}}" alt="Imagem do Exercício">
+            {% else %}
+                <div class="container">
+                    <p id="margin-1">&#8226 Treino : {{workout.title}}</p>
+                    <p id="margin-1">&#8226 Usuário : {{workout.user}}</p>
+                    <p id="margin-1">
+                        &#8226 {{workout.exercises_total}}
+                        {% if workout.exercises_total > 1 %}
+                        Exercícios
+                        {% else %}
+                        Exercício
+                        {% endif %}
+                    </p>
+                </div>
             {% endif %}
         {% endif %}
     </div>

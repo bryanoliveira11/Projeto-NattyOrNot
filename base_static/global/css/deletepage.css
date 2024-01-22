@@ -13,7 +13,7 @@
 .delete-confirm-tag img {
   margin: 0 auto;
   padding: 1rem;
-  max-width: 44rem;
+  max-width: 38rem;
 }
 
 .confirm-buttons {
@@ -55,4 +55,8 @@
 .confirm-buttons .delete-no:hover {
   filter: brightness(0.8);
   cursor: pointer;
+}
+
+#margin-1 {
+  margin: 1rem;
 }

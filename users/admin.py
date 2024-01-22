@@ -15,11 +15,11 @@ class AdminUser(admin.ModelAdmin):
 
 @admin.register(UserWorkouts)
 class AdminUserWorkouts(admin.ModelAdmin):
-    list_display = 'id', 'title', 'exercises_total', 'user', 'created_at'
+    list_display = 'id', 'title', 'exercises_total', 'user', 'created_at', 'is_shared',
     list_display_links = 'id', 'title',
-    search_fields = 'id', 'title', 'user',
+    search_fields = 'id', 'title', 'user', 'is_shared',
     ordering = '-id',
-    list_filter = 'user', 'created_at',
+    list_filter = 'user', 'created_at', 'is_shared',
     list_per_page = 10
 
 

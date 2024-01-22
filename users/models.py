@@ -66,6 +66,9 @@ class UserWorkouts(models.Model):
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name='Criado em'
     )
+    is_shared = models.BooleanField(
+        default=False, verbose_name='Compartilhado'
+    )
 
     def __str__(self) -> str:
         return f'Treino de {self.user.get_username()}'

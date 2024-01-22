@@ -18,6 +18,7 @@
             {% include "global/partials/messages.html" %}
         </div>
     </div>
+    
     <div class="main-content main-content-list container center">
         {% if workouts %}
             <table class="content-table">
@@ -28,6 +29,8 @@
                     <th scope="col">Usuário</th>
                     <th scope="col">Criado em</th>
                     <th scope="col">Detalhes</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Compartilhar</th>
                     <th scope="col">Deletar</th>
                   </tr>
                 </thead>
@@ -35,7 +38,7 @@
                 {% for workout in workouts  %}
                   <tr class="table-tr">
                     <td scope="row" class="workout-name">
-                        <a href="{% url 'users:user_workout_edit' workout.pk %}">
+                        <a href="{% url 'users:user_workout_edit' workout.pk %}" title="{{workout.title}}">
                             <i class="fa-solid fa-pen-to-square"></i>
                             {{workout.title|title_limit_length}} 
                         </a>
@@ -53,6 +56,20 @@
                         <a href="{% url 'users:user_workout_detail' workout.pk %}">
                             Ver <i class="fas fa-search-plus"></i>
                         </a>
+                    </td>
+                    <td>
+                        <div class="workout-status">
+                            {% if workout.is_shared %}
+                                <a class="published">Publicado</a>
+                            {% else %}
+                                <a class="not-published">Não Publicado</a>
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td class="workout-share">
+                        <h2 class="toggle-share-page">
+                            <i class="fa-solid fa-share-from-square" title="Compartilhar"></i>
+                        </h2>
                     </td>
                     <td class="workout-delete-form">
                         <a href="{% url 'users:user_workout_delete' workout.pk %}" class="workout-delete center">

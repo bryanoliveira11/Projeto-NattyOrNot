@@ -166,12 +166,12 @@
     {% if is_dashboard_page %}
         {% if not exercise.is_published %}
             <footer class="exercise-dashboard-footer">
-                <a href="{% url 'users:edit_exercise' exercise.pk %}">
+                <a href="{% url 'users:edit_exercise' exercise.pk %}" title="Editar Exercício">
                     <i class="fa-solid fa-pen-to-square"></i>
                     Editar
                 </a>
                 <div class="delete-page">
-                    <a class="open-delete-page" href="{% url 'users:user_exercise_delete' exercise.pk %}">
+                    <a class="open-delete-page" href="{% url 'users:user_exercise_delete' exercise.pk %}" title="Deletar Exercício">
                         <i class="fa-solid fa-trash"></i>
                     </a>
                 </div>
@@ -179,7 +179,8 @@
         {% else %}
             <footer class="exercise-footer">
                 <a href="{% url 'training:exercises_detail' exercise.slug %}"
-                    class="exercise-read-more-button center">
+                    class="exercise-read-more-button center"
+                    title="Ver Exercício">
                     <i class="fa-solid fa-eye"></i>
                     <span>Ver Mais...</span>
                 </a>

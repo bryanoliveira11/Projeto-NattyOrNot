@@ -63,6 +63,7 @@ urlpatterns = [
         views.UserWorkoutClassView.as_view(),
         name='user_workout_edit'
     ),
+    # delete workout
     path(
         'user/workout/<int:id>/delete/',
         views.UserObjectWorkoutDeleteClassView.as_view(),
@@ -94,6 +95,7 @@ urlpatterns = [
         views.DashboardUserCategoryClassView.as_view(),
         name='user_dashboard_category'
     ),
+    # delete exercise
     path(
         'dashboard/exercise/<int:id>/delete/',
         views.UserObjectExerciseDeleteClassView.as_view(),
