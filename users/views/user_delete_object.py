@@ -1,9 +1,12 @@
 from typing import Any
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.decorators import method_decorator
+from django.views import View
 from django.views.generic import DetailView
 
 from training.models import Exercises
@@ -110,3 +113,67 @@ class UserObjectWorkoutDeleteClassView(DetailView):
             'has_cover': True,
         })
         return context
+
+
+@method_decorator(
+    login_required(login_url='users:login', redirect_field_name='next'),
+    name='dispatch'
+)
+class DeleteObjectClassViewBase(View):
+    def get_exercise(self, id=None):
+        exercise = None
+
+        if id is not None:
+            exercise = Exercises.objects.filter(
+                published_by=self.request.user,
+                pk=id,
+                is_published=False,
+            ).first()
+
+            if not exercise:
+                raise Http404()
+
+        return exercise
+
+    def delete_object(self, type: str, msg_obj: str):
+        obj = None
+
+        if type == 'exercise':
+            obj = self.get_exercise(self.request.POST.get('id'))
+
+        if type == 'workout':
+            obj = UserWorkouts.objects.filter(
+                pk=self.request.POST.get('id')).first()
+
+        if obj:
+            messages.success(
+                self.request,
+                f'{msg_obj} Deletado com Sucesso.'
+            )
+            obj.delete()
+
+
+@method_decorator(
+    login_required(login_url='users:login', redirect_field_name='next'),
+    name='dispatch'
+)
+class DeleteExerciseClassView(DeleteObjectClassViewBase):
+    def get(self, *args, **kwargs):
+        return redirect(reverse('users:user_dashboard'))
+
+    def post(self, *args, **kwargs):
+        self.delete_object(type='exercise', msg_obj='Exercício')
+        return redirect(reverse('users:user_dashboard'))
+
+
+@method_decorator(
+    login_required(login_url='users:login', redirect_field_name='next'),
+    name='dispatch'
+)
+class DeleteWorkoutClassView(DeleteObjectClassViewBase):
+    def get(self, *args, **kwargs):
+        return redirect('users:user_workouts')
+
+    def post(self, *args, **kwargs):
+        self.delete_object(type='workout', msg_obj='Treino')
+        return redirect(reverse('users:user_workouts'))

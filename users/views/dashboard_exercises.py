@@ -10,7 +10,6 @@ from django.views import View
 
 from training.models import Exercises
 from users.forms import CreateExerciseForm
-from users.models import UserWorkouts
 from utils.get_notifications import get_notifications
 
 
@@ -47,8 +46,9 @@ class DashboardFormBaseClassView(View):
 
     def get_referer_url(self):
         http_referer = self.request.META.get('HTTP_REFERER')
+        create_url = 'dashboard/exercise/create/'
 
-        if http_referer is None or self.request.path in http_referer:
+        if http_referer is None or self.request.path in http_referer or create_url in http_referer:
             url_to_redirect = reverse(
                 'users:user_dashboard'
             )
@@ -121,52 +121,3 @@ class DashboardExerciseClassView(DashboardFormBaseClassView):
             return redirect(reverse('users:edit_exercise', args=(exercise.pk,)))
 
         return self.render_exercise(form=form)
-
-
-@method_decorator(
-    login_required(login_url='users:login', redirect_field_name='next'),
-    name='dispatch'
-)
-class DeleteObjectClassViewBase(DashboardFormBaseClassView):
-    def delete_object(self, type: str, msg_obj: str):
-        obj = None
-
-        if type == 'exercise':
-            obj = self.get_exercise(self.request.POST.get('id'))
-
-        if type == 'workout':
-            obj = UserWorkouts.objects.filter(
-                pk=self.request.POST.get('id')).first()
-
-        if obj:
-            messages.success(
-                self.request,
-                f'{msg_obj} Deletado com Sucesso.'
-            )
-            obj.delete()
-
-
-@method_decorator(
-    login_required(login_url='users:login', redirect_field_name='next'),
-    name='dispatch'
-)
-class DeleteExerciseClassView(DeleteObjectClassViewBase):
-    def get(self, *args, **kwargs):
-        return redirect(reverse('users:user_dashboard'))
-
-    def post(self, *args, **kwargs):
-        self.delete_object(type='exercise', msg_obj='Exercício')
-        return redirect(reverse('users:user_dashboard'))
-
-
-@method_decorator(
-    login_required(login_url='users:login', redirect_field_name='next'),
-    name='dispatch'
-)
-class DeleteWorkoutClassView(DeleteObjectClassViewBase):
-    def get(self, *args, **kwargs):
-        return redirect('users:user_workouts')
-
-    def post(self, *args, **kwargs):
-        self.delete_object(type='workout', msg_obj='Treino')
-        return redirect(reverse('users:user_workouts'))

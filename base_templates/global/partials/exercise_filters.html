@@ -11,7 +11,10 @@
 
   {% if is_home_page %}
     <div class="categories-filter home-page center">
-      <span>Categorias</span>
+      <span>
+        <i class="fa-solid fa-layer-group"></i>
+        Categorias
+      </span>
         <div class="categories-list home-page center">
             {% for category in categories  %}
             <p> 
@@ -26,7 +29,10 @@
 
   <div class="filters-container-flex">
     <div class="categories-filter">
-      <span>Categorias</span>
+      <span>
+        <i class="fa-solid fa-layer-group"></i>
+        Categorias
+      </span>
         <div class="categories-list">
             {% for category in categories  %}
             <p> 
@@ -39,7 +45,10 @@
     </div>
   
     <div class="is_published-filter">
-      <span>Visibilidade</span>
+      <span>
+        <i class="fa-solid fa-share-from-square"></i>
+        Visibilidade
+      </span>
       <div class="published-list">
         <p>
           <a href="{% url 'users:user_dashboard_is_published' True %}">

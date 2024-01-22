@@ -19,7 +19,7 @@
         </div>
     </div>
     
-    <div class="main-content main-content-list container center">
+    <div class="workouts-table container center">
         {% if workouts %}
             <table class="content-table">
                 <thead>
@@ -67,9 +67,9 @@
                         </div>
                     </td>
                     <td class="workout-share">
-                        <h2 class="toggle-share-page">
+                        <a>
                             <i class="fa-solid fa-share-from-square" title="Compartilhar"></i>
-                        </h2>
+                        </a>
                     </td>
                     <td class="workout-delete-form">
                         <a href="{% url 'users:user_workout_delete' workout.pk %}" class="workout-delete center">

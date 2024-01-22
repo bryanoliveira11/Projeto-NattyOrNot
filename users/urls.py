@@ -63,6 +63,17 @@ urlpatterns = [
         views.UserWorkoutClassView.as_view(),
         name='user_workout_edit'
     ),
+    # share workout
+    path(
+        'user/workout/<int:id>/share/',
+        views.UserWorkoutShareClassView.as_view(),
+        name='user_workout_delete'
+    ),
+    path(
+        'user/workout/<int:id>/share/confirm/',
+        views.DeleteWorkoutClassView.as_view(),
+        name='user_workout_delete_confirm'
+    ),
     # delete workout
     path(
         'user/workout/<int:id>/delete/',

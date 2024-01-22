@@ -243,18 +243,45 @@ class UserWorkoutClassView(UserWorkoutBaseClass):
     login_required(login_url='users:login', redirect_field_name='next'),
     name='dispatch'
 )
-class UserWorkoutDeleteClassView(UserWorkoutBaseClass):
-    def get(self, *args, **kwargs):
-        return redirect(reverse('users:user_workouts'))
+class UserWorkoutShareClassView(DetailView):
+    model = UserWorkouts
+    template_name = 'users/partials/delete_page.html'
+    context_object_name = 'user_workout'
+    pk_url_kwarg = 'id'
 
-    def post(self, *args, **kwargs):
-        workout = self.get_workout(self.request.POST.get('id'))
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        queryset = queryset.filter(user_id=self.request.user)
+
+        if not queryset:
+            raise Http404()
+
+        return queryset
+
+    def get_context_data(self, *args, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(*args, **kwargs)
+
+        workout = context.get('user_workout')
+        title = f'Deletar Treino - {workout.title}' if workout else workout
 
         if workout:
-            messages.success(
-                self.request,
-                f'Treino "{workout.title}" Deletado com Sucesso.'
+            form_action = reverse(
+                'users:user_workout_delete_confirm', args=(workout.pk,)
             )
-            workout.delete()
+        else:
+            raise Http404()
 
-        return redirect(reverse('users:user_workouts'))
+        notifications, notifications_total = get_notifications(self.request)
+
+        context.update({
+            'exercise': workout,
+            'workout': workout,
+            'notifications': notifications,
+            'notification_total': notifications_total,
+            'form_action': form_action,
+            'title': title,
+            'search_form_action': reverse('users:user_workouts_search'),
+            'placeholder': 'Pesquise por um Treino',
+            'is_workout_page': True,
+        })
+        return context

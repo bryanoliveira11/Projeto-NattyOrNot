@@ -5,7 +5,7 @@
 {% block content %}
     <div class="delete-confirm-tag center">
         <h3 class="form-tag main dashboard-tag">
-            &#8226 Deseja Realmente Deletar o {{type_of_object}} "{{exercise.title}}" ?
+            Deseja Realmente Deletar o {{type_of_object}} "{{exercise.title}}" ?
         </h3>
         {% if has_cover %}
             {% if exercise.cover.url %}
@@ -36,7 +36,7 @@
                     <input type="hidden" name="id" value="{{workout.pk}}">
                 {% endif %}
                 <button type="submit" class="delete-yes">
-                    Sim, Tenho Certeza.
+                    Sim, Certeza.
                 </button>
             </form>
             {% if is_exercise %}
