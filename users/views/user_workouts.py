@@ -245,9 +245,17 @@ class UserWorkoutClassView(UserWorkoutBaseClass):
 )
 class UserWorkoutShareClassView(DetailView):
     model = UserWorkouts
-    template_name = 'users/partials/delete_page.html'
+    template_name = 'users/partials/share_page.html'
     context_object_name = 'user_workout'
     pk_url_kwarg = 'id'
+
+    def get_workout(self):
+        # pegando o treino do banco
+        workout = UserWorkouts.objects.filter(
+            pk=self.kwargs.get('id')
+        ).first()
+
+        return workout
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
@@ -262,14 +270,7 @@ class UserWorkoutShareClassView(DetailView):
         context = super().get_context_data(*args, **kwargs)
 
         workout = context.get('user_workout')
-        title = f'Deletar Treino - {workout.title}' if workout else workout
-
-        if workout:
-            form_action = reverse(
-                'users:user_workout_delete_confirm', args=(workout.pk,)
-            )
-        else:
-            raise Http404()
+        title = workout.title if workout else workout
 
         notifications, notifications_total = get_notifications(self.request)
 
@@ -278,10 +279,39 @@ class UserWorkoutShareClassView(DetailView):
             'workout': workout,
             'notifications': notifications,
             'notification_total': notifications_total,
-            'form_action': form_action,
-            'title': title,
+            'title': f'Compartilhar Treino - {title}',
             'search_form_action': reverse('users:user_workouts_search'),
             'placeholder': 'Pesquise por um Treino',
             'is_workout_page': True,
         })
         return context
+
+    def post(self, *args, **kwargs):
+        workout_to_share = self.get_workout()
+
+        if workout_to_share:
+            # garantindo que o treino não está compartilhado
+            if workout_to_share.is_shared:
+                messages.error(
+                    self.request,
+                    'Este Treino já Está Compartilhado. Tente Outro.'
+                )
+                return redirect(reverse('users:user_workouts'))
+
+            # garantindo que o usuário é o mesmo
+            if workout_to_share.user != self.request.user:
+                messages.error(
+                    self.request,
+                    'Um Erro Ocorreu ao Compartilhar o Treino. Tente Novamente.'
+                )
+                return redirect(reverse('users:user_workouts'))
+
+            # compartilhando treino
+            workout_to_share.is_shared = True
+            workout_to_share.save()
+            messages.success(
+                self.request,
+                'Treino Compartilhado com Sucesso.'
+            )
+
+        return redirect(reverse('users:user_workouts'))

@@ -67,23 +67,13 @@ urlpatterns = [
     path(
         'user/workout/<int:id>/share/',
         views.UserWorkoutShareClassView.as_view(),
-        name='user_workout_delete'
-    ),
-    path(
-        'user/workout/<int:id>/share/confirm/',
-        views.DeleteWorkoutClassView.as_view(),
-        name='user_workout_delete_confirm'
+        name='user_workout_share'
     ),
     # delete workout
     path(
         'user/workout/<int:id>/delete/',
-        views.UserObjectWorkoutDeleteClassView.as_view(),
+        views.UserWorkoutDeleteClassView.as_view(),
         name='user_workout_delete'
-    ),
-    path(
-        'user/workout/<int:id>/delete/confirm/',
-        views.DeleteWorkoutClassView.as_view(),
-        name='user_workout_delete_confirm'
     ),
     # user dashboard urls
     path(
@@ -109,13 +99,8 @@ urlpatterns = [
     # delete exercise
     path(
         'dashboard/exercise/<int:id>/delete/',
-        views.UserObjectExerciseDeleteClassView.as_view(),
+        views.UserExerciseDeleteClassView.as_view(),
         name='user_exercise_delete'
-    ),
-    path(
-        'dashboard/exercise/<int:id>/delete/confirm/',
-        views.DeleteExerciseClassView.as_view(),
-        name='user_exercise_delete_confirm'
     ),
     path(
         'dashboard/exercise/create/',

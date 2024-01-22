@@ -44,7 +44,7 @@ td a:hover {
 
 .exercise.workout {
   max-width: 48rem;
-  margin-top: var(--spacing-gutter-large);
+  margin-top: var(--spacing-gutter-extra-large);
 }
 
 a.not-published {
@@ -87,7 +87,7 @@ a.not-published, a.published {
 }
 
 .workout-share a {
-  color: var(--color-white);
+  color: var(--color-dark-text);
   font-size: 1.8rem;
 }
 
@@ -96,12 +96,12 @@ a.not-published, a.published {
   cursor: pointer;
 }
 
-.fa-trash-can {
+.delete-icon {
   font-size: 1.8rem;
   color: var(--color-error-dark);
 }
 
-.fa-trash-can:hover {
+.delete-icon:hover {
   filter: brightness(0.8);
   cursor: pointer;
 }

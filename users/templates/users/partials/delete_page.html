@@ -5,7 +5,10 @@
 {% block content %}
     <div class="delete-confirm-tag center">
         <h3 class="form-tag main dashboard-tag">
-            Deseja Realmente Deletar o {{type_of_object}} "{{exercise.title}}" ?
+            <i class="fa-solid fa-trash-can m-right"></i>
+            Deseja Realmente 
+            <span class="red-text">Deletar</span>
+            o {{type_of_object}} "{{exercise.title}}" ?
         </h3>
         {% if has_cover %}
             {% if exercise.cover.url %}
@@ -28,7 +31,11 @@
     </div>
     <div class="confirm-buttons">
         <div class="confirm-buttons-flex">
-            <form action="{{form_action}}" method="POST">
+            {% if is_exercise %}
+            <form action="{% url 'users:user_exercise_delete' exercise.pk %}" method="POST">
+            {% else %}
+            <form action="{% url 'users:user_workout_delete' workout.pk %}" method="POST">
+            {% endif %}
                 {% csrf_token %}
                 {% if is_exercise %}
                     <input type="hidden" name="id" value="{{exercise.pk}}">
@@ -36,13 +43,20 @@
                     <input type="hidden" name="id" value="{{workout.pk}}">
                 {% endif %}
                 <button type="submit" class="delete-yes">
+                    <i class="fa-solid fa-check"></i>
                     Sim, Certeza.
                 </button>
             </form>
             {% if is_exercise %}
-                <a href="{% url 'users:user_dashboard' %}" class="delete-no">Não, Voltar ao Dashboard.</a>
+                <a href="{% url 'users:user_dashboard' %}" class="delete-no">
+                    <i class="fa-solid fa-ban"></i>
+                    Não, Voltar ao Dashboard.
+                </a>
             {% else %}
-                <a href="{% url 'users:user_workouts' %}" class="delete-no">Não, Voltar aos Treinos.</a>
+                <a href="{% url 'users:user_workouts' %}" class="delete-no">
+                    <i class="fa-solid fa-ban"></i>
+                    Não, Voltar aos Treinos.
+                </a>
             {% endif %}
         </div>
     </div>

@@ -2,7 +2,7 @@
 
 /* filters & notifications page */
 
-.filters-page, .confirm-page {
+.filters-page {
   width: 50rem;
   max-height: 40rem;
   text-transform: capitalize;
@@ -24,7 +24,7 @@
 }
 
 .filters-page,
-.notifications-page, .confirm-page {
+.notifications-page {
   top: 28%;
   left: 50%;
   transform: translate(-50%, 0%);
@@ -69,7 +69,7 @@
 }
 
 .filters-page-flex,
-.notifications-page-flex, .confirm-page-flex {
+.notifications-page-flex {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -77,18 +77,18 @@
 }
 
 .filters-page-title,
-.notifications-page-title, .confirm-page-title {
+.notifications-page-title {
   text-align: left;
   width: 80%;
 }
 
 .filters-page-title span,
-.notifications-page-title span, .confirm-page-title span {
+.notifications-page-title span {
   font-size: 2rem;
 }
 
 .close-filters-page,
-.close-notifications-page, .close-confirm-page {
+.close-notifications-page {
   text-align: right;
   width: 20%;
   padding: 1rem;
@@ -96,12 +96,12 @@
 }
 
 .close-filters-page i,
-.close-notifications-page i, .close-confirm-page i {
+.close-notifications-page i {
   transition: all 150ms ease-in-out;
 }
 
 .close-filters-page i:hover,
-.close-notifications-page i:hover, .close-confirm-page i:hover {
+.close-notifications-page i:hover {
   cursor: pointer;
   scale: 1.2;
 }

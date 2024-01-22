@@ -7,6 +7,7 @@
     const tableElement = document.querySelector('.content-table');
     const tableTr = document.querySelectorAll('.table-tr');
     const notifications = document.querySelectorAll('.notification');
+    const workoutShareIcon = document.querySelectorAll('#workout-share-icon');
 
     // botão não existe
     if (!toggleDarkbtn) return;
@@ -44,6 +45,7 @@
         nodeListAddClass(tableTr, 'tr-dark');
         nodeListAddClass(exerciseCardsBackground, 'dark-mode-cards');
         nodeListAddClass(notifications, 'dark-mode-style');
+        nodeListAddClass(workoutShareIcon, 'dark-mode-style');
     }
 
     // remove a classe de dark mode
@@ -54,6 +56,7 @@
         nodeListRemoveClass(tableTr, 'tr-dark');
         nodeListRemoveClass(exerciseCardsBackground, 'dark-mode-cards');
         nodeListRemoveClass(notifications, 'dark-mode-style');
+        nodeListRemoveClass(workoutShareIcon, 'dark-mode-style');
     }
 
     // muda o ícone da header dinamicamente com base no valor do localstorage

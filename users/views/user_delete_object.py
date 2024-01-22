@@ -18,7 +18,7 @@ from utils.get_notifications import get_notifications
     login_required(login_url='users:login', redirect_field_name='next'),
     name='dispatch'
 )
-class UserObjectExerciseDeleteClassView(DetailView):
+class UserExerciseDeleteClassView(DetailView):
     model = Exercises
     template_name = 'users/partials/delete_page.html'
     context_object_name = 'user_exercise'
@@ -40,18 +40,10 @@ class UserObjectExerciseDeleteClassView(DetailView):
         exercise = context.get('user_exercise')
         title = f'Deletar Exercício - {exercise}'
 
-        if exercise:
-            form_action = reverse(
-                'users:user_exercise_delete_confirm', args=(exercise.pk,)
-            )
-        else:
-            raise Http404()
-
         notifications, notifications_total = get_notifications(self.request)
 
         context.update({
             'exercise': exercise,
-            'form_action': form_action,
             'notifications': notifications,
             'notification_total': notifications_total,
             'title': title,
@@ -64,12 +56,36 @@ class UserObjectExerciseDeleteClassView(DetailView):
         })
         return context
 
+    def post(self, *args, **kwargs):
+        # pegando o exercicio do banco
+        exercise_to_delete = Exercises.objects.filter(
+            pk=self.kwargs.get('id')
+        ).first()
+
+        if exercise_to_delete:
+            # garantindo que o usuário é o mesmo
+            if exercise_to_delete.published_by != self.request.user:
+                messages.error(
+                    self.request,
+                    'Um Erro Ocorreu ao Deletar o Exercício. Tente Novamente.'
+                )
+                return redirect(reverse('users:user_dashboard'))
+
+            # compartilhando treino
+            exercise_to_delete.delete()
+            messages.success(
+                self.request,
+                'Exercício Deletado com Sucesso.'
+            )
+
+        return redirect(reverse('users:user_dashboard'))
+
 
 @method_decorator(
     login_required(login_url='users:login', redirect_field_name='next'),
     name='dispatch'
 )
-class UserObjectWorkoutDeleteClassView(DetailView):
+class UserWorkoutDeleteClassView(DetailView):
     model = UserWorkouts
     template_name = 'users/partials/delete_page.html'
     context_object_name = 'user_workout'
@@ -90,13 +106,6 @@ class UserObjectWorkoutDeleteClassView(DetailView):
         workout = context.get('user_workout')
         title = f'Deletar Treino - {workout.title}' if workout else workout
 
-        if workout:
-            form_action = reverse(
-                'users:user_workout_delete_confirm', args=(workout.pk,)
-            )
-        else:
-            raise Http404()
-
         notifications, notifications_total = get_notifications(self.request)
 
         context.update({
@@ -104,7 +113,6 @@ class UserObjectWorkoutDeleteClassView(DetailView):
             'workout': workout,
             'notifications': notifications,
             'notification_total': notifications_total,
-            'form_action': form_action,
             'title': title,
             'search_form_action': reverse('users:user_workouts_search'),
             'placeholder': 'Pesquise por um Treino',
@@ -114,66 +122,26 @@ class UserObjectWorkoutDeleteClassView(DetailView):
         })
         return context
 
+    def post(self, *args, **kwargs):
+        # pegando o treino do banco
+        workout_to_delete = UserWorkouts.objects.filter(
+            pk=self.kwargs.get('id')
+        ).first()
 
-@method_decorator(
-    login_required(login_url='users:login', redirect_field_name='next'),
-    name='dispatch'
-)
-class DeleteObjectClassViewBase(View):
-    def get_exercise(self, id=None):
-        exercise = None
+        if workout_to_delete:
+            # garantindo que o usuário é o mesmo
+            if workout_to_delete.user != self.request.user:
+                messages.error(
+                    self.request,
+                    'Um Erro Ocorreu ao Deletar o Treino. Tente Novamente.'
+                )
+                return redirect(reverse('users:user_workouts'))
 
-        if id is not None:
-            exercise = Exercises.objects.filter(
-                published_by=self.request.user,
-                pk=id,
-                is_published=False,
-            ).first()
-
-            if not exercise:
-                raise Http404()
-
-        return exercise
-
-    def delete_object(self, type: str, msg_obj: str):
-        obj = None
-
-        if type == 'exercise':
-            obj = self.get_exercise(self.request.POST.get('id'))
-
-        if type == 'workout':
-            obj = UserWorkouts.objects.filter(
-                pk=self.request.POST.get('id')).first()
-
-        if obj:
+            # deletando treino
+            workout_to_delete.delete()
             messages.success(
                 self.request,
-                f'{msg_obj} Deletado com Sucesso.'
+                'Treino Deletado com Sucesso.'
             )
-            obj.delete()
 
-
-@method_decorator(
-    login_required(login_url='users:login', redirect_field_name='next'),
-    name='dispatch'
-)
-class DeleteExerciseClassView(DeleteObjectClassViewBase):
-    def get(self, *args, **kwargs):
-        return redirect(reverse('users:user_dashboard'))
-
-    def post(self, *args, **kwargs):
-        self.delete_object(type='exercise', msg_obj='Exercício')
-        return redirect(reverse('users:user_dashboard'))
-
-
-@method_decorator(
-    login_required(login_url='users:login', redirect_field_name='next'),
-    name='dispatch'
-)
-class DeleteWorkoutClassView(DeleteObjectClassViewBase):
-    def get(self, *args, **kwargs):
-        return redirect('users:user_workouts')
-
-    def post(self, *args, **kwargs):
-        self.delete_object(type='workout', msg_obj='Treino')
         return redirect(reverse('users:user_workouts'))

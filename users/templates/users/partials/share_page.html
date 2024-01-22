@@ -1,0 +1,43 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% block title %} {{title}} {% endblock title %}
+
+{% block content %}
+    <div class="delete-confirm-tag center">
+        <h3 class="form-tag main dashboard-tag">
+            <i class="fa-solid fa-share-from-square m-right"></i>
+            Deseja Realmente 
+            <span class="green-text">Compartilhar</span>
+            o Treino "{{workout.title}}" ?
+        </h3>
+        <div class="container">
+            <h3 id="margin-1">O Seguinte Treino Ficará Publico :</h3>
+            <p id="margin-1">&#8226 Treino : {{workout.title}}</p>
+            <p id="margin-1">&#8226 Usuário : {{workout.user}}</p>
+            <p id="margin-1">
+                &#8226 {{workout.exercises_total}}
+                {% if workout.exercises_total > 1 %}
+                Exercícios
+                {% else %}
+                Exercício
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    <div class="confirm-buttons">
+        <div class="confirm-buttons-flex">
+            <form action="{% url 'users:user_workout_share' workout.pk %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{workout.pk}}">
+                <button type="submit" class="delete-yes">
+                    <i class="fa-solid fa-check"></i>
+                    Sim, Certeza.
+                </button>
+            </form>
+                <a href="{% url 'users:user_workouts' %}" class="delete-no">
+                    <i class="fa-solid fa-ban"></i>
+                    Não, Deixa Quieto.
+                </a>
+        </div>
+    </div>
+{% endblock content %}
