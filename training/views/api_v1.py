@@ -35,10 +35,10 @@ class ExercisesApiV1ViewSet(ModelViewSet):
         if not exercise:
             return
 
-        # validando exercício públicado
+        # validando exercício publicado
         if exercise.first().is_published:  # type:ignore
             raise ValidationError(
-                'Seu exercício está públicado. Não é possível concluir a operação'
+                'Seu exercício está publicado. Não é possível concluir a operação'
             )
 
     def create(self, request, *args, **kwargs):  # post

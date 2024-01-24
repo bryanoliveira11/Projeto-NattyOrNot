@@ -7,7 +7,7 @@
     const tableElement = document.querySelector('.content-table');
     const tableTr = document.querySelectorAll('.table-tr');
     const notifications = document.querySelectorAll('.notification');
-    const workoutShareIcon = document.querySelectorAll('#workout-share-icon');
+    const workoutShareIcon = document.querySelectorAll('.workout-share-icon');
 
     // botão não existe
     if (!toggleDarkbtn) return;

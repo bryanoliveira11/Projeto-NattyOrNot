@@ -93,7 +93,9 @@ class UserWorkoutDeleteClassView(DetailView):
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.filter(user_id=self.request.user)
+        queryset = queryset.filter(
+            user_id=self.request.user
+        ).select_related('user')
 
         if not queryset:
             raise Http404()

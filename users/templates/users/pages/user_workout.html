@@ -11,7 +11,9 @@
         </h2>
 
         {% if is_filtered %}
-            {% include "global/partials/is_filtered.html" %}
+            <h2 class="mb">
+                {% include "global/partials/is_filtered.html" %}
+            </h2>
         {% endif %}
 
         <div class="dashboard-message-padding">
@@ -60,16 +62,26 @@
                     <td>
                         <div class="workout-status">
                             {% if workout.is_shared %}
-                                <a class="published">Publicado</a>
+                                <a class="published" href="{% url 'users:user_workout_is_shared' workout.is_shared %}">
+                                    Publicado
+                                </a>
                             {% else %}
-                                <a class="not-published">Não Publicado</a>
+                                <a class="not-published" href="{% url 'users:user_workout_is_shared' workout.is_shared %}">
+                                    Não Publicado
+                                </a>
                             {% endif %}
                         </div>
                     </td>
                     <td class="workout-share">
-                        <a href="{% url 'users:user_workout_share' workout.pk %}">
-                            <i id="workout-share-icon" class="fa-solid fa-share-from-square" title="Compartilhar"></i>
-                        </a>
+                        {% if not workout.is_shared %}
+                            <a href="{% url 'users:user_workout_share' workout.pk %}">
+                                <i class="workout-share-icon fa-solid fa-square-share-nodes" title="Compartilhar"></i>
+                            </a>
+                        {% else %}
+                            <a href="{% url 'users:user_workout_unshare' workout.pk %}">
+                                <i class="workout-share-icon remove-share fa-solid fa-square-xmark" title="Remover Compartilhamento"></i>
+                            </a>
+                        {% endif %}
                     </td>
                     <td class="workout-delete-form">
                         <a href="{% url 'users:user_workout_delete' workout.pk %}" class="workout-delete center">

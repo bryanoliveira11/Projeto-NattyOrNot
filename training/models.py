@@ -69,7 +69,7 @@ class Exercises(models.Model):
         clean = super().clean()
         errors = {}
         messages = {
-            'UncheckOneError': 'Desmarque o Públicado ou o Rejeitar para Continuar.',
+            'UncheckOneError': 'Desmarque o Publicado ou o Rejeitar para Continuar.',
             'ExtraInfoError': 'Preencha as Informações Adicionais antes de Rejeitar.'
         }
 

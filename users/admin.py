@@ -17,6 +17,7 @@ class AdminUser(admin.ModelAdmin):
 class AdminUserWorkouts(admin.ModelAdmin):
     list_display = 'id', 'title', 'exercises_total', 'user', 'created_at', 'is_shared',
     list_display_links = 'id', 'title',
+    list_editable = 'is_shared',
     search_fields = 'id', 'title', 'user', 'is_shared',
     ordering = '-id',
     list_filter = 'user', 'created_at', 'is_shared',

@@ -63,17 +63,28 @@ urlpatterns = [
         views.UserWorkoutClassView.as_view(),
         name='user_workout_edit'
     ),
+    # delete workout
+    path(
+        'user/workout/<int:id>/delete/',
+        views.UserWorkoutDeleteClassView.as_view(),
+        name='user_workout_delete'
+    ),
     # share workout
     path(
         'user/workout/<int:id>/share/',
         views.UserWorkoutShareClassView.as_view(),
         name='user_workout_share'
     ),
-    # delete workout
     path(
-        'user/workout/<int:id>/delete/',
-        views.UserWorkoutDeleteClassView.as_view(),
-        name='user_workout_delete'
+        'user/workout/<int:id>/unshare/',
+        views.UserWorkoutUnshareClassView.as_view(),
+        name='user_workout_unshare'
+    ),
+    # workout filters
+    path(
+        'user/workouts/is_shared=<str:is_shared>/',
+        views.UserWorkoutsIsSharedFilterClassView.as_view(),
+        name='user_workout_is_shared'
     ),
     # user dashboard urls
     path(
@@ -82,7 +93,7 @@ urlpatterns = [
         name='user_dashboard_search'
     ),
     path(
-        'dashboard/exercises/filter/is_published=<str:is_published>/',
+        'dashboard/exercises/is_published=<str:is_published>/',
         views.DashboardIsPublishedFilterClassView.as_view(),
         name='user_dashboard_is_published'
     ),

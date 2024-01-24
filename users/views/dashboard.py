@@ -198,7 +198,7 @@ class DashboardIsPublishedFilterClassView(DashboardUserBase):
         context = super().get_context_data(*args, **kwargs)
 
         is_published = self.kwargs.get('is_published')
-        publish_translate = 'Públicados' if is_published == 'True' else 'Não Públicados'
+        publish_translate = 'Publicados' if is_published == 'True' else 'Não Publicados'
 
         title = f'Meus Exercícios {publish_translate} - Dashboard'
 

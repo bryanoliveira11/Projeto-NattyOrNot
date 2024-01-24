@@ -88,7 +88,7 @@ a.not-published, a.published {
 
 .workout-share a {
   color: var(--color-dark-text);
-  font-size: 1.8rem;
+  font-size: 2.2rem;
 }
 
 .workout-share a:hover {

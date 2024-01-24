@@ -23,7 +23,7 @@ class CreateWorkoutForm(forms.ModelForm, CreateFormMixin):
         ))
 
     title = forms.CharField(
-        label='Título',
+        label='Título do Treino',
         required=True,
         max_length=155,
         min_length=5,
@@ -34,7 +34,7 @@ class CreateWorkoutForm(forms.ModelForm, CreateFormMixin):
 
     exercises = forms.ModelMultipleChoiceField(
         queryset=Exercises.objects.filter(is_published=True),
-        label='Exercícios',
+        label='Exercícios Publicados',
         help_text='Segure CTRL para selecionar mais de um exercício.',
     )
 
@@ -47,5 +47,6 @@ class CreateWorkoutForm(forms.ModelForm, CreateFormMixin):
 
     def clean(self, *args, **kwargs):
         super_clean = super().clean(*args, **kwargs)
-        self.validate_google_recaptcha(data=self.data, add_error=self.add_error)
+        self.validate_google_recaptcha(
+            data=self.data, add_error=self.add_error)
         return super_clean
