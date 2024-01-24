@@ -25,6 +25,12 @@ class UserProfile(models.Model):
         default=0,
         verbose_name='Notificações não Vistas'
     )
+    created_at = models.DateTimeField(
+        auto_now_add=True, blank=True, verbose_name='Criado em'
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True, verbose_name='Alterado em'
+    )
 
     def __str__(self) -> str:
         return self.user.get_username()
@@ -65,6 +71,9 @@ class UserWorkouts(models.Model):
     )
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name='Criado em'
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True, verbose_name='Alterado em',
     )
     is_shared = models.BooleanField(
         default=False, verbose_name='Compartilhado'

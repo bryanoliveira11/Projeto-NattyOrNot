@@ -70,7 +70,8 @@ def exercise_published_notification(instance, *args, **kwargs):
             subj='Exercício Aprovado',
             subj_html='Exercício' '<p class="green-text m-left"> Aprovado. </p>',
             msg='Seu Exercício '
-            f'<a class="notification-url" href="{msg_url}">"{instance.title}"</a> '
+            f'<a class="notification-url" href="{
+                msg_url}">"{instance.title}"</a> '
             'foi <b>Aprovado</b> e está Sendo Exibido na Home.',
             send_to=user,
         )
@@ -95,7 +96,8 @@ def exercise_rejected_notification(instance, *args, **kwargs):
             subj='Exercício Rejeitado',
             subj_html='Exercício' '<p class="red-text m-left"> Rejeitado. </p>',
             msg='Seu Exercício '
-            f'<a class="notification-url" href="{msg_url}">"{instance.title}"</a> '
+            f'<a class="notification-url" href="{
+                msg_url}">"{instance.title}"</a> '
             'foi <b>Rejeitado</b> e não Será Exibido no Site, '
             f'Motivo : {extra_info}.',
             send_to=user,
@@ -123,7 +125,8 @@ def exercise_created_notification(instance, created, *args, **kwargs):
             subj='Exercício Criado',
             subj_html='Exercício Criado com Sucesso.',
             msg='Seu Exercício '
-            f'<a class="notification-url" href="{msg_url}">"{instance.title}"</a> '
+            f'<a class="notification-url" href="{
+                msg_url}">"{instance.title}"</a> '
             'foi Criado e será Avaliado pela Equipe Administrativa Antes de ser Aprovado.',
             send_to=user,
         )
@@ -144,7 +147,8 @@ def user_signin_notification(instance, created, *args, **kwargs):
             subj=subj,
             subj_html=subj,
             msg='Bem Vindo ao NattyOrNot '
-            f'<a class="notification-url" href="{msg_url}">{user.username}</a> ! '
+            f'<a class="notification-url" href="{
+                msg_url}">{user.username}</a>. '
             'Use o Menu Lateral ou o Menu Rápido Abaixo da Barra de Pesquisa '
             'para Navegar no Site. Bons Treinos !',
             send_to=user,
@@ -173,6 +177,8 @@ def configure_google_account(request, user, **kwargs):
                 email__iexact=google_account_email
             ).exclude(id=user.id).first()
 
+            msg_url = reverse('users:user_profile', args=(user.username,))
+
             if user_with_email:
                 # muda o email para "" caso já exista
                 user.email = ""
@@ -180,5 +186,7 @@ def configure_google_account(request, user, **kwargs):
                 messages.warning(
                     request,
                     'Seu E-mail já está associado a outra conta. Mas não se Preocupe, '
-                    'é possível editar seus dados em " Menu > Meu Perfil ".'
+                    'é possível editar seus dados '
+                    f'<a class="notification-url" href="{
+                        msg_url}">Clicando aqui.</a>'
                 )
