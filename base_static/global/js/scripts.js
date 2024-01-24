@@ -168,27 +168,37 @@ function CloseScreen(screen_to_close, background) {
 // função para mostrar / esconder a senha no form de login
 
 (() => {
+    // campo de input para password
     const passwordField = document.querySelector('#id_password');
-    const showPasswordBtnShow = document.querySelector('#show-password');
 
-    if (!showPasswordBtnShow) return;
+    if (!passwordField) return;
 
-    const showPasswordIcon = document.querySelector('#show-password-icon');
-    const showPasswordText = document.querySelector('#show-password-text');
+    // criando icone fa-eye no html
+    const icon = document.createElement('i');
+    icon.className = 'show-password-icon fa-regular fa-eye';
+    icon.id = 'show-password-icon'
+
+    // inserindo icone na tela se tiver a classe certa (evitar com que apareça em outros forms)
+    if (passwordField.classList.contains('login-password-field')) {
+        passwordField.parentNode.insertBefore(icon, passwordField.nextSibling);
+    }
+
+    const showPasswordIcon = document.querySelector('.show-password-icon');
+
+    if (!showPasswordIcon) return;
+
     let is_password_visible = false;
 
-    showPasswordBtnShow.addEventListener('click', () => {
+    showPasswordIcon.addEventListener('click', () => {
         if (is_password_visible) {
             passwordField.type = 'password';
             showPasswordIcon.classList.remove('fa-eye-slash');
             showPasswordIcon.classList.add('fa-eye');
-            showPasswordText.innerHTML = 'Mostrar';
         }
         else {
             passwordField.type = 'text';
             showPasswordIcon.classList.remove('fa-eye');
             showPasswordIcon.classList.add('fa-eye-slash');
-            showPasswordText.innerHTML = 'Esconder';
         }
         is_password_visible = !is_password_visible;
     });

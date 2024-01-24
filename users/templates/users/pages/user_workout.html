@@ -75,11 +75,11 @@
                     <td class="workout-share">
                         {% if not workout.is_shared %}
                             <a href="{% url 'users:user_workout_share' workout.pk %}">
-                                <i class="workout-share-icon fa-solid fa-square-share-nodes" title="Compartilhar"></i>
+                                <i class="general-icon workout-icon fa-solid fa-square-share-nodes" title="Compartilhar"></i>
                             </a>
                         {% else %}
                             <a href="{% url 'users:user_workout_unshare' workout.pk %}">
-                                <i class="workout-share-icon remove-share fa-solid fa-square-xmark" title="Remover Compartilhamento"></i>
+                                <i class="general-icon workout-icon remove-share fa-solid fa-square-xmark" title="Remover Compartilhamento"></i>
                             </a>
                         {% endif %}
                     </td>

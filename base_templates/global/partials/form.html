@@ -9,7 +9,7 @@
                     <i class="fa-regular fa-circle-xmark icon-shake"></i>
                     Existem Erros Neste Formulário.
                 </div>
-                <i class="fa-solid fa-xmark dismiss-flash-message" title="Remover Notificação"></i>
+                <i class="fa-solid fa-xmark dismiss-flash-message" title="Remover Mensagem"></i>
             </div>
         </div>
     </div>
@@ -55,15 +55,6 @@
             {% endif %}
         {% endfor %}
     </div>
-
-    {% if is_login_page %}
-        <div class="show-password-container prevent-select">
-            <div class="plaintext-button show-password" id="show-password">
-                <i class="fa-regular fa-eye" id="show-password-icon"></i>
-                <a id="show-password-text">Mostrar</a>
-            </div>
-        </div>
-    {% endif %}
 
     {% if is_exercise_form or is_workout_form %}
         {% if captcha_private_key %}

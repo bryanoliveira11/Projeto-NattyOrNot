@@ -17,7 +17,7 @@ from users.models import UserWorkouts
 from utils.get_notifications import get_notifications
 from utils.pagination import make_pagination
 
-WORKOUT_PER_PAGE = environ.get('WORKOUT_PER_PAGE', 10)
+WORKOUT_PER_PAGE = environ.get('WORKOUT_PER_PAGE', 5)
 
 
 @method_decorator(

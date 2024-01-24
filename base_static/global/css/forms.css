@@ -111,25 +111,28 @@ select option:checked {
   display: inline;
 }
 
-.show-password-container {
-  display: flex;
-  align-items: end;
-  justify-content: end;
-  margin: 0 auto;
-  padding: 1rem 0 1rem 0;
-  max-width: 64rem;
+.login-password-field {
+  position: relative;
 }
 
-.show-password {
-  margin: 0 0.5rem 0.1rem 0;
+#id_password.login-password-field {
+  padding-right: 5rem;
+}
+
+#show-password-icon {
+  padding: 1rem;
+  color: var(--color-dark-text);
+  position: absolute;
+  right: 0.15rem;
+  transform: translateY(-50%);
   cursor: pointer;
-  font-size: 1.4rem;
 }
 
-.show-password:hover {
-  filter: brightness(1.1);
+#show-password-icon {
+  top: 70%;
 }
 
-#show-password-text {
-  text-decoration: none;
+#show-password-icon:hover{
+  border-left: 1px solid var(--color-primary);
+  background: rgba(24, 24, 24, 0.062);
 }
