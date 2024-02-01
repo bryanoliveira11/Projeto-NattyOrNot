@@ -1058,18 +1058,16 @@ a.notification-url:hover {
   font-size: 1.8rem;
   padding: 1rem;
   background: var(--color-success);
+  border-radius: 0.4rem;
   transition: all 300ms ease-in-out;
   margin: 0 auto;
-  width: 93%;
+  width: 96%;
+  max-width: 100%;
 }
 
 .notifications-dismiss button:hover {
   color: var(--color-white);
   background: var(--color-success-dark);
-}
-
-.white-text {
-  color: var(--color-white);
 }
 
 /* messages */
@@ -1114,7 +1112,7 @@ a.notification-url:hover {
 
 .message-error {
   border: 1px solid #f10606cf;
-  background-color: #dc110129;
+  background: #dc110129;
   box-shadow: 0px 0px 2px #ff0303;
   color: #e46b6b;
 }
@@ -1128,7 +1126,7 @@ a.notification-url:hover {
 
 .message-warning {
   border: 1px solid #f18e06cf;
-  background-color: #dc800129;
+  background: #dc800129;
   box-shadow: 0px 0px 2px #ffb103;
   color: #ffb103;
   transition: 0.5s;
@@ -1136,7 +1134,7 @@ a.notification-url:hover {
 
 .message-info {
   border: 1px solid #062cf175;
-  background-color: #0749951f;
+  background: #0749951f;
   box-shadow: 0px 0px 2px #0396ff;
   color: #0396ff;
 }
@@ -1302,19 +1300,19 @@ textarea.api-textarea:focus {
 }
 
 .http-method.get {
-  background-color: var(--color-success);
+  background: var(--color-success);
 }
 
 .http-method.post {
-  background-color: var(--color-warning-dark);
+  background: var(--color-warning-dark);
 }
 
 .http-method.patch {
-  background-color: var(--color-info-dark);
+  background: var(--color-info-dark);
 }
 
 .http-method.delete {
-  background-color: var(--color-error-dark);
+  background: var(--color-error-dark);
 }
 
 /* user workouts */
