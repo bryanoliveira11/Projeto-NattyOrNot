@@ -13,8 +13,7 @@
     if (!toggleDarkbtn) return;
 
     /* chamando essa função para mostrar sempre o ícone e cor corretas, mesmo se atualizar a página */
-    changePageColors();
-    changeMenuIcon();
+    handlePageLoad();
 
     // valor padrão para darkmode em local storage, se não existir
     if (localStorage.getItem('darkmode') === null) {
@@ -25,9 +24,16 @@
     toggleDarkbtn.addEventListener('click', () => {
         let isDark = localStorage.getItem('darkmode');
         localStorage.setItem('darkmode', isDark === 'true' ? 'false' : 'true');
-        changeMenuIcon();
         changePageColors();
+        changeMenuIcon();
     })
+
+    function handlePageLoad() {
+        document.addEventListener('DOMContentLoaded', () => {
+            changePageColors();
+            changeMenuIcon();
+        });
+    }
 
     // chama as funções para troca de cores
     function changePageColors() {
