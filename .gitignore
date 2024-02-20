@@ -1,5 +1,7 @@
 .vscode
 ideias.txt
+PyWhatKit_DB.txt
+test.py
 
 # Django #
 *.log

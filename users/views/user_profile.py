@@ -108,12 +108,6 @@ class UserProfileDetailClassView(View):
                 if user_profile:
                     user_profile.profile_picture = user_picture
                     user_profile.save()
-                # user não tem profile, contas que veem do google
-                else:
-                    UserProfile.objects.create(
-                        user=self.request.user,
-                        profile_picture=user_picture
-                    )
 
             # salvando
             user.save()
