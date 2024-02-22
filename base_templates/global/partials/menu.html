@@ -19,7 +19,7 @@
             </span>
 
             <span class="menu-link">
-                <a href="{% url 'training:home' %}">
+                <a href="{% url 'training:home' %}" class="animated-border">
                     <i class="fa-solid fa-house"></i>
                     Home
                 </a>
@@ -27,37 +27,37 @@
 
             {% if request.user.is_authenticated %}
                 <span class="menu-link">
-                    <a href="{% url 'users:user_profile' request.user %}">
+                    <a href="{% url 'users:user_profile' request.user %}" class="animated-border">
                         <i class="fa-solid fa-circle-user"></i>
                         Meu Perfil
                     </a>
                 </span>
                 <span class="menu-link">
-                    <a href="{% url 'users:user_dashboard' %}">
+                    <a href="{% url 'users:user_dashboard' %}" class="animated-border">
                         <i class="fa-solid fa-clipboard-user"></i>
                         Meu Dashboard
                     </a>
                 </span>
                 <span class="menu-link">
-                    <a href="{% url 'users:user_workouts'%}">
+                    <a href="{% url 'users:user_workouts'%}" class="animated-border">
                         <i class="fa-solid fa-dumbbell"></i>
                         Meus Treinos
                     </a>
                 </span>
                 <span class="menu-link">
-                    <a href="{% url 'users:create_exercise' %}">
+                    <a href="{% url 'users:create_exercise' %}" class="animated-border">
                         <i class="fa-solid fa-weight-hanging"></i>
                         Criar Exercício
                     </a>
                 </span>
                 <span class="menu-link">
-                    <a href="{% url 'training:nattyornot_api' %}">
+                    <a href="{% url 'training:nattyornot_api' %}" class="animated-border">
                         <i class="fa-solid fa-server"></i>
                         Nossa API
                     </a>
                 </span>
                 <span class="menu-link">
-                    <a href="{% url 'users:logout' %}" class="user-logout-link">
+                    <a href="{% url 'users:logout' %}" class="user-logout-link animated-border">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                         Sair
                     </a>
@@ -66,13 +66,13 @@
 
             {% else %}
                 <span class="menu-link">
-                    <a href="{% url 'users:login' %}">
+                    <a href="{% url 'users:login' %}" class="animated-border">
                         <i class="fa-solid fa-right-to-bracket"></i>
                         Login
                     </a>
                 </span>
                 <span class="menu-link">
-                    <a href="{% url 'users:register' %}">
+                    <a href="{% url 'users:register' %}" class="animated-border">
                         <i class="fa-solid fa-user-plus"></i>
                         Registre-se
                     </a>

@@ -17,14 +17,15 @@
 
 {% if is_login_page %}
 {% if not request.user.is_authenticated %}
-<a class="btn-google-signin center"
-    href="{% provider_login_url 'google'%}?next=/dashboard/exercises/">
-    <img src="{% static 'global/imgs/google_icon.png' %}" alt="Logar com google">
-    Continuar com o Google.
-</a>
+    <div class="btn-google-container">
+        <a class="btn-google-signin center"
+            href="{% provider_login_url 'google'%}?next={% url 'users:user_dashboard' %}">
+            <img src="{% static 'global/imgs/google_icon.png' %}" alt="Logar com google">
+            Fazer Login com Google.
+        </a>
+    </div>
 {% endif %}
 {% endif %}
-
 
 <div class="main-content container">
     <form action="{{form_action}}" class="main-form container"

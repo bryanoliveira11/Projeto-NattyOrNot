@@ -301,12 +301,7 @@ img {
 .menu-nav a {
   width: fit-content;
   color: var(--color-white);
-  transition: all 50ms ease-in-out;
-}
-
-.menu-nav a:hover {
-  color: var(--color-gray-1);
-  border-bottom: 2px solid var(--color-white);
+  transition: all 30ms ease-in-out;
 }
 
 .menu-link {
@@ -326,6 +321,29 @@ img {
 .menu-link.hello img {
   max-width: 3rem;
   margin: 0 1rem 0.7rem 0;
+}
+
+.animated-border {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: var(--color-white);
+  margin-bottom: 1rem;
+}
+
+.animated-border::after {
+  content: "";
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-white);
+  transition: width 0.3s ease;
+}
+
+.animated-border:hover::after {
+  width: 100%;
 }
 
 /* home exercise cards */
@@ -659,7 +677,7 @@ select option:checked {
 
 .form-content button {
   padding: 1rem 2rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
   font-size: 1.5rem;
   font-weight: 500;
   border: none;
@@ -710,7 +728,7 @@ select option:checked {
 }
 
 #show-password-icon {
-  top: 70%;
+  top: 69%;
 }
 
 #show-password-icon:hover {
@@ -1075,7 +1093,7 @@ a.notification-url:hover {
   display: flex;
   flex-flow: column nowrap;
   gap: calc(var(--spacing-gutter-medium) / 2);
-  max-width: 68rem;
+  max-width: 67rem;
 }
 
 .message-form {
@@ -1665,15 +1683,15 @@ a.published {
   max-width: 64rem;
   border-radius: 0.3rem;
   margin: 0 auto;
-  background: var(--color-white);
+  background: var(--color-gray-1);
   color: var(--color-dark-text);
   font-family: var(--font-headings);
-  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.356);
   transition: all 300ms ease-in-out;
 }
 
 .btn-google-signin:hover {
-  background: var(--color-gray-2);
+  background: var(--color-gray-3);
 }
 
 .btn-google-signin.profile:hover {
@@ -1681,8 +1699,8 @@ a.published {
 }
 
 .btn-google-signin img {
+  margin-right: 1rem;
   width: 2.5rem;
-  margin-right: 1.5rem;
 }
 
 .invisible {
@@ -1810,6 +1828,15 @@ table tr.tr-dark {
   animation: zoomInzoomOut 1s infinite;
 }
 
+@keyframes border_to_right {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
 /* medias */
 @media (max-width: 1620px) {
   .back-to-top {
@@ -1832,6 +1859,15 @@ table tr.tr-dark {
     align-items: center;
     gap: var(--spacing-gutter-medium);
     max-width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .message-form, .messages-container {
+    width: 91%;
+  }
+  .btn-google-signin, .btn-google-signin.profile {
+    width: 84%;
   }
 }
 
@@ -1876,10 +1912,6 @@ table tr.tr-dark {
     margin-bottom: 0.3rem;
   }
 
-  .messages-container {
-    max-width: 91%;
-  }
-
   .main-content-error-page {
     margin: 0 auto;
   }
@@ -1897,15 +1929,6 @@ table tr.tr-dark {
 
   .main-content-error-page h3 {
     font-size: 1.4rem;
-  }
-
-  .message-form,
-  .btn-google-signin {
-    width: 75%;
-  }
-
-  .btn-google-signin.profile {
-    width: 100%;
   }
 
   .p-b {
