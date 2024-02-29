@@ -39,14 +39,14 @@ class DashboardFormBaseClassView(View):
             self.title = f'Editar Exercício - {exercise.title}'
             self.is_exercise_edit = True
         else:
-            self.title = 'Criar Exercício'
+            self.title = 'Novo Exercício'
             self.is_exercise_edit = False
 
         return exercise
 
     def get_referer_url(self):
         http_referer = self.request.META.get('HTTP_REFERER')
-        create_url = 'dashboard/exercise/create/'
+        create_url = reverse('users:create_exercise')
 
         if http_referer is None or self.request.path in http_referer or create_url in http_referer:
             url_to_redirect = reverse(

@@ -15,12 +15,12 @@
             </h3>
         {% endif %}
         <div class="login-message container center">
-            <h3 class="form-tag">
-                <a href="{% url 'users:user_workouts' %}" class="plaintext-button">
+            <h3 class="form-tag less-margin">
+                <a href="{{url_to_redirect}}" class="plaintext-button">
                     <i class="fa-solid fa-circle-left"></i>
                     Voltar
                 </a>
-                para Lista de Treinos
+                para Página Anterior.
             </h3>
             {% if is_workout_edit %}
                 <div class="add-new-workout">

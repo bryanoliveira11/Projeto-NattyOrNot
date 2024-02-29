@@ -4,12 +4,13 @@
 
 {% block content %}
     <div class="center">
-        <h2 class="form-tag main">
+        <h2 class="form-tag">
             <i class="fa-solid fa-house mr-1"></i>{{page_tag}}
         </h2>
         {% include "global/partials/toggle_filters.html" %}
         {% include "global/partials/messages.html" %}
         {% include "global/partials/exercise_filters.html" %}
+        {% include "global/partials/search.html" %}
     </div>
     <div class="main-content main-content-list container center">
         <div class="exercise-container-grid">
@@ -18,8 +19,8 @@
             {% empty %}
             <div class="main-content-error-page container center">
                 <div class="error-message-content container">
-                    <img src="{% static 'global/imgs/404_fakenatty.png' %}" alt="Imagem de Erro">
-                    <h2>Fake Natty !</h2>
+                    <i class="fa-solid fa-ban"></i>
+                    <h2>Nenhum Exercício Encontrado !</h2>
                     <h3>
                         Parece que não há exercícios, não é mesmo ?
                         {% if is_home_page %}

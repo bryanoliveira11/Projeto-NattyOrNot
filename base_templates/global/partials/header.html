@@ -1,47 +1,57 @@
 {% load static %}
+{% load filters %}
 
-<header class="main-header-container">
-  <div class="main-header container">
-    <div class="main-header-content center">
-      <a href="{% url 'training:home' %}" class="main-logo logo">
-        <img src="{% static 'global/imgs/logo.png' %}" alt="logo do site">
-        <span class="main-logo-text" title="NattyOrNot"> NattyOrNot </span>
+<header class="header">
+  {% include "global/partials/notifications.html" %}
+  <a href="{% url 'training:home' %}" class="logo" title="NattyOrNot">NattyOrNot</a>
+  <div class="header-right">
+    {% if request.user.is_authenticated %}
+      <a href="{% url 'users:user_dashboard' %}" class="header-link" title="Dashboard">
+        <i class="fa-solid fa-clipboard-user"></i>
+        Dashboard
       </a>
-      {% include "global/partials/search.html" %}
-      {% include "global/partials/notifications.html" %}
-
-        <div class="shortcuts-container">
-          {% if request.user.is_authenticated %}
-            <span>
-              <a href="{% url 'users:user_profile' request.user %}" title="Perfil">Perfil</a> /
-              <a href="{% url 'users:user_dashboard' %}" title="Dashboard">Dashboard</a> / 
-              <a href="{% url 'users:user_workouts'%}" title="Treinos">Treinos</a> /
-              <span>
-                <a href="{% url 'users:logout' %}" class="user-logout-link" title="Encerrar Sessão">
-                  Sair
-                </a>
-                {% include "global/partials/logout_form.html" %}
-              </span>
-          {% else %}
-              <span>
-                <a href="{% url 'users:login' %}" title="Perfil">Login</a> /
-                <a href="{% url 'users:register' %}" title="Dashboard">Registre-se</a>
-              </span>
-          {% endif %}
-            <button class="plaintext-button mt" id="toggle-dark-mode" title="Dark Mode">
-              <i class="fa-solid" id="menu-icon"></i>
-            </button>
-            {% if request.user.is_authenticated %}
-              <button class="plaintext-button mt" id="toggle-notification-menu" title="Notificações">
-                  <i class="fa-solid fa-bell bell-menu"></i>
-              </button>
-              {% if notification_total %}
-                <span class='notification-total'> 
-                   {{notification_total}}
-                </span>
-              {% endif %} 
-            {% endif %}
-          </span>
-        </div>
-    </div>
+      <a href="{% url 'users:user_workouts' %}" class="header-link" title="Treinos">
+        <i class="fa-solid fa-dumbbell"></i>
+        Treinos
+      </a>
+      <a class="header-link" id="toggle-notification-menu" title="{{notification_total}} Notificações">
+        <i class="fa-solid fa-bell bell-menu"></i>
+        {% if notification_total %}
+        <span class='notification-total'> 
+           {{notification_total}}
+        </span>
+        {% endif %}
+        {% if notification_total == 1 %}
+          Notificação
+        {% else %}
+          Notificações
+        {% endif %}
+      </a>
+      <a class="header-link" id="toggle-dark-mode" title="Dark Mode">
+        <i class="fa-solid" id="menu-icon"></i>
+        Tema
+      </a>
+      <a href="{% url 'users:user_profile' request.user.username %}" class="header-link" title="{{request.user.username}}">
+        <i class="fa-solid fa-circle-user"></i>
+        {{request.user.username|title_limit_length}}
+      </a>
+      <a href="{% url 'users:logout' %}" class="user-logout-link header-link" title="Encerrar Sessão">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        Sair
+      </a>
+    {% else %}
+      <a class="header-link" id="toggle-dark-mode" title="Dark Mode">
+        <i class="fa-solid" id="menu-icon"></i>
+        Tema
+      </a>
+      <a href="{% url 'users:login' %}" class="header-link">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        Login
+      </a>
+      <a href="{% url 'users:register' %}" class="header-link">
+        <i class="fa-solid fa-user-plus"></i>
+        Cadastre-se
+      </a>
+    {% endif %}
+  </div>
 </header>

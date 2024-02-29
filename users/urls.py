@@ -88,6 +88,11 @@ urlpatterns = [
     ),
     # user dashboard urls
     path(
+        'dashboard/exercises/',
+        views.DashboardUserClassView.as_view(),
+        name='user_dashboard'
+    ),
+    path(
         'dashboard/exercises/search/',
         views.DashboardSearchClassView.as_view(),
         name='user_dashboard_search'
@@ -96,11 +101,6 @@ urlpatterns = [
         'dashboard/exercises/is_published=<str:is_published>/',
         views.DashboardIsPublishedFilterClassView.as_view(),
         name='user_dashboard_is_published'
-    ),
-    path(
-        'dashboard/exercises/',
-        views.DashboardUserClassView.as_view(),
-        name='user_dashboard'
     ),
     path(
         'dashboard/exercises/category/<int:id>/',

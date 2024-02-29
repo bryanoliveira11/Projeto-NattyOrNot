@@ -30,7 +30,7 @@
                             {% csrf_token %}
                             <input type="hidden" name="username" value="{{request.user.username}}">
                             <input type="hidden" name="previous_page" value="{{request.path}}">
-                            <button class="plaintext-button white-text" type="submit" title="Remover Todas as Notificações">
+                            <button class="plaintext-button general-icons" type="submit" title="Remover Notificação">
                                 <i class="fa-solid fa-xmark" title="Remover Notificação"></i>
                             </button>
                         </form>

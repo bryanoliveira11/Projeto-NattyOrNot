@@ -13,13 +13,13 @@
 
     <div class="menu-content">
         <nav class="menu-nav">
-            <span class="menu-link hello center flex-center">
-                <img src="{% static 'global/imgs/logo.png' %}" alt="logo do site">
-                NattyOrNot
+            <span class="menu-link title center flex-center">
+                <i class="fa-solid fa-compass"></i>
+                Atalhos
             </span>
 
             <span class="menu-link">
-                <a href="{% url 'training:home' %}" class="animated-border">
+                <a href="{% url 'training:home' %}" class="animated-border" title="Home">
                     <i class="fa-solid fa-house"></i>
                     Home
                 </a>
@@ -27,54 +27,41 @@
 
             {% if request.user.is_authenticated %}
                 <span class="menu-link">
-                    <a href="{% url 'users:user_profile' request.user %}" class="animated-border">
-                        <i class="fa-solid fa-circle-user"></i>
-                        Meu Perfil
-                    </a>
-                </span>
-                <span class="menu-link">
-                    <a href="{% url 'users:user_dashboard' %}" class="animated-border">
-                        <i class="fa-solid fa-clipboard-user"></i>
-                        Meu Dashboard
-                    </a>
-                </span>
-                <span class="menu-link">
-                    <a href="{% url 'users:user_workouts'%}" class="animated-border">
-                        <i class="fa-solid fa-dumbbell"></i>
-                        Meus Treinos
-                    </a>
-                </span>
-                <span class="menu-link">
-                    <a href="{% url 'users:create_exercise' %}" class="animated-border">
+                    <a href="{% url 'users:create_exercise' %}" class="animated-border" title="Criar Novo Exercício">
                         <i class="fa-solid fa-weight-hanging"></i>
-                        Criar Exercício
+                        Novo Exercício
                     </a>
                 </span>
                 <span class="menu-link">
-                    <a href="{% url 'training:nattyornot_api' %}" class="animated-border">
-                        <i class="fa-solid fa-server"></i>
-                        Nossa API
+                    <a href="{% url 'users:user_workout_create' %}" class="animated-border" title="Criar Novo Treino">
+                        <i class="fa-solid fa-dumbbell"></i>
+                        Novo Treino
                     </a>
                 </span>
                 <span class="menu-link">
-                    <a href="{% url 'users:logout' %}" class="user-logout-link animated-border">
+                    <a href="{% url 'users:user_profile_change_password' request.user %}" class="animated-border" title="Alterar Senha">
+                        <i class="fa-solid fa-key"></i>
+                        Alterar Senha
+                    </a>
+                </span>
+                <span class="menu-link">
+                    <a href="{% url 'users:logout' %}" class="user-logout-link animated-border" title="Encerrar Sessão">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                         Sair
                     </a>
                     {% include "global/partials/logout_form.html" %}
                 </span>
-
             {% else %}
                 <span class="menu-link">
-                    <a href="{% url 'users:login' %}" class="animated-border">
+                    <a href="{% url 'users:login' %}" class="animated-border" title="Login">
                         <i class="fa-solid fa-right-to-bracket"></i>
                         Login
                     </a>
                 </span>
                 <span class="menu-link">
-                    <a href="{% url 'users:register' %}" class="animated-border">
+                    <a href="{% url 'users:register' %}" class="animated-border" title="Cadastro">
                         <i class="fa-solid fa-user-plus"></i>
-                        Registre-se
+                        Cadastre-se
                     </a>
                 </span>
             {% endif %}

@@ -5,14 +5,14 @@
 {% block content %}
     <div class="delete-confirm-tag center">
         {% if not workout.is_shared %}
-            <h3 class="form-tag main dashboard-tag">
+            <h3 class="form-tag dashboard-tag">
                 <i class="fa-solid fa-share-from-square m-right"></i>
                 Deseja Realmente 
                 <span class="green-text">Compartilhar</span>
                 o Treino "{{workout.title}}" ?
             </h3>
         {% else %}
-            <h3 class="form-tag main dashboard-tag">
+            <h3 class="form-tag dashboard-tag">
                 <i class="fa-solid fa-square-xmark m-right"></i>
                 Deseja Realmente 
                 <span class="red-text">Remover o Compartilhamento</span>

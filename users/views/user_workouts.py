@@ -171,13 +171,29 @@ class UserWorkoutBaseClass(View):
             self.title = f'Editar Treino - {workout.title}'
             self.is_workout_edit = True
         else:
-            self.title = 'Criar Treino'
+            self.title = 'Novo Treino'
             self.is_workout_edit = False
 
         return workout
 
+    def get_referer_url(self):
+        http_referer = self.request.META.get('HTTP_REFERER')
+        create_url = reverse('users:user_workout_create')
+
+        if http_referer is None or self.request.path in http_referer or create_url in http_referer:
+            print('cheguei no if')
+            url_to_redirect = reverse(
+                'users:user_workouts'
+            )
+        else:
+            url_to_redirect = http_referer
+
+        return url_to_redirect
+
     def render_workout(self, form):  # renderizando página do form
         notifications, notifications_total = get_notifications(self.request)
+
+        url_to_redirect = self.get_referer_url()
 
         return render(self.request, 'users/pages/create_workout.html', context={
             'form': form,
@@ -188,6 +204,7 @@ class UserWorkoutBaseClass(View):
             'captcha_private_key': environ.get('RECAPTCHA_PRIVATE_KEY', ''),
             'is_workout_form': True,
             'is_workout_edit': self.is_workout_edit,
+            'url_to_redirect': url_to_redirect,
             'search_form_action': reverse('users:user_workouts_search'),
             'placeholder': 'Pesquise por um Treino',
         })

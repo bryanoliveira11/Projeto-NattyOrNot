@@ -56,7 +56,7 @@ class ExerciseBaseClassView(ListView):
             'categories': categories,
             'pagination_range': pagination_range,
             'title': 'Home',
-            'page_tag': 'Home - Exercícios',
+            'page_tag': 'Home - Exercícios Publicados',
         })
 
         return context

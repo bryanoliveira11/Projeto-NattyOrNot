@@ -149,8 +149,7 @@ def user_signin_notification(instance, created, *args, **kwargs):
             msg='Bem Vindo ao NattyOrNot '
             f'<a class="notification-url" href="{
                 msg_url}">{user.username}</a>. '
-            'Use o Menu Lateral ou o Menu Rápido Abaixo da Barra de Pesquisa '
-            'para Navegar no Site. Bons Treinos !',
+            'Use os Menus para Navegar no Site. Bons Treinos !',
             send_to=user,
         )
 

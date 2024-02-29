@@ -5,7 +5,7 @@
 
 {% block content %}
     <div class="center">
-        <h2 class="form-tag main dashboard-tag">
+        <h2 class="form-tag dashboard-tag">
             <i class="fa-solid fa-dumbbell"></i>
             {{page_tag}}
         </h2>
@@ -16,9 +16,10 @@
             </h2>
         {% endif %}
 
-        <div class="dashboard-message-padding">
+        <div class="workout-message-padding">
             {% include "global/partials/messages.html" %}
         </div>
+        {% include "global/partials/search.html" %}
     </div>
     
     <div class="workouts-table container center">
@@ -95,8 +96,8 @@
         {% else %}
         <div class="main-content-error-page center">
             <div class="error-message-content">
-                <img src="{% static 'global/imgs/404_fakenatty.png' %}" alt="Imagem de Erro">
-                <h2>Fake Natty !</h2>
+                <i class="fa-solid fa-ban"></i>
+                <h2>Nenhum Treino Encontrado !</h2>
                 <h3>
                     Parece que não há nenhum Treino, não é mesmo ?
                     <h3><a href="{% url 'users:user_workout_create' %}">Criar Treino.</a></h3>

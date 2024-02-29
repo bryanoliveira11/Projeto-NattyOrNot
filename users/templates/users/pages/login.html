@@ -6,7 +6,7 @@
     </div>
 
     {% if not request.user.is_authenticated %}
-        <div class="login-register-redirect center form-tag">
+        <div class="login-register-redirect center form-tag less-margin">
             <h3> Novo Usuário?  
                 <span>
                     <a class="default-link" href="{% url 'users:register' %}">Crie uma Conta</a>
