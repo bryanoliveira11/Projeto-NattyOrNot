@@ -2,7 +2,6 @@ import json
 from os import environ
 from typing import Any, Dict
 
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.db.models.query import QuerySet

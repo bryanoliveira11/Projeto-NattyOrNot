@@ -15,9 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
+from django.conf.urls import handler404
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+
+handler404 = 'training.views.error404.error_404'
 
 urlpatterns = [
     path('accounts/', include('allauth.urls')),
