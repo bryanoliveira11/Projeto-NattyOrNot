@@ -181,7 +181,6 @@ class UserWorkoutBaseClass(View):
         create_url = reverse('users:user_workout_create')
 
         if http_referer is None or self.request.path in http_referer or create_url in http_referer:
-            print('cheguei no if')
             url_to_redirect = reverse(
                 'users:user_workouts'
             )
