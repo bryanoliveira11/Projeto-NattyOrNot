@@ -5,21 +5,11 @@
 
 {% block content %}
     <div class="center">
-        <h2 class="form-tag dashboard-tag">
-            <i class="fa-solid fa-dumbbell"></i>
-            {{page_tag}}
-        </h2>
-
-        {% if is_filtered %}
-            <h2 class="mb">
-                {% include "global/partials/is_filtered.html" %}
-            </h2>
-        {% endif %}
-
-        <div class="workout-message-padding">
-            {% include "global/partials/messages.html" %}
-        </div>
+        <h2 class="form-tag dashboard-tag">{{page_tag}}</h2>
+        {% include "global/partials/messages.html" %}
         {% include "global/partials/search.html" %}
+        {% include "global/partials/filters.html" %}
+    </div>
     </div>
     
     <div class="workouts-table container center">
@@ -99,7 +89,6 @@
                 <i class="fa-solid fa-ban"></i>
                 <h2>Nenhum Treino Encontrado !</h2>
                 <h3>
-                    Parece que não há nenhum Treino, não é mesmo ?
                     <h3><a href="{% url 'users:user_workout_create' %}">Criar Treino.</a></h3>
                 </h3>
             </div>

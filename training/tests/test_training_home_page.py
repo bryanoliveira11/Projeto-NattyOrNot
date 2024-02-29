@@ -19,7 +19,7 @@ class TrainingHomePageTest(ExercisesTestBaseClass):
     def test_training_home_template_shows_right_message_if_no_exercises(self):
         response = self.client.get(reverse('training:home'))
         self.assertIn(
-            'Parece que não há exercícios, não é mesmo ?',
+            'Nenhum Exercício Encontrado !',
             response.content.decode('utf-8')
         )
 
@@ -41,7 +41,7 @@ class TrainingHomePageTest(ExercisesTestBaseClass):
         self.make_exercise(is_published=False)
         response = self.client.get(reverse('training:home'))
         self.assertIn(
-            'Parece que não há exercícios, não é mesmo ?',
+            'Nenhum Exercício Encontrado !',
             response.content.decode('utf-8')
         )
 
@@ -72,7 +72,7 @@ class TrainingHomePageTest(ExercisesTestBaseClass):
         # title
         self.assertEqual(response.context['title'], 'Home')
         # page_tag
-        self.assertEqual(response.context['page_tag'], 'Home - Exercícios')
+        self.assertEqual(response.context['page_tag'], 'Exercícios Publicados')
         # search form action
         self.assertEqual(
             response.context['search_form_action'],
@@ -104,7 +104,7 @@ class TrainingHomePageTest(ExercisesTestBaseClass):
         )
         self.assertEqual(
             response.context['page_tag'],
-            f'Home - Resultados da Busca por "{search_term}"'
+            f'Busca por "{search_term}"'
         )
         self.assertEqual(
             response.context['search_form_action'],
@@ -130,7 +130,7 @@ class TrainingHomePageTest(ExercisesTestBaseClass):
         )
         self.assertEqual(
             response.context['page_tag'],
-            f'Home - Filtrando por Exercícios de {category_name}'
+            f'Exercícios de Test Category'
         )
         self.assertEqual(
             response.context['search_form_action'],

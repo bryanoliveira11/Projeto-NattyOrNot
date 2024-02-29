@@ -41,6 +41,7 @@ class ExerciseBaseClassView(ListView):
 
         exercises = context.get('training')
         categories = Categories.objects.all()
+        results = len(exercises) if exercises else None
 
         # paginação
         page_obj, pagination_range = make_pagination(
@@ -54,9 +55,10 @@ class ExerciseBaseClassView(ListView):
         context.update({
             'exercises': page_obj,
             'categories': categories,
+            'results_count': results,
             'pagination_range': pagination_range,
             'title': 'Home',
-            'page_tag': 'Home - Exercícios Publicados',
+            'page_tag': 'Exercícios Publicados',
         })
 
         return context
@@ -98,7 +100,7 @@ class SearchClassView(ExerciseBaseClassView):
         context = super().get_context_data(*args, **kwargs)
         context.update({
             'title': f'Busca por "{self.search_term}"',
-            'page_tag': f'Home - Resultados da Busca por "{self.search_term}"',
+            'page_tag': f'Busca por "{self.search_term}"',
             'additional_url_query': f'&q={self.search_term}',
             'is_filtered': True,
         })
@@ -122,12 +124,6 @@ class CategoriesFilterClassView(ExerciseBaseClassView):
                 pk=self.kwargs.get('id')
             ).first()
 
-            if self.category:
-                messages.error(
-                    self.request,
-                    f"Nenhum Resultado Encontrado para {self.category.name}"
-                )
-
         return queryset
 
     def get_context_data(self, *args, **kwargs) -> Dict[str, Any]:
@@ -146,7 +142,7 @@ class CategoriesFilterClassView(ExerciseBaseClassView):
 
         context.update({
             'title': f'Categoria - {category_name}',
-            'page_tag': f'Home - Filtrando por Exercícios de {category_name}',
+            'page_tag': f'Exercícios de {category_name}',
             'is_filtered': True,
         })
 

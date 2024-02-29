@@ -44,6 +44,7 @@ class DashboardUserBase(ListView):
         # exercicios do contexto
         exercises = context.get('user_exercises')
         categories = Categories.objects.all()
+        results = len(exercises) if exercises else None
 
         # paginação
         page_obj, pagination_range = make_pagination(
@@ -56,10 +57,11 @@ class DashboardUserBase(ListView):
             'exercises': page_obj,
             'pagination_range': pagination_range,
             'categories': categories,
+            'results_count': results,
             'notifications': notifications,
             'notification_total': notifications_total,
             'title': f'Dashboard',
-            'page_tag': f'Meus Exercícios - Dashboard',
+            'page_tag': f'Dashboard - Meus Exercícios',
             'search_form_action': reverse('users:user_dashboard_search'),
             'is_dashboard_page': True,
             'placeholder': 'Pesquise por um Exercício ou Categoria',
@@ -97,12 +99,6 @@ class DashboardUserCategoryClassView(DashboardUserBase):
                 pk=self.kwargs.get('id')
             ).first()
 
-            if self.category:
-                messages.error(
-                    self.request,
-                    f"Nenhum Resultado Encontrado para {self.category.name}"
-                )
-
         return queryset
 
     def get_context_data(self, *args, **kwargs) -> dict[str, Any]:
@@ -122,7 +118,7 @@ class DashboardUserCategoryClassView(DashboardUserBase):
 
         context.update({
             'title': f'Dashboard - {category_name}',
-            'page_tag': f'Meus Exercícios de {category_name} - Dashboard',
+            'page_tag': f'Dashboard - Meus Exercícios de {category_name}',
             'is_filtered': True,
         })
 
@@ -160,7 +156,7 @@ class DashboardSearchClassView(DashboardUserBase):
     def get_context_data(self, *args, **kwargs) -> Dict[str, Any]:
         context = super().get_context_data(*args, **kwargs)
 
-        title = f'Dashboard - Pesquisa por "{self.search_term}"'
+        title = f'Dashboard - Busca por "{self.search_term}"'
 
         context.update({
             'title': title,
@@ -200,7 +196,7 @@ class DashboardIsPublishedFilterClassView(DashboardUserBase):
         is_published = self.kwargs.get('is_published')
         publish_translate = 'Publicados' if is_published == 'True' else 'Não Publicados'
 
-        title = f'Meus Exercícios {publish_translate} - Dashboard'
+        title = f'Dashboard - Meus Exercícios {publish_translate} '
 
         context.update({
             'title': title,

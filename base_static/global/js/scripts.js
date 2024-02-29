@@ -33,11 +33,6 @@ function CloseScreen(screen_to_close, background) {
 }
 
 (() => {
-    // filters vars
-    const filtersButton = document.querySelector('.filters-button');
-    const filtersScreen = document.querySelector('.filters-page');
-    const closeFiltersButton = document.querySelector('#close-filters-page');
-
     // notifications vars
     const notificationScreen = document.querySelector('.notifications-page');
     const notificationBtn = document.querySelector('#toggle-notification-menu');
@@ -47,29 +42,9 @@ function CloseScreen(screen_to_close, background) {
     const exerciseGrid = document.querySelector('.exercise-container-grid');
     const pageContent = document.querySelector('.main-content-container');
 
-    /* menu de filtros */
-
-    if (filtersButton) filtersButton.addEventListener('click', () => {
-        // fechar tela de notificações se estiver aberta
-        if (notificationScreen) CloseScreen(notificationScreen, exerciseGrid);
-
-        AdjustElementDisplay(filtersScreen, 'inline');
-        AdjustElementOpacity(exerciseGrid, 0.4);
-        exerciseGrid.addEventListener('click', PreventUserClicksOnBody);
-    });
-
-    // fecha a tela de filtros
-    if (closeFiltersButton) closeFiltersButton.addEventListener('click', () => {
-        CloseScreen(filtersScreen, exerciseGrid);
-    });
-
 
     /* menu de notificações */
-
     if (notificationBtn) notificationBtn.addEventListener('click', () => {
-        // fechar tela de filtros se estiver aberta
-        if (filtersScreen) CloseScreen(filtersScreen, pageContent);
-
         AdjustElementDisplay(notificationScreen, 'inline');
 
         // se exerciseGrid existir na tela
@@ -105,8 +80,7 @@ function CloseScreen(screen_to_close, background) {
     const buttonShowMenuVisibleClass = 'button-show-menu-is-visible';
     const menuHiddenClass = 'menu-hidden';
 
-    // filters & notification screen 
-    const filtersScreen = document.querySelector('.filters-page');
+    // notification screen 
     const notificationScreen = document.querySelector('.notifications-page');
     const exerciseGrid = document.querySelector('.exercise-container-grid');
     const pageContent = document.querySelector('.main-content-container');
@@ -116,7 +90,6 @@ function CloseScreen(screen_to_close, background) {
         menuContainer.classList.remove(menuHiddenClass);
 
         if (exerciseGrid) {
-            CloseScreen(filtersScreen, exerciseGrid);
             CloseScreen(notificationScreen, exerciseGrid);
             return;
         }

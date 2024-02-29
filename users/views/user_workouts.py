@@ -44,6 +44,8 @@ class UserWorkoutsPageClassView(ListView):
         workouts = context.get('user_workout')
         titles = f'Meus Treinos'
 
+        results = len(workouts) if workouts else None
+
         # paginação
         page_obj, pagination_range = make_pagination(
             self.request, workouts, WORKOUT_PER_PAGE
@@ -54,6 +56,7 @@ class UserWorkoutsPageClassView(ListView):
         context.update({
             'workouts': page_obj,
             'exercises': page_obj,  # for paginations to work
+            'results_count': results,
             'notifications': notifications,
             'notification_total': notifications_total,
             'pagination_range': pagination_range,
@@ -135,7 +138,7 @@ class UserWorkoutsPageSearchClassView(UserWorkoutsPageClassView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
 
-        title = f'Meus Treinos - Pesquisa por "{self.search_term}"'
+        title = f'Meus Treinos - Busca por "{self.search_term}"'
 
         context.update({
             'title': title,
@@ -403,7 +406,7 @@ class UserWorkoutsIsSharedFilterClassView(UserWorkoutsPageClassView):
         is_shared = self.kwargs.get('is_shared')
         publish_translate = 'Publicados' if is_shared == 'True' else 'Não Publicados'
 
-        title = f'Filtrando por Treinos {publish_translate}'
+        title = f'Treinos - {publish_translate}'
 
         context.update({
             'title': title,
