@@ -28,6 +28,7 @@ class UserRegisterView(View):
             'placeholder': 'Pesquise por um Exercício ou Categoria',
             'additional_search_placeholder': 'na Home',
             'title': 'Cadastro',
+            'is_register_page': True,
         })
 
     def post(self, *args, **kwargs):
