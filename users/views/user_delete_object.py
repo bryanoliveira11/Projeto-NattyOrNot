@@ -55,24 +55,25 @@ class UserExerciseDeleteClassView(DetailView):
     def post(self, *args, **kwargs):
         # pegando o exercicio do banco
         exercise_to_delete = Exercises.objects.filter(
-            pk=self.kwargs.get('id')
+            pk=self.kwargs.get('id'),
+            published_by=self.request.user,
+            is_published=False,
         ).first()
 
-        if exercise_to_delete:
-            # garantindo que o usuário é o mesmo
-            if exercise_to_delete.published_by != self.request.user:
-                messages.error(
-                    self.request,
-                    'Um Erro Ocorreu ao Deletar o Exercício. Tente Novamente.'
-                )
-                return redirect(reverse('users:user_dashboard'))
-
-            # compartilhando treino
-            exercise_to_delete.delete()
-            messages.success(
+        # não encontrou no banco
+        if not exercise_to_delete:
+            messages.error(
                 self.request,
-                'Exercício Deletado com Sucesso.'
+                'Um Erro Ocorreu ao Tentar Deletar o Exercício.'
             )
+            return redirect(reverse('users:user_dashboard'))
+
+        # compartilhando treino
+        exercise_to_delete.delete()
+        messages.success(
+            self.request,
+            'Exercício Deletado com Sucesso.'
+        )
 
         return redirect(reverse('users:user_dashboard'))
 
@@ -121,23 +122,22 @@ class UserWorkoutDeleteClassView(DetailView):
     def post(self, *args, **kwargs):
         # pegando o treino do banco
         workout_to_delete = UserWorkouts.objects.filter(
-            pk=self.kwargs.get('id')
+            pk=self.kwargs.get('id'),
+            user=self.request.user,
         ).first()
 
-        if workout_to_delete:
-            # garantindo que o usuário é o mesmo
-            if workout_to_delete.user != self.request.user:
-                messages.error(
-                    self.request,
-                    'Um Erro Ocorreu ao Deletar o Treino. Tente Novamente.'
-                )
-                return redirect(reverse('users:user_workouts'))
-
-            # deletando treino
-            workout_to_delete.delete()
-            messages.success(
+        if not workout_to_delete:
+            messages.error(
                 self.request,
-                'Treino Deletado com Sucesso.'
+                'Um Erro Ocorreu ao Deletar o Treino.'
             )
+            return redirect(reverse('users:user_workouts'))
+
+        # deletando treino
+        workout_to_delete.delete()
+        messages.success(
+            self.request,
+            'Treino Deletado com Sucesso.'
+        )
 
         return redirect(reverse('users:user_workouts'))
