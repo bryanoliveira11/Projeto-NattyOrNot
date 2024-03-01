@@ -1,13 +1,13 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.urls import reverse
+from django.urls.exceptions import NoReverseMatch
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 
 from users.models import UserNotifications, UserProfile
-from utils.get_notifications import get_notifications
 
 
 @method_decorator(
@@ -29,29 +29,33 @@ class UserNotificationsDeleteClassView(View):
                 user_profile.notifications_total -= 1
                 user_profile.save()
 
-    def validate_user(self):
+    def is_valid_user(self):
         if self.request.POST.get('username') != self.request.user.username:  # type:ignore
-            messages.error(self.request, 'Usuário Inválido.')
-            return redirect(reverse('training:home'))
+            return False
+        return True
 
     def get_previous_page_url(self):
-        # urls de search do site
-        search_urls_dict = {
-            f'{reverse('training:search')}': reverse('training:home'),
-            f'{reverse('users:user_dashboard_search')}': reverse('users:user_dashboard'),
-            f'{reverse('users:user_workouts_search')}': reverse('users:user_workouts'),
-        }
+        try:
+            # urls de search do site
+            search_urls_dict = {
+                f'{reverse('training:search')}': reverse('training:home'),
+                f'{reverse('users:user_dashboard_search')}': reverse('users:user_dashboard'),
+                f'{reverse('users:user_workouts_search')}': reverse('users:user_workouts'),
+            }
 
-        path = self.request.POST.get('previous_page')
-        previous_page = path if path else reverse('training:home')
+            path = self.request.POST.get('previous_page')
+            previous_page = path if path else reverse('training:home')
 
-        # usuário apagou uma notificação na url de search
-        search_path = search_urls_dict.get(previous_page)
+            # usuário apagou uma notificação na url de search
+            search_path = search_urls_dict.get(previous_page)
 
-        if search_path is not None:
-            previous_page = search_path
+            if search_path is not None:
+                previous_page = search_path
 
-        return previous_page
+            return redirect(previous_page)
+
+        except NoReverseMatch:
+            return redirect(reverse('training:home'))
 
     def get(self, *args, **kwargs):
         raise Http404()
@@ -61,13 +65,15 @@ class UserNotificationsDeleteClassView(View):
             send_to=self.request.user,
         )
 
-        self.validate_user()
+        if not self.is_valid_user():
+            messages.error(self.request, 'Erro ao Deletar Notificação.')
+            return self.get_previous_page_url()
 
         if notifications:
             notifications.delete()
             self.adjust_notifications_value(set_to_zero=True)
 
-        return redirect(self.get_previous_page_url())
+        return self.get_previous_page_url()
 
 
 @method_decorator(
@@ -80,13 +86,15 @@ class UserNotificationDeleteSingle(UserNotificationsDeleteClassView):
 
     def post(self, *args, **kwargs):
         notification = UserNotifications.objects.filter(
-            pk=self.kwargs.get('id')
+            pk=self.kwargs.get('id'), send_to=self.request.user
         ).first()
 
-        self.validate_user()
+        if not self.is_valid_user() or not notification:
+            messages.error(self.request, 'Erro ao Deletar Notificação.')
+            return self.get_previous_page_url()
 
         if notification:
             notification.delete()
             self.adjust_notifications_value(minus_one=True)
 
-        return redirect(self.get_previous_page_url())
+        return self.get_previous_page_url()
