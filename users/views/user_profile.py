@@ -73,9 +73,6 @@ class UserProfileDetailClassView(View):
             'is_profile_page': profile_page,
             'is_change_password_page': password_page,
             'form_action': form_action,
-            'search_form_action': reverse('training:search'),
-            'placeholder': 'Pesquise por um Exercício ou Categoria',
-            'additional_search_placeholder': 'na Home',
             'title': f'Perfil ({user})',
         })
 

@@ -6,7 +6,6 @@ from django.http import Http404
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.decorators import method_decorator
-from django.views import View
 from django.views.generic import DetailView
 
 from training.models import Exercises
@@ -47,10 +46,7 @@ class UserExerciseDeleteClassView(DetailView):
             'notifications': notifications,
             'notification_total': notifications_total,
             'title': title,
-            'search_form_action': reverse('users:user_dashboard_search'),
             'is_exercise': True,
-            'placeholder': 'Pesquise por um Exercício ou Categoria',
-            'additional_search_placeholder': 'no Dashboard',
             'type_of_object': 'Exercício',
             'has_cover': True,
         })
@@ -116,8 +112,6 @@ class UserWorkoutDeleteClassView(DetailView):
             'notifications': notifications,
             'notification_total': notifications_total,
             'title': title,
-            'search_form_action': reverse('users:user_workouts_search'),
-            'placeholder': 'Pesquise por um Treino',
             'is_workout_page': True,
             'type_of_object': 'Treino',
             'has_cover': True,

@@ -10,7 +10,7 @@ def error_404(request, exception):
         request,
         'global/partials/error404.html',
         context={
-            'title': '404',
+            'title': 'Erro 404',
             'notifications': notifications,
             'notification_total': notifications_total,
         },

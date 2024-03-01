@@ -64,7 +64,6 @@ class DashboardFormBaseClassView(View):
 
         return render(self.request, 'users/pages/create_exercise.html', context={
             'form': form,
-            'search_form_action': reverse('users:user_dashboard_search'),
             'notifications': notifications,
             'notification_total': notifications_total,
             'title': self.title,
@@ -72,8 +71,6 @@ class DashboardFormBaseClassView(View):
             'captcha_private_key': environ.get('RECAPTCHA_PRIVATE_KEY', ''),
             'is_exercise_form': True,
             'is_exercise_edit': self.is_exercise_edit,
-            'placeholder': 'Pesquise por um Exercício ou Categoria',
-            'additional_search_placeholder': 'no Dashboard',
             'url_to_redirect': url_to_redirect
         })
 

@@ -98,11 +98,8 @@ class UserWorkoutsPageDetailClassView(DetailView):
             'workout': workout,
             'notifications': notifications,
             'notification_total': notifications_total,
-            'search_form_action': reverse('training:search'),
             'title': f'{title}',
             'page_tag': f'{title}',
-            'search_form_action': reverse('users:user_workouts_search'),
-            'placeholder': 'Pesquise por um Treino',
             'is_detail_page': True,
         })
 
@@ -207,8 +204,6 @@ class UserWorkoutBaseClass(View):
             'is_workout_form': True,
             'is_workout_edit': self.is_workout_edit,
             'url_to_redirect': url_to_redirect,
-            'search_form_action': reverse('users:user_workouts_search'),
-            'placeholder': 'Pesquise por um Treino',
         })
 
 
@@ -295,8 +290,6 @@ class UserWorkoutShareClassView(View):
             'notifications': notifications,
             'notification_total': notifications_total,
             'title': f'Compartilhar Treino - {title}',
-            'search_form_action': reverse('users:user_workouts_search'),
-            'placeholder': 'Pesquise por um Treino',
             'is_workout_page': True,
         })
 
@@ -349,8 +342,6 @@ class UserWorkoutUnshareClassView(UserWorkoutShareClassView):
             'notifications': notifications,
             'notification_total': notifications_total,
             'title': f'Remover Compartilhamento do Treino - {title}',
-            'search_form_action': reverse('users:user_workouts_search'),
-            'placeholder': 'Pesquise por um Treino',
             'is_workout_page': True,
         })
 

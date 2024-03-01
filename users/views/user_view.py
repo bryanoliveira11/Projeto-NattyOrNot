@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
@@ -24,9 +25,6 @@ class UserRegisterView(View):
             'form_action': reverse('users:register'),
             'notifications': notifications,
             'notification_total': notifications_total,
-            'search_form_action': reverse('training:search'),
-            'placeholder': 'Pesquise por um Exercício ou Categoria',
-            'additional_search_placeholder': 'na Home',
             'title': 'Cadastro',
             'is_register_page': True,
         })
@@ -79,9 +77,6 @@ class UserLoginView(View):
             'form_action': reverse('users:login'),
             'notifications': notifications,
             'notification_total': notifications_total,
-            'search_form_action': reverse('training:search'),
-            'placeholder': 'Pesquise por um Exercício ou Categoria',
-            'additional_search_placeholder': 'na Home',
             'title': 'Login',
             'is_login_page': True,
         })
@@ -119,16 +114,7 @@ class UserLoginView(View):
 class UserLogoutView(View):
     # vai levantar erro se o usuário fizer get ao invés de post
     def get(self, *args, **kwargs):
-        notifications, notifications_total = get_notifications(self.request)
-
-        return render(self.request, 'global/partials/error404.html', context={
-            'notifications': notifications,
-            'notification_total': notifications_total,
-            'search_form_action': reverse('training:search'),
-            'placeholder': 'Pesquise por um Exercício ou Categoria',
-            'additional_search_placeholder': 'na Home',
-            'title': 'Página Não Encontrada',
-        })
+        raise Http404()
 
     # valida se o usuário para logout é o correto
     def post(self, *args, **kwargs):
