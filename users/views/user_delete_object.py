@@ -64,11 +64,11 @@ class UserExerciseDeleteClassView(DetailView):
         if not exercise_to_delete:
             messages.error(
                 self.request,
-                'Um Erro Ocorreu ao Tentar Deletar o Exercício.'
+                'Um Erro Ocorreu ao Deletar o Exercício.'
             )
             return redirect(reverse('users:user_dashboard'))
 
-        # compartilhando treino
+        # deletando exercício
         exercise_to_delete.delete()
         messages.success(
             self.request,
