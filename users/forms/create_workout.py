@@ -13,7 +13,7 @@ class CreateWorkoutForm(forms.ModelForm, CreateFormMixin):
         add_placeholder(self.fields['title'], 'Digite o Nome do Treino')
         add_attr(self.fields['title'], 'class', 'span-2')
         add_attr(self.fields['exercises'], 'class', 'span-2')
-        add_attr(self.fields['exercises'], 'class', 'select-more-height')
+        add_attr(self.fields['exercises'], 'class', 'multiple-select')
 
     captcha = forms.CharField(
         label='',
@@ -34,7 +34,7 @@ class CreateWorkoutForm(forms.ModelForm, CreateFormMixin):
 
     exercises = forms.ModelMultipleChoiceField(
         queryset=Exercises.objects.filter(is_published=True),
-        label='Exercícios Publicados',
+        label='Exercícios Disponíveis',
         help_text='Segure CTRL para selecionar mais de um exercício.',
     )
 

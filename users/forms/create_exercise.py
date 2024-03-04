@@ -41,6 +41,7 @@ class CreateExerciseForm(forms.ModelForm, CreateFormMixin):
         add_attr(self.fields['title'], 'class', 'span-2')
         add_attr(self.fields['description'], 'class', 'span-2')
         add_attr(self.fields['categories'], 'class', 'span-2')
+        add_attr(self.fields['categories'], 'class', 'multiple-select')
 
     title = forms.CharField(
         label='Título',
@@ -103,6 +104,7 @@ class CreateExerciseForm(forms.ModelForm, CreateFormMixin):
 
     def clean(self, *args, **kwargs):
         super_clean = super().clean(*args, **kwargs)
-        self.validate_google_recaptcha(data=self.data, add_error=self.add_error)
+        self.validate_google_recaptcha(
+            data=self.data, add_error=self.add_error)
         ExerciseValidator(self.cleaned_data, ErrorClass=ValidationError)
         return super_clean

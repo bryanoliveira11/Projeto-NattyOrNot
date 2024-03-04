@@ -149,7 +149,7 @@ function CloseScreen(screen_to_close, background) {
     // criando icone fa-eye no html
     const icon = document.createElement('i');
     icon.className = 'show-password-icon fa-regular fa-eye';
-    icon.id = 'show-password-icon'
+    icon.id = 'show-password-icon';
 
     // inserindo icone na tela se tiver a classe certa (evitar com que apareça em outros forms)
     if (passwordField.classList.contains('login-password-field')) {
@@ -196,6 +196,31 @@ function CloseScreen(screen_to_close, background) {
     }
 })();
 
+// adicionar icone de check ao selecionar uma opção nos formulários que possuem a tag <select>
+(() => {
+    const selectField = document.querySelector('.form-group.multiple-select');
+
+    if (!selectField) return;
+
+    const selectLabel = selectField.querySelector('label');
+    let labelText = selectLabel.innerText;
+
+    // adicionar ícones quando o selected mudar - change
+    selectField.addEventListener('change', () => {
+        const icon = '<i class="fa-solid fa-circle-check"></i>';
+        let selectCount = 0;
+
+        selectField.querySelectorAll('option').forEach(option => {
+            if (!option.selected) {
+                option.innerHTML = option.text;
+                return;
+            }
+            option.innerHTML = `${icon} ${option.text}`;
+            selectCount++;
+        });
+        selectLabel.innerHTML = `${labelText} &#8594; ${selectCount} ${icon}`;
+    });
+})();
 
 // função para confirmar a deleção de um exercício na página do dashboard
 
