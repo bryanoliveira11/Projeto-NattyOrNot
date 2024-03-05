@@ -17,7 +17,7 @@
       <a class="header-link" id="toggle-notification-menu" title="{{notification_total}} Notificações">
         <i class="fa-solid fa-bell bell-menu"></i>
         {% if notification_total %}
-        <span class='notification-total'> 
+        <span class='notification-total'>
            {{notification_total}}
         </span>
         {% endif %}
@@ -28,7 +28,7 @@
         {% endif %}
       </a>
       <a class="header-link" id="toggle-dark-mode" title="Alterar Tema">
-        <i class="fa-solid" id="menu-icon"></i>
+        <i class="fa-solid" id="theme-icon"></i>
         Tema
       </a>
       <a href="{% url 'users:user_profile' request.user.username %}" class="header-link" title="{{request.user.username}}">
@@ -38,10 +38,11 @@
       <a href="{% url 'users:logout' %}" class="user-logout-link header-link" title="Encerrar Sessão">
         <i class="fa-solid fa-arrow-right-from-bracket"></i>
         Sair
+        {% include "global/partials/logout_form.html" %}
       </a>
     {% else %}
       <a class="header-link" id="toggle-dark-mode" title="Alterar Tema">
-        <i class="fa-solid" id="menu-icon"></i>
+        <i class="fa-solid" id="theme-icon"></i>
         Tema
       </a>
       <a href="{% url 'users:login' %}" class="header-link" title="Fazer Login">

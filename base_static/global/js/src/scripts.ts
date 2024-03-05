@@ -1,23 +1,23 @@
 // funções para as telas de filtros e notificações do usuário
 
 // evita que o usuário clique em algum elemento da tela
-function PreventUserClicksOnBody(e) {
+function PreventUserClicksOnBody(e: Event): void {
   e.preventDefault();
   e.stopPropagation();
 }
 
 // ajusta opacidade de um elemento
-function AdjustElementOpacity(element, value) {
-  if (element) element.style.opacity = value;
+function AdjustElementOpacity(element: HTMLElement, value: number): void {
+  if (element) element.style.opacity = value.toString();
 }
 
 // define o style de display do elemento
-function AdjustElementDisplay(element, value) {
+function AdjustElementDisplay(element: HTMLElement, value: string): void {
   if (element) element.style.display = value;
 }
 
 // settar display para none ao final de uma animação
-function ChangeDisplayAnimationEnd(element) {
+function ChangeDisplayAnimationEnd(element: HTMLElement): void {
   element.addEventListener(
     'animationend',
     () => {
@@ -28,7 +28,10 @@ function ChangeDisplayAnimationEnd(element) {
 }
 
 // fechar telas que 'flutuam' na página
-function CloseScreen(screen_to_close, background) {
+function CloseScreen(
+  screen_to_close: HTMLElement,
+  background: HTMLElement,
+): void {
   if (screen_to_close && background) {
     AdjustElementDisplay(screen_to_close, 'none');
     AdjustElementOpacity(background, 1);
@@ -36,160 +39,239 @@ function CloseScreen(screen_to_close, background) {
   }
 }
 
-(() => {
+class NotificationsScreen {
   // notifications vars
-  const notificationScreen = document.querySelector('.notifications-page');
-  const notificationBtn = document.querySelector('#toggle-notification-menu');
-  const closeNotificationsBtn = document.querySelector(
-    '#close-notifications-page',
-  );
+  notificationScreen: HTMLDivElement;
+  showNotificationBtn: HTMLAnchorElement;
+  closeNotificationsBtn: HTMLDivElement;
 
   // pages
-  const exerciseGrid = document.querySelector('.exercise-container-grid');
-  const pageContent = document.querySelector('.main-content-container');
+  exerciseGrid: HTMLDivElement;
+  pageContent: HTMLElement;
 
-  /* menu de notificações */
-  if (notificationBtn)
-    notificationBtn.addEventListener('click', () => {
-      AdjustElementDisplay(notificationScreen, 'inline');
+  constructor() {
+    this.notificationScreen = document.querySelector(
+      '.notifications-page',
+    ) as HTMLDivElement;
+    this.showNotificationBtn = document.querySelector(
+      '#toggle-notification-menu',
+    ) as HTMLAnchorElement;
+    this.closeNotificationsBtn = document.querySelector(
+      '#close-notifications-page',
+    ) as HTMLDivElement;
+    this.exerciseGrid = document.querySelector(
+      '.exercise-container-grid',
+    ) as HTMLDivElement;
+    this.pageContent = document.querySelector(
+      '.main-content-container',
+    ) as HTMLElement;
+  }
 
-      // se exerciseGrid existir na tela
-      if (exerciseGrid) {
-        exerciseGrid.addEventListener('click', PreventUserClicksOnBody);
-        AdjustElementOpacity(exerciseGrid, 0.4);
-        return;
-      }
+  init(): void {
+    if (this.showNotificationBtn)
+      this.showNotificationBtn.addEventListener('click', () =>
+        this.showNotificationsScreen(),
+      );
 
-      // caso contrário usar pagecontent
-      pageContent.addEventListener('click', PreventUserClicksOnBody);
-      AdjustElementOpacity(pageContent, 0.4);
-    });
+    if (this.closeNotificationsBtn)
+      this.closeNotificationsBtn.addEventListener('click', () =>
+        this.closeNotificationsScreen(),
+      );
+  }
 
-  if (closeNotificationsBtn)
-    closeNotificationsBtn.addEventListener('click', () => {
-      if (exerciseGrid) {
-        CloseScreen(notificationScreen, exerciseGrid);
-        return;
-      }
+  showNotificationsScreen(): void {
+    /* menu de notificações */
+    AdjustElementDisplay(this.notificationScreen, 'inline');
 
-      CloseScreen(notificationScreen, pageContent);
-    });
-})();
-
-// função para mostrar / esconder o menu
-
-(() => {
-  // menu
-  const buttonShowMenu = document.querySelector('.button-show-menu');
-  const buttonCloseMenu = document.querySelector('.button-close-menu');
-  const menuContainer = document.querySelector('.menu-container');
-  const buttonShowMenuVisibleClass = 'button-show-menu-is-visible';
-  const menuHiddenClass = 'menu-hidden';
-
-  // notification screen
-  const notificationScreen = document.querySelector('.notifications-page');
-  const exerciseGrid = document.querySelector('.exercise-container-grid');
-  const pageContent = document.querySelector('.main-content-container');
-
-  const showMenu = () => {
-    buttonShowMenu.classList.remove(buttonShowMenuVisibleClass);
-    menuContainer.classList.remove(menuHiddenClass);
-
-    if (exerciseGrid) {
-      CloseScreen(notificationScreen, exerciseGrid);
+    // se exerciseGrid existir na tela
+    if (this.exerciseGrid) {
+      this.exerciseGrid.addEventListener('click', PreventUserClicksOnBody);
+      AdjustElementOpacity(this.exerciseGrid, 0.4);
       return;
     }
-    CloseScreen(notificationScreen, pageContent);
-  };
 
-  const closeMenu = () => {
-    buttonShowMenu.classList.add(buttonShowMenuVisibleClass);
-    menuContainer.classList.add(menuHiddenClass);
-  };
-
-  if (buttonShowMenu) {
-    buttonShowMenu.removeEventListener('click', showMenu);
-    buttonShowMenu.addEventListener('click', showMenu);
+    // caso contrário usar pagecontent
+    this.pageContent.addEventListener('click', PreventUserClicksOnBody);
+    AdjustElementOpacity(this.pageContent, 0.4);
   }
 
-  if (buttonCloseMenu) {
-    buttonCloseMenu.removeEventListener('click', closeMenu);
-    buttonCloseMenu.addEventListener('click', closeMenu);
+  closeNotificationsScreen(): void {
+    if (this.exerciseGrid) {
+      CloseScreen(this.notificationScreen, this.exerciseGrid);
+      return;
+    }
+    CloseScreen(this.notificationScreen, this.pageContent);
+  }
+}
+
+class LateralMenu {
+  // menu
+  buttonShowMenu: HTMLButtonElement;
+  buttonCloseMenu: HTMLButtonElement;
+  menuContainer: HTMLDivElement;
+  buttonShowMenuVisibleClass: string = 'button-show-menu-is-visible';
+  menuHiddenClass: string = 'menu-hidden';
+
+  // notification screen
+  notificationScreen: HTMLDivElement;
+  exerciseGrid: HTMLDivElement;
+  pageContent: HTMLElement;
+  notificationMenu: HTMLAnchorElement;
+
+  // footer
+  footer: HTMLElement;
+
+  constructor() {
+    this.buttonShowMenu = document.querySelector(
+      '.button-show-menu',
+    ) as HTMLButtonElement;
+    this.buttonCloseMenu = document.querySelector(
+      '.button-close-menu',
+    ) as HTMLButtonElement;
+    this.menuContainer = document.querySelector(
+      '.menu-container',
+    ) as HTMLDivElement;
+    this.notificationScreen = document.querySelector(
+      '.notifications-page',
+    ) as HTMLDivElement;
+    this.exerciseGrid = document.querySelector(
+      '.exercise-container-grid',
+    ) as HTMLDivElement;
+    this.pageContent = document.querySelector(
+      '.main-content-container',
+    ) as HTMLElement;
+    this.notificationMenu = document.querySelector(
+      '#toggle-notification-menu',
+    ) as HTMLAnchorElement;
+    this.footer = document.querySelector('.main-footer') as HTMLElement;
   }
 
-  // fechar menu ao clicar na tela
-  pageContent.addEventListener('click', closeMenu);
+  init(): void {
+    if (this.buttonShowMenu) {
+      this.buttonShowMenu.removeEventListener('click', () => this.showMenu());
+      this.buttonShowMenu.addEventListener('click', () => this.showMenu());
+    }
 
-  // fechar menu ao clicar no footer
-  const footer = document.querySelector('.main-footer');
-  if (footer) footer.addEventListener('click', closeMenu);
+    if (this.buttonCloseMenu) {
+      this.buttonCloseMenu.removeEventListener('click', () => this.closeMenu());
+      this.buttonCloseMenu.addEventListener('click', () => this.closeMenu());
+    }
 
-  // fechar menu ao abrir notifications
-  const notificationMenu = document.querySelector('#toggle-notification-menu');
-  if (notificationMenu) notificationMenu.addEventListener('click', closeMenu);
-})();
+    // fechar menu ao clicar na tela
+    this.pageContent.addEventListener('click', () => this.closeMenu());
 
-// função para enviar formulários de logout
-(() => {
-  const linksLogout = document.querySelectorAll('.user-logout-link');
-  const formLogout = document.querySelector('.form-logout');
+    // fechar menu ao clicar no footer
+    if (this.footer)
+      this.footer.addEventListener('click', () => this.closeMenu());
 
-  for (const link of linksLogout) {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      formLogout.submit();
+    // fechar menu ao abrir notifications
+    if (this.notificationMenu)
+      this.notificationMenu.addEventListener('click', () => this.closeMenu());
+  }
+
+  showMenu(): void {
+    this.buttonShowMenu.classList.remove(this.buttonShowMenuVisibleClass);
+    this.menuContainer.classList.remove(this.menuHiddenClass);
+
+    if (this.exerciseGrid) {
+      CloseScreen(this.notificationScreen, this.exerciseGrid);
+      return;
+    }
+    CloseScreen(this.notificationScreen, this.pageContent);
+  }
+
+  closeMenu(): void {
+    this.buttonShowMenu.classList.add(this.buttonShowMenuVisibleClass);
+    this.menuContainer.classList.add(this.menuHiddenClass);
+  }
+}
+
+// classe para enviar formulários de logout
+class LogoutLinks {
+  linksLogout: HTMLAnchorElement[];
+  formLogout: HTMLFormElement;
+
+  constructor() {
+    this.linksLogout = Array.from(
+      document.querySelectorAll('.user-logout-link'),
+    ) as HTMLAnchorElement[];
+    this.formLogout = document.querySelector('.form-logout') as HTMLFormElement;
+  }
+
+  init(): void {
+    for (const link of this.linksLogout) {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.formLogout.submit();
+      });
+    }
+  }
+}
+
+// classe para mostrar / esconder a senha no form de login
+class ShowHidePassword {
+  passwordField: HTMLInputElement;
+
+  constructor() {
+    this.passwordField = document.querySelector(
+      '#id_password',
+    ) as HTMLInputElement;
+  }
+
+  init(): void {
+    if (!this.passwordField) return;
+    this.createEyeIcon();
+    this.updateInputType();
+  }
+
+  updateInputType(): void {
+    const showPasswordIcon = document.querySelector('.show-password-icon');
+    if (!showPasswordIcon) return;
+    let is_password_visible = false;
+
+    showPasswordIcon.addEventListener('click', () => {
+      if (is_password_visible) {
+        this.passwordField.type = 'password';
+        showPasswordIcon.classList.remove('fa-eye-slash');
+        showPasswordIcon.classList.add('fa-eye');
+      } else {
+        this.passwordField.type = 'text';
+        showPasswordIcon.classList.remove('fa-eye');
+        showPasswordIcon.classList.add('fa-eye-slash');
+      }
+      is_password_visible = !is_password_visible;
     });
   }
-})();
 
-// função para mostrar / esconder a senha no form de login
+  createEyeIcon(): void {
+    // criando icone fa-eye no html
+    const icon = document.createElement('i');
+    icon.className = 'show-password-icon fa-regular fa-eye';
+    icon.id = 'show-password-icon';
+    const passwordFieldParent = this.passwordField.parentNode as HTMLElement;
 
-(() => {
-  // campo de input para password
-  const passwordField = document.querySelector('#id_password');
+    // inserindo icone na tela se tiver a classe certa (evitar com que apareça em outros forms)
+    if (this.passwordField.classList.contains('login-password-field')) {
+      passwordFieldParent.insertBefore(icon, this.passwordField.nextSibling);
+    }
+  }
+}
 
-  if (!passwordField) return;
+// classe para remover flash messages da tela
+class DismissFlashMessages {
+  dismissMessageBtns: HTMLElement[];
 
-  // criando icone fa-eye no html
-  const icon = document.createElement('i');
-  icon.className = 'show-password-icon fa-regular fa-eye';
-  icon.id = 'show-password-icon';
-
-  // inserindo icone na tela se tiver a classe certa (evitar com que apareça em outros forms)
-  if (passwordField.classList.contains('login-password-field')) {
-    passwordField.parentNode.insertBefore(icon, passwordField.nextSibling);
+  constructor() {
+    this.dismissMessageBtns = Array.from(
+      document.querySelectorAll('.dismiss-flash-message'),
+    ) as HTMLElement[];
   }
 
-  const showPasswordIcon = document.querySelector('.show-password-icon');
-
-  if (!showPasswordIcon) return;
-
-  let is_password_visible = false;
-
-  showPasswordIcon.addEventListener('click', () => {
-    if (is_password_visible) {
-      passwordField.type = 'password';
-      showPasswordIcon.classList.remove('fa-eye-slash');
-      showPasswordIcon.classList.add('fa-eye');
-    } else {
-      passwordField.type = 'text';
-      showPasswordIcon.classList.remove('fa-eye');
-      showPasswordIcon.classList.add('fa-eye-slash');
-    }
-    is_password_visible = !is_password_visible;
-  });
-})();
-
-// remover flash messages da tela
-(() => {
-  const dismissMessageBtns = document.querySelectorAll(
-    '.dismiss-flash-message',
-  );
-
-  if (dismissMessageBtns) {
-    for (const btn of dismissMessageBtns) {
+  init(): void {
+    if (!this.dismissMessageBtns) return;
+    for (const btn of this.dismissMessageBtns) {
       btn.addEventListener('click', () => {
-        const parentElement = btn.parentElement;
+        const parentElement = btn.parentElement as HTMLElement;
 
         if (parentElement.classList.contains('message')) {
           parentElement.classList.add('hide-message');
@@ -198,51 +280,49 @@ function CloseScreen(screen_to_close, background) {
       });
     }
   }
-})();
+}
 
-// adicionar icone de check ao selecionar uma opção nos formulários que possuem a tag <select>
-(() => {
-  const selectField = document.querySelector('.form-group.multiple-select');
+class SelectInputCheckIcon {
+  selectField: HTMLSelectElement;
 
-  if (!selectField) return;
+  constructor() {
+    this.selectField = document.querySelector(
+      '.form-group.multiple-select',
+    ) as HTMLSelectElement;
+  }
 
-  const selectLabel = selectField.querySelector('label');
-  let labelText = selectLabel.innerText;
+  init(): void {
+    if (!this.selectField) return;
+    this.addCheckIcon();
+  }
 
-  // adicionar ícones quando o selected mudar - change
-  selectField.addEventListener('change', () => {
-    const icon = '<i class="fa-solid fa-circle-check"></i>';
-    let selectCount = 0;
+  addCheckIcon(): void {
+    const selectLabel = this.selectField.querySelector(
+      'label',
+    ) as HTMLLabelElement;
+    const labelText: string = selectLabel.innerText;
 
-    selectField.querySelectorAll('option').forEach((option) => {
-      if (!option.selected) {
-        option.innerHTML = option.text;
-        return;
-      }
-      option.innerHTML = `${icon} ${option.text}`;
-      selectCount++;
+    // adicionar ícones quando o selected mudar - change
+    this.selectField.addEventListener('change', () => {
+      const icon = '<i class="fa-solid fa-circle-check"></i>';
+      let selectCount: number = 0;
+
+      this.selectField.querySelectorAll('option').forEach((option) => {
+        if (!option.selected) {
+          option.innerHTML = option.text;
+          return;
+        }
+        option.innerHTML = `${icon} ${option.text}`;
+        selectCount++;
+      });
+      selectLabel.innerHTML = `${labelText} &#8594; ${selectCount} ${icon}`;
     });
-    selectLabel.innerHTML = `${labelText} &#8594; ${selectCount} ${icon}`;
-  });
-})();
+  }
+}
 
-// função para confirmar a deleção de um exercício na página do dashboard
-
-/* (() => {
-    const forms = document.querySelectorAll('.form-delete');
-
-    for (const form of forms) {
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const confirmed = confirm('Confirmar Deleção ?');
-
-            if (confirmed) {
-                form.submit();
-            }
-
-        });
-    }
-
-})();
-*/
+new LateralMenu().init();
+new NotificationsScreen().init();
+new LogoutLinks().init();
+new ShowHidePassword().init();
+new DismissFlashMessages().init();
+new SelectInputCheckIcon().init();

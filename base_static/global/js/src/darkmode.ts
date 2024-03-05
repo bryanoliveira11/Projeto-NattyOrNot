@@ -1,76 +1,75 @@
-/* dark mode toggle */
+class DarkMode {
+  toggleDarkbtn: HTMLAnchorElement;
+  mainContent: HTMLBodyElement;
+  tableElement: HTMLTableElement;
+  exerciseCardsBackground: HTMLDivElement[];
+  tableTr: HTMLElement[];
+  notifications: HTMLDivElement[];
+  generalIcons: HTMLElement[];
 
-(() => {
-  const toggleDarkbtn = document.querySelector('#toggle-dark-mode');
-  const mainContent = document.querySelector('body');
-  const exerciseCardsBackground = document.querySelectorAll(
-    '.exercise-card-background',
-  );
-  const tableElement = document.querySelector('.content-table');
-  const tableTr = document.querySelectorAll('.table-tr');
-  const notifications = document.querySelectorAll('.notification');
-  const generalIcons = document.querySelectorAll('.general-icon');
-
-  /* chamando essa função para mostrar sempre o ícone e cor corretas, mesmo se atualizar a página */
-  handlePageLoad();
-
-  // valor padrão para darkmode em local storage, se não existir
-  if (localStorage.getItem('darkmode') === null) {
-    localStorage.setItem('darkmode', 'false');
+  constructor() {
+    this.toggleDarkbtn = document.querySelector(
+      '#toggle-dark-mode',
+    ) as HTMLAnchorElement;
+    this.mainContent = document.querySelector('body') as HTMLBodyElement;
+    this.tableElement = document.querySelector(
+      '.content-table',
+    ) as HTMLTableElement;
+    this.exerciseCardsBackground = Array.from(
+      document.querySelectorAll('.exercise-card-background'),
+    ) as HTMLDivElement[];
+    this.tableTr = Array.from(
+      document.querySelectorAll('.table-tr'),
+    ) as HTMLElement[];
+    this.notifications = Array.from(
+      document.querySelectorAll('.notification'),
+    ) as HTMLDivElement[];
+    this.generalIcons = Array.from(
+      document.querySelectorAll('.general-icon'),
+    ) as HTMLElement[];
   }
 
-  // botão não existe
-  if (!toggleDarkbtn) return;
+  init(): void {
+    // toggle existe
+    if (!this.toggleDarkbtn) return;
 
-  // evento do botão, altera o valor sempre que é clicado
-  toggleDarkbtn.addEventListener('click', () => {
-    const isDark = localStorage.getItem('darkmode');
-    localStorage.setItem('darkmode', isDark === 'true' ? 'false' : 'true');
-    changePageColors();
-    changeMenuIcon();
-  });
+    this.handlePageLoad();
 
-  function handlePageLoad() {
-    document.addEventListener('DOMContentLoaded', () => {
-      changePageColors();
-      changeMenuIcon();
+    this.toggleDarkbtn.addEventListener('click', () => {
+      // configurando valor de darkmode no localstorage
+      const isDark = localStorage.getItem('darkmode');
+      localStorage.setItem('darkmode', isDark === 'true' ? 'false' : 'true');
+      this.changePageColors();
+      this.changeMenuIcon();
     });
   }
 
-  // chama as funções para troca de cores
-  function changePageColors() {
+  handlePageLoad(): void {
+    // valor padrão para darkmode em local storage, se não existir
+    if (localStorage.getItem('darkmode') === null) {
+      localStorage.setItem('darkmode', 'false');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      this.changePageColors();
+      this.changeMenuIcon();
+    });
+  }
+
+  // trocando o tema do site
+  changePageColors(): void {
     const isDark = localStorage.getItem('darkmode');
 
-    if (isDark === 'true') toggleDarkMode();
-    else removeDarkMode();
-  }
-
-  // adiciona a classe de dark mode e texto branco
-  function toggleDarkMode() {
-    addClassList(mainContent, 'dark-mode-style');
-    addClassList(tableElement, 'dark-mode-table');
-    // arrays / nodelists
-    nodeListAddClass(tableTr, 'tr-dark');
-    nodeListAddClass(exerciseCardsBackground, 'dark-mode-cards');
-    nodeListAddClass(notifications, 'dark-mode-style');
-    nodeListAddClass(generalIcons, 'dark-mode-style');
-  }
-
-  // remove a classe de dark mode
-  function removeDarkMode() {
-    removeClassList(mainContent, 'dark-mode-style');
-    removeClassList(tableElement, 'dark-mode-table');
-    // arrays / nodelists
-    nodeListRemoveClass(tableTr, 'tr-dark');
-    nodeListRemoveClass(exerciseCardsBackground, 'dark-mode-cards');
-    nodeListRemoveClass(notifications, 'dark-mode-style');
-    nodeListRemoveClass(generalIcons, 'dark-mode-style');
+    if (isDark === 'true') this.toggleDarkMode();
+    else this.removeDarkMode();
   }
 
   // muda o ícone da header dinamicamente com base no valor do localstorage
-  function changeMenuIcon() {
-    const menuIcon = document.querySelector('#menu-icon');
+  changeMenuIcon(): void {
+    const menuIcon = document.querySelector('#theme-icon') as HTMLElement;
     const isDark = localStorage.getItem('darkmode');
+
+    if (!menuIcon) return;
 
     if (isDark === 'true') {
       menuIcon.classList.remove('fa-moon');
@@ -81,25 +80,52 @@
     }
   }
 
+  // adiciona a classe de dark mode e texto branco
+  toggleDarkMode(): void {
+    this.addClassList(this.mainContent, 'dark-mode-style');
+    this.addClassList(this.tableElement, 'dark-mode-table');
+    // arrays / nodelists
+    this.nodeListAddClass(this.tableTr, 'tr-dark');
+    this.nodeListAddClass(this.exerciseCardsBackground, 'dark-mode-cards');
+    this.nodeListAddClass(this.notifications, 'dark-mode-style');
+    this.nodeListAddClass(this.generalIcons, 'dark-mode-style');
+  }
+
+  // remove a classe de dark mode
+  removeDarkMode(): void {
+    this.removeClassList(this.mainContent, 'dark-mode-style');
+    this.removeClassList(this.tableElement, 'dark-mode-table');
+    // arrays / nodelists
+    this.nodeListRemoveClass(this.tableTr, 'tr-dark');
+    this.nodeListRemoveClass(this.exerciseCardsBackground, 'dark-mode-cards');
+    this.nodeListRemoveClass(this.notifications, 'dark-mode-style');
+    this.nodeListRemoveClass(this.generalIcons, 'dark-mode-style');
+  }
+
   // adiciona uma classe ao elemento
-  function addClassList(element, class_to_add) {
+  addClassList(element: HTMLElement, class_to_add: string): void {
     if (element) element.classList.add(class_to_add);
   }
 
   // remove uma classe do elemento
-  function removeClassList(element, class_to_remove) {
-    if (element) element.classList.remove(class_to_remove);
+  removeClassList(element: HTMLElement, remove_class: string): void {
+    if (element) element.classList.remove(remove_class);
   }
 
-  function nodeListAddClass(nodelist, class_to_add) {
+  // adicionar classes em uma lista de elementos
+  nodeListAddClass(nodelist: HTMLElement[], class_to_add: string): void {
     if (nodelist) {
-      for (const element of nodelist) addClassList(element, class_to_add);
+      for (const element of nodelist) this.addClassList(element, class_to_add);
     }
   }
 
-  function nodeListRemoveClass(nodelist, class_to_remove) {
+  // remover classes em uma lista de elementos
+  nodeListRemoveClass(nodelist: HTMLElement[], remove_class: string): void {
     if (nodelist) {
-      for (const element of nodelist) removeClassList(element, class_to_remove);
+      for (const element of nodelist)
+        this.removeClassList(element, remove_class);
     }
   }
-})();
+}
+
+new DarkMode().init();
