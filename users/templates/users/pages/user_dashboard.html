@@ -21,11 +21,12 @@
                 <div class="error-message-content">
                     <i class="fa-solid fa-magnifying-glass-minus"></i>
                     <h2>Nenhum Exercício Encontrado !</h2>
-                    <h3>
-                        <h3><a href="{% url 'users:create_exercise' %}">
-                            Criar Exercício.
-                        </a></h3>
-                    </h3>
+                      <h3>
+                        <a href="{% url 'users:create_exercise' %}">
+                          <i class="fa-solid fa-circle-plus"></i>
+                          Criar Exercício.
+                        </a>
+                      </h3>
                 </div>
             </div>
             {% endfor %}

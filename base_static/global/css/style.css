@@ -1504,7 +1504,7 @@ a.published {
   margin: 0 auto;
 }
 
-.main-content-error-page i {
+.main-content-error-page i.fa-magnifying-glass-minus {
   margin-top: 5rem;
   font-size: 10rem;
 }
@@ -1657,10 +1657,6 @@ a.published {
   grid-column: span 2;
   font-family: sans-serif;
   font-size: 1.33rem;
-}
-
-.span-2 img {
-  border-radius: 0.5rem;
 }
 
 .capitalize {
