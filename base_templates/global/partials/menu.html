@@ -13,12 +13,12 @@
 
     <div class="menu-content">
         <nav class="menu-nav">
-            <span class="menu-link title center flex-center">
+            <span class="menu-link prevent-select title center flex-center">
                 <i class="fa-solid fa-compass"></i>
                 Atalhos
             </span>
 
-            <span class="menu-link">
+            <span class="menu-link prevent-select">
                 <a href="{% url 'training:home' %}" class="animated-border" title="Home">
                     <i class="fa-solid fa-house"></i>
                     Home
@@ -26,25 +26,25 @@
             </span>
 
             {% if request.user.is_authenticated %}
-                <span class="menu-link">
+                <span class="menu-link prevent-select">
                     <a href="{% url 'users:create_exercise' %}" class="animated-border" title="Criar Novo Exercício">
                         <i class="fa-solid fa-weight-hanging"></i>
                         Novo Exercício
                     </a>
                 </span>
-                <span class="menu-link">
+                <span class="menu-link prevent-select">
                     <a href="{% url 'users:user_workout_create' %}" class="animated-border" title="Criar Novo Treino">
                         <i class="fa-solid fa-dumbbell"></i>
                         Novo Treino
                     </a>
                 </span>
-                <span class="menu-link">
+                <span class="menu-link prevent-select">
                     <a href="{% url 'users:user_profile_change_password' request.user %}" class="animated-border" title="Alterar Senha">
                         <i class="fa-solid fa-key"></i>
                         Alterar Senha
                     </a>
                 </span>
-                <span class="menu-link">
+                <span class="menu-link prevent-select">
                     <a href="{% url 'users:logout' %}" class="user-logout-link animated-border" title="Encerrar Sessão">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                         Sair
@@ -52,13 +52,13 @@
                     {% include "global/partials/logout_form.html" %}
                 </span>
             {% else %}
-                <span class="menu-link">
+                <span class="menu-link prevent-select">
                     <a href="{% url 'users:login' %}" class="animated-border" title="Fazer Login">
                         <i class="fa-solid fa-right-to-bracket"></i>
                         Login
                     </a>
                 </span>
-                <span class="menu-link">
+                <span class="menu-link prevent-select">
                     <a href="{% url 'users:register' %}" class="animated-border" title="Fazer Cadastro">
                         <i class="fa-solid fa-user-plus"></i>
                         Cadastro

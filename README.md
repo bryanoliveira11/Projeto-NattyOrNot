@@ -5,6 +5,7 @@ Mini Projeto de Um Site Desenvolvido Usando :
 * Django Framework
 * Django Rest Framework para a API
 * Python (Backend)
+* Typescript
 * Javascript
 * CSS
 * HTML

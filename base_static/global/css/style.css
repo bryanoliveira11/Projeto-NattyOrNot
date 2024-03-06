@@ -206,17 +206,17 @@ a.header-link:hover::after {
 }
 
 .search-button:focus {
-  outline: 1px solid var(--color-primary);
+  outline: 1px solid var(--color-accent);
   background: rgba(24, 24, 24, 0.05);
 }
 
 .search-form:focus-within {
-  border-color: var(--color-primary);
+  border-color: var(--color-accent);
   background: var(--color-white);
 }
 
 .search-form:focus-within .search-button {
-  color: var(--color-primary);
+  color: var(--color-accent);
 }
 
 /* menu */
@@ -900,6 +900,7 @@ select option:checked {
   border: none;
   cursor: pointer;
   border-radius: 0.2rem;
+  box-shadow: 0.8rem 0 1.6rem 0 rgba(0, 0, 0, 0.1);
 }
 
 .dropbtn .fa-caret-down {
