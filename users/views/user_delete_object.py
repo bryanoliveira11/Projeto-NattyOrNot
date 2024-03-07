@@ -57,11 +57,8 @@ class UserExerciseDeleteClassView(DetailView):
 
     def post(self, *args, **kwargs):
         # pegando o exercicio do banco
-        exercise_to_delete = Exercises.objects.filter(
-            pk=self.kwargs.get('id'),
-            published_by=self.request.user,
-            is_published=False,
-        ).first()
+        exercise_to_delete = self.get_queryset().first()
+
         # não encontrou no banco
         if not exercise_to_delete:
             messages.error(
@@ -123,10 +120,7 @@ class UserWorkoutDeleteClassView(DetailView):
 
     def post(self, *args, **kwargs):
         # pegando o treino do banco
-        workout_to_delete = UserWorkouts.objects.filter(
-            pk=self.kwargs.get('id'),
-            user=self.request.user,
-        ).first()
+        workout_to_delete = self.get_queryset().first()
 
         if not workout_to_delete:
             messages.error(

@@ -86,8 +86,8 @@ class DashboardExerciseClassView(DashboardFormBaseClassView):
         self.title = None
 
     def get(self, request, id=None):
-        recipe = self.get_exercise(id)
-        form = CreateExerciseForm(instance=recipe)
+        exercise = self.get_exercise(id)
+        form = CreateExerciseForm(instance=exercise)
         return self.render_exercise(form=form)
 
     def post(self, request, id=None):
