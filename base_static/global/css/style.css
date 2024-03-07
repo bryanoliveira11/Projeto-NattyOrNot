@@ -40,7 +40,7 @@
   --color-primary-dark-shadow: #13141f96;
 
   --font-primary: sans-serif;
-  --font-headings: "Roboto Slab", serif;
+  --font-headings: 'Roboto Slab', serif;
 
   --spacing-gutter-medium: 1.7rem;
   --spacing-gutter-large: 3rem;
@@ -132,7 +132,7 @@ a.header-link:hover {
 
 a.header-link::before,
 a.header-link::after {
-  content: "";
+  content: '';
   position: absolute;
   width: 100%;
   height: 0.2rem;
@@ -324,7 +324,7 @@ a.header-link:hover::after {
 }
 
 .animated-border::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: -0.5rem;
   left: 0;
@@ -1373,24 +1373,28 @@ td a:hover {
   margin-top: var(--spacing-gutter-extra-large);
 }
 
-a.status-myself, a.status-followers, a.status-all{
+.exercise-status a.status-myself,
+.exercise-status a.status-followers,
+.exercise-status a.status-all {
   cursor: pointer;
   transition: all 200ms ease-in-out;
 }
 
-a.status-myself:hover, a.status-followers:hover, a.status-all:hover {
+.exercise-status a.status-myself:hover,
+.exercise-status a.status-followers:hover,
+.exercise-status a.status-all:hover {
   filter: brightness(70%);
 }
 
-a.status-myself {
+.exercise-status a.status-myself {
   color: var(--color-accent);
 }
 
-a.status-followers{
+.exercise-status a.status-followers {
   color: var(--color-debug-dark);
 }
 
-a.status-all {
+.exercise-status a.status-all {
   color: var(--color-success);
 }
 
