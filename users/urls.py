@@ -98,9 +98,9 @@ urlpatterns = [
         name='user_dashboard_search'
     ),
     path(
-        'dashboard/exercises/is_published=<str:is_published>/',
-        views.DashboardIsPublishedFilterClassView.as_view(),
-        name='user_dashboard_is_published'
+        'dashboard/exercises/shared=<str:shared_status>/',
+        views.DashboardSharedStatusFilterClassView.as_view(),
+        name='user_dashboard_shared_filter'
     ),
     path(
         'dashboard/exercises/category/<int:id>/',

@@ -52,11 +52,17 @@
             <i class="fa-solid fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-            <a href="{% url 'users:user_dashboard_is_published' True %}" title="Publicado">
-                Publicado
+            <a href="{% url 'users:user_dashboard_shared_filter' 'MYSELF' %}" title="Somente Você">
+              <i class="fa-regular fa-user"></i>
+              Apenas Você
             </a>
-            <a href="{% url 'users:user_dashboard_is_published' False %}" title="Não Publicado">
-                Não Publicado 
+            <a href="{% url 'users:user_dashboard_shared_filter' 'FOLLOWERS' %}" title="Meus Seguidores">
+              <i class="fa-solid fa-user-group"></i>
+              Meus Seguidores
+            </a>
+            <a href="{% url 'users:user_dashboard_shared_filter' 'ALL' %}" title="Todos">
+              <i class="fa-solid fa-earth-americas"></i>
+              Todos
             </a>
         </div>
     </div>
@@ -73,7 +79,7 @@
                 Publicado
             </a>
             <a href="{% url 'users:user_workout_is_shared' False %}" title="Não Publicado">
-                Não Publicado 
+                Não Publicado
             </a>
         </div>
     </div>

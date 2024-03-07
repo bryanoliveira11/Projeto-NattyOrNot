@@ -36,7 +36,7 @@ class DashboardFormBaseClassView(View):
                 raise Http404()
 
             # variáveis para controlar título e mensagens ao usuário
-            self.title = f'Editar Exercício - {exercise.title}'
+            self.title = f'Editar Exercício > {exercise.title}'
             self.is_exercise_edit = True
         else:
             self.title = 'Novo Exercício'
@@ -108,7 +108,9 @@ class DashboardExerciseClassView(DashboardFormBaseClassView):
             # salvando no banco
             exercise.save()
             # garantindo o preenchimento das categorias pós save
-            exercise.categories.set(form.cleaned_data.get('categories').all())
+            exercise.categories.set(
+                form.cleaned_data.get('categories').all()  # type:ignore
+            )
 
             if self.is_exercise_edit:
                 messages.success(request, 'Exercício Editado com Sucesso !')

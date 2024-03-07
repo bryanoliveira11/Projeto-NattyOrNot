@@ -1,7 +1,6 @@
 from os import environ
 from typing import Any, Dict
 
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.db.models.query import QuerySet
@@ -61,7 +60,7 @@ class DashboardUserBase(ListView):
             'notifications': notifications,
             'notification_total': notifications_total,
             'title': f'Dashboard',
-            'page_tag': f'Dashboard - Meus Exercícios',
+            'page_tag': f'Dashboard > Meus Exercícios',
             'search_form_action': reverse('users:user_dashboard_search'),
             'is_dashboard_page': True,
             'placeholder': 'Pesquise por um Exercício ou Categoria',
@@ -117,8 +116,8 @@ class DashboardUserCategoryClassView(DashboardUserBase):
             raise Http404()
 
         context.update({
-            'title': f'Dashboard - {category_name}',
-            'page_tag': f'Dashboard - Meus Exercícios de {category_name}',
+            'title': f'Dashboard > Categoria > {category_name}',
+            'page_tag': f'Dashboard > Meus Exercícios > {category_name}',
             'is_filtered': True,
         })
 
@@ -145,18 +144,17 @@ class DashboardSearchClassView(DashboardUserBase):
         queryset = queryset.filter(
             Q
             (
-                Q(published_by=self.request.user,
-                  title__icontains=self.search_term) |
+                Q(title__icontains=self.search_term) |
                 Q(categories__name__icontains=self.search_term)
             )
-        )
+        ).distinct()
 
         return queryset
 
     def get_context_data(self, *args, **kwargs) -> Dict[str, Any]:
         context = super().get_context_data(*args, **kwargs)
 
-        title = f'Dashboard - Busca por "{self.search_term}"'
+        title = f'Dashboard > Busca > "{self.search_term}"'
 
         context.update({
             'title': title,
@@ -172,31 +170,35 @@ class DashboardSearchClassView(DashboardUserBase):
     login_required(login_url='users:login', redirect_field_name='next'),
     name='dispatch'
 )
-class DashboardIsPublishedFilterClassView(DashboardUserBase):
+class DashboardSharedStatusFilterClassView(DashboardUserBase):
     def get_queryset(self, *args, **kwargs) -> QuerySet[Any]:
         queryset = super().get_queryset(*args, **kwargs)
 
-        is_published = self.kwargs.get('is_published')
+        shared_status = self.kwargs.get('shared_status')
 
-        if is_published not in ['True', 'False']:
+        if shared_status not in ['MYSELF', 'FOLLOWERS', 'ALL']:
             raise Http404()
 
         queryset = queryset.filter(
-            published_by=self.request.user, is_published=is_published
+            published_by=self.request.user, shared_status=shared_status
         )
-
-        if not queryset:
-            messages.error(self.request, 'Nenhum Exercício Encontrado.')
 
         return queryset
 
     def get_context_data(self, *args, **kwargs) -> Dict[str, Any]:
         context = super().get_context_data(*args, **kwargs)
 
-        is_published = self.kwargs.get('is_published')
-        publish_translate = 'Publicados' if is_published == 'True' else 'Não Publicados'
+        shared_status = self.kwargs.get('shared_status')
 
-        title = f'Dashboard - Meus Exercícios {publish_translate} '
+        shared_translate = {
+            'MYSELF': 'Apenas Você',
+            'FOLLOWERS': 'Meus Seguidores',
+            'ALL': 'Todos',
+        }
+
+        title = f'Dashboard > Visibilidade > {
+            shared_translate.get(shared_status)
+        }'
 
         context.update({
             'title': title,

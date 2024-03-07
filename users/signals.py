@@ -2,7 +2,7 @@ from allauth.account.signals import user_signed_up
 from allauth.socialaccount.models import SocialAccount
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.urls import reverse
 
@@ -98,8 +98,8 @@ def exercise_rejected_notification(instance, *args, **kwargs):
             msg='Seu Exercício '
             f'<a class="notification-url" href="{
                 msg_url}">"{instance.title}"</a> '
-            'foi <b>Rejeitado</b> e não Será Exibido no Site, '
-            f'Motivo : {extra_info}.',
+            'foi <b>Rejeitado</b> e não Será Exibido na Página Principal. '
+            f'<b>Motivo</b> : {extra_info}.',
             send_to=user,
         )
         ''' setting rejected to be false so the notification will not play again
@@ -120,14 +120,52 @@ def exercise_created_notification(instance, created, *args, **kwargs):
     user = get_user_by_instance(instance=instance)
     msg_url = reverse('users:edit_exercise', args=(instance.pk,))
 
-    if user:
+    if instance.shared_status == 'ALL':
         create_user_notification(
             subj='Exercício Criado',
             subj_html='Exercício Criado com Sucesso.',
             msg='Seu Exercício '
             f'<a class="notification-url" href="{
                 msg_url}">"{instance.title}"</a> '
-            'foi Criado e será Avaliado pela Equipe Administrativa Antes de ser Aprovado.',
+            'foi Criado e será <b>Analisado</b> pela Equipe Administrativa Antes de ser Aprovado.',
+            send_to=user,
+        )
+        return
+
+    create_user_notification(
+        subj='Exercício Criado',
+        subj_html='Exercício Criado com Sucesso.',
+        msg='Seu Exercício '
+        f'<a class="notification-url" href="{
+            msg_url}">"{instance.title}"</a> '
+        'foi Criado com Sucesso.',
+        send_to=user,
+    )
+
+
+# notificação para quando o status de compartilhamento muda para 'ALL'.
+@receiver(pre_save, sender=Exercises)
+def exercise_status_shared_notification(instance, sender, *args, **kwargs):
+    old_instance = Exercises.objects.filter(pk=instance.pk).first()
+
+    if not old_instance:
+        return
+
+    user = get_user_by_instance(instance=instance)
+    msg_url = reverse('users:edit_exercise', args=(instance.pk,))
+
+    old_shared_status = old_instance.shared_status  # type:ignore
+    is_new_status = instance.shared_status == 'ALL' != old_shared_status
+
+    if not instance.is_published and is_new_status:
+        create_user_notification(
+            subj='Alteração de Visibilidade do Exercício',
+            subj_html='Alteração de Visibilidade do Exercício',
+            msg='Seu Exercício '
+            f'''<a class="notification-url" href="{
+                msg_url}">"{instance.title}"</a>
+            teve a Visibilidade alterada para "Todos" e será
+            <b>Analisado</b> pela Equipe Administrativa Antes de ser Aprovado.''',
             send_to=user,
         )
 
@@ -147,8 +185,8 @@ def user_signin_notification(instance, created, *args, **kwargs):
             subj=subj,
             subj_html=subj,
             msg='Bem Vindo ao NattyOrNot '
-            f'<a class="notification-url" href="{
-                msg_url}">{user.username}</a>. '
+            f'''<a class="notification-url" href="{
+                msg_url}">{user.username}</a>. '''
             'Use os Menus para Navegar no Site. Bons Treinos !',
             send_to=user,
         )

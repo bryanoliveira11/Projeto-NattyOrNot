@@ -29,16 +29,25 @@ class TrainingHomePageTest(ExercisesTestBaseClass):
 
     def test_training_home_template_loads_exercises(self):
         # need a exercise for this test
-        self.make_exercise()
+        self.make_exercise(is_published=True)
         response = self.client.get(reverse('training:home'))
         content = response.content.decode('utf-8')
         training_context = response.context['training']
         self.assertIn('Test Exercise Title', content)
         self.assertEqual(len(training_context), 1)
 
-    def test_training_home_template_dont_load_exercises_not_published(self):
-        ''' Test if is_published False exercises are not showing  '''
-        self.make_exercise(is_published=False)
+    def test_training_home_template_dont_load_exercises_myself_shared_status(self):
+        ''' Test if shared_status == MYSELF are not appearing in home  '''
+        self.make_exercise(shared_status='MYSELF')
+        response = self.client.get(reverse('training:home'))
+        self.assertIn(
+            'Nenhum Exercício Encontrado !',
+            response.content.decode('utf-8')
+        )
+
+    def test_training_home_template_dont_load_exercises_followers_shared_status(self):
+        ''' Test if shared_status == FOLLOWERS are not appearing in home  '''
+        self.make_exercise(shared_status='FOLLOWERS')
         response = self.client.get(reverse('training:home'))
         self.assertIn(
             'Nenhum Exercício Encontrado !',
@@ -70,7 +79,7 @@ class TrainingHomePageTest(ExercisesTestBaseClass):
     def test_training_home_has_right_context(self):
         response = self.client.get(reverse('training:home'))
         # title
-        self.assertEqual(response.context['title'], 'Home')
+        self.assertEqual(response.context['title'], 'Exercícios Publicados')
         # page_tag
         self.assertEqual(response.context['page_tag'], 'Exercícios Publicados')
         # search form action
@@ -100,11 +109,12 @@ class TrainingHomePageTest(ExercisesTestBaseClass):
             reverse('training:search') + f'?q={search_term}'
         )
         self.assertEqual(
-            response.context['title'], f'Busca por "{search_term}"'
+            response.context['title'],
+            f'Exercícios Publicados > Busca > "{search_term}"'
         )
         self.assertEqual(
             response.context['page_tag'],
-            f'Busca por "{search_term}"'
+            f'Exercícios Publicados > Busca > "{search_term}"'
         )
         self.assertEqual(
             response.context['search_form_action'],
@@ -126,11 +136,12 @@ class TrainingHomePageTest(ExercisesTestBaseClass):
         category_name = 'Test Category'
         response = self.client.get(reverse('training:category', args=(1,)))
         self.assertEqual(
-            response.context['title'], f'Categoria - {category_name}'
+            response.context['title'], f'Exercícios Publicados > {
+                category_name}'
         )
         self.assertEqual(
             response.context['page_tag'],
-            f'Exercícios de Test Category'
+            f'Exercícios Publicados > {category_name}'
         )
         self.assertEqual(
             response.context['search_form_action'],
@@ -162,11 +173,4 @@ class TrainingHomePageTest(ExercisesTestBaseClass):
         self.assertEqual(
             response.context['search_form_action'],
             reverse('training:search')
-        )
-        self.assertEqual(
-            response.context['placeholder'],
-            'Pesquise por um Exercício ou Categoria'
-        )
-        self.assertEqual(
-            response.context['additional_search_placeholder'], 'na Home'
         )

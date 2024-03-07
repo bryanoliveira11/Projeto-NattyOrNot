@@ -6,7 +6,7 @@
     <div class="delete-confirm-tag center">
         <h3 class="form-tag dashboard-tag">
             <i class="fa-solid fa-trash-can m-right"></i>
-            Deseja Realmente 
+            Deseja Realmente
             <span class="red-text">Deletar</span>
             o {{type_of_object}} "{{exercise.title}}" ?
         </h3>
@@ -32,9 +32,9 @@
     <div class="confirm-buttons">
         <div class="confirm-buttons-flex">
             {% if is_exercise %}
-            <form action="{% url 'users:user_exercise_delete' exercise.pk %}" method="POST">
+            <form action="" method="POST">
             {% else %}
-            <form action="{% url 'users:user_workout_delete' workout.pk %}" method="POST">
+            <form action="" method="POST">
             {% endif %}
                 {% csrf_token %}
                 {% if is_exercise %}

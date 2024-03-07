@@ -26,8 +26,11 @@ class UserExerciseDeleteClassView(DetailView):
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
         queryset = queryset.filter(
-            published_by=self.request.user, is_published=False
+            pk=self.kwargs.get('id'),
+            published_by=self.request.user,
+            is_published=False,
         )
+
         if not queryset:
             raise Http404()
 
@@ -59,7 +62,6 @@ class UserExerciseDeleteClassView(DetailView):
             published_by=self.request.user,
             is_published=False,
         ).first()
-
         # não encontrou no banco
         if not exercise_to_delete:
             messages.error(

@@ -46,27 +46,27 @@
             <h2 class="exercise-title dashboard-exercise-title">
                 {% if not exercise.is_published %}
                     <a href="{% url 'users:edit_exercise' exercise.pk %}" title="{{exercise.title}}">
-                        {{exercise.title|title_limit_length}} 
+                        {{exercise.title|title_limit_length}}
                     </a>
                 {% else %}
                     <a href="{% url 'training:exercises_detail' exercise.slug %}" title="{{exercise.title}}">
-                        {{exercise.title|title_limit_length}} 
+                        {{exercise.title|title_limit_length}}
                     </a>
                 {% endif %}
             </h2>
         </div>
     {% endif %}
-    
+
     {% if not is_dashboard_page %}
         <div class="exercise-title-container">
             <h2 class="exercise-title">
                 {% if is_home_page %}
                     <a href="{% url 'training:exercises_detail' exercise.slug %}" title="{{exercise.title}}">
-                         {{exercise.title|title_limit_length}} 
+                         {{exercise.title|title_limit_length}}
                     </a>
                 {% else %}
                     <a href="{% url 'training:exercises_detail' exercise.slug %}" title="{{exercise.title}}">
-                        {{exercise.title}} 
+                        {{exercise.title}}
                     </a>
                 {% endif %}
             </h2>
@@ -76,7 +76,7 @@
     <div class="exercise-data">
         {% if exercise.categories.all%}
             <span class="exercise-data-item">
-                <i class="fas fa-layer-group"></i> 
+                <i class="fas fa-layer-group"></i>
                 {% for category in exercise.categories.all  %}
                     {% if exercise.categories.all|length > 1 %}
                         {% if is_dashboard_page %}
@@ -100,7 +100,7 @@
                     <span class="published-by">
                         -
                         <i class="fa-solid fa-user"></i>
-                        {{exercise.published_by.username|title_limit_length}} 
+                        {{exercise.published_by.username|title_limit_length}}
                     </span>
                 {% endif %}
                 {% if is_detail_page %}
@@ -130,15 +130,31 @@
             </span>
         </div>
         <div class="exercise-status">
+          {% if exercise.shared_status == 'MYSELF' %}
+            <a href="{% url 'users:user_dashboard_shared_filter' exercise.shared_status %}" class="status-myself">
+              <i class="fa-regular fa-user"></i>
+              Apenas Você
+            </a>
+          {% endif %}
+          {% if exercise.shared_status == 'FOLLOWERS' %}
+            <a href="{% url 'users:user_dashboard_shared_filter' exercise.shared_status %}" class="status-followers">
+              <i class="fa-solid fa-user-group"></i>
+              Meus Seguidores
+            </a>
+          {% endif %}
+          {% if exercise.shared_status == 'ALL' %}
+            <a href="{% url 'users:user_dashboard_shared_filter' exercise.shared_status %}" class="status-all">
+              <i class="fa-solid fa-earth-americas"></i>
+              Todos
+            </a>
             {% if not exercise.is_published %}
-                <a href="{% url 'users:user_dashboard_is_published' exercise.is_published %}" class="not-published">
-                     &#8226 Não Publicado 
-                </a>
-            {% else %}
-                <a href="{% url 'users:user_dashboard_is_published' exercise.is_published %}" class="published">
-                     &#8226 Publicado 
-                </a>
+              {% if exercise.was_rejected %}
+                <span class="red-text">&#8594; Rejeitado.</span>
+              {% else %}
+                <span class="red-text">&#8594; em análise.</span>
+              {% endif %}
             {% endif %}
+          {% endif %}
         </div>
     {% else %}
     {% endif %}
@@ -162,7 +178,7 @@
             </div>
         </div>
     </div>
-    
+
     {% if is_dashboard_page %}
         {% if not exercise.is_published %}
             <footer class="exercise-dashboard-footer">
@@ -196,7 +212,7 @@
                 <span>Ver Mais...</span>
             </a>
         </footer>
-    {% endif %}  
+    {% endif %}
 
     {% endif %}
     </div>

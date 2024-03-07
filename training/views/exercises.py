@@ -30,7 +30,7 @@ class ExerciseBaseClassView(ListView):
     def get_queryset(self, *args, **kwargs) -> QuerySet[Any]:
         queryset = super().get_queryset(*args, **kwargs)
 
-        queryset = queryset.filter(is_published=True).select_related(
+        queryset = queryset.filter(shared_status='ALL', is_published=True).select_related(
             'published_by').prefetch_related('categories')
 
         return queryset
@@ -41,6 +41,7 @@ class ExerciseBaseClassView(ListView):
         exercises = context.get('training')
         categories = Categories.objects.all()
         results = len(exercises) if exercises else None
+        title = 'Exercícios Publicados'
 
         # paginação
         page_obj, pagination_range = make_pagination(
@@ -56,8 +57,8 @@ class ExerciseBaseClassView(ListView):
             'categories': categories,
             'results_count': results,
             'pagination_range': pagination_range,
-            'title': 'Home',
-            'page_tag': 'Exercícios Publicados',
+            'title': title,
+            'page_tag': title,
         })
 
         return context
@@ -91,15 +92,18 @@ class SearchClassView(ExerciseBaseClassView):
                 Q(categories__name__icontains=self.search_term) |
                 Q(published_by__username__icontains=self.search_term)
             ),
-            is_published=True
-        )
+            shared_status='ALL', is_published=True
+        ).distinct()
+
         return queryset
 
     def get_context_data(self, *args, **kwargs) -> Dict[str, Any]:
         context = super().get_context_data(*args, **kwargs)
+        title = f'Exercícios Publicados > Busca > "{self.search_term}"'
+
         context.update({
-            'title': f'Busca por "{self.search_term}"',
-            'page_tag': f'Busca por "{self.search_term}"',
+            'title': title,
+            'page_tag': title,
             'additional_url_query': f'&q={self.search_term}',
             'is_filtered': True,
         })
@@ -116,7 +120,9 @@ class CategoriesFilterClassView(ExerciseBaseClassView):
         # consulta no banco de dados
         queryset = queryset.filter(
             categories__id=self.kwargs.get('id'),
-            is_published=True)
+            shared_status='ALL',
+            is_published=True,
+        )
 
         if not queryset:
             self.category = Categories.objects.filter(
@@ -139,9 +145,11 @@ class CategoriesFilterClassView(ExerciseBaseClassView):
         if category_name is None:
             raise Http404()
 
+        title = f'Exercícios Publicados > {category_name}'
+
         context.update({
-            'title': f'Categoria - {category_name}',
-            'page_tag': f'Exercícios de {category_name}',
+            'title': title,
+            'page_tag': title,
             'is_filtered': True,
         })
 
@@ -156,7 +164,7 @@ class ExerciseDetailClassView(DetailView):
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.filter(is_published=True).select_related(
+        queryset = queryset.filter(shared_status='ALL', is_published=True).select_related(
             'published_by'
         ).prefetch_related('categories')
 

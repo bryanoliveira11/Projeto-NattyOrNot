@@ -42,6 +42,8 @@ class CreateExerciseForm(forms.ModelForm, CreateFormMixin):
         add_attr(self.fields['description'], 'class', 'span-2')
         add_attr(self.fields['categories'], 'class', 'span-2')
         add_attr(self.fields['categories'], 'class', 'multiple-select')
+        add_attr(self.fields['shared_status'], 'class', 'span-2')
+        add_attr(self.fields['shared_status'], 'class', 'single-select')
 
     title = forms.CharField(
         label='Título',
@@ -74,6 +76,16 @@ class CreateExerciseForm(forms.ModelForm, CreateFormMixin):
         help_text='Dica : Segure a tecla CTRL para selecionar mais de uma categoria.',
     )
 
+    shared_status = forms.ChoiceField(
+        choices=Exercises._meta.get_field('shared_status').choices,
+        label='Visibilidade',
+        required=True,
+        help_text='''
+        Exercícios Compartilhados com Todos serão Validados antes de Serem Publicados.
+        Além disso, não será Possível Edita-lo após a Aprovação.
+        '''
+    )
+
     cover = forms.FileField(
         label='Imagem / Gif',
         help_text='Dica : Um Gif ficará mais interessante do que uma imagem.',
@@ -99,6 +111,7 @@ class CreateExerciseForm(forms.ModelForm, CreateFormMixin):
             'series',
             'reps',
             'categories',
+            'shared_status',
             'cover',
         ]
 

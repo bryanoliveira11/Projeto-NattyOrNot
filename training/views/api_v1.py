@@ -19,7 +19,7 @@ class ExercisesApiV1Pagination(PageNumberPagination):
 # api para exercícios
 class ExercisesApiV1ViewSet(ModelViewSet):
     queryset = Exercises.objects.filter(
-        is_published=True).order_by('-id').select_related(
+        shared_status='ALL', is_published=True).order_by('-id').select_related(
             'published_by'
     ).prefetch_related('categories')
     serializer_class = ExercisesSerializer
@@ -36,9 +36,9 @@ class ExercisesApiV1ViewSet(ModelViewSet):
             return
 
         # validando exercício publicado
-        if exercise.first().is_published:  # type:ignore
+        if exercise.first().shared_status == 'ALL' and exercise.is_published:  # type:ignore
             raise ValidationError(
-                'Seu exercício está publicado. Não é possível concluir a operação'
+                'Seu exercício está publicado para Todos. Não é possível concluir a operação'
             )
 
     def create(self, request, *args, **kwargs):  # post

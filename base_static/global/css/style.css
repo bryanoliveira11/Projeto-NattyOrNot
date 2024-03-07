@@ -1,7 +1,7 @@
 /* vars */
 :root {
   --color-primary: #fa885f;
-  --color-secondary: #333333;
+  --color-secondary: #16161d;
   --color-accent: #ffa500;
 
   --color-white: #ebe4e2;
@@ -436,25 +436,7 @@ a.header-link:hover::after {
 }
 
 .exercise-status {
-  padding: 0.5rem;
-}
-
-.exercise-status a.not-published {
-  color: var(--color-error-dark);
-  transition: all 200ms ease-in-out;
-}
-
-.exercise-status a.not-published:hover {
-  color: var(--color-error-dark-hover);
-}
-
-.exercise-status a.published {
-  color: var(--color-success);
-  transition: all 200ms ease-in-out;
-}
-
-.exercise-status a.published:hover {
-  color: var(--color-success-dark);
+  padding-top: 1rem;
 }
 
 .exercise-description {
@@ -643,6 +625,10 @@ a.header-link:hover::after {
 
 select {
   height: 15rem;
+}
+
+select#id_shared_status.single-select {
+  height: fit-content;
 }
 
 select option {
@@ -918,6 +904,7 @@ select option:checked {
 }
 
 .dropdown-content a {
+  text-align: left;
   color: var(--color-dark-text);
   padding: 1.2rem 1.6rem;
   text-decoration: none;
@@ -1386,18 +1373,25 @@ td a:hover {
   margin-top: var(--spacing-gutter-extra-large);
 }
 
-a.not-published {
-  color: var(--color-error-dark);
-}
-
-a.published {
-  color: var(--color-success);
-}
-
-a.not-published,
-a.published {
+a.status-myself, a.status-followers, a.status-all{
   cursor: pointer;
   transition: all 200ms ease-in-out;
+}
+
+a.status-myself:hover, a.status-followers:hover, a.status-all:hover {
+  filter: brightness(70%);
+}
+
+a.status-myself {
+  color: var(--color-accent);
+}
+
+a.status-followers{
+  color: var(--color-debug-dark);
+}
+
+a.status-all {
+  color: var(--color-success);
 }
 
 .add-new-workout,
@@ -1933,6 +1927,10 @@ table tr.tr-dark {
     margin-top: 1rem;
   }
 
+  .form-image {
+    padding: 1rem 0 0 0;
+  }
+
   .help-text {
     font-size: 1.4rem;
     width: 100%;
@@ -2033,19 +2031,6 @@ table tr.tr-dark {
 
   .notifications-page-flex {
     display: flex;
-  }
-
-  .categories-list,
-  .published-list,
-  .categories-filter,
-  .is_published-filter {
-    width: 100%;
-  }
-
-  .categories-filter,
-  .is_published-filter {
-    margin: 0.3rem;
-    padding: 0.3rem;
   }
 
   .confirm-buttons {
