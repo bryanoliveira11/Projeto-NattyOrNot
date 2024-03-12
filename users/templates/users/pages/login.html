@@ -6,18 +6,18 @@
     </div>
 
     {% if not request.user.is_authenticated %}
-        <div class="login-register-redirect center form-tag less-margin">
-            <h3> Novo Usuário?  
+        <div class="login-register-redirect center mb1-5">
+            <h3> Novo Usuário?
                 <span>
                     <a class="default-link" href="{% url 'users:register' %}">Crie uma Conta</a>
-                </span> 
+                </span>
             </h3>
         </div>
     {% endif %}
 
     {% include 'global/partials/messages.html' %}
     {% include 'users/partials/login_message.html' %}
-    
+
     {% if not request.user.is_authenticated %}
         {% include "global/partials/form.html" %}
     {% endif %}

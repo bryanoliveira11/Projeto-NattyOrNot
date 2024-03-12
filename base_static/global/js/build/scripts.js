@@ -25,6 +25,12 @@ function CloseScreen(screen_to_close, background) {
     background.removeEventListener('click', PreventUserClicksOnBody);
   }
 }
+function createIcon(className, id) {
+  const icon = document.createElement('i');
+  icon.className = className;
+  if (id) icon.id = id;
+  return icon;
+}
 class NotificationsScreen {
   constructor() {
     this.notificationScreen = document.querySelector('.notifications-page');
@@ -150,9 +156,10 @@ class ShowHidePassword {
     });
   }
   createEyeIcon() {
-    const icon = document.createElement('i');
-    icon.className = 'show-password-icon fa-regular fa-eye';
-    icon.id = 'show-password-icon';
+    const icon = createIcon(
+      'show-password-icon fa-regular fa-eye',
+      'show-password-icon',
+    );
     const passwordFieldParent = this.passwordField.parentNode;
     if (this.passwordField.classList.contains('login-password-field')) {
       passwordFieldParent.insertBefore(icon, this.passwordField.nextSibling);

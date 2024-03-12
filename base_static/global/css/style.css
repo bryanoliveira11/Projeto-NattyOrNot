@@ -63,9 +63,19 @@ html {
 }
 
 body {
+  background: var(--color-white);
+  background: -webkit-linear-gradient(
+    to left,
+    #e9e5ee,
+    #d6d0e2
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to left,
+    #e9e5ee,
+    #d6d0e2
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   font-size: 1.6rem;
   font-family: var(--font-primary);
-  background: var(--color-white);
   color: var(--color-dark-text);
   min-height: 100vh;
   display: flex;
@@ -422,6 +432,10 @@ a.header-link:hover::after {
   padding: var(--spacing-gutter-medium);
 }
 
+.exercise-card-background {
+  background: var(--color-gray-0);
+}
+
 .exercise-data a {
   color: var(--color-primary);
   font-size: 1.5rem;
@@ -472,6 +486,25 @@ a.header-link:hover::after {
 
 .exercise-footer a:hover {
   filter: brightness(0.8);
+}
+
+.exercise-footer.home-card {
+  display: flex;
+}
+
+.exercise-footer.home-card a {
+  width: 80%;
+  padding: calc(var(--spacing-gutter-medium) / 2);
+}
+
+.favorite-exercise-btn .favorite-exercise {
+  position: absolute;
+  width: 25%;
+}
+
+.favorite-exercise-btn .favorite-exercise a {
+  color: var(--color-white);
+  background: var(--color-dark-text);
 }
 
 .exercise-cover {
@@ -600,8 +633,16 @@ a.header-link:hover::after {
   list-style: none;
 }
 
+.form-content label {
+  margin-bottom: 0.5rem;
+}
+
 .help-text {
   padding: 0.4rem 0 0 0;
+  font-size: 1.4rem;
+}
+
+.helptext-p {
   font-size: 1.4rem;
 }
 
@@ -745,7 +786,6 @@ select option:checked {
   padding: calc(var(--spacing-gutter-medium) / 2);
   transition: all 300ms ease-in-out;
   border: none;
-  width: 100%;
   font-size: 1.7rem;
 }
 
@@ -759,9 +799,8 @@ select option:checked {
 }
 
 .delete-page .open-delete-page {
-  top: 1;
   position: absolute;
-  max-width: 20%;
+  width: 20%;
   background: var(--color-error-dark);
 }
 
@@ -897,7 +936,7 @@ select option:checked {
   display: none;
   position: absolute;
   background: var(--color-white);
-  width: 12.5rem;
+  width: 12.4rem;
   min-width: 1.6rem;
   box-shadow: 0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.2);
   z-index: 1;
@@ -917,7 +956,10 @@ select option:checked {
 }
 
 .dropdown-filters:hover .dropdown-content {
-  display: block;
+  display: flex;
+  flex-flow: column;
+  max-height: 25rem;
+  overflow-y: auto;
 }
 
 .dropdown-filters:hover .dropbtn {
@@ -1176,10 +1218,6 @@ a.notification-url:hover {
   margin-left: 0.3rem;
 }
 
-.login-register-redirect.register {
-  margin-bottom: 1rem;
-}
-
 /* profile */
 
 .main-content-profile img {
@@ -1218,7 +1256,7 @@ a.notification-url:hover {
 
 .user-profile-data a,
 .user-password-change a {
-  color: var(--color-white);
+  color: var(--color-gray-0);
   font-weight: 600;
   text-decoration: none;
   transition: all 200ms ease-in-out;
@@ -1475,6 +1513,14 @@ td a:hover {
   color: var(--color-white);
 }
 
+.pagination .page-link.page-item {
+  transition: all 200ms ease;
+}
+
+.pagination .page-link.page-item:hover {
+  filter: brightness(85%);
+}
+
 .pagination .page-current {
   background: var(--color-primary);
   border: 2px solid var(--color-primary);
@@ -1568,6 +1614,10 @@ td a:hover {
   margin-bottom: 1rem;
 }
 
+.mb1-5 {
+  margin-bottom: 1.5rem;
+}
+
 .mb-3 {
   margin-bottom: 3rem;
 }
@@ -1653,6 +1703,7 @@ td a:hover {
 }
 
 .span-2 {
+  margin-top: 0.5rem;
   grid-column: span 2;
   font-family: sans-serif;
   font-size: 1.33rem;
@@ -1751,14 +1802,15 @@ td a:hover {
 /* darkmode */
 
 .dark-mode-style,
-.dark-mode-table,
 .exercise-cover,
 .notification.dark-mode-style {
   background: var(--clr-dark-background);
+  background-image: linear-gradient(315deg, #313030 0%, #302e2e 74%);
   color: var(--color-gray-0);
 }
 
-.dark-mode-cards {
+.dark-mode-cards,
+.dark-mode-table {
   background: var(--clr-dark-background);
   color: var(--color-gray-0);
 }

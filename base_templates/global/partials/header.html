@@ -14,6 +14,7 @@
         <i class="fa-solid fa-dumbbell"></i>
         Treinos
       </a>
+      {% if notification_total > 0 %}
       <a class="header-link prevent-select" id="toggle-notification-menu" title="{{notification_total}} Notificações">
         <i class="fa-solid fa-bell bell-menu"></i>
         {% if notification_total %}
@@ -27,6 +28,7 @@
           Notificações
         {% endif %}
       </a>
+      {% endif %}
       <a class="header-link prevent-select" id="toggle-dark-mode" title="Alterar Tema">
         <i class="fa-solid" id="theme-icon"></i>
         Tema

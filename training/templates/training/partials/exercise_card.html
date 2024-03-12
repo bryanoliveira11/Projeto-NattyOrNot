@@ -205,12 +205,19 @@
     {% else %}
 
     {% if not is_detail_page %}
-        <footer class="exercise-footer">
+        <footer class="exercise-footer home-card">
             <a href="{% url 'training:exercises_detail' exercise.slug %}"
                 class="exercise-read-more-button center">
                 <i class="fa-solid fa-eye"></i>
                 <span>Ver Mais...</span>
             </a>
+            <div class="favorite-exercise-btn">
+              <div class="favorite-exercise">
+                <a href="" title="Favoritar Exercício">
+                  <i class="fa-solid fa-star"></i>
+                </a>
+              </div>
+            </div>
         </footer>
     {% endif %}
 

@@ -73,7 +73,7 @@ class CreateExerciseForm(forms.ModelForm, CreateFormMixin):
     categories = forms.ModelMultipleChoiceField(
         queryset=Categories.objects.all(),
         label='Categorias',
-        help_text='Dica : Segure a tecla CTRL para selecionar mais de uma categoria.',
+        help_text='Se estiver em um Computador segure a tecla CTRL para selecionar mais de uma categoria.',
     )
 
     shared_status = forms.ChoiceField(
@@ -88,7 +88,7 @@ class CreateExerciseForm(forms.ModelForm, CreateFormMixin):
 
     cover = forms.FileField(
         label='Imagem / Gif',
-        help_text='Dica : Um Gif ficará mais interessante do que uma imagem.',
+        help_text=' Um Gif ficará mais interessante do que uma imagem.',
         widget=forms.FileInput(
             attrs={
                 'class': 'span-2',

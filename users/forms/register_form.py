@@ -3,8 +3,9 @@ from collections import defaultdict
 from django import forms
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from django.utils.html import format_html
 
-from utils.django_forms import add_attr, add_placeholder, strong_password
+from utils.django_forms import add_placeholder, strong_password
 
 User = get_user_model()
 
@@ -69,7 +70,9 @@ class RegisterForm(forms.ModelForm, PasswordValidation):
     )
 
     email = forms.EmailField(
-        label='E-mail',
+        label=format_html(
+            '<i class="fa-solid fa-envelope m-right"></i> E-mail'
+        ),
         help_text=('E-mail Precisa ser Válido.'),
         error_messages={
             'required': 'Digite seu E-mail.',
@@ -77,13 +80,19 @@ class RegisterForm(forms.ModelForm, PasswordValidation):
     )
 
     password = forms.CharField(
-        label='Senha',
+        label=format_html(
+            '<i class="fa-solid fa-lock m-right"></i> Senha'
+        ),
         error_messages={
             'required': 'Digite sua Senha.'
         },
-        help_text=(
-            'Senha deve ter ao menos uma letra mínuscula, uma letra '
-            'maiúscula e um número. Mínimo de 8 dígitos.'
+        help_text=format_html(
+            '''
+          <p class="helptext-p">&#x2022; Mínimo de 8 Dígitos</p>
+          <p class="helptext-p">&#x2022; 1x Letra Maiúscula</p>
+          <p class="helptext-p">&#x2022; 1x Letra Mínuscula</p>
+          <p class="helptext-p">&#x2022; 1x Número</p>
+            '''
         ),
         widget=forms.PasswordInput(),
         validators=[strong_password],
@@ -101,8 +110,7 @@ class RegisterForm(forms.ModelForm, PasswordValidation):
     )
 
     profile_picture = forms.FileField(
-        label='Foto de Perfil',
-        help_text='* Não Obrigatório',
+        label='Foto de Perfil (Opcional)',
         required=False,
         widget=forms.FileInput(
             attrs={
@@ -219,9 +227,13 @@ class ChangePasswordForm(forms.ModelForm, PasswordValidation):
         error_messages={
             'required': 'Digite sua Senha.'
         },
-        help_text=(
-            'Senha deve ter ao menos uma letra mínuscula, uma letra '
-            'maiúscula e um número. Mínimo de 8 dígitos.'
+        help_text=format_html(
+            '''
+          <p class="helptext-p">&#x2022; Mínimo de 8 Dígitos</p>
+          <p class="helptext-p">&#x2022; 1x Letra Maiúscula</p>
+          <p class="helptext-p">&#x2022; 1x Letra Mínuscula</p>
+          <p class="helptext-p">&#x2022; 1x Número</p>
+            '''
         ),
         widget=forms.PasswordInput(),
         validators=[strong_password],

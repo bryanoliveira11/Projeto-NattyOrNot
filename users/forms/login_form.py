@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.html import format_html
 
 from utils.django_forms import add_attr, add_placeholder
 
@@ -11,4 +12,9 @@ class LoginForm(forms.Form):
         add_attr(self.fields['password'], 'class', 'login-password-field')
 
     username = forms.CharField(label='Usuário')
-    password = forms.CharField(label='Senha', widget=forms.PasswordInput())
+    password = forms.CharField(
+        label=format_html(
+            '<i class="fa-solid fa-lock m-right"></i> Senha'
+        ),
+        widget=forms.PasswordInput()
+    )

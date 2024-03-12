@@ -39,6 +39,13 @@ function CloseScreen(
   }
 }
 
+function createIcon(className: string, id?: string): HTMLElement {
+  const icon = document.createElement('i');
+  icon.className = className;
+  if (id) icon.id = id;
+  return icon;
+}
+
 class NotificationsScreen {
   // notifications vars
   notificationScreen: HTMLDivElement;
@@ -245,9 +252,10 @@ class ShowHidePassword {
 
   createEyeIcon(): void {
     // criando icone fa-eye no html
-    const icon = document.createElement('i');
-    icon.className = 'show-password-icon fa-regular fa-eye';
-    icon.id = 'show-password-icon';
+    const icon = createIcon(
+      'show-password-icon fa-regular fa-eye',
+      'show-password-icon',
+    );
     const passwordFieldParent = this.passwordField.parentNode as HTMLElement;
 
     // inserindo icone na tela se tiver a classe certa (evitar com que apareça em outros forms)
@@ -304,7 +312,7 @@ class SelectInputCheckIcon {
 
     // adicionar ícones quando o selected mudar - change
     this.selectField.addEventListener('change', () => {
-      const icon = '<i class="fa-solid fa-circle-check"></i>';
+      const icon: string = '<i class="fa-solid fa-circle-check"></i>';
       let selectCount: number = 0;
 
       this.selectField.querySelectorAll('option').forEach((option) => {
