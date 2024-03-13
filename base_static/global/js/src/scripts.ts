@@ -111,85 +111,94 @@ class NotificationsScreen {
   }
 }
 
-class LateralMenu {
-  // menu
-  buttonShowMenu: HTMLButtonElement;
-  buttonCloseMenu: HTMLButtonElement;
-  menuContainer: HTMLDivElement;
-  buttonShowMenuVisibleClass: string = 'button-show-menu-is-visible';
-  menuHiddenClass: string = 'menu-hidden';
-
-  // notification screen
-  notificationScreen: HTMLDivElement;
-  exerciseGrid: HTMLDivElement;
-  pageContent: HTMLElement;
-  notificationMenu: HTMLAnchorElement;
-
-  // footer
-  footer: HTMLElement;
+// classe para a navbar
+class NavBar {
+  dropdownBtn: HTMLButtonElement[];
+  navDropdown: HTMLDivElement[];
+  hamburgerBtn: HTMLElement;
+  navMenu: HTMLElement;
+  links: HTMLAnchorElement[];
 
   constructor() {
-    this.buttonShowMenu = document.querySelector(
-      '.button-show-menu',
-    ) as HTMLButtonElement;
-    this.buttonCloseMenu = document.querySelector(
-      '.button-close-menu',
-    ) as HTMLButtonElement;
-    this.menuContainer = document.querySelector(
-      '.menu-container',
-    ) as HTMLDivElement;
-    this.notificationScreen = document.querySelector(
-      '.notifications-page',
-    ) as HTMLDivElement;
-    this.exerciseGrid = document.querySelector(
-      '.exercise-container-grid',
-    ) as HTMLDivElement;
-    this.pageContent = document.querySelector(
-      '.main-content-container',
-    ) as HTMLElement;
-    this.notificationMenu = document.querySelector(
-      '#toggle-notification-menu',
-    ) as HTMLAnchorElement;
-    this.footer = document.querySelector('.main-footer') as HTMLElement;
+    this.dropdownBtn = Array.from(
+      document.querySelectorAll('.nav-dropdown-btn'),
+    ) as HTMLButtonElement[];
+    this.navDropdown = Array.from(
+      document.querySelectorAll('.nav-dropdown'),
+    ) as HTMLDivElement[];
+    this.hamburgerBtn = document.getElementById('hamburger') as HTMLElement;
+    this.navMenu = document.querySelector('.menu') as HTMLElement;
+    this.links = Array.from(
+      document.querySelectorAll('.nav-dropdown a'),
+    ) as HTMLAnchorElement[];
   }
 
   init(): void {
-    if (this.buttonShowMenu) {
-      this.buttonShowMenu.removeEventListener('click', () => this.showMenu());
-      this.buttonShowMenu.addEventListener('click', () => this.showMenu());
-    }
+    if (!this.dropdownBtn) return;
 
-    if (this.buttonCloseMenu) {
-      this.buttonCloseMenu.removeEventListener('click', () => this.closeMenu());
-      this.buttonCloseMenu.addEventListener('click', () => this.closeMenu());
-    }
+    this.dropdownBtn.forEach((btn) => {
+      btn.addEventListener('click', (e: Event) => {
+        if (!e.currentTarget) return;
 
-    // fechar menu ao clicar na tela
-    this.pageContent.addEventListener('click', () => this.closeMenu());
+        const dropdownIndex: string =
+          (e.currentTarget as HTMLElement).dataset.dropdown ?? '';
+        const dropdownElement = document.getElementById(
+          dropdownIndex,
+        ) as HTMLElement;
 
-    // fechar menu ao clicar no footer
-    if (this.footer)
-      this.footer.addEventListener('click', () => this.closeMenu());
+        dropdownElement.classList.toggle('active');
+        this.navDropdown.forEach((drop) => {
+          if (drop.id !== btn.dataset['dropdown']) {
+            drop.classList.remove('active');
+          }
+        });
 
-    // fechar menu ao abrir notifications
-    if (this.notificationMenu)
-      this.notificationMenu.addEventListener('click', () => this.closeMenu());
+        e.stopPropagation();
+
+        btn.setAttribute(
+          'aria-expanded',
+          btn.getAttribute('aria-expanded') === 'false' ? 'true' : 'false',
+        );
+      });
+    });
+
+    this.links.forEach((link) =>
+      link.addEventListener('click', () => {
+        this.closeDropdownMenu();
+        this.setAriaExpandedFalse();
+        this.toggleHamburger();
+      }),
+    );
+
+    document.documentElement.addEventListener('click', () => {
+      this.closeDropdownMenu();
+      this.setAriaExpandedFalse();
+    });
+
+    this.hamburgerBtn.addEventListener('click', () => this.toggleHamburger());
   }
 
-  showMenu(): void {
-    this.buttonShowMenu.classList.remove(this.buttonShowMenuVisibleClass);
-    this.menuContainer.classList.remove(this.menuHiddenClass);
-
-    if (this.exerciseGrid) {
-      CloseScreen(this.notificationScreen, this.exerciseGrid);
-      return;
-    }
-    CloseScreen(this.notificationScreen, this.pageContent);
+  setAriaExpandedFalse(): void {
+    this.dropdownBtn.forEach((btn) =>
+      btn.setAttribute('aria-expanded', 'false'),
+    );
   }
 
-  closeMenu(): void {
-    this.buttonShowMenu.classList.add(this.buttonShowMenuVisibleClass);
-    this.menuContainer.classList.add(this.menuHiddenClass);
+  closeDropdownMenu(): void {
+    this.navDropdown.forEach((drop) => {
+      drop.classList.remove('active');
+      drop.addEventListener('click', (e) => e.stopPropagation());
+    });
+  }
+
+  toggleHamburger(): void {
+    this.navMenu.classList.toggle('show');
+    this.hamburgerBtn.setAttribute(
+      'aria-expanded',
+      this.hamburgerBtn.getAttribute('aria-expanded') === 'false'
+        ? 'true'
+        : 'false',
+    );
   }
 }
 
@@ -328,7 +337,7 @@ class SelectInputCheckIcon {
   }
 }
 
-new LateralMenu().init();
+new NavBar().init();
 new NotificationsScreen().init();
 new LogoutLinks().init();
 new ShowHidePassword().init();

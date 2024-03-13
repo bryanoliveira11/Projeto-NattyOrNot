@@ -71,46 +71,72 @@ class NotificationsScreen {
     CloseScreen(this.notificationScreen, this.pageContent);
   }
 }
-class LateralMenu {
+class NavBar {
   constructor() {
-    this.buttonShowMenuVisibleClass = 'button-show-menu-is-visible';
-    this.menuHiddenClass = 'menu-hidden';
-    this.buttonShowMenu = document.querySelector('.button-show-menu');
-    this.buttonCloseMenu = document.querySelector('.button-close-menu');
-    this.menuContainer = document.querySelector('.menu-container');
-    this.notificationScreen = document.querySelector('.notifications-page');
-    this.exerciseGrid = document.querySelector('.exercise-container-grid');
-    this.pageContent = document.querySelector('.main-content-container');
-    this.notificationMenu = document.querySelector('#toggle-notification-menu');
-    this.footer = document.querySelector('.main-footer');
+    this.dropdownBtn = Array.from(
+      document.querySelectorAll('.nav-dropdown-btn'),
+    );
+    this.navDropdown = Array.from(document.querySelectorAll('.nav-dropdown'));
+    this.hamburgerBtn = document.getElementById('hamburger');
+    this.navMenu = document.querySelector('.menu');
+    this.links = Array.from(document.querySelectorAll('.nav-dropdown a'));
   }
   init() {
-    if (this.buttonShowMenu) {
-      this.buttonShowMenu.removeEventListener('click', () => this.showMenu());
-      this.buttonShowMenu.addEventListener('click', () => this.showMenu());
-    }
-    if (this.buttonCloseMenu) {
-      this.buttonCloseMenu.removeEventListener('click', () => this.closeMenu());
-      this.buttonCloseMenu.addEventListener('click', () => this.closeMenu());
-    }
-    this.pageContent.addEventListener('click', () => this.closeMenu());
-    if (this.footer)
-      this.footer.addEventListener('click', () => this.closeMenu());
-    if (this.notificationMenu)
-      this.notificationMenu.addEventListener('click', () => this.closeMenu());
+    if (!this.dropdownBtn) return;
+    this.dropdownBtn.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        var _a;
+        if (!e.currentTarget) return;
+        const dropdownIndex =
+          (_a = e.currentTarget.dataset.dropdown) !== null && _a !== void 0
+            ? _a
+            : '';
+        const dropdownElement = document.getElementById(dropdownIndex);
+        dropdownElement.classList.toggle('active');
+        this.navDropdown.forEach((drop) => {
+          if (drop.id !== btn.dataset['dropdown']) {
+            drop.classList.remove('active');
+          }
+        });
+        e.stopPropagation();
+        btn.setAttribute(
+          'aria-expanded',
+          btn.getAttribute('aria-expanded') === 'false' ? 'true' : 'false',
+        );
+      });
+    });
+    this.links.forEach((link) =>
+      link.addEventListener('click', () => {
+        this.closeDropdownMenu();
+        this.setAriaExpandedFalse();
+        this.toggleHamburger();
+      }),
+    );
+    document.documentElement.addEventListener('click', () => {
+      this.closeDropdownMenu();
+      this.setAriaExpandedFalse();
+    });
+    this.hamburgerBtn.addEventListener('click', () => this.toggleHamburger());
   }
-  showMenu() {
-    this.buttonShowMenu.classList.remove(this.buttonShowMenuVisibleClass);
-    this.menuContainer.classList.remove(this.menuHiddenClass);
-    if (this.exerciseGrid) {
-      CloseScreen(this.notificationScreen, this.exerciseGrid);
-      return;
-    }
-    CloseScreen(this.notificationScreen, this.pageContent);
+  setAriaExpandedFalse() {
+    this.dropdownBtn.forEach((btn) =>
+      btn.setAttribute('aria-expanded', 'false'),
+    );
   }
-  closeMenu() {
-    this.buttonShowMenu.classList.add(this.buttonShowMenuVisibleClass);
-    this.menuContainer.classList.add(this.menuHiddenClass);
+  closeDropdownMenu() {
+    this.navDropdown.forEach((drop) => {
+      drop.classList.remove('active');
+      drop.addEventListener('click', (e) => e.stopPropagation());
+    });
+  }
+  toggleHamburger() {
+    this.navMenu.classList.toggle('show');
+    this.hamburgerBtn.setAttribute(
+      'aria-expanded',
+      this.hamburgerBtn.getAttribute('aria-expanded') === 'false'
+        ? 'true'
+        : 'false',
+    );
   }
 }
 class LogoutLinks {
@@ -211,7 +237,7 @@ class SelectInputCheckIcon {
     });
   }
 }
-new LateralMenu().init();
+new NavBar().init();
 new NotificationsScreen().init();
 new LogoutLinks().init();
 new ShowHidePassword().init();

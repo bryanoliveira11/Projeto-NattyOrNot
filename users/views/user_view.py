@@ -8,6 +8,7 @@ from django.views import View
 from users.forms import LoginForm, RegisterForm
 from users.models import UserProfile
 from utils.get_notifications import get_notifications
+from utils.get_profile_picture import get_profile_picture
 
 
 class UserRegisterView(View):
@@ -96,6 +97,7 @@ class UserLoginView(View):
             # login com sucesso
             if authenticated_user is not None:
                 login(self.request, user=authenticated_user)
+                get_profile_picture(self.request, authenticated_user)
                 messages.success(
                     self.request,
                     f'Login Efetuado com Sucesso na Conta {self.request.user}.'
@@ -125,5 +127,6 @@ class UserLogoutView(View):
 
         # realiza o logout
         messages.success(self.request, 'Logout Efetuado. Até a Próxima !')
+        del self.request.session['user_picture']
         logout(self.request)
         return redirect(reverse('users:login'))

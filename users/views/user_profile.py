@@ -11,6 +11,7 @@ from django.views import View
 from users.forms import ChangePasswordForm, EditForm
 from users.models import UserProfile
 from utils.get_notifications import get_notifications
+from utils.get_profile_picture import get_profile_picture
 
 User = get_user_model()
 
@@ -109,6 +110,7 @@ class UserProfileDetailClassView(View):
                 if user_profile:
                     user_profile.profile_picture = user_picture
                     user_profile.save()
+                    get_profile_picture(self.request, self.request.user)
 
             # salvando
             user.save()

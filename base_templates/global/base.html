@@ -6,8 +6,7 @@
     <title> {% block title %}{{title}}{% endblock title %} | NattyOrNot</title>
 </head>
 <body>
-    {% include "global/partials/menu.html" %}
-    {% include "global/partials/header.html" %}
+    {% include "global/partials/navbar.html" %}
     <main class="main-content-container fadeIn-screen">
         {% block content %}{% endblock content %}
         {% include "global/partials/pagination.html" %}

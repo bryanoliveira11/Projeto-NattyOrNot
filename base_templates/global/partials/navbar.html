@@ -1,0 +1,222 @@
+<header id="nav-menu" aria-label="Menu de Navegação">
+  {% include "global/partials/notifications.html" %}
+  <div class="nav-container">
+    <div class="nav-start">
+      <a class="logo prevent-select" href="{% url 'training:home' %}" title="NattyOrNot">
+        NattyOrNot
+      </a>
+      <nav class="menu">
+        <ul class="menu-bar">
+          {% if request.user.is_authenticated %}
+          <li>
+            <button
+              class="nav-link nav-dropdown-btn"
+              data-dropdown="dropdown1"
+              aria-haspopup="true"
+              aria-expanded="false"
+              aria-label="Dashboard"
+              title="Dashboard">
+              Dashboard
+              <i class="fa-solid fa-chevron-down nav-chevron"></i>
+            </button>
+            <div id="dropdown1" class="nav-dropdown">
+              <ul role="menu">
+                <li role="menuitem">
+                  <a class="dropdown-link prevent-select" href="{% url 'users:user_dashboard' %}">
+                    <div>
+                      <span class="dropdown-link-title" title="Dashboard">
+                        <i class="fa-solid fa-clipboard-user"></i>
+                        Dashboard
+                      </span>
+                      <p>Veja seus Exercícios.</p>
+                    </div>
+                  </a>
+                </li>
+
+                <li role="menuitem">
+                  <a class="dropdown-link prevent-select" href="{% url 'users:create_exercise' %}">
+                    <div>
+                      <span class="dropdown-link-title" title="Criar Exercício">
+                        <i class="fa-solid fa-circle-plus"></i>
+                        Criar Exercício
+                      </span>
+                      <p>Crie Exercícios.</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li>
+            <button
+              class="nav-link nav-dropdown-btn"
+              data-dropdown="dropdown2"
+              aria-haspopup="true"
+              aria-expanded="false"
+              aria-label="Treinos"
+              title="Treinos">
+              Treinos
+              <i class="fa-solid fa-chevron-down nav-chevron"></i>
+            </button>
+            <div id="dropdown2" class="nav-dropdown">
+              <ul role="menu">
+                <li role="menuitem">
+                  <a class="dropdown-link prevent-select" href="{% url 'users:user_workouts' %}">
+                    <div>
+                      <span class="dropdown-link-title" title="Treinos">
+                        <i class="fa-solid fa-dumbbell"></i>
+                        Treinos
+                      </span>
+                      <p>Veja seus Treinos.</p>
+                    </div>
+                  </a>
+                </li>
+
+                <li role="menuitem">
+                  <a class="dropdown-link prevent-select" href="{% url 'users:user_workout_create' %}">
+                    <div>
+                      <span class="dropdown-link-title" title="Criar Treino">
+                        <i class="fa-solid fa-circle-plus"></i>
+                        Criar Treino
+                      </span>
+                      <p>Crie Treinos.</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li>
+            <button
+              class="nav-link nav-dropdown-btn"
+              data-dropdown="dropdown3"
+              aria-haspopup="true"
+              aria-expanded="false"
+              aria-label="Meu Perfil"
+              title="Meu Perfil">
+              Meu Perfil
+              <i class="fa-solid fa-chevron-down nav-chevron"></i>
+            </button>
+            <div id="dropdown3" class="nav-dropdown">
+              <ul role="menu">
+                <li role="menuitem">
+                  <a class="dropdown-link prevent-select"
+                  href="{% url 'users:user_profile' request.user.username %}">
+                    <div>
+                      <span class="dropdown-link-title" title="Meu Perfil">
+                        <i class="fa-solid fa-user-circle"></i>
+                        Perfil
+                      </span>
+                      <p>Veja seus Dados.</p>
+                    </div>
+                  </a>
+                </li>
+
+                <li role="menuitem">
+                  <a class="dropdown-link prevent-select"
+                  href="{% url 'users:user_profile_change_password' request.user.username %}">
+                    <div>
+                      <span class="dropdown-link-title" title="Alterar Senha">
+                        <i class="fa-solid fa-key"></i>
+                        Alterar Senha
+                      </span>
+                      <p>Altere sua Senha.</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          {% endif %}
+
+          {% if request.user.is_authenticated and notification_total > 0 %}
+          <li>
+          <a class="nav-link prevent-select" id="toggle-notification-menu" title="{{notification_total}} Notificações">
+            <i class="fa-solid fa-bell bell-menu"></i>
+            {% if notification_total %}
+            <span class='notification-total'>
+               {{notification_total}}
+            </span>
+            {% endif %}
+            {% if notification_total == 1 %}
+              Notificação
+            {% else %}
+              Notificações
+            {% endif %}
+          </a>
+          </li>
+          {% endif %}
+
+          <li>
+            <a class="nav-link prevent-select" id="toggle-dark-mode" title="Alterar Tema">
+              <i class="fa-solid" id="theme-icon"></i>
+              Tema
+            </a>
+          </li>
+
+          {% if not request.user.is_authenticated %}
+          <li>
+            <a href="{% url 'users:login' %}" class="nav-link prevent-select" title="Fazer Login">
+              <i class="fa-solid fa-right-to-bracket"></i>
+              Login
+            </a>
+          </li>
+
+          <li>
+            <a href="{% url 'users:register' %}" class="nav-link prevent-select" title="Fazer Cadastro">
+              <i class="fa-solid fa-user-plus"></i>
+              Cadastro
+            </a>
+          </li>
+          {% endif %}
+
+          {% if request.user.is_authenticated %}
+          <li>
+            <a href="{% url 'users:logout' %}" class="user-logout-link nav-link prevent-select" title="Encerrar Sessão">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              Sair
+              {% include "global/partials/logout_form.html" %}
+            </a>
+          </li>
+          {% endif %}
+
+        </ul>
+      </nav>
+    </div>
+
+    <div class="nav-end">
+      <div class="right-container">
+
+        {% if search_form_action %}
+        <form  action="{{search_form_action}}" method="GET" class="search" role="search">
+        {% else %}
+        <form  action="{% url 'training:search' %}" method="GET" class="search" role="search">
+        {% endif %}
+        {% if placeholder %}
+          <input type="search" value="{{search_term}}" name="q"
+          placeholder="{{placeholder}}" required />
+        {% else %}
+          <input type="search" value="{{search_term}}" name="q"
+          placeholder="Pesquisar na Home" required />
+        {% endif %}
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </form>
+
+        {% if request.session.user_picture %}
+        <a href="{% url 'users:user_profile' request.user.username %}" class="nav-profile">
+          <img
+            src="{{request.session.user_picture}}"
+            alt="Foto do Usuário"/>
+        </a>
+        {% endif %}
+      </div>
+
+      <button id="hamburger" aria-label="Abrir Menu" aria-haspopup="true" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</header>

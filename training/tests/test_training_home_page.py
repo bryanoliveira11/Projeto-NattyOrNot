@@ -90,11 +90,7 @@ class TrainingHomePageTest(ExercisesTestBaseClass):
         # search placeholder
         self.assertEqual(
             response.context['placeholder'],
-            'Pesquise por um Exercício ou Categoria'
-        )
-        # search placeholder additional phrase
-        self.assertEqual(
-            response.context['additional_search_placeholder'], 'na Home'
+            'Pesquisar na Home'
         )
         # is home page ??? should be true
         self.assertEqual(
@@ -122,10 +118,7 @@ class TrainingHomePageTest(ExercisesTestBaseClass):
         )
         self.assertEqual(
             response.context['placeholder'],
-            'Pesquise por um Exercício ou Categoria'
-        )
-        self.assertEqual(
-            response.context['additional_search_placeholder'], 'na Home'
+            'Pesquisar na Home'
         )
         self.assertEqual(response.context['is_filtered'], True)
 
@@ -149,10 +142,7 @@ class TrainingHomePageTest(ExercisesTestBaseClass):
         )
         self.assertEqual(
             response.context['placeholder'],
-            'Pesquise por um Exercício ou Categoria'
-        )
-        self.assertEqual(
-            response.context['additional_search_placeholder'], 'na Home'
+            'Pesquisar na Home'
         )
         self.assertEqual(response.context['is_filtered'], True)
 

@@ -63,8 +63,7 @@ class DashboardUserBase(ListView):
             'page_tag': 'Dashboard > Meus Exercícios',
             'search_form_action': reverse('users:user_dashboard_search'),
             'is_dashboard_page': True,
-            'placeholder': 'Pesquise por um Exercício ou Categoria',
-            'additional_search_placeholder': 'no Dashboard',
+            'placeholder': 'Pesquisar no Dashboard',
         })
 
         return context

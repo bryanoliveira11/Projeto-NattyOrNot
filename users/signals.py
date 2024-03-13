@@ -30,7 +30,9 @@ def update_notifications_counter(user):
     user_profile.save()
 
 
-def create_user_notification(subj, subj_html, msg, send_to, send_by='NattyOrNot'):
+def create_user_notification(
+    subj, subj_html, msg, send_to, send_by='NattyOrNot'
+):
     # updating notification counter
     update_notifications_counter(user=send_to)
 
@@ -89,7 +91,7 @@ def exercise_rejected_notification(instance, *args, **kwargs):
 
     user = get_user_by_instance(instance=instance)
     msg_url = reverse('users:edit_exercise', args=(instance.pk,))
-    extra_info = instance.extra_info if instance.extra_info else 'Não informado'
+    info = instance.extra_info if instance.extra_info else 'Não informado'
 
     if user:
         create_user_notification(
@@ -99,10 +101,11 @@ def exercise_rejected_notification(instance, *args, **kwargs):
             f'<a class="notification-url" href="{
                 msg_url}">"{instance.title}"</a> '
             'foi <b>Rejeitado</b> e não Será Exibido na Página Principal. '
-            f'<b>Motivo</b> : {extra_info}.',
+            f'<b>Motivo</b> : {info}.',
             send_to=user,
         )
-        ''' setting rejected to be false so the notification will not play again
+        ''' setting rejected to be false so the
+            notification will not play again
             if the user tries to edit the exercise.
         '''
         instance.rejected = False
@@ -165,7 +168,8 @@ def exercise_status_shared_notification(instance, sender, *args, **kwargs):
             f'''<a class="notification-url" href="{
                 msg_url}">"{instance.title}"</a>
             teve a Visibilidade alterada para "Todos" e será
-            <b>Analisado</b> pela Equipe Administrativa Antes de ser Aprovado.''',
+            <b>Analisado</b> pela Equipe Administrativa Antes de ser Aprovado.
+            ''',
             send_to=user,
         )
 
@@ -187,7 +191,7 @@ def user_signin_notification(instance, created, *args, **kwargs):
             msg='Bem Vindo ao NattyOrNot '
             f'''<a class="notification-url" href="{
                 msg_url}">{user.username}</a>. '''
-            'Use os Menus para Navegar no Site. Bons Treinos !',
+            'Use o Menu para Navegar no Site. Bons Treinos !',
             send_to=user,
         )
 
