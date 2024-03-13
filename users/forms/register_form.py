@@ -10,12 +10,12 @@ from utils.django_forms import add_placeholder, strong_password
 User = get_user_model()
 
 
-class PasswordValidation:
+class ValidateFields:
     def __init__(self, cleaned_data) -> None:
         self.cleaned_data = cleaned_data
         self._my_errors: defaultdict = defaultdict(list)
 
-    def password_validation(self):
+    def validate_password(self):
         # validando se as senhas batem
         password = self.cleaned_data.get('password')
         password2 = self.cleaned_data.get('password2')
@@ -28,8 +28,55 @@ class PasswordValidation:
                 'Senhas Precisam ser Iguais.'
             )
 
+    def validate_username(
+        self, is_register=False, is_edit=False, instance=None
+    ):
+        # validando usuário
+        username = self.cleaned_data.get('username')
+        username_database = User.objects.filter(
+            username__iexact=username
+        ).first()
 
-class RegisterForm(forms.ModelForm, PasswordValidation):
+        if not username_database:
+            return username
+
+        if is_register:
+            self._my_errors['username'].append(
+                'Este Usuário Está em Uso.'
+            )
+            return username
+
+        if is_edit and instance:
+            if username_database.pk != instance.pk:
+                self._my_errors['username'].append(
+                    'Este Usuário Está em Uso.'
+                )
+            return username
+
+    def validate_email(self, is_register=False, is_edit=False, instance=None):
+        # validando se o email já existe no banco
+        email = self.cleaned_data.get('email')
+        email_database = User.objects.filter(email__iexact=email).first()
+
+        if not email_database:
+            return email
+
+        if is_register:
+            if email_database:
+                self._my_errors['email'].append(
+                    'Este E-mail Está em Uso.'
+                )
+            return email
+
+        if is_edit and instance:
+            if email_database.pk != instance.pk:
+                self._my_errors['email'].append(
+                    'Este E-mail Está em Uso.'
+                )
+            return email
+
+
+class RegisterForm(forms.ModelForm, ValidateFields):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._my_errors = defaultdict(list)
@@ -58,9 +105,13 @@ class RegisterForm(forms.ModelForm, PasswordValidation):
 
     username = forms.CharField(
         label='Usuário', min_length=4, max_length=150,
-        help_text=(
-            'Obrigatório. 150 caracteres ou menos. '
-            'Letras, números e @/./+/-/_ apenas.'
+        help_text=format_html(
+            '''
+          <p class="helptext-p">&#x2022; Mínimo de 4 Dígitos</p>
+          <p class="helptext-p">&#x2022; Letras</p>
+          <p class="helptext-p">&#x2022; Números</p>
+          <p class="helptext-p">&#x2022; @/./+/-/_</p>
+            '''
         ),
         error_messages={
             'required': 'Digite seu Usuário.',
@@ -130,32 +181,13 @@ class RegisterForm(forms.ModelForm, PasswordValidation):
         ]
 
     def clean_username(self):
-        # validando usuário
-        username = self.cleaned_data.get('username')
-        username_database = User.objects.filter(
-            username__iexact=username
-        ).first()
-
-        if username_database:
-            self._my_errors['username'].append(
-                'Este Usuário Está em Uso.'
-            )
-        return username
+        return self.validate_username(is_register=True)
 
     def clean_email(self):
-        # validando se o email já existe no banco
-        email = self.cleaned_data.get('email')
-        email_database = User.objects.filter(email__iexact=email).first()
-
-        if email_database:
-            self._my_errors['email'].append(
-                'Este E-mail Está em Uso.'
-            )
-
-        return email
+        return self.validate_email(is_register=True)
 
     def clean(self, *args, **kwargs):
-        self.password_validation()
+        self.validate_password()
 
         if self._my_errors:
             raise ValidationError(self._my_errors)
@@ -183,30 +215,10 @@ class EditForm(RegisterForm):
         ]
 
     def clean_username(self):
-        username = self.cleaned_data.get('username')
-        username_database = User.objects.filter(
-            username__iexact=username
-        ).first()
-
-        # validando se o username existente no banco tem um id diferente da instancia
-        if username_database:
-            if username_database.pk != self.instance.pk:
-                self._my_errors['username'].append(
-                    'Este Usuário Está em Uso.'
-                )
-        return username
+        return self.validate_username(is_edit=True, instance=self.instance)
 
     def clean_email(self):
-        email = self.cleaned_data.get('email')
-        email_database = User.objects.filter(email__iexact=email).first()
-
-        # validando se o email existente no banco tem um id diferente da instancia
-        if email_database:
-            if email_database.pk != self.instance.pk:
-                self._my_errors['email'].append(
-                    'Este E-mail Está em Uso.'
-                )
-        return email
+        return self.validate_email(is_edit=True, instance=self.instance)
 
     def clean(self, *args, **kwargs):
         if self._my_errors:
@@ -215,7 +227,7 @@ class EditForm(RegisterForm):
         return super().clean(*args, **kwargs)
 
 
-class ChangePasswordForm(forms.ModelForm, PasswordValidation):
+class ChangePasswordForm(forms.ModelForm, ValidateFields):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._my_errors = defaultdict(list)
@@ -255,7 +267,7 @@ class ChangePasswordForm(forms.ModelForm, PasswordValidation):
         fields = ['password']
 
     def clean(self, *args, **kwargs):
-        self.password_validation()
+        self.validate_password()
 
         if self._my_errors:
             raise ValidationError(self._my_errors)

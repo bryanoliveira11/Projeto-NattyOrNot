@@ -30,7 +30,8 @@ class UserNotificationsDeleteClassView(View):
                 user_profile.save()
 
     def is_valid_user(self):
-        if self.request.POST.get('username') != self.request.user.username:  # type:ignore
+        user = self.request.user.username  # type:ignore
+        if self.request.POST.get('username') != user:
             return False
         return True
 
@@ -39,8 +40,12 @@ class UserNotificationsDeleteClassView(View):
             # urls de search do site
             search_urls_dict = {
                 f'{reverse('training:search')}': reverse('training:home'),
-                f'{reverse('users:user_dashboard_search')}': reverse('users:user_dashboard'),
-                f'{reverse('users:user_workouts_search')}': reverse('users:user_workouts'),
+                f'{reverse('users:user_dashboard_search')}': reverse(
+                    'users:user_dashboard'
+                ),
+                f'{reverse('users:user_workouts_search')}': reverse(
+                    'users:user_workouts'
+                ),
             }
 
             path = self.request.POST.get('previous_page')

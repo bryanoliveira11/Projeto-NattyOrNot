@@ -30,7 +30,7 @@ class DashboardUserBase(ListView):
     def get_queryset(self, *args, **kwargs) -> QuerySet[Any]:
         queryset = super().get_queryset(*args, **kwargs)
 
-        # filtrando exercícios que o usuário logado criou e não estão publicados
+        # filtrando exercícios que o usuário criou
         queryset = queryset.filter(
             published_by=self.request.user,
         ).prefetch_related('categories')
@@ -59,8 +59,8 @@ class DashboardUserBase(ListView):
             'results_count': results,
             'notifications': notifications,
             'notification_total': notifications_total,
-            'title': f'Dashboard',
-            'page_tag': f'Dashboard > Meus Exercícios',
+            'title': 'Dashboard',
+            'page_tag': 'Dashboard > Meus Exercícios',
             'search_form_action': reverse('users:user_dashboard_search'),
             'is_dashboard_page': True,
             'placeholder': 'Pesquise por um Exercício ou Categoria',
@@ -128,7 +128,7 @@ class DashboardUserCategoryClassView(DashboardUserBase):
     login_required(login_url='users:login', redirect_field_name='next'),
     name='dispatch'
 )
-# classe para a barra de search do dashboard filtrar no dashboard em si, não na home.
+# classe para a barra de search do dashboard
 class DashboardSearchClassView(DashboardUserBase):
     def __init__(self, *args, **kwargs):
         self.search_term = ''

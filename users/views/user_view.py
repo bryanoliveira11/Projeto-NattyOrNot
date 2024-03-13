@@ -118,7 +118,8 @@ class UserLogoutView(View):
 
     # valida se o usuário para logout é o correto
     def post(self, *args, **kwargs):
-        if self.request.POST.get('username') != self.request.user.username:  # type:ignore
+        user = self.request.user.username  # type:ignore
+        if self.request.POST.get('username') != user:
             messages.error(self.request, 'Usuário de Logout Inválido.')
             return redirect(reverse('users:login'))
 

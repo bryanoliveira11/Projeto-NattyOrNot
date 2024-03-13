@@ -7,7 +7,9 @@ from utils.django_forms import is_positive_number
 
 # essa classe é responsável por validar o form para os exercícios
 class ExerciseValidator:
-    def __init__(self, data, errors=None, ErrorClass=None, isApi=False) -> None:
+    def __init__(
+        self, data, errors=None, ErrorClass=None, isApi=False
+    ) -> None:
         self.errors = defaultdict(list) if errors is None else errors
         self.ErrorClass = ValidationError if ErrorClass is None else ErrorClass
         self.data = data

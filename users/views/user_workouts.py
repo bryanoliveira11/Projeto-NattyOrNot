@@ -178,9 +178,9 @@ class UserWorkoutBaseClass(View):
 
     def get_referer_url(self):
         http_referer = self.request.META.get('HTTP_REFERER')
-        create_url = reverse('users:user_workout_create')
+        workout = reverse('users:user_workout_create')
 
-        if http_referer is None or self.request.path in http_referer or create_url in http_referer:
+        if http_referer is None or self.request.path in http_referer or workout in http_referer:
             url_to_redirect = reverse(
                 'users:user_workouts'
             )

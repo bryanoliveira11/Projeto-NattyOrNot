@@ -45,34 +45,34 @@ class DashboardFormBaseClassView(View):
         return exercise
 
     def get_referer_url(self):
-        http_referer = self.request.META.get('HTTP_REFERER')
+        referer = self.request.META.get('HTTP_REFERER')
+        path = self.request.path
         create_url = reverse('users:create_exercise')
 
-        if http_referer is None or self.request.path in http_referer or create_url in http_referer:
-            url_to_redirect = reverse(
-                'users:user_dashboard'
-            )
-        else:
-            url_to_redirect = http_referer
+        if referer is None or path in referer or create_url in referer:
+            return reverse('users:user_dashboard')
 
-        return url_to_redirect
+        return referer
 
     def render_exercise(self, form):  # renderizando página do form
         notifications, notifications_total = get_notifications(self.request)
 
         url_to_redirect = self.get_referer_url()
 
-        return render(self.request, 'users/pages/create_exercise.html', context={
-            'form': form,
-            'notifications': notifications,
-            'notification_total': notifications_total,
-            'title': self.title,
-            'captcha_public_key': environ.get('RECAPTCHA_PUBLIC_KEY', ''),
-            'captcha_private_key': environ.get('RECAPTCHA_PRIVATE_KEY', ''),
-            'is_exercise_form': True,
-            'is_exercise_edit': self.is_exercise_edit,
-            'url_to_redirect': url_to_redirect
-        })
+        return render(
+            self.request, 'users/pages/create_exercise.html', context={
+                'form': form,
+                'notifications': notifications,
+                'notification_total': notifications_total,
+                'title': self.title,
+                'captcha_public_key': environ.get('RECAPTCHA_PUBLIC_KEY', ''),
+                'captcha_private_key': environ.get(
+                    'RECAPTCHA_PRIVATE_KEY', ''
+                ),
+                'is_exercise_form': True,
+                'is_exercise_edit': self.is_exercise_edit,
+                'url_to_redirect': url_to_redirect
+            })
 
 
 @method_decorator(
@@ -117,6 +117,8 @@ class DashboardExerciseClassView(DashboardFormBaseClassView):
             else:
                 messages.success(request, 'Exercício Criado com Sucesso !')
 
-            return redirect(reverse('users:edit_exercise', args=(exercise.pk,)))
+            return redirect(reverse(
+                'users:edit_exercise', args=(exercise.pk,)
+            ))
 
         return self.render_exercise(form=form)

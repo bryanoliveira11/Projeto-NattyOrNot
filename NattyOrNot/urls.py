@@ -25,7 +25,7 @@ handler404 = 'training.views.error404.error_404'
 urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('', include('training.urls')),
-    path('user', include('users.urls')),
+    path('user/', include('users.urls')),
     path('admin/', admin.site.urls),
     path('__debug__/', include("debug_toolbar.urls")),
 ]

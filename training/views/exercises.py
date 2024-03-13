@@ -30,7 +30,9 @@ class ExerciseBaseClassView(ListView):
     def get_queryset(self, *args, **kwargs) -> QuerySet[Any]:
         queryset = super().get_queryset(*args, **kwargs)
 
-        queryset = queryset.filter(shared_status='ALL', is_published=True).select_related(
+        queryset = queryset.filter(
+            shared_status='ALL', is_published=True
+        ).select_related(
             'published_by').prefetch_related('categories')
 
         return queryset
@@ -164,7 +166,9 @@ class ExerciseDetailClassView(DetailView):
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.filter(shared_status='ALL', is_published=True).select_related(
+        queryset = queryset.filter(
+            shared_status='ALL', is_published=True
+        ).select_related(
             'published_by'
         ).prefetch_related('categories')
 
@@ -183,10 +187,9 @@ class ExerciseDetailClassView(DetailView):
         ))
 
         http_referer = self.request.META.get('HTTP_REFERER')
+        home = reverse('training:home')
 
-        url_to_redirect = http_referer if http_referer is not None else reverse(
-            'training:home'
-        )
+        url_to_redirect = http_referer if http_referer is not None else home
 
         context.update({
             'exercise': exercise,

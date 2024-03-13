@@ -33,7 +33,7 @@ class UserProfileDetailClassView(View):
         return False
 
     # lançar um alerta na tela de perfil se o email do usuário estiver vázio
-    # isso ocorre se a conta for do google e um outro usuário já estiver usando o mesmo email
+    # isso ocorre se a conta for do google e o email já estiver em uso
     def check_email(self):
         user_db = User.objects.filter(pk=self.request.user.pk).first()
 
@@ -54,9 +54,13 @@ class UserProfileDetailClassView(View):
         return reverse('users:user_profile', args=(self.request.user,))
 
     def get_password_change_form_action(self):
-        return reverse('users:user_profile_change_password', args=(self.request.user,))
+        return reverse(
+            'users:user_profile_change_password', args=(self.request.user,)
+        )
 
-    def render_form(self, form, form_action, profile_page=False, password_page=False):
+    def render_form(
+        self, form, form_action, profile_page=False, password_page=False
+    ):
         user = self.request.user
         user_profile = self.get_user_profile(user.pk)
         is_google_account = self.is_google_account_user()

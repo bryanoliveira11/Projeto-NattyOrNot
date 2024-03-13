@@ -38,7 +38,8 @@ class ExercisesApiV1ViewSet(ModelViewSet):
         # validando exercício publicado
         if exercise.first().shared_status == 'ALL' and exercise.is_published:  # type:ignore
             raise ValidationError(
-                'Seu exercício está publicado para Todos. Não é possível concluir a operação'
+                'Seu exercício está publicado para Todos.'
+                'Não é possível concluir a operação'
             )
 
     def create(self, request, *args, **kwargs):  # post

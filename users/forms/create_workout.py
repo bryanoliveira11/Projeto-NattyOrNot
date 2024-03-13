@@ -37,7 +37,8 @@ class CreateWorkoutForm(forms.ModelForm, CreateFormMixin):
             shared_status='ALL', is_published=True
         ).order_by('-pk'),
         label='Exercícios Disponíveis',
-        help_text='Se estiver em um Computador segure a tecla CTRL para selecionar mais de um Exercício.',
+        help_text='''Se estiver em um Computador segure a tecla CTRL
+        para selecionar mais de um Exercício.''',
     )
 
     class Meta:

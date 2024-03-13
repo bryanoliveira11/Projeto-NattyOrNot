@@ -73,7 +73,8 @@ class CreateExerciseForm(forms.ModelForm, CreateFormMixin):
     categories = forms.ModelMultipleChoiceField(
         queryset=Categories.objects.all(),
         label='Categorias',
-        help_text='Se estiver em um Computador segure a tecla CTRL para selecionar mais de uma categoria.',
+        help_text='''Se estiver em um Computador segure a tecla CTRL
+        para selecionar mais de uma categoria.''',
     )
 
     shared_status = forms.ChoiceField(
@@ -81,8 +82,8 @@ class CreateExerciseForm(forms.ModelForm, CreateFormMixin):
         label='Visibilidade',
         required=True,
         help_text='''
-        Exercícios Compartilhados com Todos serão Validados antes de Serem Publicados.
-        Além disso, não será Possível Edita-lo após a Aprovação.
+        Exercícios Compartilhados com Todos serão Validados antes de Serem
+        Publicados. Além disso, não será Possível Edita-lo após a Aprovação.
         '''
     )
 
@@ -118,6 +119,7 @@ class CreateExerciseForm(forms.ModelForm, CreateFormMixin):
     def clean(self, *args, **kwargs):
         super_clean = super().clean(*args, **kwargs)
         self.validate_google_recaptcha(
-            data=self.data, add_error=self.add_error)
+            data=self.data, add_error=self.add_error
+        )
         ExerciseValidator(self.cleaned_data, ErrorClass=ValidationError)
         return super_clean
