@@ -137,29 +137,7 @@ class NavBar {
     if (!this.dropdownBtn) return;
 
     this.dropdownBtn.forEach((btn) => {
-      btn.addEventListener('click', (e: Event) => {
-        if (!e.currentTarget) return;
-
-        const dropdownIndex: string =
-          (e.currentTarget as HTMLElement).dataset.dropdown ?? '';
-        const dropdownElement = document.getElementById(
-          dropdownIndex,
-        ) as HTMLElement;
-
-        dropdownElement.classList.toggle('active');
-        this.navDropdown.forEach((drop) => {
-          if (drop.id !== btn.dataset['dropdown']) {
-            drop.classList.remove('active');
-          }
-        });
-
-        e.stopPropagation();
-
-        btn.setAttribute(
-          'aria-expanded',
-          btn.getAttribute('aria-expanded') === 'false' ? 'true' : 'false',
-        );
-      });
+      btn.addEventListener('click', (e: Event) => this.handleDropdown(btn, e));
     });
 
     this.links.forEach((link) =>
@@ -176,6 +154,35 @@ class NavBar {
     });
 
     this.hamburgerBtn.addEventListener('click', () => this.toggleHamburger());
+  }
+
+  /*
+   função para ativar a classe de active para o btn de dropdown clicado
+   e desativar os outros
+   */
+  handleDropdown(btn: HTMLButtonElement, e: Event): void {
+    if (!e.currentTarget) return;
+
+    const dropdownIndex: string =
+      (e.currentTarget as HTMLElement).dataset.dropdown ?? '';
+    const dropdownElement = document.getElementById(
+      dropdownIndex,
+    ) as HTMLElement;
+
+    dropdownElement.classList.toggle('active');
+
+    this.navDropdown.forEach((drop) => {
+      if (drop.id !== btn.dataset['dropdown']) {
+        drop.classList.remove('active');
+      }
+    });
+
+    e.stopPropagation();
+
+    btn.setAttribute(
+      'aria-expanded',
+      btn.getAttribute('aria-expanded') === 'false' ? 'true' : 'false',
+    );
   }
 
   setAriaExpandedFalse(): void {

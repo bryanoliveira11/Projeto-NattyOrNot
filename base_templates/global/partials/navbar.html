@@ -1,11 +1,19 @@
+{% load static %}
+
 <header id="nav-menu" aria-label="Menu de Navegação">
   {% include "global/partials/notifications.html" %}
   <div class="nav-container">
     <div class="nav-start">
       <a class="logo prevent-select" href="{% url 'training:home' %}" title="NattyOrNot">
+        <img src="{% static 'global/imgs/juice.png' %}">
         NattyOrNot
       </a>
       <nav class="menu">
+        <div class="search-bar-invisible">
+          <div class="search-bar-menu">
+            {% include "global/partials/search.html" %}
+          </div>
+        </div>
         <ul class="menu-bar">
           {% if request.user.is_authenticated %}
           <li>
@@ -189,21 +197,7 @@
 
     <div class="nav-end">
       <div class="right-container">
-
-        {% if search_form_action %}
-        <form  action="{{search_form_action}}" method="GET" class="search" role="search">
-        {% else %}
-        <form  action="{% url 'training:search' %}" method="GET" class="search" role="search">
-        {% endif %}
-        {% if placeholder %}
-          <input type="search" value="{{search_term}}" name="q"
-          placeholder="{{placeholder}}" required />
-        {% else %}
-          <input type="search" value="{{search_term}}" name="q"
-          placeholder="Pesquisar na Home" required />
-        {% endif %}
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </form>
+        {% include "global/partials/search.html" %}
 
         {% if request.session.user_picture %}
         <a href="{% url 'users:user_profile' request.user.username %}" class="nav-profile">

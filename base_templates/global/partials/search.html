@@ -1,10 +1,16 @@
-<div class="search-container">
-<form action="{{search_form_action}}" method="GET" class="search-form">
-    <input type="search" class="search-input"
-     value="{{search_term}}" name="q"
-     placeholder="{{placeholder}} {{additional_search_placeholder}}" required>
-     <button class="search-button" type="submit">
-        <i class="fa-solid fa-magnifying-glass"></i>
-     </button>
+{% if search_form_action %}
+  <form  action="{{search_form_action}}" method="GET" class="search" role="search">
+{% else %}
+  <form  action="{% url 'training:search' %}" method="GET" class="search" role="search">
+{% endif %}
+{% if placeholder %}
+    <input type="search" value="{{search_term}}" name="q"
+    placeholder="{{placeholder}}" required />
+{% else %}
+    <input type="search" value="{{search_term}}" name="q"
+    placeholder="Pesquisar na Home" required />
+{% endif %}
+    <button type="submit">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
 </form>
-</div>

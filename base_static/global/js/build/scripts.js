@@ -84,26 +84,7 @@ class NavBar {
   init() {
     if (!this.dropdownBtn) return;
     this.dropdownBtn.forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        var _a;
-        if (!e.currentTarget) return;
-        const dropdownIndex =
-          (_a = e.currentTarget.dataset.dropdown) !== null && _a !== void 0
-            ? _a
-            : '';
-        const dropdownElement = document.getElementById(dropdownIndex);
-        dropdownElement.classList.toggle('active');
-        this.navDropdown.forEach((drop) => {
-          if (drop.id !== btn.dataset['dropdown']) {
-            drop.classList.remove('active');
-          }
-        });
-        e.stopPropagation();
-        btn.setAttribute(
-          'aria-expanded',
-          btn.getAttribute('aria-expanded') === 'false' ? 'true' : 'false',
-        );
-      });
+      btn.addEventListener('click', (e) => this.handleDropdown(btn, e));
     });
     this.links.forEach((link) =>
       link.addEventListener('click', () => {
@@ -117,6 +98,26 @@ class NavBar {
       this.setAriaExpandedFalse();
     });
     this.hamburgerBtn.addEventListener('click', () => this.toggleHamburger());
+  }
+  handleDropdown(btn, e) {
+    var _a;
+    if (!e.currentTarget) return;
+    const dropdownIndex =
+      (_a = e.currentTarget.dataset.dropdown) !== null && _a !== void 0
+        ? _a
+        : '';
+    const dropdownElement = document.getElementById(dropdownIndex);
+    dropdownElement.classList.toggle('active');
+    this.navDropdown.forEach((drop) => {
+      if (drop.id !== btn.dataset['dropdown']) {
+        drop.classList.remove('active');
+      }
+    });
+    e.stopPropagation();
+    btn.setAttribute(
+      'aria-expanded',
+      btn.getAttribute('aria-expanded') === 'false' ? 'true' : 'false',
+    );
   }
   setAriaExpandedFalse() {
     this.dropdownBtn.forEach((btn) =>
