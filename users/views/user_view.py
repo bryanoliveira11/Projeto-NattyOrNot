@@ -167,7 +167,7 @@ class UserForgotPasswordBase(View):
             [user_email],
         )
 
-    def render_form(self, form, form_action: str):
+    def render_form(self, form, form_action: str, is_forgot_pass_page=True):
         notifications, notifications_total = get_notifications(self.request)
 
         return render(
@@ -176,7 +176,9 @@ class UserForgotPasswordBase(View):
                 'form_action': form_action,
                 'notifications': notifications,
                 'notification_total': notifications_total,
-                'title': 'Esqueci Minha Senha', }
+                'title': 'Esqueci Minha Senha',
+                'is_forgot_password_page': is_forgot_pass_page,
+            }
         )
 
     def is_user_authenticated(self):
@@ -210,7 +212,7 @@ class UserForgotPasswordView(UserForgotPasswordBase):
             )
             user = form.cleaned_data.get('user')
             code = generate_random_code()
-            self.send_code_email(email, code)
+            # self.send_code_email(email, code)
             self.save_code(user, code)
             messages.warning(
                 self.request,
@@ -257,6 +259,7 @@ class UserForgotPasswordValidateCode(UserForgotPasswordBase):
                     form_action=reverse(
                         'users:forgot_password_change_password'
                     ),
+                    is_forgot_pass_page=False,
                 )
 
         messages.error(self.request, 'Código Inválido.')

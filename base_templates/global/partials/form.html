@@ -69,7 +69,7 @@
         <div class="form-group">
             <button class="btn-submit" type="submit">
                 <i class="fa-solid fa-check"></i>
-                {% if not is_login_page and not is_register_page %}
+                {% if not is_login_page and not is_register_page and not is_forgot_password_page %}
                     Enviar
                 {% endif %}
                 {% if is_login_page %}
@@ -77,6 +77,9 @@
                 {% endif %}
                 {% if is_register_page %}
                     Cadastrar
+                {% endif %}
+                {% if is_forgot_password_page %}
+                    Avançar
                 {% endif %}
             </button>
         </div>

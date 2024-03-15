@@ -966,6 +966,7 @@ body.dark-mode-style .forgot-password-content a#forgot-password {
 .dropdown-content a {
   text-align: left;
   color: var(--color-dark-text);
+  background: var(--color-gray-0);
   padding: 1.2rem 1.6rem;
   text-decoration: none;
   display: block;
