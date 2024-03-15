@@ -26,6 +26,22 @@ urlpatterns = [
         views.UserProfileChangePassword.as_view(),
         name='user_profile_change_password'
     ),
+    # forgot password urls
+    path(
+        'forgot-password/',
+        views.UserForgotPasswordView.as_view(),
+        name='forgot_password_email'
+    ),
+    path(
+        'forgot-password/validate-code/',
+        views.UserForgotPasswordValidateCode.as_view(),
+        name='forgot_password_code'
+    ),
+    path(
+        'forgot-password/change-password/',
+        views.UserForgotPasswordReset.as_view(),
+        name='forgot_password_change_password'
+    ),
     # notifications delete path
     path(
         'notification/<int:id>/delete/',

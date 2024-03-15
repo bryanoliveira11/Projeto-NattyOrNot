@@ -1,14 +1,21 @@
+from os import environ
+
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, get_user_model, login, logout
+from django.core.mail import send_mail
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
 
-from users.forms import LoginForm, RegisterForm
+from users.forms import (ChangePasswordForm, ForgotPassword, LoginForm,
+                         RegisterForm)
 from users.models import UserProfile
 from utils.get_notifications import get_notifications
 from utils.get_profile_picture import get_profile_picture
+from utils.strings import generate_random_code
+
+User = get_user_model()
 
 
 class UserRegisterView(View):
@@ -127,6 +134,168 @@ class UserLogoutView(View):
 
         # realiza o logout
         messages.success(self.request, 'Logout Efetuado. Até a Próxima !')
-        del self.request.session['user_picture']
+
+        if self.request.session.get('user_picture'):
+            del self.request.session['user_picture']
+
         logout(self.request)
         return redirect(reverse('users:login'))
+
+
+class UserForgotPasswordBase(View):
+    def save_code(self, user, code: str):
+        user_profile = UserProfile.objects.filter(user=user).first()
+
+        if not user_profile:
+            return
+
+        user_profile.forgot_password_code = code
+        user_profile.save()
+
+        self.request.session['reset_password'] = {
+            'user_id': user_profile.user.pk,
+        }
+        self.request.session.save()
+
+    def send_code_email(self, user_email: str, code: str):
+        send_mail(
+            'Reset de Senha - NattyOrNot',
+            'Recebemos seu Pedido de Reset de Senha, seu código é '
+            f'{code}. '
+            'Informe os 6 digitos no local correto para continuar.',
+            environ.get('EMAIL_HOST_USER', ''),
+            [user_email],
+        )
+
+    def render_form(self, form, form_action: str):
+        notifications, notifications_total = get_notifications(self.request)
+
+        return render(
+            self.request, 'users/pages/forgot_password.html', context={
+                'form': form,
+                'form_action': form_action,
+                'notifications': notifications,
+                'notification_total': notifications_total,
+                'title': 'Esqueci Minha Senha', }
+        )
+
+    def is_user_authenticated(self):
+        if self.request.user.is_authenticated:
+            return True
+        return False
+
+
+class UserForgotPasswordView(UserForgotPasswordBase):
+    def get(self, *args, **kwargs):
+        if self.is_user_authenticated():
+            return redirect(reverse('training:home'))
+
+        form = ForgotPassword(is_email=True)
+
+        return self.render_form(
+            form=form,
+            form_action=reverse('users:forgot_password_email'),
+        )
+
+    def post(self, *args, **kwargs):
+        form = ForgotPassword(
+            True,
+            False,
+            self.request.POST
+        )
+
+        if form.is_valid():
+            email = form.cleaned_data.get('cleaned_data').get(  # type:ignore
+                'email'
+            )
+            user = form.cleaned_data.get('user')
+            code = generate_random_code()
+            self.send_code_email(email, code)
+            self.save_code(user, code)
+            messages.warning(
+                self.request,
+                'Enviamos um código de 6 dígitos para seu E-mail. '
+                'Por favor, informe o código no campo abaixo para continuar.'
+            )
+            return self.render_form(
+                form=ForgotPassword(is_code=True),
+                form_action=reverse('users:forgot_password_code'),
+            )
+
+        return self.render_form(
+            form=form,
+            form_action=reverse('users:forgot_password_email'),
+        )
+
+
+class UserForgotPasswordValidateCode(UserForgotPasswordBase):
+    def get(self, *args, **kwargs):
+        raise Http404()
+
+    def post(self, *args, **kwargs):
+        form = ForgotPassword(
+            False,
+            True,
+            self.request.POST
+        )
+
+        if form.is_valid():
+            code = form.cleaned_data.get('cleaned_data').get(  # type:ignore
+                'code'
+            )
+            user_data = self.request.session.get('reset_password')
+
+            user_profile = UserProfile.objects.filter(
+                user=user_data.get('user_id')  # type:ignore
+            ).first()
+
+            if user_profile and code == user_profile.forgot_password_code:
+                form = ChangePasswordForm()
+
+                return self.render_form(
+                    form=form,
+                    form_action=reverse(
+                        'users:forgot_password_change_password'
+                    ),
+                )
+
+        messages.error(self.request, 'Código Inválido.')
+        return self.render_form(
+            form=form,
+            form_action=reverse('users:forgot_password_code'),
+        )
+
+
+class UserForgotPasswordReset(UserForgotPasswordBase):
+    def get(self, *args, **kwargs):
+        raise Http404()
+
+    def post(self, *args, **kwargs):
+        user = User.objects.filter(
+            pk=self.request.session['reset_password'].get(
+                'user_id'
+            )
+        ).first()
+
+        form = ChangePasswordForm(
+            data=self.request.POST or None,
+            instance=user
+        )
+
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(user.password)
+            user.save()
+            messages.success(
+                self.request,
+                'Senha Alterada com Sucesso ! Por Favor, Faça seu Login.'
+            )
+            del self.request.session['reset_password']
+            return redirect(reverse('users:login'))
+
+        return self.render_form(
+            form=form,
+            form_action=reverse(
+                'users:forgot_password_change_password'
+            ),
+        )

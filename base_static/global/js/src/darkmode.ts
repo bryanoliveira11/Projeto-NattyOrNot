@@ -1,32 +1,12 @@
 class DarkMode {
   toggleDarkbtn: HTMLAnchorElement;
-  mainContent: HTMLBodyElement;
-  tableElement: HTMLTableElement;
-  exerciseCardsBackground: HTMLDivElement[];
-  tableTr: HTMLElement[];
-  notifications: HTMLDivElement[];
-  generalIcons: HTMLElement[];
+  body: HTMLBodyElement;
 
   constructor() {
     this.toggleDarkbtn = document.querySelector(
       '#toggle-dark-mode',
     ) as HTMLAnchorElement;
-    this.mainContent = document.querySelector('body') as HTMLBodyElement;
-    this.tableElement = document.querySelector(
-      '.content-table',
-    ) as HTMLTableElement;
-    this.exerciseCardsBackground = Array.from(
-      document.querySelectorAll('.exercise-card-background'),
-    ) as HTMLDivElement[];
-    this.tableTr = Array.from(
-      document.querySelectorAll('.table-tr'),
-    ) as HTMLElement[];
-    this.notifications = Array.from(
-      document.querySelectorAll('.notification'),
-    ) as HTMLDivElement[];
-    this.generalIcons = Array.from(
-      document.querySelectorAll('.general-icon'),
-    ) as HTMLElement[];
+    this.body = document.querySelector('body') as HTMLBodyElement;
   }
 
   init(): void {
@@ -82,24 +62,12 @@ class DarkMode {
 
   // adiciona a classe de dark mode e texto branco
   toggleDarkMode(): void {
-    this.addClassList(this.mainContent, 'dark-mode-style');
-    this.addClassList(this.tableElement, 'dark-mode-table');
-    // arrays / nodelists
-    this.nodeListAddClass(this.tableTr, 'tr-dark');
-    this.nodeListAddClass(this.exerciseCardsBackground, 'dark-mode-cards');
-    this.nodeListAddClass(this.notifications, 'dark-mode-style');
-    this.nodeListAddClass(this.generalIcons, 'dark-mode-style');
+    this.addClassList(this.body, 'dark-mode-style');
   }
 
   // remove a classe de dark mode
   removeDarkMode(): void {
-    this.removeClassList(this.mainContent, 'dark-mode-style');
-    this.removeClassList(this.tableElement, 'dark-mode-table');
-    // arrays / nodelists
-    this.nodeListRemoveClass(this.tableTr, 'tr-dark');
-    this.nodeListRemoveClass(this.exerciseCardsBackground, 'dark-mode-cards');
-    this.nodeListRemoveClass(this.notifications, 'dark-mode-style');
-    this.nodeListRemoveClass(this.generalIcons, 'dark-mode-style');
+    this.removeClassList(this.body, 'dark-mode-style');
   }
 
   // adiciona uma classe ao elemento
@@ -110,21 +78,6 @@ class DarkMode {
   // remove uma classe do elemento
   removeClassList(element: HTMLElement, remove_class: string): void {
     if (element) element.classList.remove(remove_class);
-  }
-
-  // adicionar classes em uma lista de elementos
-  nodeListAddClass(nodelist: HTMLElement[], class_to_add: string): void {
-    if (nodelist) {
-      for (const element of nodelist) this.addClassList(element, class_to_add);
-    }
-  }
-
-  // remover classes em uma lista de elementos
-  nodeListRemoveClass(nodelist: HTMLElement[], remove_class: string): void {
-    if (nodelist) {
-      for (const element of nodelist)
-        this.removeClassList(element, remove_class);
-    }
   }
 }
 

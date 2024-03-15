@@ -8,6 +8,7 @@ from .database import *
 from .i18n import *
 from .messages import *
 from .security import *
+from .smtp import *
 from .templates import *
 
 from .all_auth_config import *  # isort:skip

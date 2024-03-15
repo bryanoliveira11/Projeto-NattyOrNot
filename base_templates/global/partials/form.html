@@ -38,23 +38,23 @@
     <div class="form-content form-content-grid">
     {% endif %}
 
-        {% for field in form  %}
-            <div class="form-group {{field.field.widget.attrs.class}}">
-                <label for="{{field.id_for_label}}"> {{field.label}} </label>
-                {{field}}
+    {% for field in form  %}
+    <div class="form-group {{field.field.widget.attrs.class}}">
+      <label for="{{field.id_for_label}}"> {{field.label}} </label>
+      {{field}}
 
-                {% if field.help_text %}
-                    <p class="help-text">{{field.help_text}}</p>
-                {% endif %}
-                    {{field.errors}}
-            </div>
+      {% if field.help_text %}
+        <p class="help-text">{{field.help_text}}</p>
+      {% endif %}
+        {{field.errors}}
+    </div>
 
-            {% if field.name == 'cover' and field.value.url %}
-                <div class="span-2">
-                    <img class="form-image" src="{{field.value.url}}" alt="">
-                </div>
-            {% endif %}
-        {% endfor %}
+      {% if field.name == 'cover' and field.value.url %}
+        <div class="span-2">
+          <img class="form-image" src="{{field.value.url}}" alt="">
+        </div>
+      {% endif %}
+    {% endfor %}
     </div>
 
     {% if is_exercise_form or is_workout_form %}

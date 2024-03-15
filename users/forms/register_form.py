@@ -235,9 +235,9 @@ class ChangePasswordForm(forms.ModelForm, ValidateFields):
         add_placeholder(self.fields['password2'], 'Confirme sua Senha')
 
     password = forms.CharField(
-        label='Senha',
+        label='Nova Senha',
         error_messages={
-            'required': 'Digite sua Senha.'
+            'required': 'Digite sua Nova Senha.'
         },
         help_text=format_html(
             '''

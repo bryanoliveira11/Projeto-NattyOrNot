@@ -23,7 +23,14 @@ class UserProfile(models.Model):
     notifications_total = models.IntegerField(
         null=False,
         default=0,
-        verbose_name='Notificações não Vistas'
+        verbose_name='Notificações não Vistas',
+        editable=False,
+    )
+    forgot_password_code = models.CharField(
+        max_length=6,
+        blank=True,
+        default='',
+        editable=False,
     )
     created_at = models.DateTimeField(
         auto_now_add=True, blank=True, verbose_name='Criado em'

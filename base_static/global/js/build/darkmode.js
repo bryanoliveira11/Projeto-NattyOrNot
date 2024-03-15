@@ -2,14 +2,7 @@
 class DarkMode {
   constructor() {
     this.toggleDarkbtn = document.querySelector('#toggle-dark-mode');
-    this.mainContent = document.querySelector('body');
-    this.tableElement = document.querySelector('.content-table');
-    this.exerciseCardsBackground = Array.from(
-      document.querySelectorAll('.exercise-card-background'),
-    );
-    this.tableTr = Array.from(document.querySelectorAll('.table-tr'));
-    this.notifications = Array.from(document.querySelectorAll('.notification'));
-    this.generalIcons = Array.from(document.querySelectorAll('.general-icon'));
+    this.body = document.querySelector('body');
   }
   init() {
     if (!this.toggleDarkbtn) return;
@@ -48,37 +41,16 @@ class DarkMode {
     }
   }
   toggleDarkMode() {
-    this.addClassList(this.mainContent, 'dark-mode-style');
-    this.addClassList(this.tableElement, 'dark-mode-table');
-    this.nodeListAddClass(this.tableTr, 'tr-dark');
-    this.nodeListAddClass(this.exerciseCardsBackground, 'dark-mode-cards');
-    this.nodeListAddClass(this.notifications, 'dark-mode-style');
-    this.nodeListAddClass(this.generalIcons, 'dark-mode-style');
+    this.addClassList(this.body, 'dark-mode-style');
   }
   removeDarkMode() {
-    this.removeClassList(this.mainContent, 'dark-mode-style');
-    this.removeClassList(this.tableElement, 'dark-mode-table');
-    this.nodeListRemoveClass(this.tableTr, 'tr-dark');
-    this.nodeListRemoveClass(this.exerciseCardsBackground, 'dark-mode-cards');
-    this.nodeListRemoveClass(this.notifications, 'dark-mode-style');
-    this.nodeListRemoveClass(this.generalIcons, 'dark-mode-style');
+    this.removeClassList(this.body, 'dark-mode-style');
   }
   addClassList(element, class_to_add) {
     if (element) element.classList.add(class_to_add);
   }
   removeClassList(element, remove_class) {
     if (element) element.classList.remove(remove_class);
-  }
-  nodeListAddClass(nodelist, class_to_add) {
-    if (nodelist) {
-      for (const element of nodelist) this.addClassList(element, class_to_add);
-    }
-  }
-  nodeListRemoveClass(nodelist, remove_class) {
-    if (nodelist) {
-      for (const element of nodelist)
-        this.removeClassList(element, remove_class);
-    }
   }
 }
 new DarkMode().init();

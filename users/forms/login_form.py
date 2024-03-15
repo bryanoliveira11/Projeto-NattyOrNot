@@ -16,5 +16,15 @@ class LoginForm(forms.Form):
         label=format_html(
             '<i class="fa-solid fa-lock m-right"></i> Senha'
         ),
+        help_text=format_html(
+            '''
+          <div class="forgot-password-content">
+          <a href="/user/forgot-password"
+          id="forgot-password" title="Esqueceu sua Senha">
+          Esqueceu sua Senha ?
+          </a>
+          </div>
+            '''
+        ),
         widget=forms.PasswordInput()
     )

@@ -126,7 +126,7 @@ img {
 }
 
 .logo img {
-  width: 3.5rem;
+  width: 4rem;
   height: 3.5rem;
 }
 
@@ -751,6 +751,26 @@ select option:checked {
   padding-right: 5rem;
 }
 
+.forgot-password-content {
+  margin: 0.5rem 0.3rem 0.5rem 0;
+  display: flex;
+  align-items: end;
+  justify-content: end;
+}
+
+.forgot-password-content a#forgot-password {
+  color: var(--color-dark-text);
+  font-size: 1.3rem;
+}
+
+.forgot-password-content a#forgot-password:hover {
+  filter: brightness(85%);
+}
+
+body.dark-mode-style .forgot-password-content a#forgot-password {
+  color: var(--color-gray-1);
+}
+
 #show-password-icon {
   padding: 1rem;
   color: var(--color-dark-text);
@@ -761,12 +781,11 @@ select option:checked {
 }
 
 #show-password-icon {
-  top: 69%;
+  top: 47%;
 }
 
 #show-password-icon:hover {
-  border-left: 1px solid var(--color-primary);
-  background: rgba(24, 24, 24, 0.062);
+  background: rgba(68, 68, 68, 0.062);
 }
 
 /* dashboard */
@@ -1803,20 +1822,20 @@ td a:hover {
 
 /* darkmode */
 
-.dark-mode-style,
-.exercise-cover,
-.notification.dark-mode-style {
+body.dark-mode-style,
+body.dark-mode-style .exercise-cover,
+body.dark-mode-style .notifications-container .notification {
   background: var(--clr-dark-background);
   color: var(--color-gray-0);
 }
 
-.dark-mode-cards,
-.dark-mode-table {
+body.dark-mode-style .exercise-card-background,
+body.dark-mode-style .workouts-table tr {
   background: var(--clr-dark-background);
   color: var(--color-gray-0);
 }
 
-table tr.tr-dark {
+body.dark-mode-style .workouts-table tr {
   border: 1px solid #121212;
 }
 
@@ -2026,6 +2045,12 @@ table tr.tr-dark {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
     gap: calc(var(--spacing-gutter-medium) / 2);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .forgot-password-content {
+    margin-top: 1rem;
     align-items: center;
     justify-content: center;
   }
