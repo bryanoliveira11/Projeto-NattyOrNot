@@ -167,7 +167,11 @@ class UserForgotPasswordBase(View):
             [user_email],
         )
 
-    def render_form(self, form, form_action: str, is_forgot_pass_page=True):
+    def render_form(
+        self, form, form_action: str,
+        is_forgot_pass_page=True,
+        page='email-page',
+    ):
         notifications, notifications_total = get_notifications(self.request)
 
         return render(
@@ -178,6 +182,7 @@ class UserForgotPasswordBase(View):
                 'notification_total': notifications_total,
                 'title': 'Esqueci Minha Senha',
                 'is_forgot_password_page': is_forgot_pass_page,
+                'page': page,
             }
         )
 
@@ -212,7 +217,7 @@ class UserForgotPasswordView(UserForgotPasswordBase):
             )
             user = form.cleaned_data.get('user')
             code = generate_random_code()
-            # self.send_code_email(email, code)
+            self.send_code_email(email, code)
             self.save_code(user, code)
             messages.warning(
                 self.request,
@@ -222,6 +227,7 @@ class UserForgotPasswordView(UserForgotPasswordBase):
             return self.render_form(
                 form=ForgotPassword(is_code=True),
                 form_action=reverse('users:forgot_password_code'),
+                page='code-page',
             )
 
         return self.render_form(
@@ -260,12 +266,14 @@ class UserForgotPasswordValidateCode(UserForgotPasswordBase):
                         'users:forgot_password_change_password'
                     ),
                     is_forgot_pass_page=False,
+                    page='reset-page',
                 )
 
         messages.error(self.request, 'Código Inválido.')
         return self.render_form(
             form=form,
             form_action=reverse('users:forgot_password_code'),
+            page='code-page',
         )
 
 
@@ -301,4 +309,5 @@ class UserForgotPasswordReset(UserForgotPasswordBase):
             form_action=reverse(
                 'users:forgot_password_change_password'
             ),
+            page='reset-page'
         )

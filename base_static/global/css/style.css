@@ -751,26 +751,6 @@ select option:checked {
   padding-right: 5rem;
 }
 
-.forgot-password-content {
-  margin: 0.5rem 0.3rem 0.5rem 0;
-  display: flex;
-  align-items: end;
-  justify-content: end;
-}
-
-.forgot-password-content a#forgot-password {
-  color: var(--color-dark-text);
-  font-size: 1.3rem;
-}
-
-.forgot-password-content a#forgot-password:hover {
-  filter: brightness(85%);
-}
-
-body.dark-mode-style .forgot-password-content a#forgot-password {
-  color: var(--color-gray-1);
-}
-
 #show-password-icon {
   padding: 1rem;
   color: var(--color-dark-text);
@@ -841,6 +821,112 @@ body.dark-mode-style .forgot-password-content a#forgot-password {
 .dashboard-forms {
   padding: 0;
   margin-bottom: 1rem;
+}
+
+/* forgot password */
+
+.forgot-password-content {
+  margin: 0.5rem 0.3rem 0.5rem 0;
+  display: flex;
+  align-items: end;
+  justify-content: end;
+}
+
+.forgot-password-content a#forgot-password {
+  color: var(--color-dark-text);
+  font-size: 1.3rem;
+}
+
+body.dark-mode-style .forgot-password-content a#forgot-password {
+  color: var(--color-gray-0);
+}
+
+.forgot-password-content a#forgot-password:hover {
+  filter: brightness(85%);
+}
+
+div.forgot-password-progress {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+#reset-password-progressbar {
+  margin: 3rem 0 3rem 0;
+  overflow: hidden;
+  color: lightgrey;
+}
+
+#reset-password-progressbar .active {
+  color: var(--color-primary);
+}
+
+body.dark-mode-style #reset-password-progressbar .active {
+  color: var(--color-primary);
+}
+
+#reset-password-progressbar li {
+  list-style-type: none;
+  font-size: 1.5rem;
+  width: 33%;
+  float: left;
+  position: relative;
+  font-weight: 400;
+  color: var(--color-dark-text);
+}
+
+body.dark-mode-style #reset-password-progressbar li {
+  color: var(--color-gray-0);
+}
+
+#reset-password-progressbar #verify-email,
+#reset-password-progressbar #verify-code,
+#reset-password-progressbar #reset-password {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-style: normal;
+}
+
+#reset-password-progressbar #verify-email:before {
+  content: '\f0e0';
+
+}
+
+#reset-password-progressbar #verify-code:before {
+  content: '\f13e ';
+}
+
+#reset-password-progressbar #reset-password:before {
+  content: '\f084';
+}
+
+
+#reset-password-progressbar li:before {
+  width: 50px;
+  height: 50px;
+  line-height: 45px;
+  display: block;
+  font-size: 20px;
+  color: var(--color-gray-0);
+  background: var(--color-gray-4);
+  border-radius: 50%;
+  margin: 0 auto 10px auto;
+  padding: 2px;
+}
+
+#reset-password-progressbar li:after {
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: var(--color-gray-2);
+  position: absolute;
+  left: 0;
+  top: 25px;
+  z-index: -1;
+}
+
+#reset-password-progressbar li.active:before,
+#reset-password-progressbar li.active:after {
+  background: var(--color-primary);
 }
 
 /* delete page */
