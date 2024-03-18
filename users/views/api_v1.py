@@ -20,7 +20,7 @@ class UserApiV1ViewSet(ReadOnlyModelViewSet):
     def get_queryset(self):
         User = get_user_model()
         queryset = User.objects.filter(
-            username=self.request.user.username  # type:ignore
+            username=self.request.user.get_username()
         )
         return queryset
 

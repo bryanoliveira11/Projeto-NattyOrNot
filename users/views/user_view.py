@@ -127,7 +127,8 @@ class UserLogoutView(View):
 
     # valida se o usuário para logout é o correto
     def post(self, *args, **kwargs):
-        user = self.request.user.username  # type:ignore
+        user = self.request.user.get_username()
+
         if self.request.POST.get('username') != user:
             messages.error(self.request, 'Usuário de Logout Inválido.')
             return redirect(reverse('users:login'))
@@ -212,9 +213,11 @@ class UserForgotPasswordView(UserForgotPasswordBase):
         )
 
         if form.is_valid():
-            email = form.cleaned_data.get('cleaned_data').get(  # type:ignore
+            cleaned_data = form.cleaned_data.get('cleaned_data')
+            email = cleaned_data.get(
                 'email'
-            )
+            ) if cleaned_data is not None else ''
+
             user = form.cleaned_data.get('user')
             code = generate_random_code()
             self.send_code_email(email, code)
@@ -248,13 +251,14 @@ class UserForgotPasswordValidateCode(UserForgotPasswordBase):
         )
 
         if form.is_valid():
-            code = form.cleaned_data.get('cleaned_data').get(  # type:ignore
-                'code'
-            )
+            cleaned_data = form.cleaned_data.get('cleaned_data')
+            code = cleaned_data.get('code') if cleaned_data is not None else ''
+
             user_data = self.request.session.get('reset_password')
+            user_id = user_data.get('user_id') if user_data is not None else ''
 
             user_profile = UserProfile.objects.filter(
-                user=user_data.get('user_id')  # type:ignore
+                user=user_id,
             ).first()
 
             if user_profile and code == user_profile.forgot_password_code:

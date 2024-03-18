@@ -70,7 +70,7 @@ def exercise_published_notification(instance, *args, **kwargs):
     if user:
         create_user_notification(
             subj='Exercício Aprovado',
-            subj_html='Exercício' '<p class="green-text m-left"> Aprovado. </p>',
+            subj_html='Exercício' '<p class="green-text m-left">Aprovado.</p>',
             msg='Seu Exercício '
             f'<a class="notification-url" href="{
                 msg_url}">"{instance.title}"</a> '
@@ -96,7 +96,7 @@ def exercise_rejected_notification(instance, *args, **kwargs):
     if user:
         create_user_notification(
             subj='Exercício Rejeitado',
-            subj_html='Exercício' '<p class="red-text m-left"> Rejeitado. </p>',
+            subj_html='Exercício' '<p class="red-text m-left">Rejeitado.</p>',
             msg='Seu Exercício '
             f'<a class="notification-url" href="{
                 msg_url}">"{instance.title}"</a> '
@@ -128,9 +128,11 @@ def exercise_created_notification(instance, created, *args, **kwargs):
             subj='Exercício Criado',
             subj_html='Exercício Criado com Sucesso.',
             msg='Seu Exercício '
-            f'<a class="notification-url" href="{
-                msg_url}">"{instance.title}"</a> '
-            'foi Criado e será <b>Analisado</b> pela Equipe Administrativa Antes de ser Aprovado.',
+            f'''<a class="notification-url" href="{
+                msg_url}">"{instance.title}"</a>
+            foi Criado e será <b>Analisado</b> pela Equipe Administrativa
+            Antes de ser Aprovado.
+            ''',
             send_to=user,
         )
         return
@@ -157,7 +159,7 @@ def exercise_status_shared_notification(instance, sender, *args, **kwargs):
     user = get_user_by_instance(instance=instance)
     msg_url = reverse('users:edit_exercise', args=(instance.pk,))
 
-    old_shared_status = old_instance.shared_status  # type:ignore
+    old_shared_status = old_instance.shared_status
     is_new_status = instance.shared_status == 'ALL' != old_shared_status
 
     if not instance.is_published and is_new_status:
@@ -204,8 +206,11 @@ def configure_google_account(request, user, **kwargs):
     ).first()
 
     if google_account:
+        if not isinstance(google_account.extra_data, dict):
+            return
+
         # Pegando o email da conta do Google
-        google_account_email = google_account.extra_data.get(  # type:ignore
+        google_account_email = google_account.extra_data.get(
             'email'
         )
 
@@ -226,7 +231,8 @@ def configure_google_account(request, user, **kwargs):
                 user.save()
                 messages.warning(
                     request,
-                    'Seu E-mail já está associado a outra conta. Mas não se Preocupe, '
+                    '''Seu E-mail já está associado a outra conta.
+                    Mas não se Preocupe, '''
                     'é possível editar seus dados '
                     f'<a class="notification-url" href="{
                         msg_url}">Clicando aqui.</a>'

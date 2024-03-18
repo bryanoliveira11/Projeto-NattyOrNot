@@ -146,24 +146,17 @@
             <i class="fa-solid fa-bell bell-menu"></i>
             {% if notification_total %}
             <span class='notification-total'>
-               {{notification_total}}
+            {{notification_total}}
             </span>
             {% endif %}
             {% if notification_total == 1 %}
-              Notificação
+            Notificação
             {% else %}
-              Notificações
+            Notificações
             {% endif %}
           </a>
           </li>
           {% endif %}
-
-          <li>
-            <a class="nav-link prevent-select" id="toggle-dark-mode" title="Alterar Tema">
-              <i class="fa-solid" id="theme-icon"></i>
-              Tema
-            </a>
-          </li>
 
           {% if not request.user.is_authenticated %}
           <li>
@@ -180,6 +173,13 @@
             </a>
           </li>
           {% endif %}
+
+          <li>
+            <a class="nav-link prevent-select" id="toggle-dark-mode" title="Alterar Tema">
+              <i class="fa-solid" id="theme-icon"></i>
+              Tema
+            </a>
+          </li>
 
           {% if request.user.is_authenticated %}
           <li>

@@ -30,7 +30,7 @@ class UserNotificationsDeleteClassView(View):
                 user_profile.save()
 
     def is_valid_user(self):
-        user = self.request.user.username  # type:ignore
+        user = self.request.user.get_username()
         if self.request.POST.get('username') != user:
             return False
         return True

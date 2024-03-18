@@ -108,9 +108,12 @@ class DashboardExerciseClassView(DashboardFormBaseClassView):
             # salvando no banco
             exercise.save()
             # garantindo o preenchimento das categorias pós save
-            exercise.categories.set(
-                form.cleaned_data.get('categories').all()  # type:ignore
-            )
+            categories = form.cleaned_data.get('categories')
+
+            if categories is not None:
+                exercise.categories.set(
+                    categories.all()
+                )
 
             if self.is_exercise_edit:
                 messages.success(request, 'Exercício Editado com Sucesso !')

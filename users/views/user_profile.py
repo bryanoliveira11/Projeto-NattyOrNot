@@ -26,7 +26,7 @@ class UserProfileDetailClassView(View):
 
     def is_google_account_user(self):
         google_account = EmailAddress.objects.filter(
-            user_id=self.request.user.id  # type:ignore
+            user_id=self.request.user.pk
         ).first()
 
         if google_account is not None:
@@ -48,7 +48,7 @@ class UserProfileDetailClassView(View):
 
     def validate_url_user(self, username):
         # 404 em tentativa de editar a url
-        if username != self.request.user.username:  # type:ignore
+        if username != self.request.user.get_username():
             raise Http404()
 
     def get_profile_form_action(self):
