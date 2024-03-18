@@ -8,6 +8,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
 
+from users.email_thread import send_html_mail
 from users.forms import (ChangePasswordForm, ForgotPassword, LoginForm,
                          RegisterForm)
 from users.models import UserProfile
@@ -16,6 +17,8 @@ from utils.get_profile_picture import get_profile_picture
 from utils.strings import generate_random_code
 
 User = get_user_model()
+
+EMAIL_HOST_USER = environ.get('EMAIL_HOST_USER', '')
 
 
 class UserRegisterView(View):
@@ -214,13 +217,24 @@ class UserForgotPasswordView(UserForgotPasswordBase):
 
         if form.is_valid():
             cleaned_data = form.cleaned_data.get('cleaned_data')
-            email = cleaned_data.get(
+            user_email = cleaned_data.get(
                 'email'
             ) if cleaned_data is not None else ''
 
             user = form.cleaned_data.get('user')
             code = generate_random_code()
-            self.send_code_email(email, code)
+
+            # mandando email
+            send_html_mail(
+                subject='Reset de Senha - NattyOrNot',
+                html_content='Recebemos seu Pedido de Reset de Senha, '
+                f'seu código é  <strong>{code}</strong>. '
+                'Informe os 6 digitos no local correto para continuar.',
+                sender=EMAIL_HOST_USER,
+                recipient_list=[user_email],
+                dev_mode=False,
+            )
+
             self.save_code(user, code)
             messages.warning(
                 self.request,
