@@ -8,6 +8,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
 
+from users.email_templates import forgot_password_email_template
 from users.email_thread import send_html_mail
 from users.forms import (ChangePasswordForm, ForgotPassword, LoginForm,
                          RegisterForm)
@@ -227,9 +228,7 @@ class UserForgotPasswordView(UserForgotPasswordBase):
             # mandando email
             send_html_mail(
                 subject='Reset de Senha - NattyOrNot',
-                html_content='Recebemos seu Pedido de Reset de Senha, '
-                f'seu código é  <strong>{code}</strong>. '
-                'Informe os 6 digitos no local correto para continuar.',
+                html_content=forgot_password_email_template(code),
                 sender=EMAIL_HOST_USER,
                 recipient_list=[user_email],
                 dev_mode=False,

@@ -15,18 +15,6 @@
     </div>
 {% endif %}
 
-{% if is_login_page %}
-{% if not request.user.is_authenticated %}
-    <div class="btn-google-container">
-        <a class="btn-google-signin center"
-            href="{% provider_login_url 'google'%}?next={% url 'users:user_dashboard' %}">
-            <img src="{% static 'global/imgs/google_icon.png' %}" alt="Logar com google">
-            Fazer Login com Google.
-        </a>
-    </div>
-{% endif %}
-{% endif %}
-
 <div class="main-content container">
     <form action="{{form_action}}" class="main-form container"
     method="POST" enctype="multipart/form-data">
@@ -85,5 +73,19 @@
         </div>
     </div>
 
+    {% if is_login_page %}
+    <div class="social-accounts-login">
+      <hr class="social-accounts-sep">
+      {% if not request.user.is_authenticated %}
+      <div class="social-accounts-container">
+          <a class="social-btn btn-google"
+              href="{% provider_login_url 'google'%}?next={% url 'users:user_dashboard' %}"
+              title="Entrar com o Google.">
+              <img src="{% static 'global/imgs/google_icon.png' %}" alt="Logar com google">
+          </a>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
     </form>
 </div>
