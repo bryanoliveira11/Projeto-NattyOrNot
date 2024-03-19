@@ -1,4 +1,5 @@
 'use strict';
+var _a;
 function PreventUserClicksOnBody(e) {
   e.preventDefault();
   e.stopPropagation();
@@ -238,6 +239,27 @@ class SelectInputCheckIcon {
     });
   }
 }
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function handleForgotPasswordPages(pageAttr) {
+  const verifyEmail = document.querySelector('#verify-email');
+  const verifyCode = document.querySelector('#verify-code');
+  const resetPassword = document.querySelector('#reset-password');
+  if (!verifyEmail || !verifyCode || !resetPassword || !pageAttr) return;
+  if (pageAttr === 'code-page') {
+    verifyCode.classList.add('active');
+    return;
+  }
+  if (pageAttr === 'reset-page') {
+    verifyCode.classList.add('active');
+    resetPassword.classList.add('active');
+    return;
+  }
+}
+(_a = document.querySelector('#resend-email-btn')) === null || _a === void 0
+  ? void 0
+  : _a.addEventListener('click', () => {
+      window.location.reload();
+    });
 new NavBar().init();
 new NotificationsScreen().init();
 new LogoutLinks().init();

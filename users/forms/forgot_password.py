@@ -32,7 +32,16 @@ class ForgotPassword(forms.Form):
         if is_code:
             self.fields['code'] = forms.CharField(
                 label='Código de Verificação',
-                help_text='Enviamos o Código no seu E-mail',
+                help_text=format_html(
+                    '''
+                    <div class="help-text resend-email prevent-select">
+                        Enviamos o Código no seu E-mail
+                      <p id="resend-email-btn" title="Reenviar E-mail">
+                        Não Recebi o E-mail
+                      </p>
+                    </div>
+                    '''
+                ),
                 min_length=6,
                 max_length=6
             )

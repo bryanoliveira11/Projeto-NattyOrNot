@@ -1,7 +1,7 @@
 {% if messages %}
     <div class="main-content center container messages-container">
         {% for message in messages  %}
-            <div class="message {{message.tags}}" title="{{message}}">
+            <div class="message {{message.tags}}">
                 <div class="message-content">
                     {% if 'message-success' in message.tags %}
                         <i class="fa-regular fa-circle-check icon-shake"></i>

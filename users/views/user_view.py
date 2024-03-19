@@ -187,7 +187,7 @@ class UserForgotPasswordBase(View):
                 'notification_total': notifications_total,
                 'title': 'Esqueci Minha Senha',
                 'is_forgot_password_page': is_forgot_pass_page,
-                'page': page,
+                'pageAttr': page,
             }
         )
 
@@ -231,7 +231,7 @@ class UserForgotPasswordView(UserForgotPasswordBase):
                 html_content=forgot_password_email_template(code),
                 sender=EMAIL_HOST_USER,
                 recipient_list=[user_email],
-                dev_mode=False,
+                dev_mode=True,
             )
 
             self.save_code(user, code)

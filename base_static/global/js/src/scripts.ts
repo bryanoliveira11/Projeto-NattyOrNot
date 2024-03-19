@@ -344,6 +344,31 @@ class SelectInputCheckIcon {
   }
 }
 
+// função para lidar com o css dos passos no form de forgot password
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function handleForgotPasswordPages(pageAttr: string): void {
+  const verifyEmail = document.querySelector('#verify-email');
+  const verifyCode = document.querySelector('#verify-code');
+  const resetPassword = document.querySelector('#reset-password');
+
+  if (!verifyEmail || !verifyCode || !resetPassword || !pageAttr) return;
+
+  if (pageAttr === 'code-page') {
+    verifyCode.classList.add('active');
+    return;
+  }
+  if (pageAttr === 'reset-page') {
+    verifyCode.classList.add('active');
+    resetPassword.classList.add('active');
+    return;
+  }
+}
+
+// função para reenviar e-mail (somente recarrega a página)
+document.querySelector('#resend-email-btn')?.addEventListener('click', () => {
+  window.location.reload();
+});
+
 new NavBar().init();
 new NotificationsScreen().init();
 new LogoutLinks().init();

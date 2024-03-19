@@ -985,6 +985,24 @@ body.dark-mode-style #reset-password-progressbar li {
   background: var(--color-primary);
 }
 
+div.help-text.resend-email {
+  display: flex;
+  justify-content: space-between;
+}
+
+div.help-text.resend-email #resend-email-btn {
+  border-bottom: 1px solid var(--color-dark-text);
+}
+
+body.dark-mode-style div.help-text.resend-email #resend-email-btn {
+  border-bottom: 1px solid var(--color-gray-0);
+}
+
+div.help-text.resend-email #resend-email-btn:hover {
+  cursor: pointer;
+  filter: brightness(85%);
+}
+
 /* delete page */
 
 .delete-confirm-tag {
@@ -2286,6 +2304,15 @@ body.dark-mode-style .workouts-table tr {
 
   .confirm-buttons {
     width: 95%;
+  }
+
+  div.help-text.resend-email {
+    display: block;
+  }
+
+  div.help-text.resend-email #resend-email-btn {
+    margin-top: 1rem;
+    width: fit-content;
   }
 }
 
