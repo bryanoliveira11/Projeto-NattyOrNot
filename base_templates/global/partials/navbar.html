@@ -113,9 +113,9 @@
                   <a class="dropdown-link prevent-select"
                   href="{% url 'users:user_profile' request.user.username %}">
                     <div>
-                      <span class="dropdown-link-title" title="Meu Perfil">
+                      <span class="dropdown-link-title" title="Meus Dados">
                         <i class="fa-solid fa-user-circle"></i>
-                        Perfil
+                        Meus Dados
                       </span>
                       <p>Veja seus Dados.</p>
                     </div>
@@ -199,7 +199,7 @@
       <div class="right-container">
         {% include "global/partials/search.html" %}
 
-        {% if request.session.user_picture %}
+        {% if request.session.user_picture and request.user.is_authenticated %}
         <a href="{% url 'users:user_profile' request.user.username %}" class="nav-profile">
           <img
             src="{{request.session.user_picture}}"

@@ -1,3 +1,5 @@
+from os import environ
+
 from allauth.account.signals import user_signed_up
 from allauth.socialaccount.models import SocialAccount
 from django.contrib import messages
@@ -7,9 +9,12 @@ from django.dispatch import receiver
 from django.urls import reverse
 
 from training.models import Exercises
+from users.email_service import send_html_mail
 from users.models import UserNotifications, UserProfile
+from users.templates.emails.email_templates import signin_email_template
 
 User = get_user_model()
+EMAIL_HOST_USER = environ.get('EMAIL_HOST_USER', '')
 
 
 def get_user_by_instance(instance):
@@ -183,6 +188,8 @@ def user_signin_notification(instance, created, *args, **kwargs):
         return
 
     user = instance
+    user_email = user.email
+    username = user.username
     msg_url = reverse('users:user_profile', args=(user.username,))
     subj = 'Boas-Vindas !'
 
@@ -195,6 +202,13 @@ def user_signin_notification(instance, created, *args, **kwargs):
                 msg_url}">{user.username}</a>. '''
             'Use o Menu para Navegar no Site. Bons Treinos !',
             send_to=user,
+        )
+        send_html_mail(
+            subject='Boas Vindas - NattyOrNot',
+            html_content=signin_email_template(username),
+            sender=EMAIL_HOST_USER,
+            recipient_list=[user_email],
+            dev_mode=False,
         )
 
 
