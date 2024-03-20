@@ -213,8 +213,12 @@
             </a>
             <div class="favorite-exercise-btn">
               <div class="favorite-exercise">
-                <a href="" title="Favoritar Exercício">
-                  <i class="fa-solid fa-star"></i>
+                <a href="{% url 'training:favorite_exercise' exercise.pk %}">
+                  {% if request.user in exercise.favorited_by.all %}
+                  <i i class="fa-solid fa-star yellow-text" title="Desfavoritar Exercício"></i>
+                  {% else %}
+                  <i i class="fa-solid fa-star" title="Favoritar Exercício"></i>
+                  {% endif %}
                 </a>
               </div>
             </div>

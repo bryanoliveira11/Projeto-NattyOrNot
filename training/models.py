@@ -28,7 +28,7 @@ class Exercises(models.Model):
     series = models.IntegerField(verbose_name='Séries')
     reps = models.IntegerField(verbose_name='Repetições')
     is_published = models.BooleanField(
-        default=False, verbose_name='Publicar Exercício'
+        default=False, verbose_name='Exercício Está Publicado'
     )
     shared_status = models.CharField(
         max_length=9, verbose_name='Status de Compartilhamento',
@@ -64,6 +64,11 @@ class Exercises(models.Model):
         blank=True,
         verbose_name='Publicado por'
     )
+    favorited_by = models.ManyToManyField(
+        User, blank=True, default='',
+        verbose_name='Favoritado por',
+        related_name='favorited_by_users',
+    )
     cover = models.ImageField(
         upload_to='exercises/%Y/%m/%d/',
         blank=True,
@@ -78,10 +83,13 @@ class Exercises(models.Model):
         clean = super().clean()
         errors = {}
         messages = {
-            'UncheckOneError': 'Desmarque o Publicado ou o Rejeitar para Continuar.',
-            'ExtraInfoError': 'Preencha as Informações Adicionais antes de Rejeitar.',
+            'UncheckOneError': 'Desmarque o Publicado ou '
+            'o Rejeitar para Continuar.',
+            'ExtraInfoError': 'Preencha as Informações Adicionais '
+            'antes de Rejeitar.',
             'SharedIsNotAll': 'O Exercício não Está Compartilhado para Todos.',
-            'InvalidReject': 'Não é Possível Rejeitar um Exercício que não esteja Compartilhado para Todos.'
+            'InvalidReject': 'Não é Possível Rejeitar um Exercício '
+            'que não esteja Compartilhado para Todos.'
         }
 
         # validating other data
@@ -127,7 +135,9 @@ class Exercises(models.Model):
 
     def get_absolute_url(self):
         if self.is_published:
-            return reverse('training:exercises_detail', kwargs={"slug": self.slug})
+            return reverse(
+                'training:exercises_detail', kwargs={"slug": self.slug}
+            )
 
         return reverse('training:home')
 

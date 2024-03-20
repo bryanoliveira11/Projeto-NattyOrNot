@@ -150,7 +150,8 @@ class UserLogoutView(View):
 
 class UserForgotPasswordBase(View):
     def save_code(self, user, code: str):
-        user_profile = UserProfile.objects.filter(user=user).first()
+        user_profile = UserProfile.objects.filter(
+            user=user).select_related('user').first()
 
         if not user_profile:
             return
@@ -273,7 +274,7 @@ class UserForgotPasswordValidateCode(UserForgotPasswordBase):
 
             user_profile = UserProfile.objects.filter(
                 user=user_id,
-            ).first()
+            ).select_related('user').first()
 
             if user_profile and code == user_profile.forgot_password_code:
                 form = ChangePasswordForm()

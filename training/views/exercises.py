@@ -2,11 +2,13 @@ import json
 from os import environ
 from typing import Any, Dict
 
+from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView, View
@@ -17,6 +19,7 @@ from utils.api_exercises_json import exercises_json
 from utils.pagination import make_pagination
 
 PER_PAGE = environ.get('HOME_PER_PAGE', 8)
+User = get_user_model()
 
 
 # classe base para a home
@@ -33,7 +36,7 @@ class ExerciseBaseClassView(ListView):
         queryset = queryset.filter(
             shared_status='ALL', is_published=True
         ).select_related(
-            'published_by').prefetch_related('categories')
+            'published_by').prefetch_related('categories', 'favorited_by')
 
         return queryset
 
@@ -199,6 +202,47 @@ class ExerciseDetailClassView(DetailView):
         })
 
         return context
+
+
+@method_decorator(
+    login_required(login_url='users:login', redirect_field_name='next'),
+    name='dispatch'
+)
+class FavoriteExerciseClassView(View):
+    def get(self, *args, **kwargs):
+        exercise_id = self.kwargs.get('id', '')
+        exercise = Exercises.objects.filter(pk=exercise_id).first()
+        user = self.request.user
+        http_referer = self.request.META.get('HTTP_REFERER')
+        home = reverse('training:home')
+        url_to_redirect = http_referer if http_referer is not None else home
+
+        if not exercise:
+            return redirect(home)
+
+        # exercício já favoritado
+        if user in exercise.favorited_by.all():
+            exercise.favorited_by.remove(
+                User.objects.filter(pk=user.pk).first()
+            )
+            messages.success(
+                self.request,
+                'Exercício Desfavoritado.'
+            )
+            return redirect(url_to_redirect)
+
+        # adicionando usuário aos favoritos
+        exercise.favorited_by.add(
+            User.objects.filter(pk=user.pk).first()
+        )
+
+        # TODO adicionar link para lista de favoritos do usuário nessa msg.
+        messages.success(
+            self.request,
+            'Exercício Favoritado com Sucesso !'
+        )
+
+        return redirect(url_to_redirect)
 
 
 @method_decorator(

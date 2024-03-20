@@ -20,7 +20,8 @@
   --color-success-dark: #4a9c5d;
   --color-success: #5bc273;
   --color-alert-dark: #927f40;
-  --color-warning-dark: #b9a14f;
+  --color-warning-dark: #d4af37;
+  --color-warning: #f5cf52;
   --color-error-dark: #da525d;
   --color-error-dark-hover: #7a3036;
   --color-error-dark-transparent: #da525d6b;
@@ -481,14 +482,14 @@ button.nav-link {
   display: flex;
 }
 
-.exercise-footer.home-card a {
+.exercise-footer.home-card .exercise-read-more-button {
   width: 80%;
   padding: calc(var(--spacing-gutter-medium) / 2);
 }
 
 .favorite-exercise-btn .favorite-exercise {
   position: absolute;
-  width: 25%;
+  width: 20%;
 }
 
 .favorite-exercise-btn .favorite-exercise a {
@@ -497,7 +498,7 @@ button.nav-link {
 }
 
 .exercise-cover {
-  background: #fff;
+  background: var(--color-gray-0);
 }
 
 .dashboard-cover img,
@@ -1869,7 +1870,7 @@ td a:hover {
 }
 
 .yellow-text {
-  color: var(--color-warning-dark);
+  color: var(--color-warning);
 }
 
 .blue-text {

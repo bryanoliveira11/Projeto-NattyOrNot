@@ -31,6 +31,11 @@ urlpatterns = [
         views.ExerciseDetailClassView.as_view(),
         name='exercises_detail'
     ),
+    path(
+        'exercises/favorite/<int:id>/',
+        views.FavoriteExerciseClassView.as_view(),
+        name='favorite_exercise'
+    ),
     # api paths
     path(
         'exercises/api/v1/category/',
