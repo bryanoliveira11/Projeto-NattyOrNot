@@ -189,16 +189,15 @@ class ExerciseDetailClassView(DetailView):
             self.request, is_detail_page=True
         ))
 
-        http_referer = self.request.META.get('HTTP_REFERER')
-        home = reverse('training:home')
-
-        url_to_redirect = http_referer if http_referer is not None else home
+        http_referer = self.request.META.get(
+            'HTTP_REFERER', reverse('training:home')
+        )
 
         context.update({
             'exercise': exercise,
             'title': f'{exercise}',
             'page_tag': f'{exercise}',
-            'url_to_redirect': url_to_redirect
+            'url_to_redirect': http_referer,
         })
 
         return context
@@ -213,12 +212,12 @@ class FavoriteExerciseClassView(View):
         exercise_id = self.kwargs.get('id', '')
         exercise = Exercises.objects.filter(pk=exercise_id).first()
         user = self.request.user
-        http_referer = self.request.META.get('HTTP_REFERER')
-        home = reverse('training:home')
-        url_to_redirect = http_referer if http_referer is not None else home
+        http_referer = self.request.META.get(
+            'HTTP_REFERER', reverse('training:home')
+        )
 
         if not exercise:
-            return redirect(home)
+            return redirect(http_referer)
 
         # exercício já favoritado
         if user in exercise.favorited_by.all():
@@ -229,7 +228,7 @@ class FavoriteExerciseClassView(View):
                 self.request,
                 'Exercício Desfavoritado.'
             )
-            return redirect(url_to_redirect)
+            return redirect(http_referer)
 
         # adicionando usuário aos favoritos
         exercise.favorited_by.add(
@@ -242,7 +241,7 @@ class FavoriteExerciseClassView(View):
             'Exercício Favoritado com Sucesso !'
         )
 
-        return redirect(url_to_redirect)
+        return redirect(http_referer)
 
 
 @method_decorator(
