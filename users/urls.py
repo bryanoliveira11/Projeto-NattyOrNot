@@ -139,6 +139,12 @@ urlpatterns = [
         views.DashboardExerciseClassView.as_view(),
         name='edit_exercise'
     ),
+    # user favorites
+    path(
+        'dashboard/exercises/favorites/',
+        views.FavoriteExercisesBaseClassView.as_view(),
+        name='user_exercises_favorites'
+    ),
     # api paths
     path('', include(user_api_v1_router.urls)),
 ]

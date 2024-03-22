@@ -215,6 +215,7 @@ class FavoriteExerciseClassView(View):
         http_referer = self.request.META.get(
             'HTTP_REFERER', reverse('training:home')
         )
+        favorites_url = reverse('users:user_exercises_favorites')
 
         if not exercise:
             return redirect(http_referer)
@@ -235,10 +236,13 @@ class FavoriteExerciseClassView(View):
             User.objects.filter(pk=user.pk).first()
         )
 
-        # TODO adicionar link para lista de favoritos do usuário nessa msg.
         messages.success(
             self.request,
-            'Exercício Favoritado com Sucesso !'
+            f'''Exercício Favoritado com Sucesso !
+            <a class="favorites-url" href="{favorites_url}"
+            title="Ver Favoritos">
+            Ver Favoritos
+            </a>'''
         )
 
         return redirect(http_referer)

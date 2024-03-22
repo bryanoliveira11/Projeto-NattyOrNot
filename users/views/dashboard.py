@@ -13,7 +13,7 @@ from training.models import Categories, Exercises
 from utils.get_notifications import get_notifications
 from utils.pagination import make_pagination
 
-DASHBOARD_PER_PAGE = environ.get('DASHBOARD_PER_PAGE', 4)
+DASHBOARD_PER_PAGE = environ.get('DASHBOARD_PER_PAGE', 8)
 
 
 @method_decorator(
