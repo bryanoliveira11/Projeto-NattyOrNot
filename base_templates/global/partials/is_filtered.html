@@ -1,20 +1,28 @@
 {% if is_home_page %}
     <a href="{% url 'training:home' %}" class="clean-filters" title="limpar filtros">
-        <i class="fa-solid fa-circle-xmark"></i>
-        limpar filtros
+      <i class="fa-solid fa-circle-xmark"></i>
+      limpar filtros
     </a>
 {% endif %}
 
 {% if is_dashboard_page %}
     <a href="{% url 'users:user_dashboard' %}" class="clean-filters" title="limpar filtros">
-        <i class="fa-solid fa-circle-xmark"></i>
-        limpar filtros
+      <i class="fa-solid fa-circle-xmark"></i>
+      limpar filtros
     </a>
 {% endif %}
 
 {% if is_workout_page %}
     <a href="{% url 'users:user_workouts' %}" class="clean-filters" title="limpar filtros">
-        <i class="fa-solid fa-circle-xmark"></i>
-        limpar filtros
+      <i class="fa-solid fa-circle-xmark"></i>
+      limpar filtros
+    </a>
+{% endif %}
+
+{% if is_favorites_page %}
+    <a href="{% url 'users:user_exercises_favorites' %}"
+      class="clean-filters" title="limpar filtros">
+      <i class="fa-solid fa-circle-xmark"></i>
+      limpar filtros
     </a>
 {% endif %}

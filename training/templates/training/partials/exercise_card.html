@@ -20,7 +20,7 @@
                 </a>
             {% endif %}
         {% else %}
-            {% if is_home_page %}
+            {% if is_home_page or is_favorites_page %}
             <div class="detail-cover home-page">
                 <a href="{% url 'training:exercises_detail' exercise.slug %}">
                     {% if exercise.cover %}
@@ -60,7 +60,7 @@
     {% if not is_dashboard_page %}
         <div class="exercise-title-container">
             <h2 class="exercise-title">
-                {% if is_home_page %}
+                {% if is_home_page or is_favorites_page %}
                     <a href="{% url 'training:exercises_detail' exercise.slug %}" title="{{exercise.title}}">
                          {{exercise.title|title_limit_length}}
                     </a>

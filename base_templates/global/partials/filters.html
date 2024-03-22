@@ -84,4 +84,21 @@
         </div>
     </div>
     {% endif %}
+
+    {% if is_favorites_page %}
+    <div class="dropdown-filters">
+        <button class="dropbtn">
+            Categorias
+            <i class="fa-solid fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            {% for category in categories  %}
+            <a href="{% url 'users:user_exercises_favorites_category' category.pk %}"
+              title="{{category.name}}">
+              {{category.name}}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 </div>
