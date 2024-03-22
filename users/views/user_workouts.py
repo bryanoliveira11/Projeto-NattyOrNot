@@ -42,7 +42,7 @@ class UserWorkoutsPageClassView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         workouts = context.get('user_workout')
-        titles = f'Meus Treinos'
+        titles = 'Meus Treinos'
 
         results = len(workouts) if workouts else None
 
@@ -82,7 +82,9 @@ class UserWorkoutsPageDetailClassView(DetailView):
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.filter(user=self.request.user).select_related('user').prefetch_related(
+        queryset = queryset.filter(
+            user=self.request.user
+        ).select_related('user').prefetch_related(
             'exercises', 'exercises__categories', 'exercises__published_by'
         )
         return queryset
@@ -177,15 +179,16 @@ class UserWorkoutBaseClass(View):
         return workout
 
     def get_referer_url(self):
-        http_referer = self.request.META.get('HTTP_REFERER')
+        referer = self.request.META.get('HTTP_REFERER')
         workout = reverse('users:user_workout_create')
+        req_path = self.request.path
 
-        if http_referer is None or self.request.path in http_referer or workout in http_referer:
+        if referer is None or req_path in referer or workout in referer:
             url_to_redirect = reverse(
                 'users:user_workouts'
             )
         else:
-            url_to_redirect = http_referer
+            url_to_redirect = referer
 
         return url_to_redirect
 
@@ -194,17 +197,23 @@ class UserWorkoutBaseClass(View):
 
         url_to_redirect = self.get_referer_url()
 
-        return render(self.request, 'users/pages/create_workout.html', context={
-            'form': form,
-            'notifications': notifications,
-            'notification_total': notifications_total,
-            'title': self.title,
-            'captcha_public_key': environ.get('RECAPTCHA_PUBLIC_KEY', ''),
-            'captcha_private_key': environ.get('RECAPTCHA_PRIVATE_KEY', ''),
-            'is_workout_form': True,
-            'is_workout_edit': self.is_workout_edit,
-            'url_to_redirect': url_to_redirect,
-        })
+        return render(
+            self.request, 'users/pages/create_workout.html',
+            context={
+                'form': form,
+                'notifications': notifications,
+                'notification_total': notifications_total,
+                'title': self.title,
+                'captcha_public_key': environ.get(
+                    'RECAPTCHA_PUBLIC_KEY', ''
+                ),
+                'captcha_private_key': environ.get(
+                    'RECAPTCHA_PRIVATE_KEY', ''
+                ),
+                'is_workout_form': True,
+                'is_workout_edit': self.is_workout_edit,
+                'url_to_redirect': url_to_redirect,
+            })
 
 
 @method_decorator(
@@ -235,20 +244,27 @@ class UserWorkoutClassView(UserWorkoutBaseClass):
             # garantindo o preenchimento do usuário
             workout.user = request.user
             # pegando a quantidade de exercícios escolhidos no form
+            exercises = form.cleaned_data.get('exercises')
+
+            if not exercises:
+                return
+
             workout.exercises_total = len(
-                form.cleaned_data.get('exercises').all()
+                exercises.all()
             )
             # salvando no banco
             workout.save()
             # garantindo o preenchimento dos exercícios pós save
-            workout.exercises.set(form.cleaned_data.get('exercises').all())
+            workout.exercises.set(exercises.all())
 
             if self.is_workout_edit:
                 messages.success(request, 'Treino Editado com Sucesso !')
             else:
                 messages.success(request, 'Treino Criado com Sucesso !')
 
-            return redirect(reverse('users:user_workout_edit', args=(workout.pk,)))
+            return redirect(
+                reverse('users:user_workout_edit', args=(workout.pk,))
+            )
 
         return self.render_workout(form=form)
 
@@ -301,7 +317,7 @@ class UserWorkoutShareClassView(View):
             if workout.user != self.request.user:
                 messages.error(
                     self.request,
-                    'Um Erro Ocorreu ao Compartilhar o Treino. Tente Novamente.'
+                    'Um Erro Ocorreu ao Compartilhar o Treino.'
                 )
                 return redirect(reverse('users:user_workouts'))
 
@@ -395,9 +411,9 @@ class UserWorkoutsIsSharedFilterClassView(UserWorkoutsPageClassView):
         context = super().get_context_data(*args, **kwargs)
 
         is_shared = self.kwargs.get('is_shared')
-        publish_translate = 'Publicados' if is_shared == 'True' else 'Não Publicados'
+        translated = 'Publicados' if is_shared == 'True' else 'Não Publicados'
 
-        title = f'Treinos - {publish_translate}'
+        title = f'Treinos - {translated}'
 
         context.update({
             'title': title,
