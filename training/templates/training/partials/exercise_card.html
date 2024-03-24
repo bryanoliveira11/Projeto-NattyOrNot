@@ -105,10 +105,17 @@
                 {% endif %}
                 {% if is_detail_page %}
                     <span class="published_date">
-                        -
-                        <i class="fas fa-calendar-alt"></i>
-                        {{ exercise.created_at|date:"d/m/Y" }} ás {{ exercise.created_at|date:"H:i" }}
+                      -
+                      <i class="fas fa-calendar-alt"></i>
+                      {{ exercise.created_at|date:"d/m/Y" }} ás {{ exercise.created_at|date:"H:i" }}
                     </span>
+                    {% if exercise.favorites_count > 0 %}
+                    <span class="favorites-count">
+                      -
+                      <i class="fa-solid fa-star"></i>
+                      {{ exercise.favorites_count }}
+                    </span>
+                    {% endif %}
                 {% endif %}
             </span>
         {% endif %}

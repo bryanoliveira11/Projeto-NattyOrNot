@@ -69,6 +69,10 @@ class Exercises(models.Model):
         verbose_name='Favoritado por',
         related_name='favorited_by_users',
     )
+    favorites_count = models.IntegerField(
+        blank=True, default=0,
+        verbose_name='Quantidade de Favoritados'
+    )
     cover = models.ImageField(
         upload_to='exercises/%Y/%m/%d/',
         blank=True,

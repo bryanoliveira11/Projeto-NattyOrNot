@@ -13,7 +13,7 @@ from training.models import Categories, Exercises
 from utils.get_notifications import get_notifications
 from utils.pagination import make_pagination
 
-FAVORITES_PER_PAGE = environ.get('FAVORITES_PER_PAGE', 4)
+FAVORITES_PER_PAGE = environ.get('FAVORITES_PER_PAGE', 8)
 
 
 @method_decorator(

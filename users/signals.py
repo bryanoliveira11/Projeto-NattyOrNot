@@ -59,10 +59,16 @@ def create_profile(user):
 
 
 # exercise approved notification
-@receiver(post_save, sender=Exercises)
+@receiver(pre_save, sender=Exercises)
 def exercise_published_notification(instance, *args, **kwargs):
+    old_instance = Exercises.objects.filter(pk=instance.pk).first()
+
     # instance = exercise
-    if not instance.is_published:
+    if not instance.is_published or not old_instance:
+        return
+
+    # changed favorites count
+    if old_instance.favorites_count != instance.favorites_count:
         return
 
     # getting user

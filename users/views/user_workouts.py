@@ -227,7 +227,7 @@ class UserWorkoutClassView(UserWorkoutBaseClass):
 
     def get(self, request, id=None):
         workout = self.get_workout(id)
-        form = CreateWorkoutForm(instance=workout)
+        form = CreateWorkoutForm(instance=workout, user=self.request.user)
         return self.render_workout(form=form)
 
     def post(self, request, id=None):

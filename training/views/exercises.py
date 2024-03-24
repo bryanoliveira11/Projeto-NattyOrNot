@@ -225,6 +225,8 @@ class FavoriteExerciseClassView(View):
             exercise.favorited_by.remove(
                 User.objects.filter(pk=user.pk).first()
             )
+            exercise.favorites_count -= 1
+            exercise.save()
             messages.success(
                 self.request,
                 'Exercício Desfavoritado.'
@@ -235,6 +237,8 @@ class FavoriteExerciseClassView(View):
         exercise.favorited_by.add(
             User.objects.filter(pk=user.pk).first()
         )
+        exercise.favorites_count += 1
+        exercise.save()
 
         messages.success(
             self.request,
@@ -242,6 +246,7 @@ class FavoriteExerciseClassView(View):
             <a class="favorites-url" href="{favorites_url}"
             title="Ver Favoritos">
             Ver Favoritos
+            <i class="fa-solid fa-star" style="font-size:1.8rem;"></i>
             </a>'''
         )
 
