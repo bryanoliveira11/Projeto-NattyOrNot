@@ -369,9 +369,51 @@ document.querySelector('#resend-email-btn')?.addEventListener('click', () => {
   window.location.reload();
 });
 
+class HandlePasswordStyles {
+  passwordField: HTMLInputElement;
+  helpTexts: HTMLElement[];
+
+  constructor() {
+    this.passwordField = document.querySelector(
+      '#id_password',
+    ) as HTMLInputElement;
+    this.helpTexts = Array.from(
+      document.querySelectorAll('.helptext-p.password'),
+    ) as HTMLElement[];
+  }
+
+  init(): void {
+    if (!this.passwordField || !this.helpTexts) return;
+    this.passwordField.addEventListener('keyup', () => this.handleStyle());
+  }
+
+  handleStyle(): void {
+    const conditions = [
+      !(this.passwordField.value.length < 8),
+      /^(?=.*[A-Z])/.test(this.passwordField.value),
+      /^(?=.*[a-z])/.test(this.passwordField.value),
+      /^(?=.*\d)/.test(this.passwordField.value),
+    ];
+    const errorColor = '#da525d';
+    const normalColor = '#f3f1f1';
+
+    const colors = [normalColor, errorColor];
+
+    conditions.forEach((condition, index) => {
+      this.changeHelpTextColor(index, condition ? colors[0] : colors[1]);
+    });
+  }
+
+  changeHelpTextColor(index: number, color: string): void {
+    if (!this.helpTexts[index]) return;
+    this.helpTexts[index].style.color = color;
+  }
+}
+
 new NavBar().init();
 new NotificationsScreen().init();
 new LogoutLinks().init();
 new ShowHidePassword().init();
 new DismissFlashMessages().init();
 new SelectInputCheckIcon().init();
+new HandlePasswordStyles().init();

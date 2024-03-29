@@ -260,9 +260,40 @@ function handleForgotPasswordPages(pageAttr) {
   : _a.addEventListener('click', () => {
       window.location.reload();
     });
+class HandlePasswordStyles {
+  constructor() {
+    this.passwordField = document.querySelector('#id_password');
+    this.helpTexts = Array.from(
+      document.querySelectorAll('.helptext-p.password'),
+    );
+  }
+  init() {
+    if (!this.passwordField || !this.helpTexts) return;
+    this.passwordField.addEventListener('keyup', () => this.handleStyle());
+  }
+  handleStyle() {
+    const conditions = [
+      !(this.passwordField.value.length < 8),
+      /^(?=.*[A-Z])/.test(this.passwordField.value),
+      /^(?=.*[a-z])/.test(this.passwordField.value),
+      /^(?=.*\d)/.test(this.passwordField.value),
+    ];
+    const errorColor = '#da525d';
+    const normalColor = '#f3f1f1';
+    const colors = [normalColor, errorColor];
+    conditions.forEach((condition, index) => {
+      this.changeHelpTextColor(index, condition ? colors[0] : colors[1]);
+    });
+  }
+  changeHelpTextColor(index, color) {
+    if (!this.helpTexts[index]) return;
+    this.helpTexts[index].style.color = color;
+  }
+}
 new NavBar().init();
 new NotificationsScreen().init();
 new LogoutLinks().init();
 new ShowHidePassword().init();
 new DismissFlashMessages().init();
 new SelectInputCheckIcon().init();
+new HandlePasswordStyles().init();

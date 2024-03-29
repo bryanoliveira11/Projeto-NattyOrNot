@@ -30,11 +30,11 @@ def signin_email_template(username: str):
   <h1>👋</h1>
   <h1>Boas-Vindas !</h1>
   <h2>Seja bem vindo ao NattyOrNot, {username}.</h2>
-  <h3>
+  <h2>
   <pre>Aqui você pode criar e compartilhar seus exercícios e treinos,
   além de interagir com uma comunidade apaixonada por saúde e bem-estar.
   Vamos treinar juntos e alcançar nossos objetivos! 💪🏋️‍♀️
-  </pre></h3>
+  </pre></h2>
   <p>&copy; 2024 NattyOrNot.</p>
   </body>
   </html>

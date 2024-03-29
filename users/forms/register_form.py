@@ -139,10 +139,10 @@ class RegisterForm(forms.ModelForm, ValidateFields):
         },
         help_text=format_html(
             '''
-          <p class="helptext-p">&#x2022; Mínimo de 8 Dígitos</p>
-          <p class="helptext-p">&#x2022; 1x Letra Maiúscula</p>
-          <p class="helptext-p">&#x2022; 1x Letra Mínuscula</p>
-          <p class="helptext-p">&#x2022; 1x Número</p>
+          <p class="helptext-p password">&#x2022; Mínimo de 8 Dígitos</p>
+          <p class="helptext-p password">&#x2022; 1x Letra Maiúscula</p>
+          <p class="helptext-p password">&#x2022; 1x Letra Mínuscula</p>
+          <p class="helptext-p password">&#x2022; 1x Número</p>
             '''
         ),
         widget=forms.PasswordInput(),
@@ -241,10 +241,10 @@ class ChangePasswordForm(forms.ModelForm, ValidateFields):
         },
         help_text=format_html(
             '''
-          <p class="helptext-p">&#x2022; Mínimo de 8 Dígitos</p>
-          <p class="helptext-p">&#x2022; 1x Letra Maiúscula</p>
-          <p class="helptext-p">&#x2022; 1x Letra Mínuscula</p>
-          <p class="helptext-p">&#x2022; 1x Número</p>
+          <p class="helptext-p password">&#x2022; Mínimo de 8 Dígitos</p>
+          <p class="helptext-p password">&#x2022; 1x Letra Maiúscula</p>
+          <p class="helptext-p password">&#x2022; 1x Letra Mínuscula</p>
+          <p class="helptext-p password">&#x2022; 1x Número</p>
             '''
         ),
         widget=forms.PasswordInput(),

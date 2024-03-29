@@ -745,6 +745,10 @@ select option:checked {
   position: relative;
 }
 
+#id_profile_picture:hover {
+  cursor: pointer;
+}
+
 #id_password.login-password-field {
   padding-right: 5rem;
 }
