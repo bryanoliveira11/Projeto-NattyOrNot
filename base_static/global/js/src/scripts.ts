@@ -394,8 +394,9 @@ class HandlePasswordStyles {
       /^(?=.*[a-z])/.test(this.passwordField.value),
       /^(?=.*\d)/.test(this.passwordField.value),
     ];
+    const isDarkMode = localStorage.getItem('darkmode');
     const errorColor = '#da525d';
-    const normalColor = '#f3f1f1';
+    const normalColor = isDarkMode === 'true' ? '#f3f1f1' : '#444';
 
     const colors = [normalColor, errorColor];
 
