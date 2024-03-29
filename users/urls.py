@@ -102,51 +102,14 @@ urlpatterns = [
         views.UserWorkoutsIsSharedFilterClassView.as_view(),
         name='user_workout_is_shared'
     ),
-    # user dashboard urls
-    path(
-        'dashboard/exercises/',
-        views.DashboardUserClassView.as_view(),
-        name='user_dashboard'
-    ),
-    path(
-        'dashboard/exercises/search/',
-        views.DashboardSearchClassView.as_view(),
-        name='user_dashboard_search'
-    ),
-    path(
-        'dashboard/exercises/shared=<str:shared_status>/',
-        views.DashboardSharedStatusFilterClassView.as_view(),
-        name='user_dashboard_shared_filter'
-    ),
-    path(
-        'dashboard/exercises/category/<int:id>/',
-        views.DashboardUserCategoryClassView.as_view(),
-        name='user_dashboard_category'
-    ),
-    # delete exercise
-    path(
-        'dashboard/exercise/<int:id>/delete/',
-        views.UserExerciseDeleteClassView.as_view(),
-        name='user_exercise_delete'
-    ),
-    path(
-        'dashboard/exercise/create/',
-        views.DashboardExerciseClassView.as_view(),
-        name='create_exercise'
-    ),
-    path(
-        'dashboard/exercise/<int:id>/edit/',
-        views.DashboardExerciseClassView.as_view(),
-        name='edit_exercise'
-    ),
     # user favorites
     path(
-        'dashboard/exercises/favorites/',
+        'exercises/favorites/',
         views.FavoriteExercisesBaseClassView.as_view(),
         name='user_exercises_favorites'
     ),
     path(
-        'dashboard/exercises/favorites/category/<int:id>/',
+        'exercises/favorites/category/<int:id>/',
         views.FavoriteExercisesCategoriesFilter.as_view(),
         name='user_exercises_favorites_category'
     ),

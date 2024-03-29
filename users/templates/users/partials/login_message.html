@@ -2,17 +2,17 @@
 <div class="login-message center">
     {% if is_dashboard_page %}
         <h3 class='p-05'>
-            Este é o seu 
-            <a href="{% url 'users:user_dashboard' %}" class="plaintext-button">
-                Dashboard ! 
+            Este é o seu
+            <a href="{% url 'dashboard:user_dashboard' %}" class="plaintext-button">
+                Dashboard !
             </a>
             Você pode
-            <a href="{% url 'users:create_exercise' %}" class="plaintext-button">
+            <a href="{% url 'dashboard:create_exercise' %}" class="plaintext-button">
                 criar um exercício
             </a>,
             <a href="{% url 'training:home' %}" class="plaintext-button">
                 ir até a home
-            </a> ou 
+            </a> ou
             <a href="{% url 'users:logout' %}" class="plaintext-button user-logout-link">
                 sair
             </a>.
@@ -20,14 +20,14 @@
     {% endif %}
     {% if is_profile_page or is_change_password_page %}
         <h3 class='p-05'>
-            Este é o seu 
+            Este é o seu
             <a href="{% url 'users:user_profile' request.user %}" class="plaintext-button">
-                Perfil ! 
+                Perfil !
             </a>
             Você pode editar seus dados,
             <a href="{% url 'training:home' %}" class="plaintext-button">
                 ir até a home
-            </a> ou 
+            </a> ou
             <a href="{% url 'users:logout' %}" class="plaintext-button user-logout-link">
                 sair
             </a>.
@@ -36,14 +36,14 @@
 
     {% if is_workout_page %}
         <h3 class='p-05'>
-            Estes são seus 
+            Estes são seus
             <a href="{% url 'users:user_workouts' %}" class="plaintext-button">
-                Treinos ! 
+                Treinos !
             </a>
             Você pode criar um novo treino
             <a href="{% url 'users:user_workout_create' %}" class="plaintext-button">
                 clicando aqui
-            </a> ou 
+            </a> ou
             <a href="{% url 'users:logout' %}" class="plaintext-button user-logout-link">
                 sair
             </a>.

@@ -39,7 +39,7 @@
         </button>
         <div class="dropdown-content">
             {% for category in categories  %}
-            <a href="{% url 'users:user_dashboard_category' category.pk %}" title="{{category.name}}">
+            <a href="{% url 'dashboard:user_dashboard_category' category.pk %}" title="{{category.name}}">
               {{category.name}}
             </a>
             {% endfor %}
@@ -52,15 +52,15 @@
             <i class="fa-solid fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-            <a href="{% url 'users:user_dashboard_shared_filter' 'MYSELF' %}" title="Somente Você">
+            <a href="{% url 'dashboard:user_dashboard_shared_filter' 'MYSELF' %}" title="Somente Você">
               <i class="fa-regular fa-user"></i>
               Apenas Você
             </a>
-            <a href="{% url 'users:user_dashboard_shared_filter' 'FOLLOWERS' %}" title="Meus Seguidores">
+            <a href="{% url 'dashboard:user_dashboard_shared_filter' 'FOLLOWERS' %}" title="Meus Seguidores">
               <i class="fa-solid fa-user-group"></i>
               Meus Seguidores
             </a>
-            <a href="{% url 'users:user_dashboard_shared_filter' 'ALL' %}" title="Todos">
+            <a href="{% url 'dashboard:user_dashboard_shared_filter' 'ALL' %}" title="Todos">
               <i class="fa-solid fa-earth-americas"></i>
               Todos
             </a>

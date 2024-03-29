@@ -21,7 +21,7 @@
                     <i class="fa-solid fa-magnifying-glass-minus"></i>
                     <h2>Nenhum Exercício Encontrado !</h2>
                       <h3>
-                        <a href="{% url 'users:create_exercise' %}">
+                        <a href="{% url 'dashboard:create_exercise' %}">
                           <i class="fa-solid fa-circle-plus"></i>
                           Criar Exercício.
                         </a>
@@ -33,7 +33,7 @@
     </div>
     {% if exercises %}
         <div class="add-new-exercise">
-            <a href="{% url 'users:create_exercise' %}">
+            <a href="{% url 'dashboard:create_exercise' %}">
                 <i class="fa-solid fa-circle-plus"></i>
                 Novo Exercício
             </a>

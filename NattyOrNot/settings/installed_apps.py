@@ -2,6 +2,7 @@ INSTALLED_APPS = [
     # my apps
     'users',
     'training',
+    'dashboard',
     # django defaults
     'django.contrib.admin',
     'django.contrib.auth',

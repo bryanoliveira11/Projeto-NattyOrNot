@@ -79,7 +79,7 @@
       {% if not request.user.is_authenticated %}
       <div class="social-accounts-container">
           <a class="social-btn btn-google"
-              href="{% provider_login_url 'google'%}?next={% url 'users:user_dashboard' %}"
+              href="{% provider_login_url 'google'%}?next={% url 'dashboard:user_dashboard' %}"
               title="Entrar com o Google.">
               <img src="{% static 'global/imgs/google_icon.png' %}" alt="Logar com google">
           </a>

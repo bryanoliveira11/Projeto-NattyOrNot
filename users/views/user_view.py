@@ -114,7 +114,7 @@ class UserLoginView(View):
                     self.request,
                     f'Login Efetuado com Sucesso na Conta {self.request.user}.'
                 )
-                return redirect(reverse('users:user_dashboard'))
+                return redirect(reverse('dashboard:user_dashboard'))
             # errou as credenciais
             else:
                 messages.error(self.request, 'Credenciais Inválidas.')

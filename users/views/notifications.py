@@ -40,8 +40,8 @@ class UserNotificationsDeleteClassView(View):
             # urls de search do site
             search_urls_dict = {
                 f'{reverse('training:search')}': reverse('training:home'),
-                f'{reverse('users:user_dashboard_search')}': reverse(
-                    'users:user_dashboard'
+                f'{reverse('dashboard:user_dashboard_search')}': reverse(
+                    'dashboard:user_dashboard'
                 ),
                 f'{reverse('users:user_workouts_search')}': reverse(
                     'users:user_workouts'

@@ -1,4 +1,5 @@
 from os import environ
+from typing import Any
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -7,9 +8,10 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
+from django.views.generic import DetailView
 
+from dashboard.forms.create_exercise import CreateExerciseForm
 from training.models import Exercises
-from users.forms import CreateExerciseForm
 from utils.get_notifications import get_notifications
 
 
@@ -47,10 +49,10 @@ class DashboardFormBaseClassView(View):
     def get_referer_url(self):
         referer = self.request.META.get('HTTP_REFERER')
         path = self.request.path
-        create_url = reverse('users:create_exercise')
+        create_url = reverse('dashboard:create_exercise')
 
         if referer is None or path in referer or create_url in referer:
-            return reverse('users:user_dashboard')
+            return reverse('dashboard:user_dashboard')
 
         return referer
 
@@ -60,7 +62,7 @@ class DashboardFormBaseClassView(View):
         url_to_redirect = self.get_referer_url()
 
         return render(
-            self.request, 'users/pages/create_exercise.html', context={
+            self.request, 'dashboard/pages/create_exercise.html', context={
                 'form': form,
                 'notifications': notifications,
                 'notification_total': notifications_total,
@@ -121,7 +123,71 @@ class DashboardExerciseClassView(DashboardFormBaseClassView):
                 messages.success(request, 'Exercício Criado com Sucesso !')
 
             return redirect(reverse(
-                'users:edit_exercise', args=(exercise.pk,)
+                'dashboard:edit_exercise', args=(exercise.pk,)
             ))
 
         return self.render_exercise(form=form)
+
+
+@method_decorator(
+    login_required(login_url='users:login', redirect_field_name='next'),
+    name='dispatch'
+)
+class DashboardDeleteExerciseClassView(DetailView):
+    model = Exercises
+    template_name = 'users/partials/delete_page.html'
+    context_object_name = 'user_exercise'
+    pk_url_kwarg = 'id'
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        queryset = queryset.filter(
+            pk=self.kwargs.get('id'),
+            published_by=self.request.user,
+            is_published=False,
+        )
+
+        if not queryset:
+            raise Http404()
+
+        return queryset
+
+    def get_context_data(self, *args, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(*args, **kwargs)
+
+        exercise = context.get('user_exercise')
+        title = f'Deletar Exercício - {exercise}'
+
+        notifications, notifications_total = get_notifications(self.request)
+
+        context.update({
+            'exercise': exercise,
+            'notifications': notifications,
+            'notification_total': notifications_total,
+            'title': title,
+            'is_exercise': True,
+            'type_of_object': 'Exercício',
+            'has_cover': True,
+        })
+        return context
+
+    def post(self, *args, **kwargs):
+        # pegando o exercicio do banco
+        exercise_to_delete = self.get_queryset().first()
+
+        # não encontrou no banco
+        if not exercise_to_delete:
+            messages.error(
+                self.request,
+                'Um Erro Ocorreu ao Deletar o Exercício.'
+            )
+            return redirect(reverse('dashboard:user_dashboard'))
+
+        # deletando exercício
+        exercise_to_delete.delete()
+        messages.success(
+            self.request,
+            'Exercício Deletado com Sucesso.'
+        )
+
+        return redirect(reverse('dashboard:user_dashboard'))

@@ -101,7 +101,7 @@ def exercise_rejected_notification(instance, *args, **kwargs):
         return
 
     user = get_user_by_instance(instance=instance)
-    msg_url = reverse('users:edit_exercise', args=(instance.pk,))
+    msg_url = reverse('dashboard:edit_exercise', args=(instance.pk,))
     info = instance.extra_info if instance.extra_info else 'Não informado'
 
     if user:
@@ -132,7 +132,7 @@ def exercise_created_notification(instance, created, *args, **kwargs):
         return
 
     user = get_user_by_instance(instance=instance)
-    msg_url = reverse('users:edit_exercise', args=(instance.pk,))
+    msg_url = reverse('dashboard:edit_exercise', args=(instance.pk,))
 
     if instance.shared_status == 'ALL':
         create_user_notification(
@@ -168,7 +168,7 @@ def exercise_status_shared_notification(instance, sender, *args, **kwargs):
         return
 
     user = get_user_by_instance(instance=instance)
-    msg_url = reverse('users:edit_exercise', args=(instance.pk,))
+    msg_url = reverse('dashboard:edit_exercise', args=(instance.pk,))
 
     old_shared_status = old_instance.shared_status
     is_new_status = instance.shared_status == 'ALL' != old_shared_status

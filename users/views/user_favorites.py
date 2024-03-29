@@ -1,8 +1,7 @@
 from os import environ
-from typing import Any, Dict
+from typing import Any
 
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.http import Http404
 from django.urls import reverse
@@ -64,7 +63,7 @@ class FavoriteExercisesBaseClassView(ListView):
             'notification_total': notifications_total,
             'title': title,
             'page_tag': title,
-            'search_form_action': reverse('users:user_dashboard_search'),
+            'search_form_action': reverse('dashboard:user_dashboard_search'),
             'is_favorites_page': True,
             'placeholder': 'Pesquisar em Favoritos',
         })

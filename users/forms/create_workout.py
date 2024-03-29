@@ -1,8 +1,8 @@
 from django import forms
 from django.db.models import Q
 
+from dashboard.forms.create_exercise import CreateFormMixin
 from training.models import Exercises
-from users.forms.create_exercise import CreateFormMixin
 from users.models import UserWorkouts
 from utils.django_forms import add_attr, add_placeholder
 

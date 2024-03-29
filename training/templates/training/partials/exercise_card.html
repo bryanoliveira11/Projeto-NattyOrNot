@@ -6,7 +6,7 @@
         {% if is_dashboard_page %}
             {% if not exercise.is_published %}
             <div class="dashboard-cover">
-                <a href="{% url 'users:edit_exercise' exercise.pk %}">
+                <a href="{% url 'dashboard:edit_exercise' exercise.pk %}">
                     {% if exercise.cover %}
                         <img src="{{exercise.cover.url}}" alt="imagem do exercício">
                     {% endif %}
@@ -45,7 +45,7 @@
         <div class="exercise-title-container dashboard-exercise-title">
             <h2 class="exercise-title dashboard-exercise-title">
                 {% if not exercise.is_published %}
-                    <a href="{% url 'users:edit_exercise' exercise.pk %}" title="{{exercise.title}}">
+                    <a href="{% url 'dashboard:edit_exercise' exercise.pk %}" title="{{exercise.title}}">
                         {{exercise.title|title_limit_length}}
                     </a>
                 {% else %}
@@ -80,7 +80,7 @@
                 {% for category in exercise.categories.all  %}
                     {% if exercise.categories.all|length > 1 %}
                         {% if is_dashboard_page %}
-                            <a href="{% url 'users:user_dashboard_category' category.id %}">
+                            <a href="{% url 'dashboard:user_dashboard_category' category.id %}">
                                 {{category.name}}
                             </a> |
                         {% else %}
@@ -88,7 +88,7 @@
                         {% endif %}
                     {% else %}
                         {% if is_dashboard_page %}
-                            <a href="{% url 'users:user_dashboard_category' category.id %}">
+                            <a href="{% url 'dashboard:user_dashboard_category' category.id %}">
                                 {{category.name}}
                             </a>
                         {% else %}
@@ -138,19 +138,19 @@
         </div>
         <div class="exercise-status">
           {% if exercise.shared_status == 'MYSELF' %}
-            <a href="{% url 'users:user_dashboard_shared_filter' exercise.shared_status %}" class="status-myself">
+            <a href="{% url 'dashboard:user_dashboard_shared_filter' exercise.shared_status %}" class="status-myself">
               <i class="fa-regular fa-user"></i>
               Apenas Você
             </a>
           {% endif %}
           {% if exercise.shared_status == 'FOLLOWERS' %}
-            <a href="{% url 'users:user_dashboard_shared_filter' exercise.shared_status %}" class="status-followers">
+            <a href="{% url 'dashboard:user_dashboard_shared_filter' exercise.shared_status %}" class="status-followers">
               <i class="fa-solid fa-user-group"></i>
               Meus Seguidores
             </a>
           {% endif %}
           {% if exercise.shared_status == 'ALL' %}
-            <a href="{% url 'users:user_dashboard_shared_filter' exercise.shared_status %}" class="status-all">
+            <a href="{% url 'dashboard:user_dashboard_shared_filter' exercise.shared_status %}" class="status-all">
               <i class="fa-solid fa-earth-americas"></i>
               Todos
             </a>
@@ -189,12 +189,12 @@
     {% if is_dashboard_page %}
         {% if not exercise.is_published %}
             <footer class="exercise-dashboard-footer">
-                <a href="{% url 'users:edit_exercise' exercise.pk %}" title="Editar Exercício">
+                <a href="{% url 'dashboard:edit_exercise' exercise.pk %}" title="Editar Exercício">
                     <i class="fa-solid fa-pen-to-square"></i>
                     Editar
                 </a>
                 <div class="delete-page">
-                    <a class="open-delete-page" href="{% url 'users:user_exercise_delete' exercise.pk %}" title="Deletar Exercício">
+                    <a class="open-delete-page" href="{% url 'dashboard:user_exercise_delete' exercise.pk %}" title="Deletar Exercício">
                         <i class="fa-solid fa-trash"></i>
                     </a>
                 </div>

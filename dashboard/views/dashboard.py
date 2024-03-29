@@ -22,7 +22,7 @@ DASHBOARD_PER_PAGE = environ.get('DASHBOARD_PER_PAGE', 8)
 )
 # classe base para o dashboard
 class DashboardUserBase(ListView):
-    template_name = 'users/pages/user_dashboard.html'
+    template_name = 'dashboard/pages/dashboard.html'
     model = Exercises
     context_object_name = 'user_exercises'
     ordering = ['-id']
@@ -61,7 +61,7 @@ class DashboardUserBase(ListView):
             'notification_total': notifications_total,
             'title': 'Dashboard',
             'page_tag': 'Dashboard > Meus Exercícios',
-            'search_form_action': reverse('users:user_dashboard_search'),
+            'search_form_action': reverse('dashboard:user_dashboard_search'),
             'is_dashboard_page': True,
             'placeholder': 'Pesquisar no Dashboard',
         })
@@ -75,7 +75,7 @@ class DashboardUserBase(ListView):
 )
 # classe para mostrar o dashboard do usuário com os exercícios criados
 class DashboardUserClassView(DashboardUserBase):
-    template_name = 'users/pages/user_dashboard.html'
+    template_name = 'dashboard/pages/dashboard.html'
 
 
 @method_decorator(
