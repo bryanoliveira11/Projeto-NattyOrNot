@@ -8,12 +8,12 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
 
+from base_templates.emails.email_templates import \
+    forgot_password_email_template
 from users.email_service import send_html_mail
 from users.forms import (ChangePasswordForm, ForgotPassword, LoginForm,
                          RegisterForm)
 from users.models import UserProfile
-from users.templates.emails.email_templates import \
-    forgot_password_email_template
 from utils.get_notifications import get_notifications
 from utils.get_profile_picture import get_profile_picture
 from utils.strings import generate_random_code

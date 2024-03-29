@@ -8,10 +8,10 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.urls import reverse
 
+from base_templates.emails.email_templates import signin_email_template
 from training.models import Exercises
 from users.email_service import send_html_mail
 from users.models import UserNotifications, UserProfile
-from users.templates.emails.email_templates import signin_email_template
 
 User = get_user_model()
 EMAIL_HOST_USER = environ.get('EMAIL_HOST_USER', '')
