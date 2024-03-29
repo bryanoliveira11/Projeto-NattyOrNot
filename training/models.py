@@ -70,7 +70,7 @@ class Exercises(models.Model):
         related_name='favorited_by_users',
     )
     favorites_count = models.IntegerField(
-        blank=True, default=0,
+        blank=True, default=0, editable=False,
         verbose_name='Quantidade de Favoritados'
     )
     cover = models.ImageField(

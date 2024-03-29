@@ -216,6 +216,10 @@ class FavoriteExerciseClassView(View):
             'HTTP_REFERER', reverse('training:home')
         )
         favorites_url = reverse('users:user_exercises_favorites')
+        msg_url = f'''<a class="favorites-url" href="{favorites_url}"
+              title="Ver Favoritos"> Ver Favoritos
+              <i class="fa-solid fa-star" style="font-size:1.8rem;"></i>
+              </a>'''
 
         if not exercise:
             return redirect(http_referer)
@@ -225,11 +229,11 @@ class FavoriteExerciseClassView(View):
             exercise.favorited_by.remove(
                 User.objects.filter(pk=user.pk).first()
             )
-            exercise.favorites_count -= 1
+            exercise.favorites_count = exercise.favorited_by.count()
             exercise.save()
             messages.success(
                 self.request,
-                'Exercício Desfavoritado.'
+                f'''Exercício Desfavoritado. {msg_url}'''
             )
             return redirect(http_referer)
 
@@ -237,17 +241,12 @@ class FavoriteExerciseClassView(View):
         exercise.favorited_by.add(
             User.objects.filter(pk=user.pk).first()
         )
-        exercise.favorites_count += 1
+        exercise.favorites_count = exercise.favorited_by.count()
         exercise.save()
 
         messages.success(
             self.request,
-            f'''Exercício Favoritado com Sucesso !
-            <a class="favorites-url" href="{favorites_url}"
-            title="Ver Favoritos">
-            Ver Favoritos
-            <i class="fa-solid fa-star" style="font-size:1.8rem;"></i>
-            </a>'''
+            f'''Exercício Favoritado com Sucesso ! {msg_url}'''
         )
 
         return redirect(http_referer)
