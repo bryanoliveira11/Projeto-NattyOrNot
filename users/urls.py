@@ -18,8 +18,13 @@ urlpatterns = [
     # user profile urls
     path(
         '<str:username>/profile/',
-        views.UserProfileDetailClassView.as_view(),
+        views.UserShowProfileClassView.as_view(),
         name='user_profile'
+    ),
+    path(
+        '<str:username>/profile/data/',
+        views.UserProfileDataClassView.as_view(),
+        name='user_profile_data'
     ),
     path(
         '<str:username>/profile/change/password/',

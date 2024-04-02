@@ -35,3 +35,12 @@
 <link rel="stylesheet" href="{% static 'global/css/style-min.css' %}" />
 
 <link rel="shortcut icon" href="{% static 'global/imgs/favicon.png' %}" type="image/png"/>
+
+<title>
+  {% block title %}
+  {% if notification_total %}
+  ({{notification_total}})
+  {% endif %}
+  {{title}}
+  {% endblock title %} | NattyOrNot
+</title>

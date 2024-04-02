@@ -2,12 +2,13 @@ from allauth.account.models import EmailAddress
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
 
+from training.models import Exercises
 from users.forms import ChangePasswordForm, EditForm
 from users.models import UserProfile
 from utils.get_notifications import get_notifications
@@ -20,11 +21,11 @@ User = get_user_model()
     login_required(login_url='users:login', redirect_field_name='next'),
     name='dispatch'
 )
-class UserProfileDetailClassView(View):
-    def get_user_profile(self, user_id):
+class UserProfileBaseClassView(View):
+    def get_user_profile(self, user_id: int) -> UserProfile | None:
         return UserProfile.objects.filter(user__id=user_id).first()
 
-    def is_google_account_user(self):
+    def is_google_account_user(self) -> bool:
         google_account = EmailAddress.objects.filter(
             user_id=self.request.user.pk
         ).first()
@@ -35,7 +36,7 @@ class UserProfileDetailClassView(View):
 
     # lançar um alerta na tela de perfil se o email do usuário estiver vázio
     # isso ocorre se a conta for do google e o email já estiver em uso
-    def check_email(self):
+    def check_email(self) -> None:
         user_db = User.objects.filter(pk=self.request.user.pk).first()
 
         if user_db:
@@ -46,22 +47,31 @@ class UserProfileDetailClassView(View):
                     'Por Favor, Revise seus Dados !'
                 )
 
-    def validate_url_user(self, username):
+    def validate_url_user(self, username: str):
         # 404 em tentativa de editar a url
         if username != self.request.user.get_username():
             raise Http404()
 
-    def get_profile_form_action(self):
-        return reverse('users:user_profile', args=(self.request.user,))
+    def get_profile_form_action(self) -> str:
+        return reverse('users:user_profile_data', args=(self.request.user,))
 
-    def get_password_change_form_action(self):
+    def get_password_change_form_action(self) -> str:
         return reverse(
             'users:user_profile_change_password', args=(self.request.user,)
         )
 
+    def get_user_exercises(self, user):
+        exercises = Exercises.objects.filter(
+            published_by=user,
+        ).exclude(shared_status='MYSELF').select_related(
+            'published_by'
+        ).prefetch_related('categories', 'favorited_by').order_by('-pk')
+
+        return exercises
+
     def render_form(
         self, form, form_action, profile_page=False, password_page=False
-    ):
+    ) -> HttpResponse:
         user = self.request.user
         user_profile = self.get_user_profile(user.pk)
         is_google_account = self.is_google_account_user()
@@ -78,9 +88,37 @@ class UserProfileDetailClassView(View):
             'is_profile_page': profile_page,
             'is_change_password_page': password_page,
             'form_action': form_action,
-            'title': f'Perfil ({user})',
+            'title': f'Meus Dados - {user}',
         })
 
+
+@method_decorator(
+    login_required(login_url='users:login', redirect_field_name='next'),
+    name='dispatch'
+)
+class UserShowProfileClassView(UserProfileBaseClassView):
+    def get(self, *args, **kwargs):
+        self.validate_url_user(self.kwargs.get('username'))
+        user = self.get_user_profile(self.request.user.pk)
+        exercises = self.get_user_exercises(self.request.user)
+        notifications, notifications_total = get_notifications(self.request)
+
+        return render(
+            self.request, 'users/pages/user_show_profile.html', context={
+                'user': user,
+                'exercises': exercises,
+                'title': f'Perfil - {user}',
+                'notifications': notifications,
+                'notification_total': notifications_total,
+            }
+        )
+
+
+@method_decorator(
+    login_required(login_url='users:login', redirect_field_name='next'),
+    name='dispatch'
+)
+class UserProfileDataClassView(UserProfileBaseClassView):
     # get vai mostrar a foto de perfil do user e seus dados
     def get(self, *args, **kwargs):
         self.validate_url_user(self.kwargs.get('username'))
@@ -119,7 +157,7 @@ class UserProfileDetailClassView(View):
                 'Dados Editados com Sucesso !'
             )
             return redirect(
-                reverse('users:user_profile', args=(self.request.user,)),
+                reverse('users:user_profile_data', args=(self.request.user,)),
             )
 
         return self.render_form(
@@ -133,7 +171,7 @@ class UserProfileDetailClassView(View):
     login_required(login_url='users:login', redirect_field_name='next'),
     name='dispatch'
 )
-class UserProfileChangePassword(UserProfileDetailClassView):
+class UserProfileChangePassword(UserProfileBaseClassView):
     def get(self, *args, **kwargs):
         self.validate_url_user(self.kwargs.get('username'))
         form = ChangePasswordForm(instance=self.request.user)

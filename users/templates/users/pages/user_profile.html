@@ -21,15 +21,16 @@
     </h2>
 
     <div class="show-user-form">
-        {% if is_profile_page %}
-            <div class="user-profile-data selected">
-        {% else %}
-            <div class="user-profile-data">
-        {% endif %}
-                <a class="user-profile-data-show-form" 
-                href="{% url 'users:user_profile' request.user.username %}">Meus Dados</a>
-            </div>
-        
+      {% if is_profile_page %}
+        <div class="user-profile-data selected">
+      {% else %}
+        <div class="user-profile-data">
+      {% endif %}
+        <a class="user-profile-data-show-form"
+        href="{% url 'users:user_profile_data' request.user.username %}">Meus Dados
+        </a>
+    </div>
+
         {% if is_change_password_page %}
             <div class="user-password-change selected">
         {% else %}
@@ -37,7 +38,7 @@
         {% endif %}
             <a class="user-profile-change-password-form"
                 href="{% url 'users:user_profile_change_password' request.user.username %}">
-                Alterar Senha 
+                Alterar Senha
             </a>
         </div>
     </div>

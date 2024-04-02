@@ -125,8 +125,21 @@
                   <a class="dropdown-link prevent-select"
                   href="{% url 'users:user_profile' request.user.username %}">
                     <div>
-                      <span class="dropdown-link-title" title="Meus Dados">
+                      <span class="dropdown-link-title" title="Perfil">
                         <i class="fa-solid fa-user-circle"></i>
+                        Perfil
+                      </span>
+                      <p>Veja seu Perfil.</p>
+                    </div>
+                  </a>
+                </li>
+
+                <li role="menuitem">
+                  <a class="dropdown-link prevent-select"
+                  href="{% url 'users:user_profile_data' request.user.username %}">
+                    <div>
+                      <span class="dropdown-link-title" title="Meus Dados">
+                        <i class="fa-solid fa-database"></i>
                         Meus Dados
                       </span>
                       <p>Veja seus Dados.</p>
@@ -152,24 +165,6 @@
 
           {% endif %}
 
-          {% if request.user.is_authenticated and notification_total > 0 %}
-          <li>
-          <a class="nav-link prevent-select" id="toggle-notification-menu" title="{{notification_total}} Notificações">
-            <i class="fa-solid fa-bell bell-menu"></i>
-            {% if notification_total %}
-            <span class='notification-total'>
-            {{notification_total}}
-            </span>
-            {% endif %}
-            {% if notification_total == 1 %}
-            Notificação
-            {% else %}
-            Notificações
-            {% endif %}
-          </a>
-          </li>
-          {% endif %}
-
           {% if not request.user.is_authenticated %}
           <li>
             <a href="{% url 'users:login' %}" class="nav-link prevent-select" title="Fazer Login">
@@ -192,6 +187,19 @@
               Tema
             </a>
           </li>
+
+          {% if request.user.is_authenticated and notification_total > 0 %}
+            <li>
+            <a class="nav-link prevent-select" id="toggle-notification-menu" title="{{notification_total}} Notificações">
+              <i class="fa-solid fa-bell bell-menu"></i>
+              {% if notification_total %}
+              <span class='notification-total'>
+              {{notification_total}}
+              </span>
+              {% endif %}
+            </a>
+            </li>
+          {% endif %}
 
           {% if request.user.is_authenticated %}
           <li>

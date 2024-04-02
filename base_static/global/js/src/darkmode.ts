@@ -63,6 +63,7 @@ class DarkMode {
   // adiciona a classe de dark mode e texto branco
   toggleDarkMode(): void {
     this.addClassList(this.body, 'dark-mode-style');
+    this.body.style.transition = 'all 150ms ease';
   }
 
   // remove a classe de dark mode

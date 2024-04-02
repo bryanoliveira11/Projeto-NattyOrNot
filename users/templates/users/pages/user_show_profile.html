@@ -1,0 +1,51 @@
+{% extends "global/base.html" %}
+{% load filters %}
+
+{% block content %}
+
+<div class="user-profile-container">
+  {% if user.profile_picture %}
+  <img src="{{user.profile_picture.url}}" alt="">
+  {% endif %}
+  <div class="user-profile-content">
+    <div class="user-profile-show-data">
+      <h2>{{request.user.username|title_limit_length}}</h2>
+      <h2>
+        <a href="{% url 'users:user_profile_data' request.user.username %}" title="Editar Perfil">
+          Editar Perfil
+          <i class="fa-solid fa-user-pen m-left"></i>
+        </a>
+      </h2>
+    </div>
+    <div class="user-profile-stats">
+      <h2>999 Posts</h2>
+      <h2>99999 Seguidores</h2>
+      <h2>9999 Seguindo</h2>
+    </div>
+    <div class="user-profile-bio">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Si qua in iis corrigere voluit,
+        deteriora fecit. Quis hoc dicit? Saepe ab Aristotele, a Theophrasto mirabiliter est laudata
+        per se ipsa rerum scientia; Bork Quamquam te quidem video minime esse deterritum.
+        Nemo igitur esse beatus potest. Duo Reges: constructio interrete. Neque solum ea communia,
+        verum etiam paria esse dixerunt.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="user-profile-posts">
+  <h2 class="form-tag">Exercícios</h2>
+  <div class="user-exercise-post-list">
+    {% for exercise in exercises  %}
+    <div class="user-exercise-post-item">
+      <img src="{{exercise.cover.url}}" alt="{{exercise.title}}">
+      <h2>{{exercise.title}}</h2>
+    </div>
+    {% empty %}
+    sem posts bro
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock content %}

@@ -42,6 +42,7 @@ class DarkMode {
   }
   toggleDarkMode() {
     this.addClassList(this.body, 'dark-mode-style');
+    this.body.style.transition = 'all 150ms ease';
   }
   removeDarkMode() {
     this.removeClassList(this.body, 'dark-mode-style');

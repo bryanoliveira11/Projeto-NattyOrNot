@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from users.models import UserNotifications, UserProfile, UserWorkouts
+from users.models import UserProfile, UserWorkouts
 
 
 @admin.register(UserProfile)
@@ -21,14 +21,4 @@ class AdminUserWorkouts(admin.ModelAdmin):
     search_fields = 'id', 'title', 'user', 'is_shared',
     ordering = '-id',
     list_filter = 'user', 'created_at', 'is_shared',
-    list_per_page = 10
-
-
-@admin.register(UserNotifications)
-class AdminUserNotifications(admin.ModelAdmin):
-    list_display = 'id', 'subject', 'send_by', 'send_to', 'send_at'
-    list_display_links = 'id', 'subject',
-    search_fields = 'id', 'subject', 'send_to',
-    ordering = '-id',
-    list_filter = 'send_to', 'send_at',
     list_per_page = 10
