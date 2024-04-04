@@ -14,20 +14,7 @@
             {% for exercise in exercises  %}
                 {% include "training/partials/exercise_card.html" %}
             {% empty %}
-            <div class="main-content-error-page container center">
-                <div class="error-message-content container">
-                    <i class="fa-solid fa-magnifying-glass-minus"></i>
-                    <h2>Nenhum Exercício Encontrado !</h2>
-                      {% if is_home_page %}
-                        <h3>
-                          <a href="{% url 'dashboard:create_exercise' %}">
-                            <i class="fa-solid fa-circle-plus"></i>
-                            Criar um Exercício
-                          </a>
-                        </h3>
-                      {% endif %}
-                </div>
-            </div>
+                {% include "global/partials/no-content.html" %}
             {% endfor %}
         </div>
     </div>

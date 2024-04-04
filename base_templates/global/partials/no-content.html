@@ -1,0 +1,45 @@
+<div class="main-content-error-page center">
+  <div class="error-message-content">
+    <i class="fa-solid fa-magnifying-glass-minus"></i>
+      {% if is_workout_page %}
+      <h2>Nenhum Treino Encontrado !</h2>
+      {% else %}
+      <h2>Nenhum Exercício Encontrado !</h2>
+      {% endif %}
+      {% if is_home_page %}
+      <h3>
+        <a href="{% url 'dashboard:create_exercise' %}">
+          <i class="fa-solid fa-circle-plus"></i>
+          Criar um Exercício
+        </a>
+      </h3>
+      {% endif %}
+
+      {% if is_dashboard_page %}
+      <h3>
+        <a href="{% url 'dashboard:create_exercise' %}">
+          <i class="fa-solid fa-circle-plus"></i>
+          Criar Exercício.
+        </a>
+      </h3>
+      {% endif %}
+
+      {% if is_favorites_page %}
+      <h3>
+        <a href="{% url 'training:home' %}">
+          <i class="fa-solid fa-star"></i>
+          Favorite Exercícios Aqui.
+        </a>
+      </h3>
+      {% endif %}
+
+      {% if is_workout_page %}
+      <h3>
+        <a href="{% url 'users:user_workout_create' %}">
+          <i class="fa-solid fa-circle-plus"></i>
+          Criar Treino.
+        </a>
+      </h3>
+      {% endif %}
+  </div>
+</div>
