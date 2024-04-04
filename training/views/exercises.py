@@ -44,6 +44,7 @@ class ExerciseBaseClassView(ListView):
         context = super().get_context_data(*args, **kwargs)
 
         exercises = context.get('training')
+
         categories = Categories.objects.all()
         results = len(exercises) if exercises else None
         title = 'Exercícios Publicados'

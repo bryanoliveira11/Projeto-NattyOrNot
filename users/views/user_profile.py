@@ -22,8 +22,11 @@ User = get_user_model()
     name='dispatch'
 )
 class UserProfileBaseClassView(View):
-    def get_user_profile(self, user_id: int) -> UserProfile | None:
+    def get_user_profile_by_id(self, user_id: int) -> UserProfile | None:
         return UserProfile.objects.filter(user__id=user_id).first()
+
+    def get_user_profile_by_name(self, username: str) -> UserProfile | None:
+        return UserProfile.objects.filter(user__username=username).first()
 
     def is_google_account_user(self) -> bool:
         google_account = EmailAddress.objects.filter(
@@ -73,7 +76,7 @@ class UserProfileBaseClassView(View):
         self, form, form_action, profile_page=False, password_page=False
     ) -> HttpResponse:
         user = self.request.user
-        user_profile = self.get_user_profile(user.pk)
+        user_profile = self.get_user_profile_by_id(user.pk)
         is_google_account = self.is_google_account_user()
         self.check_email()
         notifications, notifications_total = get_notifications(self.request)
@@ -92,22 +95,32 @@ class UserProfileBaseClassView(View):
         })
 
 
+# classe para o perfil publico
 @method_decorator(
     login_required(login_url='users:login', redirect_field_name='next'),
     name='dispatch'
 )
 class UserShowProfileClassView(UserProfileBaseClassView):
     def get(self, *args, **kwargs):
-        self.validate_url_user(self.kwargs.get('username'))
-        user = self.get_user_profile(self.request.user.pk)
-        exercises = self.get_user_exercises(self.request.user)
+        user_profile = self.get_user_profile_by_name(
+            self.kwargs.get('username')
+        )
+        user_instance = User.objects.filter(
+            username=self.kwargs.get('username')
+        ).first()
+
+        if user_profile is None or not user_instance:
+            raise Http404()
+
+        exercises = self.get_user_exercises(user_instance)
         notifications, notifications_total = get_notifications(self.request)
 
         return render(
             self.request, 'users/pages/user_show_profile.html', context={
-                'user': user,
+                'user_profile': user_profile,
+                'user': user_instance,
                 'exercises': exercises,
-                'title': f'Perfil - {user}',
+                'title': f'Perfil - {user_profile}',
                 'notifications': notifications,
                 'notification_total': notifications_total,
             }
@@ -122,7 +135,10 @@ class UserProfileDataClassView(UserProfileBaseClassView):
     # get vai mostrar a foto de perfil do user e seus dados
     def get(self, *args, **kwargs):
         self.validate_url_user(self.kwargs.get('username'))
-        form = EditForm(instance=self.request.user)
+        user_profile = self.get_user_profile_by_name(
+            self.kwargs.get('username')
+        )
+        form = EditForm(user_profile=user_profile, instance=self.request.user)
         return self.render_form(
             form=form,
             profile_page=True,
@@ -140,15 +156,17 @@ class UserProfileDataClassView(UserProfileBaseClassView):
         if form.is_valid():
             user = form.save(commit=False)
             user_picture = form.cleaned_data.get('profile_picture')
-            user_profile = self.get_user_profile(self.request.user.pk)
+            user_profile = self.get_user_profile_by_id(self.request.user.pk)
+            user_bio = form.cleaned_data.get('biography')
 
-            # alterando foto caso haja dados no form
-            if user_picture:
-                # user já tem profile
-                if user_profile:
+            # user já tem profile
+            if user_profile:
+                user_profile.biography = user_bio
+                if user_picture:
+                    # alterando foto caso haja dados no form
                     user_profile.profile_picture = user_picture
-                    user_profile.save()
-                    get_profile_picture(self.request, self.request.user)
+                user_profile.save()
+                get_profile_picture(self.request, self.request.user)
 
             # salvando
             user.save()

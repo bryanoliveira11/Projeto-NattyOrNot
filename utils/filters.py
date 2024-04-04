@@ -32,3 +32,10 @@ def format_exercises_num(value):
         return f'{value} Exercícios'
 
     return f'{value} Exercício'
+
+
+def format_favorites_text(value):
+    if value == 0 or value > 1:
+        return f'{value} vezes'
+
+    return f'{value} vez'

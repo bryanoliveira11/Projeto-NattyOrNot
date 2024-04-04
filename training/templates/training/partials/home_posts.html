@@ -1,0 +1,61 @@
+{% load filters %}
+
+<section class="main">
+  <div class="wrapper">
+    <div class="left-col">
+      <div class="home-post">
+        <div class="home-post-info">
+          <div class="home-post-user">
+            <div class="home-post-profile-pic">
+              <a href="{% url 'users:user_profile' exercise.published_by %}">
+                <img src="{{request.session.user_picture}}"
+                alt="Foto de Perfil de {{exercise.published_by}}"
+                title="Perfil de {{exercise.published_by}}" />
+              </a>
+            </div>
+            <a href="{% url 'users:user_profile' exercise.published_by %}"
+            title="Perfil de {{exercise.published_by}}">
+              <p class="home-post-username">{{exercise.published_by}}</p>
+            </a>
+          </div>
+        </div>
+        <a href="{% url 'training:exercises_detail' exercise.slug %}" title="Ver Post">
+          <img src="{{exercise.cover.url}}" class="home-post-image" alt="{{exercise.title}}" />
+        </a>
+        <div class="home-post-title">
+          <a href="{% url 'training:exercises_detail' exercise.slug %}"
+          title="{{exercise.title}}">
+          {{exercise.title}}
+        </a>
+        </div>
+        <div class="home-post-content">
+          <div class="home-post-reaction-wrapper">
+            <a href="{% url 'training:favorite_exercise' exercise.pk %}">
+              {% if request.user in exercise.favorited_by.all %}
+              <i class="fa-solid fa-star yellow-text" title="Desfavoritar Exercício"></i>
+              {% else %}
+              <i class="fa-solid fa-star home-icon" title="Favoritar Exercício"></i>
+              {% endif %}
+            </a>
+            <a href="{% url 'training:exercises_detail' exercise.slug %}" title="Comentar">
+              <i class="fa-solid fa-comment dark-text home-icon"></i>
+            </a>
+            <i class="fa-solid fa-copy dark-text home-icon" title="Copiar Link do Post"></i>
+          </div>
+          <p class="home-post-favorites">
+            Favoritado {{exercise.favorites_count|format_favorites_text}}
+          </p>
+          <p class="home-post-description">
+            <span>{{exercise.published_by}}</span>
+            {{exercise.description}}
+          </p>
+          <p class="home-post-date">
+            {{ exercise.created_at|date:"d/m/Y" }}
+            ás
+            {{ exercise.created_at|date:"H:i" }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

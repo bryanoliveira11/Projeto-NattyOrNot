@@ -5,7 +5,7 @@ from users.models import UserProfile, UserWorkouts
 
 @admin.register(UserProfile)
 class AdminUser(admin.ModelAdmin):
-    list_display = 'user', 'profile_picture', 'created_at', 'updated_at',
+    list_display = 'user', 'profile_picture', 'biography', 'created_at', 'updated_at',
     list_display_links = 'user',
     search_fields = 'id', 'user',
     ordering = '-id',

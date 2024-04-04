@@ -161,7 +161,7 @@ class RegisterForm(forms.ModelForm, ValidateFields):
     )
 
     profile_picture = forms.FileField(
-        label='Foto de Perfil (Opcional)',
+        label='Foto de Perfil',
         required=False,
         widget=forms.FileInput(
             attrs={
@@ -197,6 +197,11 @@ class RegisterForm(forms.ModelForm, ValidateFields):
 
 # este form vai ser usado para editar os dados do usuário
 class EditForm(RegisterForm):
+    def __init__(self, user_profile=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if user_profile:
+            self.fields['biography'].initial = user_profile.biography
+
     password = forms.CharField(required=False, widget=forms.PasswordInput(
         attrs={'class': 'invisible'}
     ))
@@ -204,6 +209,13 @@ class EditForm(RegisterForm):
     password2 = forms.CharField(required=False, widget=forms.PasswordInput(
         attrs={'class': 'invisible'}
     ))
+
+    biography = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'class': 'span-2'}),
+        label='Biografia',
+        help_text='Adicione uma Biografia ao seu Perfil !',
+    )
 
     class Meta:
         model = User

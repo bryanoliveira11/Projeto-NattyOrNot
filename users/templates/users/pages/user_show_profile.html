@@ -1,20 +1,30 @@
 {% extends "global/base.html" %}
+{% load static %}
 {% load filters %}
 
 {% block content %}
 
 <div class="user-profile-container">
-  {% if user.profile_picture %}
-  <img src="{{user.profile_picture.url}}" alt="">
+  {% if user_profile.profile_picture %}
+  <img src="{{user_profile.profile_picture.url}}" alt="Foto de Perfil de {{user}}">
+  {% else %}
+  <img src="{% static 'global/imgs/default-user-picture.png' %}" alt="Foto de Perfil de {{user}}">
   {% endif %}
   <div class="user-profile-content">
     <div class="user-profile-show-data">
-      <h2>{{request.user.username|title_limit_length}}</h2>
+      <h2>{{user.username|title_limit_length}}</h2>
       <h2>
-        <a href="{% url 'users:user_profile_data' request.user.username %}" title="Editar Perfil">
-          Editar Perfil
-          <i class="fa-solid fa-user-pen m-left"></i>
-        </a>
+        {% if user.username == request.user.username %}
+          <a href="{% url 'users:user_profile_data' request.user.username %}" title="Editar Perfil">
+            Editar Perfil
+            <i class="fa-solid fa-user-pen m-left"></i>
+          </a>
+        {% else %}
+          <a href="">
+            Seguir
+            <i class="fa-solid fa-user-plus"></i>
+          </a>
+        {% endif %}
       </h2>
     </div>
     <div class="user-profile-stats">
@@ -24,11 +34,7 @@
     </div>
     <div class="user-profile-bio">
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Si qua in iis corrigere voluit,
-        deteriora fecit. Quis hoc dicit? Saepe ab Aristotele, a Theophrasto mirabiliter est laudata
-        per se ipsa rerum scientia; Bork Quamquam te quidem video minime esse deterritum.
-        Nemo igitur esse beatus potest. Duo Reges: constructio interrete. Neque solum ea communia,
-        verum etiam paria esse dixerunt.
+        {{user_profile.biography}}
       </p>
     </div>
   </div>

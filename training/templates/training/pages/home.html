@@ -3,19 +3,17 @@
 {% block title %} {{title}} {% endblock title %}
 
 {% block content %}
-    <div class="center">
-        <h2 class="form-tag">{{page_tag}}</h2>
-        {% include "global/partials/messages.html" %}
-        {% include "global/partials/filters.html" %}
-    </div>
+<div class="center">
+    <h2 class="form-tag">
+      {% include "global/partials/messages.html" %}
+    </h2>
+    <!-- {% include "global/partials/filters.html" %} -->
+</div>
 
-    <div class="main-content main-content-list container center">
-        <div class="exercise-container-grid">
-            {% for exercise in exercises  %}
-                {% include "training/partials/exercise_card.html" %}
-            {% empty %}
-                {% include "global/partials/no-content.html" %}
-            {% endfor %}
-        </div>
-    </div>
+{% for exercise in exercises  %}
+  {% include "training/partials/home_posts.html" %}
+{% empty %}
+  {% include "global/partials/no-content.html" %}
+{% endfor %}
+
 {% endblock content %}

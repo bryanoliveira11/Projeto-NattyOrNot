@@ -59,7 +59,7 @@ class Exercises(models.Model):
     )
     published_by = models.ForeignKey(
         User,
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         null=True,
         blank=True,
         verbose_name='Publicado por'

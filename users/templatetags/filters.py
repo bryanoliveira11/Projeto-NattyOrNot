@@ -28,3 +28,8 @@ def format_reps(reps):
 @register.filter
 def format_exercises_num(value):
     return filters.format_exercises_num(value)
+
+
+@register.filter
+def format_favorites_text(value):
+    return filters.format_favorites_text(value)
