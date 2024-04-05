@@ -3,11 +3,12 @@
 {% block title %} {{title}} {% endblock title %}
 
 {% block content %}
-<div class="center">
-    <h2 class="form-tag">
-      {% include "global/partials/messages.html" %}
+<div class="page-tag-title">
+    <h2>
+      {{page_tag}}
     </h2>
-    <!-- {% include "global/partials/filters.html" %} -->
+    {% include "global/partials/messages.html" %}
+    {% include "global/partials/filters.html" %}
 </div>
 
 {% for exercise in exercises  %}

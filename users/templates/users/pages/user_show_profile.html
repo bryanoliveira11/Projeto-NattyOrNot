@@ -12,7 +12,13 @@
   {% endif %}
   <div class="user-profile-content">
     <div class="user-profile-show-data">
-      <h2>{{user.username|title_limit_length}}</h2>
+      <h2>
+        {% if user.username == request.user.username %}
+        {{user.username|title_limit_length}} (você)
+        {% else %}
+        {{user.username|title_limit_length}}
+        {% endif %}
+      </h2>
       <h2>
         {% if user.username == request.user.username %}
           <a href="{% url 'users:user_profile_data' request.user.username %}" title="Editar Perfil">

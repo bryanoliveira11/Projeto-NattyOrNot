@@ -21,7 +21,7 @@ class UserProfile(models.Model):
         verbose_name='Foto de Perfil'
     )
     biography = models.TextField(
-        verbose_name='Biografia', default='', null=True
+        verbose_name='Biografia', default='', null=True, blank=True
     )
     notifications_total = models.IntegerField(
         null=False,

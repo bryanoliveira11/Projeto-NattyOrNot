@@ -80,19 +80,23 @@
                 {% for category in exercise.categories.all  %}
                     {% if exercise.categories.all|length > 1 %}
                         {% if is_dashboard_page %}
-                            <a href="{% url 'dashboard:user_dashboard_category' category.id %}">
+                            <a href="{% url 'dashboard:user_dashboard_category' category.id %}" title="{{category.name}}">
                                 {{category.name}}
                             </a> |
                         {% else %}
-                            <a href="{% url 'training:category' category.id %}">{{category.name}}</a> |
+                            <a href="{% url 'training:category' category.id %}" title="{{category.name}}">
+                              {{category.name}}
+                            </a> |
                         {% endif %}
                     {% else %}
                         {% if is_dashboard_page %}
-                            <a href="{% url 'dashboard:user_dashboard_category' category.id %}">
+                            <a href="{% url 'dashboard:user_dashboard_category' category.id %}" title="{{category.name}}">
                                 {{category.name}}
                             </a>
                         {% else %}
-                            <a href="{% url 'training:category' category.id %}">{{category.name}}</a>
+                            <a href="{% url 'training:category' category.id %}" title="{{category.name}}">
+                              {{category.name}}
+                            </a>
                         {% endif %}
                     {% endif %}
                 {% endfor %}
@@ -101,6 +105,7 @@
                       -
                       <i class="fa-solid fa-user"></i>
                       <a href="{% url 'users:user_profile' exercise.published_by %}"
+                      class="home-post-username"
                       title="Perfil de {{exercise.published_by}}">
                       <span>{{exercise.published_by}}</span>
                       </a>

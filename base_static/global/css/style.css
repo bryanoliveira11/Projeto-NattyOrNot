@@ -337,7 +337,7 @@ button.nav-link {
   height: auto;
   border: 1px solid var(--color-gray-3);
   margin: 4rem auto;
-  box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.2)
+  box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 body.dark-mode-style .home-post {
@@ -353,7 +353,8 @@ body.dark-mode-style .home-post {
   padding: 0 2rem;
 }
 
-.home-post-info .home-post-username {
+.home-post-info .home-post-username,
+a.home-post-username {
   width: auto;
   font-weight: bold;
   color: var(--color-dark-text);
@@ -396,8 +397,17 @@ body.dark-mode-style .home-post {
   font-weight: bold;
 }
 
-.home-post-title{
-  margin: 1rem 0 0 2rem;
+.home-post-title,
+.home-post-categories {
+  margin: 1rem 2rem 0 2rem;
+}
+
+.home-post-categories a {
+  color: var(--color-dark-text);
+}
+
+body.dark-mode-style .home-post-categories a {
+  color: var(--color-gray-0);
 }
 
 .home-post-title a {
@@ -405,7 +415,8 @@ body.dark-mode-style .home-post {
   text-transform: capitalize;
 }
 
-.home-post-title a:hover {
+.home-post-title a:hover,
+.home-post-categories a:hover {
   filter: brightness(85%);
 }
 
@@ -639,6 +650,18 @@ a.favorites-url:hover {
   max-height: 40rem;
 }
 
+.page-tag-title {
+  max-width: 64rem;
+  margin: 4rem auto;
+  padding: 0 1rem 0 1rem;
+  text-align: left;
+}
+
+.page-tag-title h2 {
+  font-size: 2rem;
+  margin-top: 1rem;
+}
+
 .form-tag.less-margin {
   margin-top: 2rem;
 }
@@ -654,7 +677,6 @@ a.favorites-url:hover {
 .home-remove-filter a {
   color: var(--color-primary);
   font-size: 1.7rem;
-  margin-left: 1rem;
 }
 
 .home-remove-filter span {
@@ -1201,6 +1223,7 @@ div.help-text.resend-email #resend-email-btn:hover {
 
 .results span {
   font-family: var(--font-headings);
+  font-size: 1.5rem;
 }
 
 .results .clean-filters {
@@ -1220,7 +1243,7 @@ div.help-text.resend-email #resend-email-btn:hover {
 
 .dropdown-container {
   max-width: 64rem;
-  margin: 0 auto 1rem auto;
+  margin: 1rem auto 1rem auto;
 }
 
 .dropdown-filters {
@@ -1461,6 +1484,10 @@ a.notification-url:hover {
   color: var(--color-dark-text);
   font-size: 1.8rem;
   text-align: left;
+}
+
+.message-top-bottom-margin {
+  margin: 1rem 0 1rem 0;
 }
 
 .message-disqus {
@@ -1955,6 +1982,10 @@ td a:hover {
   font-size: 10rem;
 }
 
+.error-message-content {
+  margin-bottom: 5rem;
+}
+
 .error-message-content h2 {
   font-size: 2.5rem;
   margin-top: var(--spacing-gutter-medium);
@@ -2366,8 +2397,8 @@ body.dark-mode-style .workouts-table tr {
     width: 84%;
   }
 
-  .dropdown-container {
-    width: 90%;
+  .home-post {
+    margin: 0 1rem 2rem 1rem;
   }
 }
 

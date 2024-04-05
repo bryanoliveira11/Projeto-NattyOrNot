@@ -39,7 +39,3 @@ def format_favorites_text(value):
         return f'{value} vezes'
 
     return f'{value} vez'
-
-
-def get_item(dictionary, key):
-    return dictionary.get(key)

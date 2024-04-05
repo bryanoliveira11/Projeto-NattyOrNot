@@ -1,24 +1,28 @@
 {% if messages %}
-    <div class="main-content center container messages-container">
-        {% for message in messages  %}
-            <div class="message {{message.tags}}">
-                <div class="message-content">
-                    {% if 'message-success' in message.tags %}
-                        <i class="fa-regular fa-circle-check icon-shake"></i>
-                    {% endif %}
-                    {% if 'message-error' in message.tags %}
-                        <i class="fa-regular fa-circle-xmark icon-shake"></i>
-                    {% endif %}
-                    {% if 'message-info' in message.tags %}
-                        <i class="fa-solid fa-circle-info zoomIn-zoomOut"></i>
-                    {% endif %}
-                    {% if 'message-warning' in message.tags %}
-                        <i class="fa-solid fa-triangle-exclamation zoomIn-zoomOut"></i>
-                    {% endif %}
-                    {{message|safe}}
-                </div>
-                <i class="fa-solid fa-xmark dismiss-flash-message" title="Remover Mensagem"></i>
-            </div>
-        {% endfor %}
-    </div>
+  {% if is_home_page %}
+  <div class="main-content center messages-container message-top-bottom-margin">
+  {% else %}
+  <div class="main-content center container messages-container">
+  {% endif %}
+    {% for message in messages  %}
+      <div class="message {{message.tags}}">
+        <div class="message-content">
+          {% if 'message-success' in message.tags %}
+            <i class="fa-regular fa-circle-check icon-shake"></i>
+          {% endif %}
+          {% if 'message-error' in message.tags %}
+            <i class="fa-regular fa-circle-xmark icon-shake"></i>
+          {% endif %}
+          {% if 'message-info' in message.tags %}
+            <i class="fa-solid fa-circle-info zoomIn-zoomOut"></i>
+          {% endif %}
+          {% if 'message-warning' in message.tags %}
+            <i class="fa-solid fa-triangle-exclamation zoomIn-zoomOut"></i>
+          {% endif %}
+            {{message|safe}}
+        </div>
+            <i class="fa-solid fa-xmark dismiss-flash-message" title="Remover Mensagem"></i>
+      </div>
+    {% endfor %}
+  </div>
 {% endif %}

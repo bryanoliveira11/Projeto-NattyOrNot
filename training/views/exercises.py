@@ -15,7 +15,6 @@ from django.views.generic import DetailView, ListView, View
 
 from training.contexts.training_base_contexts import get_home_page_base_context
 from training.models import ApiMediaImages, Categories, Exercises
-from users.models import UserProfile
 from utils.api_exercises_json import exercises_json
 from utils.pagination import make_pagination
 
@@ -41,22 +40,6 @@ class ExerciseBaseClassView(ListView):
 
         return queryset
 
-    # função para pegar as fotos dos usuários que postaram algo na home page
-    def get_users_profile_pictures(self, exercises: list):
-        user_list = [
-            exercise.published_by for exercise in
-            exercises if exercise.published_by
-        ]
-        user_profiles = UserProfile.objects.filter(
-            user__in=user_list
-        ).select_related('user')
-
-        users_data = {
-            profile.user: profile.profile_picture for profile in user_profiles
-        }
-
-        return users_data
-
     def get_context_data(self, *args, **kwargs) -> Dict[str, Any]:
         context = super().get_context_data(*args, **kwargs)
 
@@ -72,14 +55,13 @@ class ExerciseBaseClassView(ListView):
         )
 
         context.update(
-            get_home_page_base_context(self.request, is_home_page=True)
+            get_home_page_base_context(
+                self.request, exercises=exercises, is_home_page=True
+            )
         )
-
-        users_data = self.get_users_profile_pictures(exercises)
 
         context.update({
             'exercises': page_obj,
-            'users_data': users_data,
             'categories': categories,
             'results_count': results,
             'pagination_range': pagination_range,

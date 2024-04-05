@@ -6,16 +6,15 @@
 {% block title %} {{title}} {% endblock title %}
 
 {% block content %}
-    <div class="center">
-        <h2 class="form-tag">
+    <div class="page-tag-title">
+        <h3 class="home-remove-filter left">
+          <a href="{{url_to_redirect}}">
+              <i class="fa-solid fa-circle-left"></i>
+              <span class="back-to-home">Voltar</span>
+          </a>
+        </h3>
+        <h2>
             Exercício - {{page_tag}}
-            <h3 class="home-remove-filter home form-tag less-margin">
-                <a href="{{url_to_redirect}}">
-                    <i class="fa-solid fa-circle-left"></i>
-                    <span class="back-to-home">Voltar</span>
-                </a>
-                <span>para Página Anterior</span>
-            </h3>
         </h2>
     </div>
     <div class="main-content main-content-detail container center">
