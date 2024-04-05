@@ -1,4 +1,5 @@
 {% load filters %}
+{% load static %}
 
 <section class="main">
   <div class="wrapper">
@@ -7,11 +8,21 @@
         <div class="home-post-info">
           <div class="home-post-user">
             <div class="home-post-profile-pic">
-              <a href="{% url 'users:user_profile' exercise.published_by %}">
-                <img src="{{request.session.user_picture}}"
-                alt="Foto de Perfil de {{exercise.published_by}}"
-                title="Perfil de {{exercise.published_by}}" />
-              </a>
+              {% for username, picture in users_data.items %}
+                {% if username == exercise.published_by %}
+                  <a href="{% url 'users:user_profile' exercise.published_by %}">
+                  {% if picture %}
+                  <img src="media/{{ picture }}"
+                  alt="Foto de Perfil de {{ exercise.published_by }}"
+                  title="Perfil de {{ exercise.published_by }}" />
+                {% else %}
+                  <img src="{% static 'global/imgs/default-user-picture.png' %}"
+                  alt="Foto de Perfil de {{ exercise.published_by }}"
+                  title="Perfil de {{ exercise.published_by }}" />
+                {% endif %}
+                </a>
+                {% endif %}
+              {% endfor %}
             </div>
             <a href="{% url 'users:user_profile' exercise.published_by %}"
             title="Perfil de {{exercise.published_by}}">
@@ -46,7 +57,6 @@
             Favoritado {{exercise.favorites_count|format_favorites_text}}
           </p>
           <p class="home-post-description">
-            <span>{{exercise.published_by}}</span>
             {{exercise.description}}
           </p>
           <p class="home-post-date">

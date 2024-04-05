@@ -98,9 +98,12 @@
                 {% endfor %}
                 {% if not is_dashboard_page and exercise.published_by is not None %}
                     <span class="published-by">
-                        -
-                        <i class="fa-solid fa-user"></i>
-                        {{exercise.published_by.username|title_limit_length}}
+                      -
+                      <i class="fa-solid fa-user"></i>
+                      <a href="{% url 'users:user_profile' exercise.published_by %}"
+                      title="Perfil de {{exercise.published_by}}">
+                      <span>{{exercise.published_by}}</span>
+                      </a>
                     </span>
                 {% endif %}
                 {% if is_detail_page %}
@@ -109,13 +112,6 @@
                       <i class="fas fa-calendar-alt"></i>
                       {{ exercise.created_at|date:"d/m/Y" }} ás {{ exercise.created_at|date:"H:i" }}
                     </span>
-                    {% if exercise.favorites_count > 0 %}
-                    <span class="favorites-count">
-                      -
-                      <i class="fa-solid fa-star"></i>
-                      {{ exercise.favorites_count }}
-                    </span>
-                    {% endif %}
                 {% endif %}
             </span>
         {% endif %}

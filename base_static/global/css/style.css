@@ -127,7 +127,7 @@ img {
   max-width: 1600px;
   margin: 0 auto;
   column-gap: 2rem;
-  height: 90px;
+  height: 80px;
   padding: 1.2rem 3rem;
 }
 
@@ -337,6 +337,7 @@ button.nav-link {
   height: auto;
   border: 1px solid var(--color-gray-3);
   margin: 4rem auto;
+  box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.2)
 }
 
 body.dark-mode-style .home-post {
@@ -366,14 +367,16 @@ body.dark-mode-style .home-post {
 }
 
 .home-post-info .home-post-profile-pic {
-  height: 4rem;
-  width: 4rem;
   padding: 0;
   background: none;
+  display: flex;
+  align-items: center;
 }
 
 .home-post-info .home-post-profile-pic img {
   border-radius: 50%;
+  height: 4rem;
+  width: 4rem;
   border: none;
 }
 
@@ -2280,6 +2283,7 @@ body.dark-mode-style .workouts-table tr {
   }
 
   .nav-container {
+    height: 90px;
     padding: 1.2rem;
   }
 
