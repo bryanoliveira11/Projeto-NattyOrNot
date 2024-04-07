@@ -3,29 +3,30 @@
 {% block title %} {{title}} {% endblock title %}
 
 {% block content %}
-    <div class="center">
-        <h2 class="form-tag dashboard-tag">{{page_tag}}</h2>
-        <div class="dashboard-message-padding">
-            {% include "global/partials/messages.html" %}
-            {% include "global/partials/filters.html" %}
-        </div>
+<div class="center">
+    <h2 class="form-tag dashboard-tag">{{page_tag}}</h2>
+    <div class="dashboard-message-padding">
+        {% include "global/partials/messages.html" %}
+        {% include "global/partials/filters.html" %}
     </div>
+</div>
 
-    <div class="main-content main-content-list container center">
-        <div class="exercise-container-grid">
-            {% for exercise in exercises  %}
-              {% include "training/partials/exercise_card.html" %}
-            {% empty %}
-              {% include "global/partials/no-content.html" %}
-            {% endfor %}
-        </div>
+<div class="main-content main-content-list container center">
+    <div class="exercise-container-grid">
+        {% for exercise in exercises  %}
+          {% include "training/partials/exercise_card.html" %}
+        {% empty %}
+          {% include "global/partials/no-content.html" %}
+        {% endfor %}
     </div>
-    {% if exercises %}
-        <div class="add-new-exercise">
-            <a href="{% url 'dashboard:create_exercise' %}">
-                <i class="fa-solid fa-circle-plus"></i>
-                Novo Exercício
-            </a>
-        </div>
-    {% endif %}
+</div>
+{% if exercises %}
+  <div class="add-new-exercise">
+      <a href="{% url 'dashboard:create_exercise' %}">
+          <i class="fa-solid fa-circle-plus"></i>
+          Novo Exercício
+      </a>
+  </div>
+{% endif %}
+
 {% endblock content %}

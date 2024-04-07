@@ -1,5 +1,5 @@
 'use strict';
-var _a;
+var _a, _b;
 function PreventUserClicksOnBody(e) {
   e.preventDefault();
   e.stopPropagation();
@@ -255,10 +255,15 @@ function handleForgotPasswordPages(pageAttr) {
     return;
   }
 }
-(_a = document.querySelector('#resend-email-btn')) === null || _a === void 0
+(_a = document.getElementById('resend-email-btn')) === null || _a === void 0
   ? void 0
   : _a.addEventListener('click', () => {
       window.location.reload();
+    });
+(_b = document.getElementById('go-back-link')) === null || _b === void 0
+  ? void 0
+  : _b.addEventListener('click', () => {
+      history.back();
     });
 class HandlePasswordStyles {
   constructor() {

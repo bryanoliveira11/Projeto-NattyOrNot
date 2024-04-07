@@ -8,18 +8,18 @@
 {% block content %}
     <div class="page-tag-title">
         <h3 class="home-remove-filter left">
-          <a href="{{url_to_redirect}}">
+          <a href="{{url_to_redirect}}" id="go-back-link">
               <i class="fa-solid fa-circle-left"></i>
               <span class="back-to-home">Voltar</span>
           </a>
         </h3>
         <h2>
-            Exercício - {{page_tag}}
+            Exercício > {{page_tag}}
         </h2>
     </div>
     <div class="main-content main-content-detail container center">
         <div class="exercise-container-grid details">
-                {% include "training/partials/exercise_card.html" %}
+          {% include "training/partials/exercise_card.html" %}
         </div>
         <div class="firefox-warning-message">
             <div class="main-content center container messages-container">

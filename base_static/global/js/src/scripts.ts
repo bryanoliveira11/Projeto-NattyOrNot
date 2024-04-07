@@ -365,8 +365,13 @@ function handleForgotPasswordPages(pageAttr: string): void {
 }
 
 // função para reenviar e-mail (somente recarrega a página)
-document.querySelector('#resend-email-btn')?.addEventListener('click', () => {
+document.getElementById('resend-email-btn')?.addEventListener('click', () => {
   window.location.reload();
+});
+
+// função para voltar páginas que precisam manter o scroll
+document.getElementById('go-back-link')?.addEventListener('click', () => {
+  history.back();
 });
 
 class HandlePasswordStyles {

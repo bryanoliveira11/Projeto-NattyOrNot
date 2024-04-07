@@ -2,40 +2,37 @@
 {% block title %} {{title}}{% endblock title %}
 
 {% block content %}
-    <div class="main-content center container">
-        {% if is_exercise_edit %}
-            <h3 class="form-tag dashboard-forms">
-                <i class="fa-solid fa-pen-to-square"></i>
-                {{title}}
-            </h3>
-        {% else %}
-            <h3 class="form-tag dashboard-forms">
-                <i class="fa-solid fa-circle-plus m-right"></i>
-                {{title}}
-            </h3>
-        {% endif %}
-        <div class="login-message container center">
-            <h3 class="form-tag less-margin">
-                <a href="{{url_to_redirect}}" class="plaintext-button">
-                    <i class="fa-solid fa-circle-left"></i>
-                    Voltar
-                </a>
-                para Página Anterior.
-            </h3>
-            {% if is_exercise_edit %}
-                <div class="add-new-exercise">
-                    <a href="{% url 'dashboard:create_exercise' %}">
-                        <i class="fa-solid fa-circle-plus"></i>
-                        Novo Exercício
-                    </a>
-                </div>
-            {% endif %}
-        </div>
+<div class="main-content">
+  <div class="page-tag-title">
+    <h3 class="home-remove-filter left">
+      <a href="{{url_to_redirect}}">
+          <i class="fa-solid fa-circle-left"></i>
+          <span class="back-to-home">Voltar</span>
+      </a>
+      {% if is_exercise_edit %}
+      <span class="sep">|</span>
+      <span>
+        <a href="{% url 'dashboard:create_exercise' %}">
+          <i class="fa-solid fa-circle-plus"></i>
+          Novo Exercício
+        </a>
+      </span>
+      {% endif %}
+    </h3>
+    <h2>
+      {% if is_exercise_edit %}
+        <i class="fa-solid fa-pen-to-square"></i>
+      {% else %}
+        <i class="fa-solid fa-circle-plus m-right"></i>
+      {% endif %}
+        {{title}}
+    </h2>
+  </div>
 
-        {% include "global/partials/messages.html" %}
-        <div class="left">
-            {% include "global/partials/form.html" %}
-        </div>
+  {% include "global/partials/messages.html" %}
+    <div class="left">
+        {% include "global/partials/form.html" %}
     </div>
+</div>
 
 {% endblock content %}
