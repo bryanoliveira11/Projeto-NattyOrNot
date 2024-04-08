@@ -1,0 +1,64 @@
+{% extends "global/base.html" %}
+
+{% block content %}
+
+<div class="page-tag-title">
+  <h2>
+    <i class="fa-solid fa-heart-pulse"></i>
+    {{page_tag}}
+  </h2>
+  {% include "global/partials/messages.html" %}
+</div>
+
+{% include "global/partials/form.html" %}
+
+{% if user_health.is_valid_data %}
+
+<div class="page-tag-title health-page">
+  <h2>
+    <i class="fa-solid fa-chart-simple"></i>
+    Estatísticas
+  </h2>
+</div>
+
+<div class="user-health-container">
+  <div class="user-health-content">
+    <div class="user-health-content-flex">
+      <div class="user-health-water">
+        <h2>Água Recomendada</h2>
+        <span>
+          <i class="fa-solid fa-droplet"></i>
+          {{user_health.water_intake}} ml
+        </span>
+        <p>35 ml por kg</p>
+      </div>
+      <div class="user-health-protein">
+        <h2>Proteína Recomendada</h2>
+        <span>
+          <i class="fa-solid fa-dna"></i>
+          {{user_health.protein_intake}} g
+        </span>
+        <p>0.8 g por kg</p>
+      </div>
+    </div>
+    <div class="user-health-imc {{imc_css_class}}">
+      <span>
+        <h2>Índice de Massa Corporal (IMC)</h2>
+        {% if imc_css_class == 'normal-weight' %}
+        <i class="fa-solid fa-person-circle-check"></i>
+        {% endif %}
+        {% if imc_css_class == 'above-weight' %}
+        <i class="fa-solid fa-person-circle-exclamation"></i>
+        {% endif %}
+        {% if imc_css_class == 'over-weight' %}
+        <i class="fa-solid fa-person-circle-minus"></i>
+        {% endif %}
+        {{user_health.imc}} - {{imc_category}}
+      </span>
+      <p>Seu peso dividido pela altura duas vezes</p>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% endblock content %}

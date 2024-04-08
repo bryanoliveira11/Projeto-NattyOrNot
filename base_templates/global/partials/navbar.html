@@ -136,6 +136,19 @@
 
                 <li role="menuitem">
                   <a class="dropdown-link prevent-select"
+                  href="{% url 'users:user_profile_health' request.user.username %}">
+                    <div>
+                      <span class="dropdown-link-title" title="Health">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                        Health
+                      </span>
+                      <p>Veja Estatísticas sobre sua Saúde.</p>
+                    </div>
+                  </a>
+                </li>
+
+                <li role="menuitem">
+                  <a class="dropdown-link prevent-select"
                   href="{% url 'users:user_profile_data' request.user.username %}">
                     <div>
                       <span class="dropdown-link-title" title="Meus Dados">

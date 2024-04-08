@@ -26,3 +26,10 @@ def is_positive_number(field_number: int):
         if field_number > 0:
             return True
     return False
+
+
+def is_positive_float_number(field_number: float):
+    if isinstance(field_number, float):
+        if field_number > 0:
+            return True
+    return False

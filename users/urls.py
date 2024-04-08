@@ -22,6 +22,11 @@ urlpatterns = [
         name='user_profile'
     ),
     path(
+        '<str:username>/profile/health/',
+        views.UserProfileHealthClassView.as_view(),
+        name='user_profile_health'
+    ),
+    path(
         '<str:username>/profile/data/',
         views.UserProfileDataClassView.as_view(),
         name='user_profile_data'

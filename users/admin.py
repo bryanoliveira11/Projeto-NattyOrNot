@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from users.models import UserProfile, UserWorkouts
+from users.models import UserHealth, UserProfile, UserWorkouts
 
 
 @admin.register(UserProfile)
@@ -21,4 +21,14 @@ class AdminUserWorkouts(admin.ModelAdmin):
     search_fields = 'id', 'title', 'user', 'is_shared',
     ordering = '-id',
     list_filter = 'user', 'created_at', 'is_shared',
+    list_per_page = 10
+
+
+@admin.register(UserHealth)
+class AdminUserHealth(admin.ModelAdmin):
+    list_display = 'id', 'user', 'height', 'weight', 'imc', 'protein_intake', 'water_intake', 'updated_at',
+    list_display_links = 'id', 'user',
+    search_fields = 'id', 'title', 'height', 'weight', 'imc',
+    ordering = '-id',
+    list_filter = 'user', 'height', 'weight', 'imc',
     list_per_page = 10

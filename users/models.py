@@ -97,6 +97,52 @@ class UserWorkouts(models.Model):
         verbose_name_plural = 'Treinos'
 
 
+class UserHealth(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        blank=True,
+        verbose_name='Usuário'
+    )
+    height = models.IntegerField(
+        verbose_name='Altura (cm)',
+        blank=True, null=True
+    )
+    weight = models.DecimalField(
+        decimal_places=2, max_digits=10, verbose_name='Peso (kg)',
+        blank=True, null=True
+    )
+    imc = models.DecimalField(
+        decimal_places=2, max_digits=10, verbose_name='IMC',
+        blank=True, null=True
+    )
+    protein_intake = models.DecimalField(
+        decimal_places=2, max_digits=10,
+        verbose_name='Proteína Recomendada (g)',
+        blank=True, null=True
+    )
+    water_intake = models.DecimalField(
+        decimal_places=2, max_digits=10,
+        verbose_name='Aguá Recomendada (ml)',
+        blank=True, null=True
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True, verbose_name='Alterado em'
+    )
+    is_valid_data = models.BooleanField(
+        default=False,
+        verbose_name='Dados estão Válidos',
+        editable=False
+    )
+
+    def __str__(self) -> str:
+        return 'Health'
+
+    class Meta:
+        verbose_name = 'Health'
+        verbose_name_plural = 'Health'
+
+
 class UserNotifications(models.Model):
     subject = models.CharField(
         max_length=155, verbose_name='Assunto', default=''
