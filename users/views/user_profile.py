@@ -50,7 +50,7 @@ class UserProfileBaseClassView(View):
             if not user_db.email:  # type:ignore
                 messages.warning(
                     self.request,
-                    'Parece que seu Email não está Preenchido. '
+                    'Seu E-mail não está Preenchido. '
                     'Por Favor, Revise seus Dados !'
                 )
 

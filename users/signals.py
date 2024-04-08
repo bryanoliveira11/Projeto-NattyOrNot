@@ -243,7 +243,7 @@ def configure_google_account(request, user, **kwargs):
                 email__iexact=google_account_email
             ).exclude(id=user.id).first()
 
-            msg_url = reverse('users:user_profile', args=(user.username,))
+            msg_url = reverse('users:user_profile_data', args=(user.username,))
 
             if user_with_email:
                 # muda o email para "" caso já exista
