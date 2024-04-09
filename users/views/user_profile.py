@@ -77,7 +77,7 @@ class UserProfileBaseClassView(View):
         return exercises
 
     def render_form(
-        self, form, form_action, profile_page=False, password_page=False
+        self, form, form_action='', profile_page=False, password_page=False
     ) -> HttpResponse:
         user = self.request.user
         user_profile = self.get_user_profile_by_id(user.pk)
@@ -151,6 +151,8 @@ class UserProfileDataClassView(UserProfileBaseClassView):
 
     # post permitirá que o user edite os dados existentes da conta
     def post(self, *args, **kwargs):
+        self.validate_url_user(self.kwargs.get('username'))
+
         form = EditForm(
             data=self.request.POST or None,
             files=self.request.FILES or None,
@@ -204,6 +206,8 @@ class UserProfileChangePassword(UserProfileBaseClassView):
         )
 
     def post(self, *args, **kwargs):
+        self.validate_url_user(self.kwargs.get('username'))
+
         form = ChangePasswordForm(
             data=self.request.POST or None,
             files=self.request.FILES or None,
@@ -233,7 +237,7 @@ class UserProfileChangePassword(UserProfileBaseClassView):
     name='dispatch'
 )
 class UserProfileHealthClassView(UserProfileBaseClassView):
-    def render_health_form(self, form, form_action, user_health):
+    def render_health_form(self, form, user_health):
         title = f'Health - {self.request.user.get_username()}'
         notifications, notifications_total = get_notifications(self.request)
         imc_category, imc_css_class = imc_classify(
@@ -249,7 +253,6 @@ class UserProfileHealthClassView(UserProfileBaseClassView):
                 'imc_css_class': imc_css_class,
                 'notifications': notifications,
                 'notification_total': notifications_total,
-                'form_action': form_action,
                 'title': title,
                 'page_tag': title,
                 'is_health_page': True
@@ -280,13 +283,11 @@ class UserProfileHealthClassView(UserProfileBaseClassView):
 
         return self.render_health_form(
             form=form,
-            form_action=reverse(
-                'users:user_profile_health', args=(self.request.user,)
-            ),
             user_health=user_health
         )
 
     def post(self, *args, **kwargs):
+        self.validate_url_user(self.kwargs.get('username'))
         user_health = self.get_health_user(self.kwargs.get('username'))
 
         form = UserHealthForm(
@@ -323,8 +324,5 @@ class UserProfileHealthClassView(UserProfileBaseClassView):
 
         return self.render_health_form(
             form=form,
-            form_action=reverse(
-                'users:user_profile_health', args=(self.request.user,)
-            ),
             user_health=user_health
         )

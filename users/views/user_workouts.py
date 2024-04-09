@@ -170,7 +170,7 @@ class UserWorkoutBaseClass(View):
                 raise Http404()
 
             # variáveis para controlar título e mensagens ao usuário
-            self.title = f'Editar Treino - {workout.title}'
+            self.title = f'Editar Treino > {workout.title}'
             self.is_workout_edit = True
         else:
             self.title = 'Novo Treino'
@@ -227,7 +227,10 @@ class UserWorkoutClassView(UserWorkoutBaseClass):
 
     def get(self, request, id=None):
         workout = self.get_workout(id)
-        form = CreateWorkoutForm(instance=workout, user=self.request.user)
+        exercises_initial = workout.exercises.all() if workout else None
+        form = CreateWorkoutForm(
+            instance=workout, initial={'exercises': exercises_initial}
+        )
         return self.render_workout(form=form)
 
     def post(self, request, id=None):
