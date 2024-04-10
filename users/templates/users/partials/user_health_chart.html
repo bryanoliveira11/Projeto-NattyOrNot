@@ -2,6 +2,8 @@
   <canvas id="user-health-chart"></canvas>
 </div>
 
+{{ user_chart_data|json_script:"user_chart_data" }}
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
@@ -16,7 +18,9 @@ function createChart() {
 
   const ctx = document.getElementById('user-health-chart');
 
-  const jsonData = JSON.parse('{{ user_chart_data|escapejs }}');
+  const jsonDataElement = document.getElementById('user_chart_data');
+  const jsonDataString = jsonDataElement.textContent;
+  const jsonData = JSON.parse(JSON.parse(jsonDataString));
 
   if (jsonData === null) return;
 
@@ -49,7 +53,7 @@ function createChart() {
         },
         title: {
           display: true,
-          text: 'Gráfico Peso x Data',
+          text: 'Gráfico - Peso x Data',
           color: textColor,
         },
       },
