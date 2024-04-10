@@ -1,3 +1,5 @@
+import json
+
 from allauth.account.models import EmailAddress
 from django.contrib import messages
 from django.contrib.auth import get_user_model
@@ -10,7 +12,7 @@ from django.views import View
 
 from training.models import Exercises
 from users.forms import ChangePasswordForm, EditForm, UserHealthForm
-from users.models import UserHealth, UserProfile
+from users.models import UserHealth, UserHealthChartData, UserProfile
 from utils.get_notifications import get_notifications
 from utils.get_profile_picture import get_profile_picture
 from utils.imc_classify import imc_classify
@@ -237,12 +239,42 @@ class UserProfileChangePassword(UserProfileBaseClassView):
     name='dispatch'
 )
 class UserProfileHealthClassView(UserProfileBaseClassView):
+    def get_health_data_chart(self):
+        user_chart_data = UserHealthChartData.objects.filter(
+            user=self.request.user
+        ).all()
+
+        if not user_chart_data:
+            return
+
+        weight_list = []
+        date_list = []
+
+        for data in user_chart_data:
+            date = data.created_at.date()
+            formated_date = date.strftime('%d/%m/%Y')
+            weight_list.append(float(data.weight))
+            date_list.append(formated_date)
+
+        return {
+            'weights': weight_list[::-1],
+            'dates': date_list[::-1],
+        }
+
     def render_health_form(self, form, user_health):
         title = f'Health - {self.request.user.get_username()}'
         notifications, notifications_total = get_notifications(self.request)
         imc_category, imc_css_class = imc_classify(
             user_health.imc
         ) if user_health.imc else (None, None)
+        user_chart_data = self.get_health_data_chart()
+        user_chart_data = json.dumps(
+            user_chart_data, indent=1, ensure_ascii=False
+        )
+        chart_exists = True
+
+        if user_chart_data == 'null':
+            chart_exists = False
 
         return render(
             self.request,
@@ -251,6 +283,8 @@ class UserProfileHealthClassView(UserProfileBaseClassView):
                 'user_health': user_health,
                 'imc_category': imc_category,
                 'imc_css_class': imc_css_class,
+                'user_chart_data': user_chart_data,
+                'chart_exists': chart_exists,
                 'notifications': notifications,
                 'notification_total': notifications_total,
                 'title': title,
@@ -311,6 +345,12 @@ class UserProfileHealthClassView(UserProfileBaseClassView):
 
             user_health.is_valid_data = True
             user_health.save()
+
+            # criando dados para o chart.js
+            UserHealthChartData.objects.create(
+                user=user_health.user,
+                weight=weight,
+            )
 
             messages.success(
                 self.request,

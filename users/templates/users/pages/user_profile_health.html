@@ -22,6 +22,9 @@
 </div>
 
 <div class="user-health-container">
+  {% if chart_exists %}
+  {% include "users/partials/user_health_chart.html" %}
+  {% endif %}
   <div class="user-health-content">
     <div class="user-health-content-flex">
       <div class="user-health-water">

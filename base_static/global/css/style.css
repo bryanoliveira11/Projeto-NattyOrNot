@@ -1743,7 +1743,7 @@ body.dark-mode-style .user-profile-container .user-profile-show-data h2 a {
 /* user health page */
 .user-health-container {
   max-width: 64rem;
-  margin: 0 auto 4rem auto;
+  margin: 0 auto 6rem auto;
 }
 
 .user-health-container .user-health-content-flex {
@@ -1751,6 +1751,12 @@ body.dark-mode-style .user-profile-container .user-profile-show-data h2 a {
   align-items: start;
   gap: 2rem;
   margin: 3rem auto;
+}
+
+.user-health-container #user-health-chart {
+  width: 100%;
+  padding: 1rem 1rem;
+  margin: 0 auto;
 }
 
 .user-health-container .user-health-content h2 {

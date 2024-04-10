@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from users.models import UserHealth, UserProfile, UserWorkouts
+from users.models import (UserHealth, UserHealthChartData, UserProfile,
+                          UserWorkouts)
 
 
 @admin.register(UserProfile)

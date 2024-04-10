@@ -1,0 +1,85 @@
+<div>
+  <canvas id="user-health-chart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+function createChart() {
+  const primaryColor = '#fa885f';
+  const isDarkMode = localStorage.getItem('darkmode');
+  let textColor = '#444';
+
+  if (isDarkMode === 'true') {
+    textColor = '#f3f1f1';
+  }
+
+  const ctx = document.getElementById('user-health-chart');
+
+  const jsonData = JSON.parse('{{ user_chart_data|escapejs }}');
+
+  if (jsonData === null) return;
+
+  const weightValues = jsonData.weights;
+  const dateValues = jsonData.dates;
+
+  const chartConfig = {
+    type: 'line',
+    data: {
+      labels: dateValues,
+      datasets: [{
+        label: 'Peso',
+        color: textColor,
+        data: weightValues,
+        borderWidth: 2,
+        borderColor: primaryColor,
+        backgroundColor: primaryColor,
+        fill: false,
+        pointStyle: 'circle',
+        pointRadius: 8,
+        pointHoverRadius: 15,
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Gráfico Peso x Data',
+          color: textColor,
+        },
+      },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+            text: 'Data',
+            color: textColor
+          },
+          ticks: {
+            color: textColor,
+          },
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: 'Peso',
+            color: textColor
+          },
+          ticks: {
+            color: textColor,
+          },
+        }
+      }
+    }
+  }
+  const chart = new Chart(ctx, chartConfig);
+}
+createChart()
+</script>
