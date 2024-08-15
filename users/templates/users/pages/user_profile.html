@@ -45,10 +45,12 @@
 </div>
 <div class="container">
     {% if is_google_account %}
+      <div class="google-profile-btn">
         <span class="btn-google-signin profile center">
-            <img src="{% static 'global/imgs/google_icon.png' %}" alt="Logar com google">
-            Conta Google.
+          <img src="{% static 'global/imgs/google_icon.png' %}" alt="Logar com google">
+          Conta Google.
         </span>
+      </div>
     {% endif %}
     {% include "global/partials/messages.html" %}
     {% include "global/partials/form.html" %}

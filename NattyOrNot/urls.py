@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from allauth.socialaccount.providers.google import views as all_auth_views
 from django.conf import settings
 from django.conf.urls import handler404
 from django.conf.urls.static import static
@@ -23,9 +24,13 @@ from django.urls import include, path
 handler404 = 'training.views.error404.error_404'
 
 urlpatterns = [
-    path('accounts/', include('allauth.urls')),
     path('', include('training.urls')),
     path('user/', include('users.urls')),
+    path(
+        'accounts/google/login/callback/',
+        all_auth_views.oauth2_callback,
+        name='google_callback'
+    ),
     path('dashboard/', include('dashboard.urls')),
     path('admin/', admin.site.urls),
     path('__debug__/', include("debug_toolbar.urls")),

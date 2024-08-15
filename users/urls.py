@@ -1,3 +1,4 @@
+from allauth.socialaccount.providers.google import views as all_auth_views
 from django.urls import include, path
 from rest_framework.routers import SimpleRouter
 
@@ -15,6 +16,11 @@ urlpatterns = [
     path('register/', views.UserRegisterView.as_view(), name='register'),
     path('login/', views.UserLoginView.as_view(), name='login'),
     path('logout/', views.UserLogoutView.as_view(), name='logout'),
+    path(
+        'accounts/google/login/',
+        all_auth_views.oauth2_login,
+        name='google_login'
+    ),
     # user profile urls
     path(
         '<str:username>/profile/',

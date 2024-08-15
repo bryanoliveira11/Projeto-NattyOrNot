@@ -2,7 +2,7 @@
   {% if is_home_page or is_health_page %}
   <div class="main-content center messages-container message-top-bottom-margin">
   {% else %}
-  <div class="main-content center container messages-container">
+  <div class="main-content center messages-container">
   {% endif %}
     {% for message in messages  %}
       <div class="message {{message.tags}}">

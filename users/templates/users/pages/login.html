@@ -1,6 +1,8 @@
 {% extends 'global/base.html' %}
-{% block content %}
+{% load socialaccount %}
+{% load static %}
 
+{% block content %}
     <div class="main-content center">
         <h2 class="form-tag">Login</h2>
     </div>
@@ -13,13 +15,26 @@
                 </span>
             </h3>
         </div>
+
+        {% include 'global/partials/messages.html' %}
+
+        <div class="social-accounts-container">
+          <a href="{% url 'users:google_login' %}?next={% url 'dashboard:user_dashboard' %}" title="Entrar com o Google">
+            <div class="google-login">
+                <div class="google-icon">
+                  <img src="{% static 'global/imgs/google_icon.png' %}" alt="">
+                </div>
+                <div class="google-login-text">
+                  <h2>Entrar com o Google</h2>
+                </div>
+            </div>
+          </a>
+        </div>
     {% endif %}
 
-    {% include 'global/partials/messages.html' %}
     {% include 'users/partials/login_message.html' %}
 
     {% if not request.user.is_authenticated %}
         {% include "global/partials/form.html" %}
     {% endif %}
-
 {% endblock content %}

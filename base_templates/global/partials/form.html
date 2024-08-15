@@ -1,4 +1,3 @@
-{% load socialaccount %}
 {% load static %}
 
 {% if form.errors %}
@@ -15,8 +14,8 @@
     </div>
 {% endif %}
 
-<div class="main-content container">
-    <form action="{{form_action}}" class="main-form container"
+<div class="main-content">
+    <form action="{{form_action}}" class="main-form"
     method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
@@ -72,20 +71,5 @@
             </button>
         </div>
     </div>
-
-    {% if is_login_page %}
-    <div class="social-accounts-login">
-      <hr class="social-accounts-sep">
-      {% if not request.user.is_authenticated %}
-      <div class="social-accounts-container">
-          <a class="social-btn btn-google"
-              href="{% provider_login_url 'google'%}?next={% url 'dashboard:user_dashboard' %}"
-              title="Entrar com o Google.">
-              <img src="{% static 'global/imgs/google_icon.png' %}" alt="Logar com google">
-          </a>
-      </div>
-      {% endif %}
-    </div>
-    {% endif %}
     </form>
 </div>

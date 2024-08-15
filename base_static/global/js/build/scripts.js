@@ -265,7 +265,8 @@ function handleForgotPasswordPages(pageAttr) {
   : _b.addEventListener('click', () => {
       history.back();
     });
-class HandlePasswordStyles {
+
+class HandlePasswordTipsStyles {
   constructor() {
     this.passwordField = document.querySelector('#id_password');
     this.helpTexts = Array.from(
@@ -283,23 +284,51 @@ class HandlePasswordStyles {
       /^(?=.*[a-z])/.test(this.passwordField.value),
       /^(?=.*\d)/.test(this.passwordField.value),
     ];
-    const isDarkMode = localStorage.getItem('darkmode');
-    const errorColor = '#da525d';
-    const normalColor = isDarkMode === 'true' ? '#f3f1f1' : '#444';
-    const colors = [normalColor, errorColor];
+    const errorColor = '#dc3545';
+    const successColor = '#28a745';
+
     conditions.forEach((condition, index) => {
-      this.changeHelpTextColor(index, condition ? colors[0] : colors[1]);
+      const color = condition ? successColor : errorColor;
+      this.changeHelpTextColor(index, color);
+
+      if (!condition) {
+        this.addIcon(index, 'fa-circle-exclamation', errorColor);
+        this.removeIcon(index, 'fa-check');
+      } else {
+        this.addIcon(index, 'fa-check', successColor);
+        this.removeIcon(index, 'fa-circle-exclamation');
+      }
     });
   }
   changeHelpTextColor(index, color) {
     if (!this.helpTexts[index]) return;
     this.helpTexts[index].style.color = color;
   }
+  addIcon(index, iconClass, color) {
+    if (!this.helpTexts[index]) return;
+
+    let icon = this.helpTexts[index].querySelector(`.${iconClass}`);
+    if (!icon) {
+      icon = document.createElement('i');
+      icon.className = `fa-solid ${iconClass}`;
+      icon.style.marginLeft = '8px';
+      icon.style.color = color;
+      this.helpTexts[index].appendChild(icon);
+    }
+  }
+  removeIcon(index, iconClass) {
+    if (!this.helpTexts[index]) return;
+    const icon = this.helpTexts[index].querySelector(`.${iconClass}`);
+    if (icon) {
+      this.helpTexts[index].removeChild(icon);
+    }
+  }
 }
+
 new NavBar().init();
 new NotificationsScreen().init();
 new LogoutLinks().init();
 new ShowHidePassword().init();
 new DismissFlashMessages().init();
 new SelectInputCheckIcon().init();
-new HandlePasswordStyles().init();
+new HandlePasswordTipsStyles().init();
