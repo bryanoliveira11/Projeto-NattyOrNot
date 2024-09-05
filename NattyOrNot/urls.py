@@ -17,6 +17,7 @@ Including another URLconf
 from allauth.socialaccount.providers.google import views as all_auth_views
 from django.conf import settings
 from django.conf.urls import handler404
+from users.views.all_auth import login_cancelled
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
@@ -26,6 +27,11 @@ handler404 = 'training.views.error404.error_404'
 urlpatterns = [
     path('', include('training.urls')),
     path('user/', include('users.urls')),
+    path(
+        'accounts/social/login/cancelled/',
+        login_cancelled,
+        name='socialaccount_login_cancelled'
+    ), 
     path(
         'accounts/google/login/callback/',
         all_auth_views.oauth2_callback,
