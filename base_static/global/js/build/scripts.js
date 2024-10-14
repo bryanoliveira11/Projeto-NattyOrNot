@@ -325,6 +325,30 @@ class HandlePasswordTipsStyles {
   }
 }
 
+class CopyPostUrl {
+  constructor() {
+    this.copyPostElms = document.querySelectorAll('.copy-post-url');
+  }
+  init() {
+    if (!this.copyPostElms.length) return;
+    this.copyUrl();
+  }
+  copyUrl() {
+    this.copyPostElms.forEach((elm) => {
+      elm.addEventListener('click', () => {
+        const postUrlElm = elm;
+        if (postUrlElm) {
+          const postUrl = postUrlElm.getAttribute('data-url');
+          navigator.clipboard.writeText(postUrl);
+          elm.classList.remove('fa-copy');
+          elm.classList.add('fa-circle-check');
+          elm.style.color = '#5bc273';
+        }
+      });
+    });
+  }
+}
+
 new NavBar().init();
 new NotificationsScreen().init();
 new LogoutLinks().init();
@@ -332,3 +356,4 @@ new ShowHidePassword().init();
 new DismissFlashMessages().init();
 new SelectInputCheckIcon().init();
 new HandlePasswordTipsStyles().init();
+new CopyPostUrl().init();

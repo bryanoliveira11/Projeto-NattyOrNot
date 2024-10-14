@@ -60,7 +60,9 @@
             <a href="{% url 'training:exercises_detail' exercise.slug %}" title="Comentar">
               <i class="fa-solid fa-comment dark-text home-icon"></i>
             </a>
-            <i class="fa-solid fa-copy dark-text home-icon" title="Copiar Link do Post"></i>
+              <i class="fa-solid fa-copy dark-text home-icon copy-post-url"
+              title="Copiar Link do Post"
+              data-url="{{request.META.HTTP_HOST}}{% url 'training:exercises_detail' exercise.slug %}"></i>
           </div>
           <p class="home-post-favorites">
             Favoritado {{exercise.favorites_count|format_favorites_text}}
