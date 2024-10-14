@@ -24,6 +24,13 @@
 <div class="user-health-container">
   {% if chart_exists %}
   {% include "users/partials/user_health_chart.html" %}
+  <form method="POST" class="form-content health-delete"
+  action="{% url 'users:user_profile_health_delete_data' request.user.username %}">
+  {% csrf_token %}
+  <button class="btn-submit health-delete-btn">
+    Apagar Último Registro <i class="fa-solid fa-delete-left"></i>
+  </button>
+  </form>
   {% endif %}
   <div class="user-health-content">
     <div class="user-health-content-flex">

@@ -1832,6 +1832,18 @@ body.dark-mode-style .user-profile-container .user-profile-show-data h2 a {
   background: var(--color-error-dark);
 }
 
+.form-content.health-delete {
+  padding: 0 1.5rem;
+}
+
+button.health-delete-btn {
+  background: linear-gradient(
+    90deg,
+    rgba(205, 74, 85, 1) 32%,
+    rgba(153, 49, 58, 1) 100%
+  );
+}
+
 /* api page */
 .main-api-page {
   max-width: 64rem;
@@ -2558,6 +2570,16 @@ body.dark-mode-style .workouts-table tr {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
     gap: calc(var(--spacing-gutter-medium) / 2);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .user-profile-posts .user-exercise-post-list {
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+  }
+
+  .user-profile-container .user-profile-show-data,
+  .user-profile-container .user-profile-stats {
     align-items: center;
     justify-content: center;
   }

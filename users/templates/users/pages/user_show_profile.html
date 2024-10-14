@@ -34,7 +34,7 @@
       </h2>
     </div>
     <div class="user-profile-stats">
-      <h2>999 Posts</h2>
+      <h2>{{posts_len}} Posts</h2>
       <h2>99999 Seguidores</h2>
       <h2>9999 Seguindo</h2>
     </div>
@@ -47,7 +47,9 @@
 </div>
 
 <div class="user-profile-posts">
+  {% if exercises %}
   <h2 class="form-tag">Exercícios</h2>
+  {% endif %}
   <div class="user-exercise-post-list">
     {% for exercise in exercises  %}
     <div class="user-exercise-post-item">
@@ -55,7 +57,11 @@
       <h2>{{exercise.title}}</h2>
     </div>
     {% empty %}
-    sem posts bro
+    <div class="main-content-error-page center">
+      <div class="error-message-content">
+        <h3>Esse Usuário não tem Publicações !</h3>
+      </div>
+    </div>
     {% endfor %}
   </div>
 </div>

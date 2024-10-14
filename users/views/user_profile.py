@@ -16,6 +16,7 @@ from users.models import UserHealth, UserHealthChartData, UserProfile
 from utils.get_notifications import get_notifications
 from utils.get_profile_picture import get_profile_picture
 from utils.imc_classify import imc_classify
+from utils.pagination import make_pagination
 
 User = get_user_model()
 
@@ -121,11 +122,17 @@ class UserShowProfileClassView(UserProfileBaseClassView):
         notifications, notifications_total = get_notifications(self.request)
         exercises = self.get_user_exercises(user_instance)
 
+        page_obj, pagination_range = make_pagination(
+            self.request, exercises, 12
+        )
+
         return render(
             self.request, 'users/pages/user_show_profile.html', context={
                 'user_profile': user_profile,
                 'user': user_instance,
-                'exercises': exercises,
+                'exercises': page_obj,
+                'pagination_range': pagination_range,
+                'posts_len': len(exercises),
                 'notifications': notifications,
                 'notification_total': notifications_total,
                 'title': f'Perfil - {user_profile}',
@@ -365,4 +372,34 @@ class UserProfileHealthClassView(UserProfileBaseClassView):
         return self.render_health_form(
             form=form,
             user_health=user_health
+        )
+
+
+@method_decorator(
+    login_required(login_url='users:login', redirect_field_name='next'),
+    name='dispatch'
+)
+class UserProfileHealthDeleteLastData(View):
+    def get(self, *args, **kwargs):
+        return redirect(
+            reverse(
+                'users:user_profile_health', args=(self.request.user,)
+            ),
+        )
+
+    def post(self, *args, **kwargs):
+        last_chart_data = UserHealthChartData.objects.filter(
+            user=self.request.user,
+        ).first()
+
+        if last_chart_data:
+            last_chart_data.delete()
+            messages.success(
+                self.request, 'Último Registro de Peso Deletado com Sucesso.'
+            )
+
+        return redirect(
+            reverse(
+                'users:user_profile_health', args=(self.request.user,)
+            ),
         )

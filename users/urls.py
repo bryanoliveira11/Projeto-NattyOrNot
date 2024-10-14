@@ -33,6 +33,11 @@ urlpatterns = [
         name='user_profile_health'
     ),
     path(
+        '<str:username>/profile/health/delete-last-data',
+        views.UserProfileHealthDeleteLastData.as_view(),
+        name='user_profile_health_delete_data'
+    ),
+    path(
         '<str:username>/profile/data/',
         views.UserProfileDataClassView.as_view(),
         name='user_profile_data'
