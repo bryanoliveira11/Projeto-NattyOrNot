@@ -39,7 +39,7 @@ class DashboardUserBase(ListView):
 
     def get_context_data(self, *args, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(*args, **kwargs)
-
+        title = 'Meus Exercícios'
         # exercicios do contexto
         exercises = context.get('user_exercises')
         categories = Categories.objects.all()
@@ -59,8 +59,8 @@ class DashboardUserBase(ListView):
             'results_count': results,
             'notifications': notifications,
             'notification_total': notifications_total,
-            'title': 'Dashboard',
-            'page_tag': 'Dashboard > Meus Exercícios',
+            'title': title,
+            'page_tag': title,
             'search_form_action': reverse('dashboard:user_dashboard_search'),
             'is_dashboard_page': True,
             'placeholder': 'Pesquisar no Dashboard',
@@ -115,8 +115,8 @@ class DashboardUserCategoryClassView(DashboardUserBase):
             raise Http404()
 
         context.update({
-            'title': f'Dashboard > Categoria > {category_name}',
-            'page_tag': f'Dashboard > Meus Exercícios > {category_name}',
+            'title': f'Categoria > {category_name}',
+            'page_tag': f'Meus Exercícios > {category_name}',
             'is_filtered': True,
         })
 
@@ -153,7 +153,7 @@ class DashboardSearchClassView(DashboardUserBase):
     def get_context_data(self, *args, **kwargs) -> Dict[str, Any]:
         context = super().get_context_data(*args, **kwargs)
 
-        title = f'Dashboard > Busca > "{self.search_term}"'
+        title = f'Busca > "{self.search_term}"'
 
         context.update({
             'title': title,
@@ -195,7 +195,7 @@ class DashboardSharedStatusFilterClassView(DashboardUserBase):
             'ALL': 'Todos',
         }
 
-        title = f'Dashboard > Visibilidade > {
+        title = f'Meus Exercícios > Visibilidade > {
             shared_translate.get(shared_status)
         }'
 
