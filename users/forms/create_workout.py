@@ -1,9 +1,21 @@
 from django import forms
+from django_select2 import forms as s2forms
 
 from dashboard.forms.create_exercise import CreateFormMixin
 from training.models import Exercises
 from users.models import UserWorkouts
 from utils.django_forms import add_attr, add_placeholder
+
+
+class ExercisesS2MultipleWidget(s2forms.ModelSelect2MultipleWidget):
+    def label_from_instance(self, obj: Exercises):
+        return f'{obj.title} - {obj.published_by}'
+
+    def result_from_instance(self, obj: Exercises, request):
+        return {
+            'id': obj.pk,
+            'text': self.label_from_instance(obj),
+        }
 
 
 class CreateWorkoutForm(forms.ModelForm, CreateFormMixin):
@@ -12,15 +24,29 @@ class CreateWorkoutForm(forms.ModelForm, CreateFormMixin):
         add_placeholder(self.fields['title'], 'Digite o Nome do Treino')
         add_attr(self.fields['title'], 'class', 'span-2')
         add_attr(self.fields['exercises'], 'class', 'span-2')
-        add_attr(self.fields['exercises'], 'class', 'multiple-select')
 
     exercises = forms.ModelMultipleChoiceField(
         queryset=Exercises.objects.filter(
             is_published=True, shared_status='ALL'
         ).order_by('-pk'),
         label='Exercícios Disponíveis',
-        help_text='''Se estiver em um Computador segure a tecla CTRL
-          para selecionar mais de um Exercício.''',
+        widget=ExercisesS2MultipleWidget(
+            model=Exercises,
+            queryset=Exercises.objects.filter(
+                is_published=True, shared_status='ALL'
+            ).order_by('-pk'),
+            search_fields=[
+                'title__icontains',
+                'categories__name__icontains',
+                'published_by__username__icontains',
+            ],
+            max_results=10,
+            attrs={
+                'data-placeholder': 'Buscar por Nome, Categoria ou Usuário',
+                'selectionCssClass': 'form-control',
+                'data-language': 'pt-BR',
+            },
+        )
     )
 
     captcha = forms.CharField(
@@ -43,7 +69,7 @@ class CreateWorkoutForm(forms.ModelForm, CreateFormMixin):
     class Meta:
         model = UserWorkouts
         fields = [
-            'title',
+            'title', 'exercises',
         ]
 
     def clean(self, *args, **kwargs):

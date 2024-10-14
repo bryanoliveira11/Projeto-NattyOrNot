@@ -6,10 +6,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # my middlewares
-    'users.notifications_middleware.NotificationsMiddleware',
     # cors headers middleware
     'corsheaders.middleware.CorsMiddleware',
+    # my middlewares
+    'users.notifications_middleware.NotificationsMiddleware',
     # all auth middleware
     'allauth.account.middleware.AccountMiddleware',
     # debug toolbar middleware

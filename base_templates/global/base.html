@@ -13,6 +13,9 @@
 
 <a class="back-to-top" href="#" title="Voltar ao Topo">➤</a>
 {% include "global/partials/footer.html" %}
+{% if is_workout_form %}
+{{form.media.js}}
+{% endif %}
 <script src="{% static 'global/js/build/darkmode.js' %}"></script>
 <script src="{% static 'global/js/build/scripts.js' %}"></script>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
