@@ -15,6 +15,7 @@ class ExercisesS2MultipleWidget(s2forms.ModelSelect2MultipleWidget):
         return {
             'id': obj.pk,
             'text': self.label_from_instance(obj),
+            'cover': obj.cover.url,
         }
 
 
@@ -46,6 +47,8 @@ class CreateWorkoutForm(forms.ModelForm, CreateFormMixin):
             attrs={
                 'data-placeholder': 'Buscar por Nome, Categoria ou Usuário',
                 'selectionCssClass': 'form-control',
+                'data-minimum-input-length': 2,
+                'data-close-on-select': 'false',
                 'data-language': 'pt-BR',
             },
         )

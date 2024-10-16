@@ -349,6 +349,58 @@ class CopyPostUrl {
   }
 }
 
+class HandleWorkoutExercises {
+  constructor() {
+    this.selectedExercises = document.getElementById('id_exercises');
+    this.exerciseGrid = null;
+  }
+  init() {
+    if (!this.selectedExercises) return;
+    this.handleselectedExercises();
+  }
+  handleselectedExercises() {
+    $(this.selectedExercises).on('select2:select', (e) => {
+      const data = e.params.data;
+      this.createExerciseGrid(data);
+    });
+    $(this.selectedExercises).on('select2:unselect', (e) => {
+      const data = e.params.data;
+      if (data.disabled === false) {
+        this.removeExerciseImage(data);
+      }
+    });
+  }
+  createExerciseGrid(data) {
+    const targetDiv = document.querySelector(
+      'div.form-group.span-2.single-select',
+    );
+    if (!targetDiv) return;
+
+    if (!this.exerciseGrid) {
+      this.exerciseGrid = document.createElement('div');
+      this.exerciseGrid.className = 'form-group span-2 exercise-grid';
+      targetDiv.parentNode.insertBefore(this.exerciseGrid, targetDiv);
+    }
+
+    const imageElement = document.createElement('img');
+    imageElement.src = data.cover;
+    imageElement.alt = data.text || 'Exercise Image';
+    imageElement.className = 'exercise-image';
+    imageElement.dataset.exerciseId = data.id;
+
+    this.exerciseGrid.appendChild(imageElement);
+  }
+  removeExerciseImage(data) {
+    if (!this.exerciseGrid) return;
+    const imageToRemove = this.exerciseGrid.querySelector(
+      `img[data-exercise-id="${data.id}"]`,
+    );
+    if (imageToRemove) {
+      this.exerciseGrid.removeChild(imageToRemove);
+    }
+  }
+}
+
 new NavBar().init();
 new NotificationsScreen().init();
 new LogoutLinks().init();
@@ -357,3 +409,4 @@ new DismissFlashMessages().init();
 new SelectInputCheckIcon().init();
 new HandlePasswordTipsStyles().init();
 new CopyPostUrl().init();
+new HandleWorkoutExercises().init();

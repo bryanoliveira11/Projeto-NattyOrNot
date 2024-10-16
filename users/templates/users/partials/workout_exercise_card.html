@@ -4,13 +4,15 @@
 <div class="exercise workout">
     <div class="exercise-cover workout-cover">
         {% if exercise.cover %}
+          <a href="{% url 'training:exercises_detail' exercise.slug %}" title="{{exercise.title}}">
             <img src="{{exercise.cover.url}}" alt="imagem do exercício {{exercise.title}}">
+          </a>
         {% endif %}
     </div>
     <div class="exercise-title-container">
         <h2 class="exercise-title">
             <a href="{% url 'training:exercises_detail' exercise.slug %}" title="{{exercise.title}}">
-                {{exercise.title|title_limit_length}} 
+                {{exercise.title|title_limit_length}}
             </a>
         </h2>
     </div>
@@ -19,7 +21,7 @@
         <div class="exercise-data">
             {% if exercise.categories.all%}
                 <span class="exercise-data-item">
-                    <i class="fas fa-layer-group"></i> 
+                    <i class="fas fa-layer-group"></i>
                     {% for category in exercise.categories.all  %}
                         {% if exercise.categories.all|length > 1 %}
                             <span>{{category.name}}</span> |
@@ -28,16 +30,16 @@
                         {% endif %}
                     {% endfor %}
                 </span>
-            
+
             {% if exercise.published_by %}
                 <span class="published-by">
                     -
                     <i class="fa-solid fa-user"></i>
-                    {{exercise.published_by}} 
-                </span>        
+                    {{exercise.published_by}}
+                </span>
             {% endif %}
             {% endif %}
-            
+
             <div class="exercise-meta-container">
                 <div class="exercise-meta exercise-series-number">
                     <h3 class="exercise-meta-title"><i class="fa-solid fa-repeat"></i>
@@ -47,7 +49,7 @@
                         {{exercise.series|format_series}}
                     </div>
                 </div>
-            
+
                 <div class="exercise-meta exercise-repeat-number">
                     <h3 class="exercise-meta-title"><i class="fa-solid fa-xmark"></i>
                         Repetições

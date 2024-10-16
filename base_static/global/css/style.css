@@ -2128,6 +2128,22 @@ td a:hover {
   border: none;
 }
 
+.exercise-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin: 2rem auto !important;
+}
+
+.exercise-grid .exercise-image {
+  width: 18rem;
+  height: 18rem;
+  object-fit: cover;
+}
+
 /* pagination */
 .pagination-content {
   display: flex;
@@ -2603,6 +2619,13 @@ body.dark-mode-style .workouts-table tr {
   }
 }
 
+@media (max-width: 609px) {
+  .exercise-grid .exercise-image {
+    width: 25rem;
+    height: 20rem;
+  }
+}
+
 @media (max-width: 606px) {
   .user-profile-posts .form-tag {
     text-align: center;
@@ -2805,6 +2828,13 @@ body.dark-mode-style .workouts-table tr {
     width: 90%;
     margin: 2rem auto;
     height: fit-content;
+  }
+}
+
+@media (max-width: 549px) {
+  .exercise-grid .exercise-image {
+    width: 100%;
+    height: 30rem;
   }
 }
 
