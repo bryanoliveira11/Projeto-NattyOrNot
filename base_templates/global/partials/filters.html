@@ -75,11 +75,13 @@
             <i class="fa-solid fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-            <a href="{% url 'users:user_workout_is_shared' True %}" title="Publicado">
-                Publicado
+            <a href="{% url 'users:user_workout_shared_status' 'MYSELF' %}" title="Apenas Você">
+              <i class="fa-regular fa-user"></i>
+              Apenas Você
             </a>
-            <a href="{% url 'users:user_workout_is_shared' False %}" title="Não Publicado">
-                Não Publicado
+            <a href="{% url 'users:user_workout_shared_status' 'ALL' %}" title="Todos">
+              <i class="fa-solid fa-earth-americas"></i>
+              Todos
             </a>
         </div>
     </div>

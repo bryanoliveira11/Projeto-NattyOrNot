@@ -109,18 +109,24 @@ class UserProfileBaseClassView(View):
 )
 class UserShowProfileClassView(UserProfileBaseClassView):
     def get(self, *args, **kwargs):
-        user_profile = self.get_user_profile_by_name(
-            self.kwargs.get('username')
-        )
         user_instance = User.objects.filter(
             username=self.kwargs.get('username')
         ).first()
+
+        user_profile = UserProfile.objects.filter(
+            user=user_instance,
+        ).select_related('user').first()
 
         if user_profile is None or not user_instance:
             raise Http404()
 
         notifications, notifications_total = get_notifications(self.request)
-        exercises = self.get_user_exercises(user_instance)
+
+        exercises = Exercises.objects.filter(
+            published_by=user_instance,
+        ).prefetch_related(
+            'published_by', 'categories'
+        ).order_by('-pk').exclude(shared_status='MYSELF')
 
         page_obj, pagination_range = make_pagination(
             self.request, exercises, 12
@@ -132,7 +138,6 @@ class UserShowProfileClassView(UserProfileBaseClassView):
                 'user': user_instance,
                 'exercises': page_obj,
                 'pagination_range': pagination_range,
-                'posts_len': len(exercises),
                 'notifications': notifications,
                 'notification_total': notifications_total,
                 'title': f'Perfil - {user_profile}',

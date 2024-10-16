@@ -24,6 +24,8 @@ class CreateWorkoutForm(forms.ModelForm, CreateFormMixin):
         add_placeholder(self.fields['title'], 'Digite o Nome do Treino')
         add_attr(self.fields['title'], 'class', 'span-2')
         add_attr(self.fields['exercises'], 'class', 'span-2')
+        add_attr(self.fields['shared_status'], 'class', 'span-2')
+        add_attr(self.fields['shared_status'], 'class', 'single-select')
 
     exercises = forms.ModelMultipleChoiceField(
         queryset=Exercises.objects.filter(
@@ -49,6 +51,15 @@ class CreateWorkoutForm(forms.ModelForm, CreateFormMixin):
         )
     )
 
+    shared_status = forms.ChoiceField(
+        choices=UserWorkouts._meta.get_field('shared_status').choices,
+        label='Visibilidade',
+        required=True,
+        help_text='''
+        Compartilhe Exercícios com Outros Usuários.
+        '''
+    )
+
     captcha = forms.CharField(
         label='',
         required=False,
@@ -69,7 +80,7 @@ class CreateWorkoutForm(forms.ModelForm, CreateFormMixin):
     class Meta:
         model = UserWorkouts
         fields = [
-            'title', 'exercises',
+            'title', 'exercises', 'shared_status',
         ]
 
     def clean(self, *args, **kwargs):

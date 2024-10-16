@@ -21,8 +21,7 @@
                     <th scope="col">Usuário</th>
                     <th scope="col">Criado em</th>
                     <th scope="col">Detalhes</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Compartilhar</th>
+                    <th scope="col">Visibilidade</th>
                     <th scope="col">Deletar</th>
                   </tr>
                 </thead>
@@ -51,27 +50,16 @@
                     </td>
                     <td>
                         <div class="workout-status">
-                            {% if workout.is_shared %}
-                                <a class="published" href="{% url 'users:user_workout_is_shared' workout.is_shared %}">
-                                    Publicado
+                            {% if workout.shared_status == 'ALL' %}
+                                <a class="shared-all" href="{% url 'users:user_workout_shared_status' workout.shared_status %}">
+                                    Todos
                                 </a>
                             {% else %}
-                                <a class="not-published" href="{% url 'users:user_workout_is_shared' workout.is_shared %}">
-                                    Não Publicado
+                                <a class="shared-myself" href="{% url 'users:user_workout_shared_status' workout.shared_status %}">
+                                    Apenas Você
                                 </a>
                             {% endif %}
                         </div>
-                    </td>
-                    <td class="workout-share">
-                        {% if not workout.is_shared %}
-                            <a href="{% url 'users:user_workout_share' workout.pk %}">
-                                <i class="general-icon workout-icon fa-solid fa-square-share-nodes" title="Compartilhar"></i>
-                            </a>
-                        {% else %}
-                            <a href="{% url 'users:user_workout_unshare' workout.pk %}">
-                                <i class="general-icon workout-icon remove-share fa-solid fa-square-xmark" title="Remover Compartilhamento"></i>
-                            </a>
-                        {% endif %}
                     </td>
                     <td class="workout-delete-form">
                         <a href="{% url 'users:user_workout_delete' workout.pk %}" class="workout-delete center">

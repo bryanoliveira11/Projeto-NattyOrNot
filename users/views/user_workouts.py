@@ -276,133 +276,18 @@ class UserWorkoutClassView(UserWorkoutBaseClass):
     login_required(login_url='users:login', redirect_field_name='next'),
     name='dispatch'
 )
-class UserWorkoutShareClassView(View):
-    def get_workout(self):
-        workout = UserWorkouts.objects.filter(
-            pk=self.kwargs.get('id'),
-            user_id=self.request.user
-        ).select_related('user').first()
-
-        if not workout:
-            raise Http404()
-
-        return workout
-
-    def get(self, *args, **kwargs):
-        workout = self.get_workout()
-
-        # garantindo que o treino não está compartilhado
-        if workout.is_shared:
-            messages.error(
-                self.request,
-                'Este Treino já Está Compartilhado.'
-            )
-            return redirect(reverse('users:user_workouts'))
-
-        title = workout.title if workout else workout
-
-        notifications, notifications_total = get_notifications(self.request)
-
-        return render(self.request, 'users/partials/share_page.html', {
-            'exercise': workout,
-            'workout': workout,
-            'notifications': notifications,
-            'notification_total': notifications_total,
-            'title': f'Compartilhar Treino - {title}',
-            'is_workout_page': True,
-        })
-
-    def post(self, *args, **kwargs):
-        workout = self.get_workout()
-
-        if workout:
-            # garantindo que o usuário é o mesmo
-            if workout.user != self.request.user:
-                messages.error(
-                    self.request,
-                    'Um Erro Ocorreu ao Compartilhar o Treino.'
-                )
-                return redirect(reverse('users:user_workouts'))
-
-            # compartilhando treino
-            workout.is_shared = True
-            workout.save()
-            messages.success(
-                self.request,
-                'Treino Compartilhado com Sucesso.'
-            )
-
-        return redirect(reverse('users:user_workouts'))
-
-
-@method_decorator(
-    login_required(login_url='users:login', redirect_field_name='next'),
-    name='dispatch'
-)
-class UserWorkoutUnshareClassView(UserWorkoutShareClassView):
-    def get(self, *args, **kwargs):
-        workout = self.get_workout()
-
-        # garantindo que o treino está compartilhado
-        if not workout.is_shared:
-            messages.error(
-                self.request,
-                'Este Treino Não Está Compartilhado.'
-            )
-            return redirect(reverse('users:user_workouts'))
-
-        title = workout.title if workout else workout
-
-        notifications, notifications_total = get_notifications(self.request)
-
-        return render(self.request, 'users/partials/share_page.html', {
-            'exercise': workout,
-            'workout': workout,
-            'notifications': notifications,
-            'notification_total': notifications_total,
-            'title': f'Remover Compartilhamento do Treino - {title}',
-            'is_workout_page': True,
-        })
-
-    def post(self, *args, **kwargs):
-        workout = self.get_workout()
-
-        if workout:
-            # garantindo que o usuário é o mesmo
-            if workout.user != self.request.user:
-                messages.error(
-                    self.request,
-                    'Um Erro Ocorreu. Tente Novamente.'
-                )
-                return redirect(reverse('users:user_workouts'))
-
-            # compartilhando treino
-            workout.is_shared = False
-            workout.save()
-            messages.success(
-                self.request,
-                'Compartilhamento Removido com Sucesso.'
-            )
-
-        return redirect(reverse('users:user_workouts'))
-
-
-@method_decorator(
-    login_required(login_url='users:login', redirect_field_name='next'),
-    name='dispatch'
-)
 class UserWorkoutsIsSharedFilterClassView(UserWorkoutsPageClassView):
     def get_queryset(self, *args, **kwargs) -> QuerySet[Any]:
         queryset = super().get_queryset(*args, **kwargs)
 
-        is_shared = self.kwargs.get('is_shared')
+        shared_status = self.kwargs.get('shared_status')
 
-        if is_shared not in ['True', 'False']:
+        if shared_status not in ['MYSELF', 'ALL']:
             raise Http404()
 
         queryset = queryset.filter(
             user=self.request.user,
-            is_shared=is_shared
+            shared_status=shared_status
         ).select_related('user')
 
         if not queryset:
@@ -413,8 +298,9 @@ class UserWorkoutsIsSharedFilterClassView(UserWorkoutsPageClassView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
 
-        is_shared = self.kwargs.get('is_shared')
-        translated = 'Publicados' if is_shared == 'True' else 'Não Publicados'
+        shared_status = self.kwargs.get('shared_status')
+        translated = 'Compartilhados' if shared_status == 'ALL' \
+            else 'Não Compartilhados'
 
         title = f'Treinos - {translated}'
 

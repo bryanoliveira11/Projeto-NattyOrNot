@@ -85,9 +85,12 @@ class UserWorkouts(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True, verbose_name='Alterado em',
     )
-    is_shared = models.BooleanField(
-        default=False, verbose_name='Compartilhado'
-    )
+    shared_status = models.CharField(
+        max_length=9, verbose_name='Status de Compartilhamento',
+        default='MYSELF', choices=(
+            ('MYSELF', 'Somente Você'),
+            ('ALL', 'Todos os Usuários'),
+        ))
 
     def __str__(self) -> str:
         return f'Treino de {self.user.get_username()}'

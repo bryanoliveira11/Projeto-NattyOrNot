@@ -16,12 +16,12 @@ class AdminUser(admin.ModelAdmin):
 
 @admin.register(UserWorkouts)
 class AdminUserWorkouts(admin.ModelAdmin):
-    list_display = 'id', 'title', 'exercises_total', 'user', 'created_at', 'updated_at', 'is_shared',
+    list_display = 'id', 'title', 'exercises_total', 'user', 'created_at', 'updated_at', 'shared_status',
     list_display_links = 'id', 'title',
-    list_editable = 'is_shared',
-    search_fields = 'id', 'title', 'user', 'is_shared',
+    list_editable = 'shared_status',
+    search_fields = 'id', 'title', 'user', 'shared_status',
     ordering = '-id',
-    list_filter = 'user', 'created_at', 'is_shared',
+    list_filter = 'user', 'created_at', 'shared_status',
     list_per_page = 10
 
 

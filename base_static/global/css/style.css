@@ -2089,6 +2089,14 @@ td a:hover {
   cursor: pointer;
 }
 
+.shared-all {
+  color: var(--color-info-dark);
+}
+
+.shared-myself{
+  color: var(--color-success);
+}
+
 .workout-share a {
   color: var(--color-dark-text);
   font-size: 2.2rem;
