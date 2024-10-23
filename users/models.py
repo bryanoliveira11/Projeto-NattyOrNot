@@ -180,3 +180,26 @@ class UserNotifications(models.Model):
     class Meta:
         verbose_name = 'Notificação'
         verbose_name_plural = 'Notificações'
+
+
+class UserFollows(models.Model):
+    follower = models.ForeignKey(
+        User, related_name='following', on_delete=models.CASCADE,
+        verbose_name='Seguidor',
+    )
+    following = models.ForeignKey(
+        User, related_name='followers', on_delete=models.CASCADE,
+        verbose_name='Seguindo',
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('follower', 'following')
+        indexes = [
+            models.Index(fields=['follower', 'following']),
+        ]
+        verbose_name = 'Seguidor'
+        verbose_name_plural = 'Seguidores'
+
+    def __str__(self):
+        return f"{self.follower.username} segue {self.following.username}"

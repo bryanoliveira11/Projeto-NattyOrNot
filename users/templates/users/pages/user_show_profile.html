@@ -21,22 +21,35 @@
       </h2>
       <h2>
         {% if user.username == request.user.username %}
-          <a href="{% url 'users:user_profile_data' request.user.username %}" title="Editar Perfil">
-            Editar Perfil
-            <i class="fa-solid fa-user-pen m-left"></i>
-          </a>
+        <a href="{% url 'users:user_profile_data' request.user.username %}" title="Editar Perfil">
+          Editar Perfil
+          <i class="fa-solid fa-user-pen m-left"></i>
+        </a>
+        {% elif already_follows %}
+        <form action="{% url 'users:unfollow' user.pk %}"
+        method="post" class="inline-form" title="Deixar de Seguir">
+          {% csrf_token %}
+          <button type="submit" class="plaintext-button">
+            Deixar de Seguir
+            <i class="fa-solid fa-user-minus"></i>
+          </button>
+        </form>
         {% else %}
-          <a href="" title="Seguir">
+        <form action="{% url 'users:follow' user.pk %}"
+        method="post" class="inline-form" title="Seguir">
+          {% csrf_token %}
+          <button type="submit" class="plaintext-button">
             Seguir
             <i class="fa-solid fa-user-plus"></i>
-          </a>
+          </button>
+        </form>
         {% endif %}
       </h2>
     </div>
     <div class="user-profile-stats">
       <h2>{{exercises|length}} Posts</h2>
-      <h2>99999 Seguidores</h2>
-      <h2>9999 Seguindo</h2>
+      <h2>{{follower_count}} Seguidores</h2>
+      <h2>{{following_count}} Seguindo</h2>
     </div>
     <div class="user-profile-bio">
       <p>

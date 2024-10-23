@@ -123,6 +123,14 @@ urlpatterns = [
         views.FavoriteExercisesCategoriesFilter.as_view(),
         name='user_exercises_favorites_category'
     ),
+    # user follows
+    path(
+        'follow/<int:id>/', views.UserFollowsClassView.as_view(), name='follow'
+    ),
+    path(
+        'unfollow/<int:id>/',
+        views.UserUnfollowsClassView.as_view(), name='unfollow'
+    ),
     # api paths
     path('', include(user_api_v1_router.urls)),
 ]

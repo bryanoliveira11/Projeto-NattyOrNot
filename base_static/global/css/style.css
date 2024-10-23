@@ -915,6 +915,7 @@ select option:checked {
   background: none;
   color: var(--color-primary);
   font-size: 1.6rem;
+  font-weight: 600;
 }
 
 .plaintext-button:hover {
@@ -1897,11 +1898,8 @@ body.dark-mode-style .user-profile-container .user-profile-show-data h2 a {
 }
 
 button.health-delete-btn {
-  background: linear-gradient(
-    90deg,
-    rgba(205, 74, 85, 1) 32%,
-    rgba(153, 49, 58, 1) 100%
-  );
+  background: #6c757d;
+  background: linear-gradient(90deg, #6c757d 32%, #545e66 100%);
 }
 
 /* api page */
