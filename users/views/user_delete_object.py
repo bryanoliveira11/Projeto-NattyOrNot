@@ -25,6 +25,7 @@ class UserWorkoutDeleteClassView(DetailView):
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
         queryset = queryset.filter(
+            pk=self.kwargs.get('id'),
             user_id=self.request.user
         ).select_related('user')
 
@@ -55,7 +56,7 @@ class UserWorkoutDeleteClassView(DetailView):
 
     def post(self, *args, **kwargs):
         # pegando o treino do banco
-        workout_to_delete = self.get_queryset().first()
+        workout_to_delete = self.get_queryset()
 
         if not workout_to_delete:
             messages.error(
