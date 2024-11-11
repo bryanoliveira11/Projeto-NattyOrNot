@@ -47,7 +47,7 @@ class CreateWorkoutForm(forms.ModelForm, CreateFormMixin):
             attrs={
                 'data-placeholder': 'Buscar por Nome, Categoria ou Usuário',
                 'selectionCssClass': 'form-control',
-                'data-minimum-input-length': 2,
+                'data-minimum-input-length': 0,
                 'data-close-on-select': 'false',
                 'data-language': 'pt-BR',
             },

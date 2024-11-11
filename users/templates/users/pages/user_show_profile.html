@@ -51,23 +51,25 @@
       <h2>{{follower_count}} Seguidores</h2>
       <h2>{{following_count}} Seguindo</h2>
     </div>
+    {% if user_health is not None %}
     <div class="user-profile-bio">
-      <p>
-        {{user_profile.biography}}
-      </p>
+      <div class="btn user-health-profile-data">Altura : {{user_health.height}} cm</div>
+      <div class="btn user-health-profile-data">Peso : {{user_health.weight}} kg</div>
     </div>
+    {% endif %}
   </div>
 </div>
 
 <div class="user-profile-posts">
   {% if exercises %}
-  <h2 class="form-tag">Exercícios</h2>
+  <h2 class="form-tag">Exercícios do Usuário</h2>
   {% endif %}
   <div class="user-exercise-post-list">
     {% for exercise in exercises  %}
     <div class="user-exercise-post-item">
-      <img src="{{exercise.cover.url}}" alt="{{exercise.title}}">
-      <h2>{{exercise.title}}</h2>
+      <a target="_blank" href="{% url 'training:exercises_detail' exercise.slug %}">
+        <img src="{{exercise.cover.url}}" alt="{{exercise.title}}">
+      </a>
     </div>
     {% empty %}
     <div class="main-content-error-page center">

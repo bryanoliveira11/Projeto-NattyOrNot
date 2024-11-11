@@ -105,11 +105,7 @@ class UserProfileBaseClassView(View):
 
 
 # classe para o perfil publico
-@method_decorator(
-    login_required(login_url='users:login', redirect_field_name='next'),
-    name='dispatch'
-)
-class UserShowProfileClassView(UserProfileBaseClassView):
+class UserShowProfileClassView(View):
     def get(self, *args, **kwargs):
         user_instance = User.objects.filter(
             username=self.kwargs.get('username')
@@ -136,19 +132,25 @@ class UserShowProfileClassView(UserProfileBaseClassView):
 
         already_follows = False
 
-        if self.kwargs.get('username') != self.request.user.username:
-            already_follows = UserFollows.objects.filter(
-                follower=self.request.user, following=user_instance
-            ).exists()
+        if self.request.user.is_authenticated:
+            if self.kwargs.get('username') != self.request.user.username:
+                already_follows = UserFollows.objects.filter(
+                    follower=self.request.user, following=user_instance
+                ).exists()
 
         follower_count, following_count = get_user_follow_stats(
             user_instance.pk
         )  # type: ignore
 
+        user_health = UserHealth.objects.filter(
+            user=user_instance,
+        ).first()
+
         return render(
             self.request, 'users/pages/user_show_profile.html', context={
                 'user_profile': user_profile,
                 'user': user_instance,
+                'user_health': user_health,
                 'exercises': page_obj,
                 'pagination_range': pagination_range,
                 'notifications': notifications,
@@ -195,11 +197,9 @@ class UserProfileDataClassView(UserProfileBaseClassView):
             user_profile = self.get_user_profile_by_id(
                 self.request.user.pk  # type:ignore
             )
-            user_bio = form.cleaned_data.get('biography')
 
             # user já tem profile
             if user_profile:
-                user_profile.biography = user_bio
                 if user_picture:
                     # alterando foto caso haja dados no form
                     user_profile.profile_picture = user_picture

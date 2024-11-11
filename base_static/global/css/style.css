@@ -141,6 +141,10 @@ img {
   flex-direction: initial;
 }
 
+ul.menu-bar {
+  margin-bottom: 0;
+}
+
 a.nav-link,
 button.nav-link {
   position: relative;
@@ -1691,7 +1695,7 @@ a.notification-url:hover {
 .user-profile-container .user-profile-stats,
 .user-profile-container .user-profile-bio {
   display: flex;
-  gap: 2.5rem;
+  gap: 1.5rem;
   padding: 1rem;
   margin-left: 2rem;
   width: 95%;
@@ -1726,7 +1730,7 @@ body.dark-mode-style .user-profile-container .user-profile-show-data h2 a {
 .user-profile-posts .user-exercise-post-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--spacing-gutter-medium);
+  gap: 2.5rem;
   padding: 1.5rem;
   margin: 0 auto;
 }
@@ -1735,6 +1739,10 @@ body.dark-mode-style .user-profile-container .user-profile-show-data h2 a {
   width: 33rem;
   height: 25rem;
   object-fit: cover;
+}
+
+.btn.user-health-profile-data {
+  font-size: 1.6rem;
 }
 
 /* profile change data */
@@ -2091,7 +2099,7 @@ td a:hover {
   color: var(--color-info-dark);
 }
 
-.shared-myself{
+.shared-myself {
   color: var(--color-success);
 }
 
@@ -2826,6 +2834,11 @@ body.dark-mode-style .workouts-table tr {
     width: 90%;
     margin: 2rem auto;
     height: fit-content;
+  }
+
+  .user-profile-container .user-profile-bio {
+    align-items: center;
+    justify-content: center;
   }
 }
 
