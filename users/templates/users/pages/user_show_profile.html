@@ -48,8 +48,13 @@
     </div>
     <div class="user-profile-stats">
       <h2>{{exercises|length}} Posts</h2>
-      <h2>{{follower_count}} Seguidores</h2>
+      <a href="{% url 'users:followers' user.username %}" class="plaintext-button alt">
+        <h2>{{follower_count}} Seguidores</h2>
+      </a>
+      <a href="{% url 'users:following' user.username %}"
+      class="plaintext-button alt">
       <h2>{{following_count}} Seguindo</h2>
+      </a>
     </div>
     {% if user_health is not None %}
     <div class="user-profile-bio">
@@ -67,9 +72,13 @@
   <div class="user-exercise-post-list">
     {% for exercise in exercises  %}
     <div class="user-exercise-post-item">
+      {% if exercise.is_published %}
       <a target="_blank" href="{% url 'training:exercises_detail' exercise.slug %}">
         <img src="{{exercise.cover.url}}" alt="{{exercise.title}}">
       </a>
+      {% else %}
+      <img src="{{exercise.cover.url}}" alt="{{exercise.title}}">
+      {% endif %}
     </div>
     {% empty %}
     <div class="main-content-error-page center">

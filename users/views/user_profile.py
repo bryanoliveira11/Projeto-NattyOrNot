@@ -120,16 +120,6 @@ class UserShowProfileClassView(View):
 
         notifications, notifications_total = get_notifications(self.request)
 
-        exercises = Exercises.objects.filter(
-            published_by=user_instance,
-        ).prefetch_related(
-            'published_by', 'categories'
-        ).order_by('-pk').exclude(shared_status='MYSELF')
-
-        page_obj, pagination_range = make_pagination(
-            self.request, exercises, 12
-        )
-
         already_follows = False
 
         if self.request.user.is_authenticated:
@@ -137,6 +127,23 @@ class UserShowProfileClassView(View):
                 already_follows = UserFollows.objects.filter(
                     follower=self.request.user, following=user_instance
                 ).exists()
+
+        exercises = Exercises.objects.filter(
+            published_by=user_instance,
+        ).prefetch_related(
+            'published_by', 'categories'
+        ).order_by('-pk').exclude(
+            shared_status='MYSELF',
+        )
+
+        if not already_follows:
+            exercises = exercises.exclude(
+                shared_status__in=['MYSELF', 'FOLLOWERS']
+            )
+
+        page_obj, pagination_range = make_pagination(
+            self.request, exercises, 12
+        )
 
         follower_count, following_count = get_user_follow_stats(
             user_instance.pk

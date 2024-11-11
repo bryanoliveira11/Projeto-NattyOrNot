@@ -21,7 +21,7 @@
         <div class="exercise-container-grid details">
           {% include "training/partials/exercise_card.html" %}
         </div>
-        <div class="firefox-warning-message">
+        {% comment %} <div class="firefox-warning-message">
             <div class="main-content center container messages-container">
                 <div class="message-disqus message-content message-info">
                     <i class="fa-solid fa-circle-info message-icon zoomIn-zoomOut"></i>
@@ -29,7 +29,7 @@
                     <b>Firefox</b>, recomendamos tentar em outro navegador.
                 </div>
             </div>
-        </div>
+        </div> {% endcomment %}
         {% disqus_show_comments %}
     </div>
 {% endblock content %}

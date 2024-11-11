@@ -922,6 +922,14 @@ select option:checked {
   font-weight: 600;
 }
 
+.plaintext-button.alt {
+  color: var(--color-dark-text);
+}
+
+body.dark-mode-style .plaintext-button.alt {
+  color: var(--color-gray-0);
+}
+
 .plaintext-button:hover {
   cursor: pointer;
   filter: brightness(85%);
@@ -1735,10 +1743,19 @@ body.dark-mode-style .user-profile-container .user-profile-show-data h2 a {
   margin: 0 auto;
 }
 
+.user-profile-posts .user-exercise-post-list .user-exercise-post-item {
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+  transition: scale 200ms ease-in-out;
+}
+
 .user-profile-posts .user-exercise-post-list .user-exercise-post-item img {
   width: 33rem;
   height: 25rem;
   object-fit: cover;
+}
+
+.user-profile-posts .user-exercise-post-list .user-exercise-post-item:hover {
+  scale: 1.1;
 }
 
 .btn.user-health-profile-data {
@@ -1825,6 +1842,63 @@ body.dark-mode-style .user-profile-container .user-profile-show-data h2 a {
 .user-password-change a:hover {
   filter: brightness(1.3);
   color: var(--color-dark-text);
+}
+
+/* user followers */
+
+.followers-container {
+  max-width: 40rem;
+  width: 100%;
+  margin: 1rem auto;
+}
+
+.followers-container .followers-flex {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.followers-container .followers-flex .follower {
+  max-width: 64rem;
+  width: 100%;
+  max-height: fit-content;
+  height: 100%;
+  background: #fff;
+  border-radius: 0.4rem;
+  box-shadow: 6px 5px 18px -6px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 6px 5px 18px -6px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 6px 5px 18px -6px rgba(0, 0, 0, 0.2);
+}
+
+.follower {
+  padding: 0.7rem 1rem;
+  transition: scale 200ms ease-in-out;
+}
+
+.follower .follower-flex {
+  display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.follower .follower-flex img {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+}
+
+.follower .follower-flex h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 2rem 0 0 2rem;
+  color: var(--color-dark-text);
+}
+
+.follower:hover {
+  scale: 1.1;
 }
 
 /* user health page */

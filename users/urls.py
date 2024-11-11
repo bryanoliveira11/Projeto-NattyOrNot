@@ -131,6 +131,14 @@ urlpatterns = [
         'unfollow/<int:id>/',
         views.UserUnfollowsClassView.as_view(), name='unfollow'
     ),
+    path(
+        '<str:username>/followers/',
+        views.UserFollowers.as_view(), name='followers'
+    ),
+    path(
+        '<str:username>/following/',
+        views.UserFollowing.as_view(), name='following'
+    ),
     # api paths
     path('', include(user_api_v1_router.urls)),
 ]

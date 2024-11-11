@@ -1,0 +1,45 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% block title %} {{title}} {% endblock title %}
+
+{% block content %}
+<div class="center">
+    <div class="page-tag-title center">
+      <a href="{{request.META.HTTP_REFERER}}" class="plaintext-button">
+        <i class="fa-solid fa-circle-left"></i>
+        <span class="back-to-home">Voltar</span>
+      </a>
+      <h2 class="form-tag dashboard-tag">{{title}}</h2>
+    </div>
+</div>
+
+<div class="main-content main-content-list container center">
+  <div class="followers-container">
+        <div class="followers-flex">
+            {% for follower in followers  %}
+            <div class="follower">
+              <a href="{% url 'users:user_profile' follower %}">
+                <div class="follower-flex">
+                  {% if follower.profile_picture %}
+                  <img src="{{follower.profile_picture.url}}" alt="">
+                  {% else %}
+                  <img src="{% static 'global/imgs/default-user-picture.png' %}" alt="">
+                  {% endif %}
+                  <h3>{{follower}}</h3>
+                </div>
+              </a>
+            </div>
+            {% empty %}
+            <div class="main-content-error-page center">
+              <div class="error-message-content">
+                <img src="{% static 'global/imgs/followers.png' %}" alt="">
+                <h2>
+                  Nenhum Seguidor Encontrado.
+                </h2>
+              </div>
+            </div>
+            {% endfor %}
+      </div>
+  </div>
+</div>
+{% endblock %}
