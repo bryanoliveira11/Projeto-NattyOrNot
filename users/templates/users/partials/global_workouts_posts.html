@@ -46,7 +46,7 @@
         </div>
         <div class="home-post-content">
           <div class="home-post-reaction-wrapper">
-            <a href="">
+            <a href="{% url 'users:favorite_workout' workout.pk %}">
               {% if request.user in workout.favorited_by.all %}
               <i class="fa-solid fa-star yellow-text" title="Desfavoritar Treino"></i>
               {% else %}
@@ -58,7 +58,7 @@
             data-url="{{request.META.HTTP_HOST}}{% url 'users:user_workout_detail' workout.pk %}"></i>
           </div>
           <p class="home-post-favorites">
-            {% comment %} Favoritado {{workout.favorites_count|format_favorites_text}} {% endcomment %}
+            Favoritado {{workout.favorited_by.all|length|format_favorites_text}}
           </p>
           <p class="home-post-description">
             {{workout.exercises_total}}

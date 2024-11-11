@@ -1,0 +1,61 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% load filters %}
+{% block title %} {{title}} {% endblock title %}
+
+{% block content %}
+    <div class="center">
+        <h2 class="form-tag dashboard-tag">{{page_tag}}</h2>
+        {% include "global/partials/messages.html" %}
+    </div>
+    </div>
+
+    <div class="workouts-table container center">
+        {% if workouts %}
+            <table class="content-table">
+                <thead>
+                  <tr class="table-tr">
+                    <th scope="col">Nome do Treino</th>
+                    <th scope="col">Total de Exercícios</th>
+                    <th scope="col">Usuário</th>
+                    <th scope="col">Criado em</th>
+                    <th scope="col">Detalhes</th>
+                    <th scope="col">Ação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for workout in workouts  %}
+                  <tr class="table-tr">
+                    <td scope="row" class="workout-name">
+                      {{workout.title|title_limit_length}}
+                    </td>
+                    <td> {{ workout.exercises_total|format_exercises_num }} </td>
+                    <td> <a href="{% url 'users:user_profile' workout.user %}">
+                        {{ workout.user.username|title_limit_length }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ workout.created_at|date:"d/m/Y" }}
+                        ás {{ workout.created_at|date:"H:i" }}
+                    </td>
+                    <td>
+                        <a href="{% url 'users:user_workout_detail' workout.pk %}">
+                            Ver <i class="fas fa-search-plus"></i>
+                        </a>
+                    </td>
+                    <td>
+                      <a href="{% url 'users:favorite_workout' workout.pk %}"
+                      class="yellow-text">
+                        <i class="fa-solid fa-star"></i>
+                        Desfavoritar
+                    </a>
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+        {% include "global/partials/no-content.html" %}
+        {% endif %}
+    </div>
+{% endblock content %}

@@ -2409,6 +2409,7 @@ td a:hover {
 
 .yellow-text {
   color: var(--color-warning);
+  filter: brightness(90%);
 }
 
 .blue-text {

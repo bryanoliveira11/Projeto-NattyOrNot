@@ -124,6 +124,16 @@ urlpatterns = [
         name='user_exercises_favorites'
     ),
     path(
+        'workouts/favorites/',
+        views.UserWorkoutsFavoritesClassView.as_view(),
+        name='user_workouts_favorites'
+    ),
+    path(
+        'workout/favorite/<int:id>/',
+        views.FavoriteWorkoutClassView.as_view(),
+        name='favorite_workout'
+    ),
+    path(
         'exercises/favorites/category/<int:id>/',
         views.FavoriteExercisesCategoriesFilter.as_view(),
         name='user_exercises_favorites_category'

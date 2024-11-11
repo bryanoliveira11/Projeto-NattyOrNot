@@ -77,6 +77,11 @@ class UserWorkouts(models.Model):
     exercises_total = models.IntegerField(
         default=0, verbose_name='Total de Exercícios'
     )
+    favorited_by = models.ManyToManyField(
+        User, blank=True, default='',
+        verbose_name='Favoritado por',
+        related_name='workout_favorited_by',
+    )
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name='Criado em'
     )

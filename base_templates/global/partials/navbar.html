@@ -110,7 +110,7 @@
                 <li role="menuitem">
                   <a class="dropdown-link prevent-select" href="{% url 'users:user_workouts' %}">
                     <div>
-                      <span class="dropdown-link-title" title="Treinos">
+                      <span class="dropdown-link-title" title="Meus Treinos">
                         <i class="fa-solid fa-dumbbell"></i>
                         Meus Treinos
                       </span>
@@ -127,6 +127,19 @@
                         Criar Treino
                       </span>
                       <p>Crie Treinos.</p>
+                    </div>
+                  </a>
+                </li>
+
+                <li role="menuitem">
+                  <a class="dropdown-link prevent-select"
+                  href="{% url 'users:user_workouts_favorites' %}">
+                    <div>
+                      <span class="dropdown-link-title" title="Treinos Favoritos">
+                        <i class="fa-solid fa-star"></i>
+                        Favoritos
+                      </span>
+                      <p>Veja seus Treinos Favoritos.</p>
                     </div>
                   </a>
                 </li>

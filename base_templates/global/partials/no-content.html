@@ -1,7 +1,7 @@
 <div class="main-content-error-page center">
   <div class="error-message-content">
     <i class="fa-solid fa-magnifying-glass-minus"></i>
-      {% if is_workout_page %}
+      {% if is_workout_page or is_workout_favorites_page %}
       <h2>Nenhum Treino Encontrado !</h2>
       {% else %}
       <h2>Nenhum Exercício Encontrado !</h2>
@@ -38,6 +38,15 @@
         <a href="{% url 'users:user_workout_create' %}">
           <i class="fa-solid fa-circle-plus"></i>
           Criar Treino.
+        </a>
+      </h3>
+      {% endif %}
+
+      {% if is_workout_favorites_page %}
+      <h3>
+        <a href="{% url 'users:global_workouts' %}">
+          <i class="fa-solid fa-star"></i>
+          Favorite Treinos Aqui.
         </a>
       </h3>
       {% endif %}
