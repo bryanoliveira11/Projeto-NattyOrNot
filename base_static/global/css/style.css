@@ -1870,6 +1870,10 @@ body.dark-mode-style .user-profile-container .user-profile-show-data h2 a {
   -moz-box-shadow: 6px 5px 18px -6px rgba(0, 0, 0, 0.2);
 }
 
+body.dark-mode-style .followers-container .followers-flex .follower {
+  background: var(--color-primary-dark-shadow);
+}
+
 .follower {
   padding: 0.7rem 1rem;
   transition: scale 200ms ease-in-out;
@@ -1895,6 +1899,10 @@ body.dark-mode-style .user-profile-container .user-profile-show-data h2 a {
   text-overflow: ellipsis;
   margin: 2rem 0 0 2rem;
   color: var(--color-dark-text);
+}
+
+body.dark-mode-style .follower .follower-flex h3 {
+  color: var(--color-gray-0);
 }
 
 .follower:hover {

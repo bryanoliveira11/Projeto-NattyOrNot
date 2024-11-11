@@ -24,7 +24,7 @@ class GlobalWorkoutsClassView(ListView):
 
         queryset = queryset.filter(
             shared_status='ALL',
-        ).select_related('user').prefetch_related('exercises')
+        ).select_related('user').prefetch_related('exercises', 'favorited_by')
 
         return queryset
 
