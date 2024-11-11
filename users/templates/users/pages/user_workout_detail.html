@@ -8,7 +8,7 @@
             Treino - {{page_tag}}
         </h2>
         <h3 class="home-remove-filter form-tag less-margin">
-            <a href="{% url 'users:user_workouts' %}">
+            <a href="{{request.META.HTTP_REFERER}}">
                 <i class="fa-solid fa-circle-left"></i>
                 Voltar
             </a>

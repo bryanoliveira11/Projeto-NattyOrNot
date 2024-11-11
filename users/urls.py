@@ -81,6 +81,11 @@ urlpatterns = [
         name='user_workouts'
     ),
     path(
+        'workouts/global-workouts',
+        views.GlobalWorkoutsClassView.as_view(),
+        name='global_workouts'
+    ),
+    path(
         'workouts/search/',
         views.UserWorkoutsPageSearchClassView.as_view(),
         name='user_workouts_search'

@@ -30,6 +30,19 @@
             <div id="dropdown1" class="nav-dropdown">
               <ul role="menu">
                 <li role="menuitem">
+                  <a class="dropdown-link prevent-select"
+                   href="/">
+                    <div>
+                      <span class="dropdown-link-title" title="Treinos">
+                        <i class="fa-solid fa-globe"></i>
+                        Exercícios
+                      </span>
+                      <p>Veja os Exercícios de outros Usuários.</p>
+                    </div>
+                  </a>
+                </li>
+
+                <li role="menuitem">
                   <a class="dropdown-link prevent-select" href="{% url 'dashboard:user_dashboard' %}">
                     <div>
                       <span class="dropdown-link-title" title="Meus Exercícios">
@@ -82,11 +95,24 @@
             <div id="dropdown2" class="nav-dropdown">
               <ul role="menu">
                 <li role="menuitem">
+                  <a class="dropdown-link prevent-select"
+                   href="{% url 'users:global_workouts' %}">
+                    <div>
+                      <span class="dropdown-link-title" title="Treinos">
+                        <i class="fa-solid fa-globe"></i>
+                        Treinos
+                      </span>
+                      <p>Veja os Treinos de outros Usuários.</p>
+                    </div>
+                  </a>
+                </li>
+
+                <li role="menuitem">
                   <a class="dropdown-link prevent-select" href="{% url 'users:user_workouts' %}">
                     <div>
                       <span class="dropdown-link-title" title="Treinos">
                         <i class="fa-solid fa-dumbbell"></i>
-                        Treinos
+                        Meus Treinos
                       </span>
                       <p>Veja seus Treinos.</p>
                     </div>

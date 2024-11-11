@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse
 
 from training.models import Exercises
 from utils.resize_image import resize_image
@@ -91,6 +92,14 @@ class UserWorkouts(models.Model):
 
     def __str__(self) -> str:
         return f'Treino de {self.user.get_username()}'
+
+    def get_absolute_url(self):
+        if self.shared_status != 'MYSELF':
+            return reverse(
+                'users:user_workout_detail', args=(self.pk,)
+            )
+
+        return reverse('training:home')
 
     class Meta:
         verbose_name = 'Treino'

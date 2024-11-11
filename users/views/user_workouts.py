@@ -82,9 +82,7 @@ class UserWorkoutsPageDetailClassView(DetailView):
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.filter(
-            user=self.request.user
-        ).select_related('user').prefetch_related(
+        queryset = queryset.select_related('user').prefetch_related(
             'exercises', 'exercises__categories', 'exercises__published_by'
         )
         return queryset

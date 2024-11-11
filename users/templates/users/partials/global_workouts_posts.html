@@ -1,0 +1,80 @@
+{% load filters %}
+{% load static %}
+
+<section class="main">
+  <div class="wrapper">
+    <div class="left-col">
+      <div class="home-post">
+        <div class="home-post-info">
+          <div class="home-post-user">
+            <div class="home-post-profile-pic">
+              {% for username, picture in users_data.items %}
+                {% if username == workout.user %}
+                  <a href="{% url 'users:user_profile' workout.user %}">
+                  {% if picture %}
+                  <img src="/{{ picture }}"
+                  alt="Foto de Perfil de {{ workout.user }}"
+                  title="Perfil de {{ workout.user }}" />
+                {% else %}
+                  <img src="{% static 'global/imgs/default-user-picture.png' %}"
+                  alt="Foto de Perfil de {{ workout.user }}"
+                  title="Perfil de {{ workout.user }}" />
+                {% endif %}
+                </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <a href="{% url 'users:user_profile' workout.user %}"
+            title="Perfil de {{workout.user}}">
+              <p class="home-post-username">{{workout.user}}</p>
+            </a>
+          </div>
+        </div>
+        <a href="{% url 'users:user_workout_detail' workout.pk %}" title="Ver Post">
+          {% with first_exercise=workout.exercises.all|first %}
+            {% if first_exercise %}
+            <img src="{{first_exercise.cover.url}}"
+            class="home-post-image" alt="{{workout.title}}" />
+            {% endif %}
+            {% endwith %}
+        </a>
+        <div class="home-post-title">
+          <a href="{% url 'users:user_workout_detail' workout.pk %}"
+          title="{{workout.title}}">
+          {{workout.title}}
+        </a>
+        </div>
+        <div class="home-post-content">
+          <div class="home-post-reaction-wrapper">
+            <a href="">
+              {% if request.user in workout.favorited_by.all %}
+              <i class="fa-solid fa-star yellow-text" title="Desfavoritar Treino"></i>
+              {% else %}
+              <i class="fa-solid fa-star home-icon" title="Favoritar Treino"></i>
+              {% endif %}
+            </a>
+            <i class="fa-solid fa-copy dark-text home-icon copy-post-url"
+            title="Copiar Link do Post"
+            data-url="{{request.META.HTTP_HOST}}{% url 'users:user_workout_detail' workout.pk %}"></i>
+          </div>
+          <p class="home-post-favorites">
+            {% comment %} Favoritado {{workout.favorites_count|format_favorites_text}} {% endcomment %}
+          </p>
+          <p class="home-post-description">
+            {{workout.exercises_total}}
+            {% if workout.exercises_total == 1 %}
+            Exercício
+            {% else %}
+            Exercícios
+            {% endif %}
+          </p>
+          <p class="home-post-date">
+            {{ workout.created_at|date:"d/m/Y" }}
+            ás
+            {{ workout.created_at|date:"H:i" }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

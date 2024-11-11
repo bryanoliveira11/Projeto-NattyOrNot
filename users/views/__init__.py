@@ -1,5 +1,6 @@
 from .all_auth import *
 from .api_v1 import *
+from .global_workouts import *
 from .notifications import *
 from .user_delete_object import *
 from .user_favorites import *
