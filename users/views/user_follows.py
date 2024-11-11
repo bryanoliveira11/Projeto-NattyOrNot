@@ -1,3 +1,5 @@
+from os import environ
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
@@ -6,11 +8,14 @@ from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
 
+from base_templates.emails.email_templates import followed_by
+from users.email_service import send_html_mail
 from users.models import UserFollows, UserNotifications, UserProfile
 from utils.get_notifications import get_notifications
 from utils.pagination import make_pagination
 
 User = get_user_model()
+EMAIL_HOST_USER = environ.get('EMAIL_HOST_USER', '')
 
 
 @method_decorator(
@@ -52,6 +57,14 @@ class UserFollowsClassView(View):
             'começou a seguir você.',
             send_by='NattyOrNot',
             send_to=following,
+        )
+
+        send_html_mail(
+            subject='Novo Seguidor',
+            html_content=followed_by(str(follower)),
+            sender=EMAIL_HOST_USER,
+            recipient_list=[following.email],
+            dev_mode=False,
         )
 
         return redirect(

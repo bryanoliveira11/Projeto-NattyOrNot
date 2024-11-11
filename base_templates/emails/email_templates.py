@@ -40,3 +40,21 @@ def signin_email_template(username: str):
     </body>
     </html>
   """
+
+
+def followed_by(username: str):
+    return f"""
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="text-align: center;">
+    <h1>👤</h1>
+    <h1>Novo Seguidor !</h1>
+    <h2>{username} começou a seguir você.</h2>
+    <p>&copy; 2024 NattyOrNot.</p>
+    </body>
+    </html>
+  """
